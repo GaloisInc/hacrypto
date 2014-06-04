@@ -1,0 +1,141 @@
+The system is: CYGWIN - 1.7.30(0.272/5/3) - x86_64
+Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+Compiler: /usr/bin/cc 
+Build flags: 
+Id flags: 
+
+The output was:
+0
+
+
+Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "a.exe"
+
+The C compiler identification is GNU, found in "/cygdrive/c/Users/jdodds/Documents/snapshots/relic-0.3.5/CMakeFiles/2.8.11.2/CompilerIdC/a.exe"
+
+Determining if the C compiler works passed with the following output:
+Change Dir: /cygdrive/c/Users/jdodds/Documents/snapshots/relic-0.3.5/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make.exe "cmTryCompileExec2407081933/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec2407081933.dir/build.make CMakeFiles/cmTryCompileExec2407081933.dir/build
+make[1]: Entering directory '/cygdrive/c/Users/jdodds/Documents/snapshots/relic-0.3.5/CMakeFiles/CMakeTmp'
+/usr/bin/cmake.exe -E cmake_progress_report /cygdrive/c/Users/jdodds/Documents/snapshots/relic-0.3.5/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec2407081933.dir/testCCompiler.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec2407081933.dir/testCCompiler.c.o   -c /cygdrive/c/Users/jdodds/Documents/snapshots/relic-0.3.5/CMakeFiles/CMakeTmp/testCCompiler.c
+Linking C executable cmTryCompileExec2407081933.exe
+/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTryCompileExec2407081933.dir/link.txt --verbose=1
+/usr/bin/cc       -Wl,--enable-auto-import  CMakeFiles/cmTryCompileExec2407081933.dir/testCCompiler.c.o  -o cmTryCompileExec2407081933.exe -Wl,--out-implib,libcmTryCompileExec2407081933.dll.a -Wl,--major-image-version,0,--minor-image-version,0  
+make[1]: Leaving directory '/cygdrive/c/Users/jdodds/Documents/snapshots/relic-0.3.5/CMakeFiles/CMakeTmp'
+
+
+Detecting C compiler ABI info compiled with the following output:
+Change Dir: /cygdrive/c/Users/jdodds/Documents/snapshots/relic-0.3.5/CMakeFiles/CMakeTmp
+
+Run Build Command:/usr/bin/make.exe "cmTryCompileExec3789728156/fast"
+/usr/bin/make -f CMakeFiles/cmTryCompileExec3789728156.dir/build.make CMakeFiles/cmTryCompileExec3789728156.dir/build
+make[1]: Entering directory '/cygdrive/c/Users/jdodds/Documents/snapshots/relic-0.3.5/CMakeFiles/CMakeTmp'
+/usr/bin/cmake.exe -E cmake_progress_report /cygdrive/c/Users/jdodds/Documents/snapshots/relic-0.3.5/CMakeFiles/CMakeTmp/CMakeFiles 1
+Building C object CMakeFiles/cmTryCompileExec3789728156.dir/CMakeCCompilerABI.c.o
+/usr/bin/cc    -o CMakeFiles/cmTryCompileExec3789728156.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-2.8.11.2/Modules/CMakeCCompilerABI.c
+Linking C executable cmTryCompileExec3789728156.exe
+/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTryCompileExec3789728156.dir/link.txt --verbose=1
+/usr/bin/cc       -v CMakeFiles/cmTryCompileExec3789728156.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec3789728156.exe -Wl,--out-implib,libcmTryCompileExec3789728156.dll.a -Wl,--major-image-version,0,--minor-image-version,0   
+Using built-in specs.
+COLLECT_GCC=/usr/bin/cc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/lto-wrapper.exe
+Target: x86_64-pc-cygwin
+Configured with: /cygdrive/i/szsz/tmpp/cygwin64/gcc/gcc-4.8.3-2/src/gcc-4.8.3/configure --srcdir=/cygdrive/i/szsz/tmpp/cygwin64/gcc/gcc-4.8.3-2/src/gcc-4.8.3 --prefix=/usr --exec-prefix=/usr --bindir=/usr/bin --sbindir=/usr/sbin --libexecdir=/usr/libexec --datadir=/usr/share --localstatedir=/var --sysconfdir=/etc --libdir=/usr/lib --datarootdir=/usr/share --docdir=/usr/share/doc/gcc --htmldir=/usr/share/doc/gcc/html -C --build=x86_64-pc-cygwin --host=x86_64-pc-cygwin --target=x86_64-pc-cygwin --without-libiconv-prefix --without-libintl-prefix --enable-shared --enable-shared-libgcc --enable-static --enable-version-specific-runtime-libs --enable-bootstrap --disable-__cxa_atexit --with-dwarf2 --with-tune=generic --enable-languages=ada,c,c++,fortran,lto,objc,obj-c++ --enable-graphite --enable-threads=posix --enable-libatomic --enable-libgomp --disable-libitm --enable-libquadmath --enable-libquadmath-support --enable-libssp --enable-libada --enable-libgcj-sublibs --disable-java-awt --disable-symvers --with-ecj-jar=/usr/share/java/ecj.jar --with-gnu-ld --with-gnu-as --with-cloog-include=/usr/include/cloog-isl --without-libiconv-prefix --without-libintl-prefix --with-system-zlib --libexecdir=/usr/lib
+Thread model: posix
+gcc version 4.8.3 (GCC) 
+COMPILER_PATH=/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/:/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/:/usr/lib/gcc/x86_64-pc-cygwin/:/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/:/usr/lib/gcc/x86_64-pc-cygwin/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/:/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3789728156.exe' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-pc-cygwin/4.8.3/collect2.exe -m i386pep --wrap _Znwm --wrap _Znam --wrap _ZdlPv --wrap _ZdaPv --wrap _ZnwmRKSt9nothrow_t --wrap _ZnamRKSt9nothrow_t --wrap _ZdlPvRKSt9nothrow_t --wrap _ZdaPvRKSt9nothrow_t -Bdynamic --dll-search-prefix=cyg --tsaware -o cmTryCompileExec3789728156.exe /usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../../../lib/crt0.o /usr/lib/gcc/x86_64-pc-cygwin/4.8.3/crtbegin.o -L/usr/lib/gcc/x86_64-pc-cygwin/4.8.3 -L/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../.. CMakeFiles/cmTryCompileExec3789728156.dir/CMakeCCompilerABI.c.o --out-implib libcmTryCompileExec3789728156.dll.a --major-image-version 0 --minor-image-version 0 -lgcc_s -lgcc -lcygwin -ladvapi32 -lshell32 -luser32 -lkernel32 -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-cygwin/4.8.3/crtend.o
+make[1]: Leaving directory '/cygdrive/c/Users/jdodds/Documents/snapshots/relic-0.3.5/CMakeFiles/CMakeTmp'
+
+
+Parsed C implicit link information from above output:
+  link line regex: [^( *|.*[/\])(ld.exe|ld|collect2)[^/\]*( |$)]
+  ignore line: [Change Dir: /cygdrive/c/Users/jdodds/Documents/snapshots/relic-0.3.5/CMakeFiles/CMakeTmp]
+  ignore line: []
+  ignore line: [Run Build Command:/usr/bin/make.exe "cmTryCompileExec3789728156/fast"]
+  ignore line: [/usr/bin/make -f CMakeFiles/cmTryCompileExec3789728156.dir/build.make CMakeFiles/cmTryCompileExec3789728156.dir/build]
+  ignore line: [make[1]: Entering directory '/cygdrive/c/Users/jdodds/Documents/snapshots/relic-0.3.5/CMakeFiles/CMakeTmp']
+  ignore line: [/usr/bin/cmake.exe -E cmake_progress_report /cygdrive/c/Users/jdodds/Documents/snapshots/relic-0.3.5/CMakeFiles/CMakeTmp/CMakeFiles 1]
+  ignore line: [Building C object CMakeFiles/cmTryCompileExec3789728156.dir/CMakeCCompilerABI.c.o]
+  ignore line: [/usr/bin/cc    -o CMakeFiles/cmTryCompileExec3789728156.dir/CMakeCCompilerABI.c.o   -c /usr/share/cmake-2.8.11.2/Modules/CMakeCCompilerABI.c]
+  ignore line: [Linking C executable cmTryCompileExec3789728156.exe]
+  ignore line: [/usr/bin/cmake.exe -E cmake_link_script CMakeFiles/cmTryCompileExec3789728156.dir/link.txt --verbose=1]
+  ignore line: [/usr/bin/cc       -v CMakeFiles/cmTryCompileExec3789728156.dir/CMakeCCompilerABI.c.o  -o cmTryCompileExec3789728156.exe -Wl,--out-implib,libcmTryCompileExec3789728156.dll.a -Wl,--major-image-version,0,--minor-image-version,0   ]
+  ignore line: [Using built-in specs.]
+  ignore line: [COLLECT_GCC=/usr/bin/cc]
+  ignore line: [COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/lto-wrapper.exe]
+  ignore line: [Target: x86_64-pc-cygwin]
+  ignore line: [Configured with: /cygdrive/i/szsz/tmpp/cygwin64/gcc/gcc-4.8.3-2/src/gcc-4.8.3/configure --srcdir=/cygdrive/i/szsz/tmpp/cygwin64/gcc/gcc-4.8.3-2/src/gcc-4.8.3 --prefix=/usr --exec-prefix=/usr --bindir=/usr/bin --sbindir=/usr/sbin --libexecdir=/usr/libexec --datadir=/usr/share --localstatedir=/var --sysconfdir=/etc --libdir=/usr/lib --datarootdir=/usr/share --docdir=/usr/share/doc/gcc --htmldir=/usr/share/doc/gcc/html -C --build=x86_64-pc-cygwin --host=x86_64-pc-cygwin --target=x86_64-pc-cygwin --without-libiconv-prefix --without-libintl-prefix --enable-shared --enable-shared-libgcc --enable-static --enable-version-specific-runtime-libs --enable-bootstrap --disable-__cxa_atexit --with-dwarf2 --with-tune=generic --enable-languages=ada,c,c++,fortran,lto,objc,obj-c++ --enable-graphite --enable-threads=posix --enable-libatomic --enable-libgomp --disable-libitm --enable-libquadmath --enable-libquadmath-support --enable-libssp --enable-libada --enable-libgcj-sublibs --disable-java-awt --disable-symvers --with-ecj-jar=/usr/share/java/ecj.jar --with-gnu-ld --with-gnu-as --with-cloog-include=/usr/include/cloog-isl --without-libiconv-prefix --without-libintl-prefix --with-system-zlib --libexecdir=/usr/lib]
+  ignore line: [Thread model: posix]
+  ignore line: [gcc version 4.8.3 (GCC) ]
+  ignore line: [COMPILER_PATH=/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/:/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/:/usr/lib/gcc/x86_64-pc-cygwin/:/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/:/usr/lib/gcc/x86_64-pc-cygwin/]
+  ignore line: [LIBRARY_PATH=/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/:/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../../../lib/:/lib/../lib/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../../:/lib/:/usr/lib/]
+  ignore line: [COLLECT_GCC_OPTIONS='-v' '-o' 'cmTryCompileExec3789728156.exe' '-mtune=generic' '-march=x86-64']
+  link line: [ /usr/lib/gcc/x86_64-pc-cygwin/4.8.3/collect2.exe -m i386pep --wrap _Znwm --wrap _Znam --wrap _ZdlPv --wrap _ZdaPv --wrap _ZnwmRKSt9nothrow_t --wrap _ZnamRKSt9nothrow_t --wrap _ZdlPvRKSt9nothrow_t --wrap _ZdaPvRKSt9nothrow_t -Bdynamic --dll-search-prefix=cyg --tsaware -o cmTryCompileExec3789728156.exe /usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../../../lib/crt0.o /usr/lib/gcc/x86_64-pc-cygwin/4.8.3/crtbegin.o -L/usr/lib/gcc/x86_64-pc-cygwin/4.8.3 -L/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../../../lib -L/lib/../lib -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../.. CMakeFiles/cmTryCompileExec3789728156.dir/CMakeCCompilerABI.c.o --out-implib libcmTryCompileExec3789728156.dll.a --major-image-version 0 --minor-image-version 0 -lgcc_s -lgcc -lcygwin -ladvapi32 -lshell32 -luser32 -lkernel32 -lgcc_s -lgcc /usr/lib/gcc/x86_64-pc-cygwin/4.8.3/crtend.o]
+    arg [/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/collect2.exe] ==> ignore
+    arg [-m] ==> ignore
+    arg [i386pep] ==> ignore
+    arg [--wrap] ==> ignore
+    arg [_Znwm] ==> ignore
+    arg [--wrap] ==> ignore
+    arg [_Znam] ==> ignore
+    arg [--wrap] ==> ignore
+    arg [_ZdlPv] ==> ignore
+    arg [--wrap] ==> ignore
+    arg [_ZdaPv] ==> ignore
+    arg [--wrap] ==> ignore
+    arg [_ZnwmRKSt9nothrow_t] ==> ignore
+    arg [--wrap] ==> ignore
+    arg [_ZnamRKSt9nothrow_t] ==> ignore
+    arg [--wrap] ==> ignore
+    arg [_ZdlPvRKSt9nothrow_t] ==> ignore
+    arg [--wrap] ==> ignore
+    arg [_ZdaPvRKSt9nothrow_t] ==> ignore
+    arg [-Bdynamic] ==> ignore
+    arg [--dll-search-prefix=cyg] ==> ignore
+    arg [--tsaware] ==> ignore
+    arg [-o] ==> ignore
+    arg [cmTryCompileExec3789728156.exe] ==> ignore
+    arg [/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../../../lib/crt0.o] ==> ignore
+    arg [/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/crtbegin.o] ==> ignore
+    arg [-L/usr/lib/gcc/x86_64-pc-cygwin/4.8.3] ==> dir [/usr/lib/gcc/x86_64-pc-cygwin/4.8.3]
+    arg [-L/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../../../lib] ==> dir [/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../../../lib]
+    arg [-L/lib/../lib] ==> dir [/lib/../lib]
+    arg [-L/usr/lib/../lib] ==> dir [/usr/lib/../lib]
+    arg [-L/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../..] ==> dir [/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../..]
+    arg [CMakeFiles/cmTryCompileExec3789728156.dir/CMakeCCompilerABI.c.o] ==> ignore
+    arg [--out-implib] ==> ignore
+    arg [libcmTryCompileExec3789728156.dll.a] ==> ignore
+    arg [--major-image-version] ==> ignore
+    arg [0] ==> ignore
+    arg [--minor-image-version] ==> ignore
+    arg [0] ==> ignore
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [-lgcc] ==> lib [gcc]
+    arg [-lcygwin] ==> lib [cygwin]
+    arg [-ladvapi32] ==> lib [advapi32]
+    arg [-lshell32] ==> lib [shell32]
+    arg [-luser32] ==> lib [user32]
+    arg [-lkernel32] ==> lib [kernel32]
+    arg [-lgcc_s] ==> lib [gcc_s]
+    arg [-lgcc] ==> lib [gcc]
+    arg [/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/crtend.o] ==> ignore
+  remove lib [gcc_s]
+  remove lib [gcc]
+  remove lib [gcc_s]
+  remove lib [gcc]
+  collapse library dir [/usr/lib/gcc/x86_64-pc-cygwin/4.8.3] ==> [/usr/lib/gcc/x86_64-pc-cygwin/4.8.3]
+  collapse library dir [/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../../../lib] ==> [/usr/lib]
+  collapse library dir [/lib/../lib] ==> [/lib]
+  collapse library dir [/usr/lib/../lib] ==> [/usr/lib]
+  collapse library dir [/usr/lib/gcc/x86_64-pc-cygwin/4.8.3/../../..] ==> [/usr/lib]
+  implicit libs: [cygwin;advapi32;shell32;user32;kernel32]
+  implicit dirs: [/usr/lib/gcc/x86_64-pc-cygwin/4.8.3;/usr/lib;/lib]
+  implicit fwks: []
+
+

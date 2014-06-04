@@ -1,0 +1,28 @@
+cl342 -- Cryptlib 3.4.2 -- http://www.cryptlib.com/
+  - both high and low level APIs
+  - Big and apparently thorough documentation (manual.pdf)
+
+libmcrypt-2.5.8 -- http://mcrypt.sourceforge.net/
+  - not much information, pairs with a program mcrypt meant to be used in a shell
+
+libtomcrypt-1.17 -- http://libtom.org/
+  - free library
+  - aims to have a consistent api
+
+MIRACL -- http://www.certivox.com/miracl/
+  - also contains a high-precision math library
+  - fast? uses custom assembly somehow to increase speed
+
+nacl -- http://nacl.cr.yp.to/
+  - limited API
+  - peer-reviewed articles
+
+OpenAES-0.9.0 
+  - just an aes implementation
+
+openssl-1.0.1g -- http://www.openssl.org/
+  - openssl
+
+relic -- https://code.google.com/p/relic-toolkit/
+  - calls itself a meta-toolkit. Not sure what that means yet
+
