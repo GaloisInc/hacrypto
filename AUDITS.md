@@ -14,13 +14,46 @@ Relevant Libraries
 | NaCl              | http://nacl.cr.yp.to/                  | C    | Complete |  
 | Nettle            |                                        | C    | Ongoing  |  
 | Cryptlib          |                                        | C    | Ongoing  |   
-| libmcrypt         |                                        | C    | Ongoing  |  
-| libtomcrypt       |                                        | C    | Ongoing  |  
-| MIRACL            |                                        | C    | Ongoing  |  
+| libmcrypt         | http://mcrypt.sourceforge.net/         | C    | Ongoing  |  
+| libtomcrypt       | http://libtom.org/?page=features       | C    | Ongoing  |  
+| MIRACL            | http://www.certivox.com/miracl/        | C    | Complete |  
 | OpenAES           |                                        | C    | Ongoing  |  
 | relic             |                                        | C    | Ongoing  |  
 
-MIRACL,
+libtomcrypt
+---------------------------
+| | |
+|------|----------------|
+| Size | 39K C |
+| Age | 2001-2007 |
+| Key Metrics |  |
+| Documentation | [doc file](https://github.com/GaloisInc/hacrypto/blob/master/c/libtomcrypt-1.17/doc/crypt.pdf) |
+| License | public domain |
+| Feature Description | |
+| Examples | [1K C](https://github.com/GaloisInc/hacrypto/tree/master/c/libtomcrypt-1.17/demos)|
+| Community | [IRC chat](http://webchat.freenode.net/?channels=libtom), [list](https://groups.google.com/forum/#!forum/libtom) |
+| Wiki | no |
+| Tracker | no |
+| Support | no |
+| API Design | modular, standard |
+| Architecture Specifications | no |
+| Design Specifications | no |
+| Behavioral Specifications | no |
+| Engineering Practices | Written completely in C, Requires only gcc to build |
+| Tests | 3k handwritten C, includes some randomness |
+| Other Evidence of Correctness | |
+| Validation | tests |
+| Verification | |
+| Published Materials | |
+| Other Comments | |
+
+libmcrypt
+---------------------------
+| | |
+|------|----------------|
+| Other Comments | private-key only|
+
+MIRACL
 ---------------------------
 | | |
 |------|----------------|
@@ -47,7 +80,7 @@ MIRACL,
 | Published Materials | no |
 | Other Comments | no |
 
-Nettle,
+Nettle
 ---------------------------
 | | |
 |------|----------------|
@@ -75,7 +108,7 @@ Nettle,
 | Other Comments | |
 
 
-NaCl,
+NaCl
 ---------------------------
 | | |
 |------|----------------|
