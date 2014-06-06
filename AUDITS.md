@@ -12,7 +12,7 @@ Relevant Libraries
 | BouncyCastle 1.7  | http://www.bouncycastle.org/csharp/    | C#   | Ongoing  |  
 | OpenSSL           |                                        | C    | Ongoing  |  
 | NaCl              | http://nacl.cr.yp.to/                  | C    | Complete |  
-| Nettle            |                                        | C    | Ongoing  |  
+| Nettle            | http://www.lysator.liu.se/~nisse/nettle/ | C    | Ongoing  |  
 | Cryptlib          |                                        | C    | Ongoing  |   
 | libmcrypt         | http://mcrypt.sourceforge.net/         | C    | Ongoing  |  
 | libtomcrypt       | http://libtom.org/?page=features       | C    | Ongoing  |  
@@ -43,8 +43,8 @@ libtomcrypt
 | Tests | 3k handwritten C, includes some randomness |
 | Other Evidence of Correctness | |
 | Validation | tests |
-| Verification | |
-| Published Materials | |
+| Verification | no |
+| Published Materials | no |
 | Other Comments | |
 
 libmcrypt
