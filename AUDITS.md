@@ -6,18 +6,18 @@ High-level Quality Audits of Crypto Libraries
 Relevant Libraries
 ------------------
 
-| Name              | Site                                   | PL   | Status   |
-| BouncyCastle 1.50 | https://www.bouncycastle.org/java.html | Java | Complete |
-| BouncyCastle 1.7  | http://www.bouncycastle.org/csharp/    | C#   | Ongoing  |
-| OpenSSL           |                                        | C    | Ongoing  |
-| NaCl              | http://nacl.cr.yp.to/                  | C    | Complete |
-| Nettle            |                                        | C    | Ongoing  |
-| Cryptlib          |                                        | C    | Ongoing  | 
-| libmcrypt         |                                        | C    | Ongoing  |
-| libtomcrypt       |                                        | C    | Ongoing  |
-| MIRACL            |                                        | C    | Ongoing  |
-| OpenAES           |                                        | C    | Ongoing  |
-| relic             |                                        | C    | Ongoing  |
+| Name              | Site                                   | PL   | Status   |  
+| BouncyCastle 1.50 | https://www.bouncycastle.org/java.html | Java | Complete |  
+| BouncyCastle 1.7  | http://www.bouncycastle.org/csharp/    | C#   | Ongoing  |  
+| OpenSSL           |                                        | C    | Ongoing  |  
+| NaCl              | http://nacl.cr.yp.to/                  | C    | Complete |  
+| Nettle            |                                        | C    | Ongoing  |  
+| Cryptlib          |                                        | C    | Ongoing  |   
+| libmcrypt         |                                        | C    | Ongoing  |  
+| libtomcrypt       |                                        | C    | Ongoing  |  
+| MIRACL            |                                        | C    | Ongoing  |  
+| OpenAES           |                                        | C    | Ongoing  |  
+| relic             |                                        | C    | Ongoing  |  
 
 Nettle,
 ---------------------------
