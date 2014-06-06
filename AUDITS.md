@@ -54,14 +54,14 @@ Nettle,
 | Size | 45k c, 11k asm |
 | Age | 1998 - current (active as of 6/5/14) |
 | Key Metrics | 27k c at top level, x86_64 5k asm, x86 2k asm, arm 3k asm, sparc32 & 64 .5k asm each, tools 2k c |
-| Documentation | html with installation, examples, api reference, http://www.lysator.liu.se/~nisse/nettle/nettle.html |
+| Documentation | html with installation, examples, [api reference](http://www.lysator.liu.se/~nisse/nettle/nettle.html) |
 | License | LGPL |
 | Feature Description | low level crypto only with a simple, general interface|
-| Examples | http://www.lysator.liu.se/~nisse/nettle/nettle.html#Example , 3k examples in example directory|
-| Community | mailing list http://lists.lysator.liu.se/mailman/listinfo/nettle-bugs |
+| Examples | [website](http://www.lysator.liu.se/~nisse/nettle/nettle.html#Example) , 3k examples in example directory|
+| Community | [mailing list](http://lists.lysator.liu.se/mailman/listinfo/nettle-bugs) |
 | Wiki | no |
 | Tracker | no |
-| Support | mailing list or email nisse@lysator.liu.se with questions|
+| Support | mailing list or [email](mailto:nisse@lysator.liu.se) with questions|
 | API Design | general, low level only api|
 | Architecture Specifications | no |
 | Design Specifications | no |
@@ -82,9 +82,9 @@ NaCl,
 | Size | 19K asm, 13K C |
 | Age | 2008 - 2011 |
 | Key Metrics | crypto_stream 13k asm, 2k c; crypto_scalarmult 5K asm, 1K c; curvecp 3k c; crypto_ontimeauth 1k c, 1k asm |
-| Documentation | examples on the website (e.g. http://nacl.cr.yp.to/box.html) |
+| Documentation | [examples on the website](http://nacl.cr.yp.to/box.html) |
 | License | public domain |
-| Feature Description | http://nacl.cr.yp.to/features.html |
+| Feature Description | [website](http://nacl.cr.yp.to/features.html) |
 | Examples | tests, documentation is mostly examples|
 | Community | not much |
 | Wiki | no |
@@ -99,7 +99,7 @@ NaCl,
 | Other Evidence of Correctness | code practices help, authors pay attention to cryptoanalysis |
 | Validation | some validation done against sage and python libraries to compare results in a report at http://cr.yp.to/highspeed/naclcrypto-20090310.pdf|
 | Verification | no |
-| Published Materials |http://cr.yp.to/highspeed/coolnacl-20120725.pdf (LatinCrypt 2012); http://nacl.cr.yp.to/securing-communication.pdf (high level tech report);  |
+| Published Materials | [LatinCrypt 2012 paper](http://cr.yp.to/highspeed/coolnacl-20120725.pdf) ; [high level tech report](http://nacl.cr.yp.to/securing-communication.pdf)  |
 | Other Comments | engineering practices seem verification friendly, not sure about large amounts of asm |
 
 
