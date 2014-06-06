@@ -20,6 +20,33 @@ Relevant Libraries
 | OpenAES           |                                        | C    | Ongoing  |  
 | relic             |                                        | C    | Ongoing  |  
 
+MIRACL,
+---------------------------
+| | |
+|------|----------------|
+| Size | 48K C, 45K CPP (says it has a cpp wrapper, but there must be more)|
+| Age | unknown-current |
+| Key Metrics | most code at top level |
+| Documentation | [users manual and refs](https://certivox.org/display/EXT/MIRACL+User%27s+Manual) |
+| License | AGPL, closed source available |
+| Feature Description | Low level, comes with libraries for high precision math, autogenerates optimal assembly |
+| Examples | [Example programs](https://certivox.org/display/EXT/8.+Example+Programs) in the user manual |
+| Community | [CertiVox community](https://certivox.org/display/WLCM/Community) [Twitter](https://twitter.com/CertiVox) |
+| Wiki | no |
+| Tracker | [JIRA tracker](https://sdlc.certivox.com/browse/MIRACL) |
+| Support | [support list](http://lists.certivox.org/mailman/listinfo/miracl-users) |
+| API Design | Allows developer designed APIs |	
+| Architecture Specifications | no |
+| Design Specifications | no |
+| Behavioral Specifications | no |
+| Engineering Practices | no|
+| Tests | not provided|
+| Other Evidence of Correctness | no |
+| Validation | [some users](http://www.certivox.com/about-certivox/testimonials/) |
+| Verification | no|
+| Published Materials | no |
+| Other Comments | no |
+
 Nettle,
 ---------------------------
 | | |
