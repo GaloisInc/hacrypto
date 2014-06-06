@@ -50,6 +50,8 @@ Nettle,
 
 NaCl,
 ---------------------------
+| | |
+|------|----------------|
 | Size | 19K asm, 13K C |
 | Age | 2008 - 2011 |
 | Key Metrics | crypto_stream 13k asm, 2k c; crypto_scalarmult 5K asm, 1K c; curvecp 3k c; crypto_ontimeauth 1k c, 1k asm |
@@ -76,7 +78,8 @@ NaCl,
 
 BouncyCastle 1.50 for Java, 
 ---------------------------
-
+| | |
+|------|----------------|
 | Size | 448K of Java |
 | Age | under development from 2000-2014 |
 | Key Metrics | core is 128K, 84 packages, and 1125 classes (128K/84/1125); provider is 57K/41/963; mail is 5K/5/53; pg is 18K/9/171; pkix 28K/32/436 |
@@ -105,6 +108,8 @@ BouncyCastle 1.7 for C#, 7 April 2011
 
 template,
 ---------------------------
+| | |
+|------|----------------|
 | Size | |
 | Age |  |
 | Key Metrics |  |
