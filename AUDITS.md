@@ -3,20 +3,21 @@ High-level Quality Audits of Crypto Libraries
 
 ##### Joe Kiniry and Joey Dodds, Galois
 
+
 Relevant Libraries
 ------------------
 
 | Name              | Site                                   | PL   | Status   |  
 |-------------------|----------------------------------------|------|----------|
-| BouncyCastle 1.50 | https://www.bouncycastle.org/java.html | Java | Complete |  
-| BouncyCastle 1.7  | http://www.bouncycastle.org/csharp/    | C#   | Ongoing  |  
+| [BouncyCastle 1.50 for Java, ](#user-content-bouncycastle-150-for-java-) | https://www.bouncycastle.org/java.html | Java | Complete |  
+| [BouncyCastle 1.7 for C#, 7 April 2011](#user-content-bouncycastle-17-for-c-7-april-2011) | http://www.bouncycastle.org/csharp/    | C#   | Ongoing  |  
 | OpenSSL           |                                        | C    | Ongoing  |  
-| NaCl              | http://nacl.cr.yp.to/                  | C    | Complete |  
-| Nettle            | http://www.lysator.liu.se/~nisse/nettle/ | C    | Ongoing  |  
+| [NaCl](#user-content-nacl)  | http://nacl.cr.yp.to/                  | C    | Complete |  
+| [Nettle](#user-content-nettle)  | http://www.lysator.liu.se/~nisse/nettle/ | C    | Ongoing  |  
 | Cryptlib          |                                        | C    | Ongoing  |   
-| libmcrypt         | http://mcrypt.sourceforge.net/         | C    | Ongoing  |  
-| libtomcrypt       | http://libtom.org/?page=features       | C    | Ongoing  |  
-| MIRACL            | http://www.certivox.com/miracl/        | C    | Complete |  
+| [libmcrypt](#user-content-libmcrypt) | http://mcrypt.sourceforge.net/         | C    | Ongoing  |  
+| [libtomcrypt](#user-content-libtomcrypt) | http://libtom.org/?page=features       | C    | Ongoing  |  
+| [MIRACL](#user-content-miracl) | http://www.certivox.com/miracl/        | C    | Complete |  
 | OpenAES           |                                        | C    | Ongoing  |  
 | relic             |                                        | C    | Ongoing  |  
 
