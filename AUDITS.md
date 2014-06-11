@@ -19,7 +19,13 @@ Relevant Libraries
 | [libtomcrypt](#user-content-libtomcrypt) | http://libtom.org/?page=features       | C    | Ongoing  |  
 | [MIRACL](#user-content-miracl) | http://www.certivox.com/miracl/        | C    | Complete |  
 | OpenAES           |                                        | C    | Ongoing  |  
-| relic             |                                        | C    | Ongoing  |  
+| relic             |                                        | C    | Ongoing  |
+| ffmpeg | | C, C++ | Ongoing |
+| Android crypto    | Originally seen in Mozilla's repo under ./mozilla/mobile/android/base/sync/crypto/ and ./mobile/android/base/sync/jpake/ | Java | Not Archived |
+| Java SDK | javax.crypto | Java | Not Archived |
+| Mozilla hawk-brower, identity, passwordmgr, sync | | Javascript | Ongoing |
+| Mozilla SRTP | | C | Ongoing |
+| Mozilla NSS | | C | Ongoing |
 
 libtomcrypt
 ---------------------------
