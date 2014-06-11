@@ -11,7 +11,7 @@ Relevant Libraries
 |-------------------|----------------------------------------|------|----------|
 | [BouncyCastle 1.50 for Java, ](#user-content-bouncycastle-150-for-java-) | https://www.bouncycastle.org/java.html | Java | Complete |  
 | [BouncyCastle 1.7 for C#, 7 April 2011](#user-content-bouncycastle-17-for-c-7-april-2011) | http://www.bouncycastle.org/csharp/    | C#   | Ongoing  |  
-| OpenSSL           |                                        | C    | Ongoing  |  
+| [OpenSSL](#user-content-OpenSSl) | http://www.openssl.org/ | C    | Ongoing  |  
 | [NaCl](#user-content-nacl)  | http://nacl.cr.yp.to/                  | C    | Complete |  
 | [Nettle](#user-content-nettle)  | http://www.lysator.liu.se/~nisse/nettle/ | C    | Ongoing  |  
 | Cryptlib          |                                        | C    | Ongoing  |   
@@ -19,8 +19,35 @@ Relevant Libraries
 | [libtomcrypt](#user-content-libtomcrypt) | http://libtom.org/?page=features       | C    | Ongoing  |  
 | [MIRACL](#user-content-miracl) | http://www.certivox.com/miracl/        | C    | Complete |  
 | OpenAES           |                                        | C    | Ongoing  |  
-| [RELIC](#user-content-RELIC) | https://code.google.com/p/relic-toolkit/  | C    | Ongoing  |  
+| [RELIC](#user-content-RELIC) | https://code.google.com/p/relic-toolkit/  | C    | Complete  |  
 
+
+OpenSSL,
+---------------------------
+| | |
+|------|----------------|
+| Size | 274K C, 70K Perl, 11K asm|
+| Age | 1998 - current (6/10/14) |
+| Key Metrics | 246K crypto, 20K SSL, 34K apps, 15K engines, 10K demos |
+| Documentation | [various documents](http://www.openssl.org/docs/) |
+| License | [Apache-style](http://www.openssl.org/source/license.html) |
+| Feature Description | SSL, TLS |
+| Examples | 10K demos, Numerous examples on the internet|
+| Community | [mailing lists](http://www.openssl.org/support/community.html) |
+| Wiki | |
+| Tracker | [request tracker](http://www.openssl.org/support/rt.html) |
+| Support | lists, hire team members |
+| API Design | |
+| Architecture Specifications | no |
+| Design Specifications | no |
+| Behavioral Specifications | no |
+| Engineering Practices |  |
+| Tests |  |
+| Other Evidence of Correctness | |
+| Validation | |
+| Verification | |
+| Published Materials | |
+| Other Comments | |
 
 RELIC,
 ---------------------------
