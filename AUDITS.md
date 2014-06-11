@@ -20,7 +20,40 @@ Relevant Libraries
 | [MIRACL](#user-content-miracl) | http://www.certivox.com/miracl/        | C    | Complete |  
 | OpenAES           |                                        | C    | Ongoing  |  
 | [RELIC](#user-content-RELIC) | https://code.google.com/p/relic-toolkit/  | C    | Complete  |  
+| ffmpeg | | C, C++ | Ongoing |
+| Android crypto    | Originally seen in Mozilla's repo under ./mozilla/mobile/android/base/sync/crypto/ and ./mobile/android/base/sync/jpake/ | Java | Not Archived |
+| Java SDK | javax.crypto | Java | Not Archived |
+| Mozilla hawk-brower, identity, passwordmgr, sync | | Javascript | Ongoing |
+| Mozilla SRTP | | C | Ongoing |
+| Mozilla NSS | | C | Ongoing |
+| PolarSSL | https://polarssl.org/ | C | Ongoing | 
 
+PolarSSL,
+---------------------------
+| | |
+|------|----------------|
+| Size | 54k C |
+| Age | 2006-current (6/11/2014) |
+| Key Metrics | 36K library |
+| Documentation | [Doxygen](https://polarssl.org/api/index.html), [Design page](https://polarssl.org/high-level-design) |
+| License | GPL or closed source|
+| Feature Description | [webpage](https://polarssl.org/features) |
+| Examples | [11k programs directory](https://github.com/polarssl/polarssl/tree/development/programs) |
+| Community | [Discussion forum](https://polarssl.org/discussions) |
+| Wiki | no |
+| Tracker | [tickets](https://polarssl.org/tickets) |
+| Support | [Discussion forum](https://polarssl.org/discussions) |
+| API Design | [Doxygen](https://polarssl.org/api/index.html) |
+| Architecture Specifications | no |
+| Design Specifications | no |
+| Behavioral Specifications | no |
+| Engineering Practices | no global code, loosly coupled, portable, [coding standards](https://polarssl.org/kb/development/polarssl-coding-standards) |
+| Tests | [2k of tests](https://polarssl.org/kb/generic/what-tests-and-checks-are-run-for-polarssl) using custom perl harness|
+| Other Evidence of Correctness |  |
+| Validation | script to compare results with OpenSSL, [used by a number of projects](https://polarssl.org/kb/generic/projects-using-polarssl)|
+| Verification | |
+| Published Materials | |
+| Other Comments | [security center, listing attacks and bugs](https://polarssl.org/security)|
 
 OpenSSL,
 ---------------------------
@@ -37,13 +70,13 @@ OpenSSL,
 | Wiki | |
 | Tracker | [request tracker](http://www.openssl.org/support/rt.html) |
 | Support | lists, hire team members |
-| API Design | |
+| API Design | no |
 | Architecture Specifications | no |
 | Design Specifications | no |
 | Behavioral Specifications | no |
-| Engineering Practices |  |
-| Tests |  |
-| Other Evidence of Correctness | |
+| Engineering Practices | none specified |
+| Tests | hard to count, scattered through dirs. Handwritten tests for each function |
+| Other Evidence of Correctness | widely used and attacked |
 | Validation | |
 | Verification | |
 | Published Materials | |
