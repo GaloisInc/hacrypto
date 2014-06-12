@@ -11,24 +11,51 @@ Relevant Libraries
 |-------------------|----------------------------------------|------|----------|
 | [BouncyCastle 1.50 for Java, ](#user-content-bouncycastle-150-for-java-) | https://www.bouncycastle.org/java.html | Java | Complete |  
 | [BouncyCastle 1.7 for C#, 7 April 2011](#user-content-bouncycastle-17-for-c-7-april-2011) | http://www.bouncycastle.org/csharp/    | C#   | Ongoing  |  
-| [OpenSSL](#user-content-OpenSSl) | http://www.openssl.org/ | C    | Ongoing  |  
+| [OpenSSL](#user-content-OpenSSl) | http://www.openssl.org/ | C    | Complete  |  
 | [NaCl](#user-content-nacl)  | http://nacl.cr.yp.to/                  | C    | Complete |  
-| [Nettle](#user-content-nettle)  | http://www.lysator.liu.se/~nisse/nettle/ | C    | Ongoing  |  
+| [Nettle](#user-content-nettle)  | http://www.lysator.liu.se/~nisse/nettle/ | C    | Complete  |  
 | Cryptlib          |                                        | C    | Ongoing  |   
-| [libmcrypt](#user-content-libmcrypt) | http://mcrypt.sourceforge.net/         | C    | Ongoing  |  
-| [libtomcrypt](#user-content-libtomcrypt) | http://libtom.org/?page=features       | C    | Ongoing  |  
+| [libmcrypt](#user-content-libmcrypt) | http://mcrypt.sourceforge.net/         | C    | Private/shared key only  |  
+| [libtomcrypt](#user-content-libtomcrypt) | http://libtom.org/?page=features       | C    | Complete  |  
 | [MIRACL](#user-content-miracl) | http://www.certivox.com/miracl/        | C    | Complete |  
 | OpenAES           |                                        | C    | Ongoing  |  
 | [RELIC](#user-content-RELIC) | https://code.google.com/p/relic-toolkit/  | C    | Complete  |  
-| ffmpeg | | C, C++ | Ongoing |
-| Android crypto    | Originally seen in Mozilla's repo under ./mozilla/mobile/android/base/sync/crypto/ and ./mobile/android/base/sync/jpake/ | Java | Not Archived |
+| ffmpeg | http://www.ffmpeg.org/ | C, C++ | Ongoing |
+| Android crypto | Originally seen in Mozilla's repo under ./mozilla/mobile/android/base/sync/crypto/ and ./mobile/android/base/sync/jpake/ | Java | Not Archived |
 | Java SDK | javax.crypto | Java | Not Archived |
 | Mozilla hawk-brower, identity, passwordmgr, sync | | Javascript | Ongoing |
 | Mozilla SRTP | | C | Ongoing |
-| Mozilla NSS | | C | Ongoing |
-| PolarSSL | https://polarssl.org/ | C | Ongoing | 
+| [Mozilla NSS](#user-content-Mozilla-NSS) | https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS | C | Complete |
+| [PolarSSL](#user-content-PolarSSL) | https://polarssl.org/ | C | Ongoing | 
 
-PolarSSL,
+Mozilla NSS
+---------------------------
+| | |
+|------|----------------|
+| Size | 478K C, 50K asm, 15k sh (harness for tests)|
+| Age | 1995-current |
+| Key Metrics | 434K lib, 88K command |
+| Documentation | [overview](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/Overview) (many broken links), a few docs in docs folder ([incomplete](https://bugzilla.mozilla.org/show_bug.cgi?id=836477) |
+| License | MPL |
+| Feature Description | [open standards](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/Overview#Interoperability_and_Open_Standards) |
+| Examples | [example list](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Sample_Code) |
+| Community | [list](https://lists.mozilla.org/listinfo/dev-security), [stack overflow](http://stackoverflow.com/r/mozilla), [google group](http://groups.google.com/group/mozilla.dev.security) |
+| Wiki | [main site](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS) |
+| Tracker | [Bugzilla](https://bugzilla.mozilla.org/buglist.cgi?query_format=specific&order=relevance+desc&bug_status=__open__&product=NSS&content=NSS&comments=0) |
+| Support | [Mozilla support] (https://support.mozilla.org/en-US/)|
+| API Design | [Layered](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_API_GUIDELINES), separates into a few libraries |
+| Architecture Specifications | no |
+| Design Specifications | no |
+| Behavioral Specifications | no |
+| Engineering Practices | [Numerous, described below anchor link](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_API_GUIDELINES#Naming_Conventions) |
+| Tests | custom harness, lines hard to count. Pass/Fail tests|
+| Other Evidence of Correctness | [used in several high-profile projects](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/Overview) |
+| Validation | |
+| Verification | no |
+| Published Materials | no |
+| Other Comments | [built on top of nspr](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS#NSS_is_built_on_top_of_Netscape_Portable_Runtime_(NSPR)) |
+
+PolarSSL
 ---------------------------
 | | |
 |------|----------------|
