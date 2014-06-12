@@ -1,0 +1,85 @@
+/alphacpuid.pl/1.3/Thu Apr 17 18:49:35 2014//
+/arm_arch.h/1.4/Thu Jun 12 15:49:27 2014//
+/armcap.c/1.5/Thu Jun 12 15:49:27 2014//
+/armv4cpuid.S/1.5/Sat May  3 19:36:47 2014//
+/cpt_err.c/1.12/Thu Jun 12 15:49:27 2014//
+/cryptlib.c/1.26/Thu Jun 12 15:49:27 2014//
+/cryptlib.h/1.19/Thu Jun 12 15:49:27 2014//
+/crypto.h/1.30/Thu Jun 12 15:49:27 2014//
+/cversion.c/1.13/Thu Jun 12 15:49:27 2014//
+/ex_data.c/1.16/Thu Jun 12 15:49:27 2014//
+/ia64cpuid.S/1.3/Thu Apr 17 18:49:35 2014//
+/malloc-wrapper.c/1.3/Sun Apr 20 14:32:19 2014//
+/md32_common.h/1.15/Thu Jun 12 15:49:27 2014//
+/mem_clr.c/1.4/Thu Jun 12 15:49:27 2014//
+/mem_dbg.c/1.22/Thu Jun 12 15:49:27 2014//
+/o_init.c/1.8/Thu Jun 12 15:49:27 2014//
+/o_str.c/1.8/Thu Jun 12 15:49:27 2014//
+/o_time.c/1.15/Thu Jun 12 15:49:27 2014//
+/o_time.h/1.6/Thu Jun 12 15:49:27 2014//
+/opensslv.h/1.25/Thu Jun 12 15:49:27 2014//
+/ossl_typ.h/1.12/Thu Jun 12 15:49:27 2014//
+/pariscid.pl/1.5/Thu May  1 22:26:21 2014//
+/ppccap.c/1.5/Thu Jun 12 15:49:27 2014//
+/ppccpuid.pl/1.4/Sat May  3 11:39:46 2014//
+/s390xcap.c/1.3/Thu Jun 12 15:49:27 2014//
+/s390xcpuid.S/1.3/Thu Apr 17 18:49:35 2014//
+/sparccpuid.S/1.3/Thu Apr 17 18:49:35 2014//
+/sparcv9cap.c/1.6/Thu Jun 12 15:49:27 2014//
+/uid.c/1.8/Thu Jun 12 15:49:27 2014//
+/x86_64cpuid.pl/1.11/Mon Jun  2 15:08:37 2014//
+/x86cpuid.pl/1.5/Mon Jun  2 15:08:37 2014//
+D/aes////
+D/asn1////
+D/bf////
+D/bio////
+D/bn////
+D/buffer////
+D/camellia////
+D/cast////
+D/chacha////
+D/cmac////
+D/cms////
+D/comp////
+D/conf////
+D/des////
+D/dh////
+D/dsa////
+D/dso////
+D/ec////
+D/ecdh////
+D/ecdsa////
+D/engine////
+D/err////
+D/evp////
+D/hmac////
+D/idea////
+D/krb5////
+D/lhash////
+D/md4////
+D/md5////
+D/mdc2////
+D/modes////
+D/objects////
+D/ocsp////
+D/pem////
+D/perlasm////
+D/pkcs12////
+D/pkcs7////
+D/poly1305////
+D/rand////
+D/rc2////
+D/rc4////
+D/rc5////
+D/ripemd////
+D/rsa////
+D/sha////
+D/srp////
+D/stack////
+D/store////
+D/ts////
+D/txt_db////
+D/ui////
+D/whrlpool////
+D/x509////
+D/x509v3////
