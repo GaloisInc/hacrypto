@@ -14,7 +14,7 @@ Relevant Libraries
 | [OpenSSL](#user-content-OpenSSl) | http://www.openssl.org/ | C    | Complete  |  
 | [NaCl](#user-content-nacl)  | http://nacl.cr.yp.to/                  | C    | Complete |  
 | [Nettle](#user-content-nettle)  | http://www.lysator.liu.se/~nisse/nettle/ | C    | Complete  |  
-| Cryptlib          |                                        | C    | Ongoing  |   
+| [Cryptlib](#user-content-cryptlib)   |   http://www.cryptlib.com/  | C    | Complete  |   
 | [libmcrypt](#user-content-libmcrypt) | http://mcrypt.sourceforge.net/         | C    | Private/shared key only  |  
 | [libtomcrypt](#user-content-libtomcrypt) | http://libtom.org/?page=features       | C    | Complete  |  
 | [MIRACL](#user-content-miracl) | http://www.certivox.com/miracl/        | C    | Complete |  
@@ -29,7 +29,7 @@ Relevant Libraries
 | [PolarSSL](#user-content-PolarSSL) | https://polarssl.org/ | C | Complete | 
 | [OpenBSD Framework](#user-content-OpenBSD-Framework) | http://www.openbsd.org/crypto.html | Complete | 
 
-cryptlib
+Cryptlib
 ---------------------------
 | | |
 |------|----------------|
