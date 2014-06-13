@@ -27,7 +27,34 @@ Relevant Libraries
 | Mozilla SRTP | | C | Ongoing |
 | [Mozilla NSS](#user-content-Mozilla-NSS) | https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS | C | Complete |
 | [PolarSSL](#user-content-PolarSSL) | https://polarssl.org/ | C | Complete | 
-| OpenBSD Framework | http://www.openbsd.org/crypto.html | 
+| [OpenBSD Framework](#user-content-OpenBSD-Framework) | http://www.openbsd.org/crypto.html | Complete | 
+
+cryptlib
+---------------------------
+| | |
+|------|----------------|
+| Size | 241K C, 63K asm |
+| Age |  |
+| Key Metrics |  |
+| Documentation | [user guide](ftp://ftp.franken.de/pub/crypt/cryptlib/manual.pdf) |
+| License | [sleepycat](http://opensource.org/licenses/Sleepycat) GPL compatible |
+| Feature Description | supports many platforms, full implementations of protocols such as S/MIME and SSL, can use hardware accelerators |
+| Examples | [website](http://www.cryptlib.com/security-software/programming-code-examples), manual is filled with examples |
+| Community | no |
+| Wiki | no |
+| Tracker | no |
+| Support | by email |
+| API Design | Three layers, high, middle and low, covered in manual|
+| Architecture Specifications | no |
+| Design Specifications | no |
+| Behavioral Specifications | no |
+| Engineering Practices | |
+| Tests | 30K, Handwritten, lots of comments|
+| Other Evidence of Correctness | [numerous clients](http://www.cryptlib.com/security-software/clients-users) |
+| Validation | tests |
+| Verification | no  |
+| Published Materials | |
+| Other Comments | |
 
 OpenBSD Framework
 ---------------------------
