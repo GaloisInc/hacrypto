@@ -27,6 +27,34 @@ Relevant Libraries
 | Mozilla SRTP | | C | Ongoing |
 | [Mozilla NSS](#user-content-Mozilla-NSS) | https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS | C | Complete |
 | [PolarSSL](#user-content-PolarSSL) | https://polarssl.org/ | C | Complete | 
+| OpenBSD Framework | http://www.openbsd.org/crypto.html | 
+
+OpenBSD Framework
+---------------------------
+| | |
+|------|----------------|
+| Size | 9K c |
+| Age | 2000-current |
+| Key Metrics | all source top level|
+| Documentation | Well documented code|
+| License | BSD |
+| Feature Description | in the kernel, makes use of hardware accelerators, |
+| Examples | |
+| Community | [mailing lists](http://www.openbsd.org/mail.html) |
+| Wiki | |
+| Tracker | [bugs database](http://www.openbsd.org/report.html) |
+| Support | http://www.openbsd.org/mail.html |
+| API Design | added to the system as a device/service layer |
+| Architecture Specifications | no |
+| Design Specifications | no |
+| Behavioral Specifications | no |
+| Engineering Practices | [BSD style](http://www.openbsd.org/cgi-bin/man.cgi?query=style&sektion=9&apropos=0&manpath=OpenBSD+Current&arch=) |
+| Tests | |
+| Other Evidence of Correctness | BSD is known to pay attention to security |
+| Validation | |
+| Verification | |
+| Published Materials | [The Design of the OpenBSD Cryptographic Framework](http://www.openbsd.org/papers/ocf.pdf)|
+| Other Comments | [alleged backdoor](http://marc.info/?l=openbsd-tech&m=129236621626462&w=2) |
 
 Mozilla NSS
 ---------------------------
