@@ -11,7 +11,7 @@ Relevant Libraries
 |-------------------|----------------------------------------|------|----------|
 | [BouncyCastle 1.50 for Java, ](#user-content-bouncycastle-150-for-java-) | https://www.bouncycastle.org/java.html | Java | Complete |  
 | [BouncyCastle 1.7 for C#, 7 April 2011](#user-content-bouncycastle-17-for-c-7-april-2011) | http://www.bouncycastle.org/csharp/    | C#   | Ongoing  |  
-| [OpenSSL](#user-content-openSSl) | http://www.openssl.org/ | C    | Complete  |  
+| [OpenSSL](#user-content-openssl) | http://www.openssl.org/ | C    | Complete  |  
 | [NaCl](#user-content-nacl)  | http://nacl.cr.yp.to/                  | C    | Complete |  
 | [Nettle](#user-content-nettle)  | http://www.lysator.liu.se/~nisse/nettle/ | C    | Complete  |  
 | [Cryptlib](#user-content-cryptlib)   |   http://www.cryptlib.com/  | C    | Complete  |   
