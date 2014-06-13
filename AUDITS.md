@@ -26,7 +26,7 @@ Relevant Libraries
 | Mozilla hawk-brower, identity, passwordmgr, sync | | Javascript | Ongoing |
 | Mozilla SRTP | | C | Ongoing |
 | [Mozilla NSS](#user-content-Mozilla-NSS) | https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS | C | Complete |
-| [PolarSSL](#user-content-PolarSSL) | https://polarssl.org/ | C | Ongoing | 
+| [PolarSSL](#user-content-PolarSSL) | https://polarssl.org/ | C | Complete | 
 
 Mozilla NSS
 ---------------------------
