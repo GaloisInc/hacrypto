@@ -28,6 +28,34 @@ Relevant Libraries
 | [Mozilla NSS](#user-content-Mozilla-NSS) | https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS | C | Complete |
 | [PolarSSL](#user-content-PolarSSL) | https://polarssl.org/ | C | Complete | 
 | [OpenBSD Framework](#user-content-OpenBSD-Framework) | http://www.openbsd.org/crypto.html | Complete | 
+| [Sodium](#user-content-sodium) | https://github.com/jedisct1/libsodium | Complete |
+
+Sodium,
+---------------------------
+| | |
+|------|----------------|
+| Size | 17K C, 1K asm |
+| Age | 2013-current |
+| Key Metrics | 4K crypto-sign, 4K crypto-stream, 1K generichash, 1K pwhash (generichash and pwhash are not in NaCl|
+| Documentation | [README](https://github.com/jedisct1/libsodium/blob/master/README.markdown), most of the NaCl documentation applies|
+| License | [ISC license](http://en.wikipedia.org/wiki/ISC_license) |
+| Feature Description | Portable NaCl plus generic hash, password hash, short hash, and additional (simpler) api functions|
+| Examples | tests, NaCl documentation|
+| Community | no |
+| Wiki | no |
+| Tracker | no |
+| Support | no |
+| API Design | Same as NaCl plus _easy functions|
+| Architecture Specifications | no |
+| Design Specifications | no |
+| Behavioral Specifications | no |
+| Engineering Practices | unknown |
+| Tests | 3K handwritten C|
+| Other Evidence of Correctness | no |
+| Validation | no |
+| Verification | no |
+| Published Materials | no |
+| Other Comments | The portable version of NaCl. Worth looking into how similar implementations are to NaCl, if the same coding practices are used|
 
 Cryptlib
 ---------------------------
