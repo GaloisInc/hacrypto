@@ -11,24 +11,134 @@ Relevant Libraries
 |-------------------|----------------------------------------|------|----------|
 | [BouncyCastle 1.50 for Java, ](#user-content-bouncycastle-150-for-java-) | https://www.bouncycastle.org/java.html | Java | Complete |  
 | [BouncyCastle 1.7 for C#, 7 April 2011](#user-content-bouncycastle-17-for-c-7-april-2011) | http://www.bouncycastle.org/csharp/    | C#   | Ongoing  |  
-| [OpenSSL](#user-content-OpenSSl) | http://www.openssl.org/ | C    | Ongoing  |  
+| [OpenSSL](#user-content-openssl) | http://www.openssl.org/ | C    | Complete  |  
 | [NaCl](#user-content-nacl)  | http://nacl.cr.yp.to/                  | C    | Complete |  
-| [Nettle](#user-content-nettle)  | http://www.lysator.liu.se/~nisse/nettle/ | C    | Ongoing  |  
-| Cryptlib          |                                        | C    | Ongoing  |   
-| [libmcrypt](#user-content-libmcrypt) | http://mcrypt.sourceforge.net/         | C    | Ongoing  |  
-| [libtomcrypt](#user-content-libtomcrypt) | http://libtom.org/?page=features       | C    | Ongoing  |  
+| [Nettle](#user-content-nettle)  | http://www.lysator.liu.se/~nisse/nettle/ | C    | Complete  |  
+| [Cryptlib](#user-content-cryptlib)   |   http://www.cryptlib.com/  | C    | Complete  |   
+| [libmcrypt](#user-content-libmcrypt) | http://mcrypt.sourceforge.net/         | C    | Private/shared key only  |  
+| [libtomcrypt](#user-content-libtomcrypt) | http://libtom.org/?page=features       | C    | Complete  |  
 | [MIRACL](#user-content-miracl) | http://www.certivox.com/miracl/        | C    | Complete |  
 | OpenAES           |                                        | C    | Ongoing  |  
-| [RELIC](#user-content-RELIC) | https://code.google.com/p/relic-toolkit/  | C    | Complete  |  
-| ffmpeg | | C, C++ | Ongoing |
-| Android crypto    | Originally seen in Mozilla's repo under ./mozilla/mobile/android/base/sync/crypto/ and ./mobile/android/base/sync/jpake/ | Java | Not Archived |
+| [RELIC](#user-content-relic) | https://code.google.com/p/relic-toolkit/  | C    | Complete  |  
+| ffmpeg | http://www.ffmpeg.org/ | C, C++ | Ongoing |
+| Android crypto | Originally seen in Mozilla's repo under ./mozilla/mobile/android/base/sync/crypto/ and ./mobile/android/base/sync/jpake/ | Java | Not Archived |
 | Java SDK | javax.crypto | Java | Not Archived |
 | Mozilla hawk-brower, identity, passwordmgr, sync | | Javascript | Ongoing |
 | Mozilla SRTP | | C | Ongoing |
-| Mozilla NSS | | C | Ongoing |
-| PolarSSL | https://polarssl.org/ | C | Ongoing | 
+| [Mozilla NSS](#user-content-mozilla-nss) | https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS | C | Complete |
+| [PolarSSL](#user-content-polarssl) | https://polarssl.org/ | C | Complete | 
+| [OpenBSD Framework](#user-content-openbsd-framework) | http://www.openbsd.org/crypto.html | Complete | 
+| [Sodium](#user-content-sodium) | https://github.com/jedisct1/libsodium | Complete |
 
-PolarSSL,
+Sodium,
+---------------------------
+| | |
+|------|----------------|
+| Size | 17K C, 1K asm |
+| Age | 2013-current |
+| Key Metrics | 4K crypto-sign, 4K crypto-stream, 1K generichash, 1K pwhash (generichash and pwhash are not in NaCl|
+| Documentation | [README](https://github.com/jedisct1/libsodium/blob/master/README.markdown), most of the NaCl documentation applies|
+| License | [ISC license](http://en.wikipedia.org/wiki/ISC_license) |
+| Feature Description | Portable NaCl plus generic hash, password hash, short hash, and additional (simpler) api functions|
+| Examples | tests, NaCl documentation|
+| Community | no |
+| Wiki | no |
+| Tracker | no |
+| Support | no |
+| API Design | Same as NaCl plus _easy functions|
+| Architecture Specifications | no |
+| Design Specifications | no |
+| Behavioral Specifications | no |
+| Engineering Practices | unknown |
+| Tests | 3K handwritten C|
+| Other Evidence of Correctness | no |
+| Validation | no |
+| Verification | no |
+| Published Materials | no |
+| Other Comments | The portable version of NaCl. Worth looking into how similar implementations are to NaCl, if the same coding practices are used|
+
+Cryptlib
+---------------------------
+| | |
+|------|----------------|
+| Size | 241K C, 63K asm |
+| Age |  |
+| Key Metrics |  |
+| Documentation | [user guide](ftp://ftp.franken.de/pub/crypt/cryptlib/manual.pdf) |
+| License | [sleepycat](http://opensource.org/licenses/Sleepycat) GPL compatible |
+| Feature Description | supports many platforms, full implementations of protocols such as S/MIME and SSL, can use hardware accelerators |
+| Examples | [website](http://www.cryptlib.com/security-software/programming-code-examples), manual is filled with examples |
+| Community | no |
+| Wiki | no |
+| Tracker | no |
+| Support | by email |
+| API Design | Three layers, high, middle and low, covered in manual|
+| Architecture Specifications | no |
+| Design Specifications | no |
+| Behavioral Specifications | no |
+| Engineering Practices | |
+| Tests | 30K, Handwritten, lots of comments|
+| Other Evidence of Correctness | [numerous clients](http://www.cryptlib.com/security-software/clients-users) |
+| Validation | tests |
+| Verification | no  |
+| Published Materials | |
+| Other Comments | |
+
+OpenBSD Framework
+---------------------------
+| | |
+|------|----------------|
+| Size | 9K c |
+| Age | 2000-current |
+| Key Metrics | all source top level|
+| Documentation | Well documented code|
+| License | BSD |
+| Feature Description | in the kernel, makes use of hardware accelerators, |
+| Examples | |
+| Community | [mailing lists](http://www.openbsd.org/mail.html) |
+| Wiki | |
+| Tracker | [bugs database](http://www.openbsd.org/report.html) |
+| Support | http://www.openbsd.org/mail.html |
+| API Design | added to the system as a device/service layer |
+| Architecture Specifications | no |
+| Design Specifications | no |
+| Behavioral Specifications | no |
+| Engineering Practices | [BSD style](http://www.openbsd.org/cgi-bin/man.cgi?query=style&sektion=9&apropos=0&manpath=OpenBSD+Current&arch=) |
+| Tests | |
+| Other Evidence of Correctness | BSD is known to pay attention to security |
+| Validation | |
+| Verification | |
+| Published Materials | [The Design of the OpenBSD Cryptographic Framework](http://www.openbsd.org/papers/ocf.pdf)|
+| Other Comments | [alleged backdoor](http://marc.info/?l=openbsd-tech&m=129236621626462&w=2) |
+
+Mozilla NSS
+---------------------------
+| | |
+|------|----------------|
+| Size | 478K C, 50K asm, 15k sh (harness for tests)|
+| Age | 1995-current |
+| Key Metrics | 434K lib, 88K command |
+| Documentation | [overview](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/Overview) (many broken links), a few docs in docs folder ([incomplete](https://bugzilla.mozilla.org/show_bug.cgi?id=836477) |
+| License | MPL |
+| Feature Description | [open standards](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/Overview#Interoperability_and_Open_Standards) |
+| Examples | [example list](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_Sample_Code) |
+| Community | [list](https://lists.mozilla.org/listinfo/dev-security), [stack overflow](http://stackoverflow.com/r/mozilla), [google group](http://groups.google.com/group/mozilla.dev.security) |
+| Wiki | [main site](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS) |
+| Tracker | [Bugzilla](https://bugzilla.mozilla.org/buglist.cgi?query_format=specific&order=relevance+desc&bug_status=__open__&product=NSS&content=NSS&comments=0) |
+| Support | [Mozilla support] (https://support.mozilla.org/en-US/)|
+| API Design | [Layered](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_API_GUIDELINES), separates into a few libraries |
+| Architecture Specifications | no |
+| Design Specifications | no |
+| Behavioral Specifications | no |
+| Engineering Practices | [Numerous, described below anchor link](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/NSS_API_GUIDELINES#Naming_Conventions) |
+| Tests | custom harness, lines hard to count. Pass/Fail tests|
+| Other Evidence of Correctness | [used in several high-profile projects](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS/Overview) |
+| Validation | |
+| Verification | no |
+| Published Materials | no |
+| Other Comments | [built on top of nspr](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS#NSS_is_built_on_top_of_Netscape_Portable_Runtime_(NSPR)) |
+
+PolarSSL
 ---------------------------
 | | |
 |------|----------------|
