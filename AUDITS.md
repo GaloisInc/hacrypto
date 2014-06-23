@@ -27,8 +27,8 @@ Relevant Libraries
 | Mozilla SRTP | | C | Ongoing |
 | [Mozilla NSS](#user-content-mozilla-nss) | https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS | C | Complete |
 | [PolarSSL](#user-content-polarssl) | https://polarssl.org/ | C | Complete | 
-| [OpenBSD Framework](#user-content-openbsd-framework) | http://www.openbsd.org/crypto.html | Complete | 
-| [Sodium](#user-content-sodium) | https://github.com/jedisct1/libsodium | Complete |
+| [OpenBSD Framework](#user-content-openbsd-framework) | http://www.openbsd.org/crypto.html | C| Complete | 
+| [Sodium](#user-content-sodium) | https://github.com/jedisct1/libsodium | C | Complete |
 
 Sodium,
 ---------------------------
