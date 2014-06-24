@@ -27,13 +27,13 @@ Relevant Libraries
 | Mozilla SRTP | | C | Ongoing |
 | [Mozilla NSS](#user-content-mozilla-nss) | https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS | C | Complete |
 | [PolarSSL](#user-content-polarssl) | https://polarssl.org/ | C | Complete | 
-| [OpenBSD Framework](#user-content-openbsd-framework) | http://www.openbsd.org/crypto.html | Complete |
-| [FreeBSD Framework] | | Not Started |
-| [NetBSD Framework] | | Not Started |
-| [Sodium](#user-content-sodium) | https://github.com/jedisct1/libsodium | Complete |
-| libressl from OpenBSD foundation |  | Not Started |
-| Google's boringssl | | Not Started |
-| Google's JavaScript library | | Not Started |
+| [OpenBSD Framework](#user-content-openbsd-framework) | http://www.openbsd.org/crypto.html | C | Complete |
+| [FreeBSD Framework] | | C | Not Started |
+| [NetBSD Framework] | | C | Not Started |
+| [Sodium](#user-content-sodium) | https://github.com/jedisct1/libsodium | C | Complete |
+| libressl from OpenBSD foundation |  | C | Not Started |
+| Google's boringssl | | C | Not Started |
+| Google's JavaScript library | | Javascript | Not Started |
 
 Sodium
 ---------------------------
