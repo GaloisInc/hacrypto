@@ -9,17 +9,17 @@ Relevant Libraries
 
 | Name              | Site                                   | PL   | Status   |  
 |-------------------|----------------------------------------|------|----------|
-| [BouncyCastle 1.50 for Java, ](#user-content-bouncycastle-150-for-java-) | https://www.bouncycastle.org/java.html | Java | Complete |  
-| [BouncyCastle 1.7 for C#, 7 April 2011](#user-content-bouncycastle-17-for-c-7-april-2011) | http://www.bouncycastle.org/csharp/    | C#   | Ongoing  |  
-| [OpenSSL](#user-content-openssl) | http://www.openssl.org/ | C    | Complete  |  
-| [NaCl](#user-content-nacl)  | http://nacl.cr.yp.to/                  | C    | Complete |  
-| [Nettle](#user-content-nettle)  | http://www.lysator.liu.se/~nisse/nettle/ | C    | Complete  |  
-| [Cryptlib](#user-content-cryptlib)   |   http://www.cryptlib.com/  | C    | Complete  |   
-| [libmcrypt](#user-content-libmcrypt) | http://mcrypt.sourceforge.net/         | C    | Private/shared key only  |  
-| [libtomcrypt](#user-content-libtomcrypt) | http://libtom.org/?page=features       | C    | Complete  |  
-| [MIRACL](#user-content-miracl) | http://www.certivox.com/miracl/        | C    | Complete |  
-| OpenAES           |                                        | C    | Ongoing  |  
-| [RELIC](#user-content-relic) | https://code.google.com/p/relic-toolkit/  | C    | Complete  |  
+| [BouncyCastle 1.50 for Java, ](#user-content-bouncycastle-150-for-java-) | https://www.bouncycastle.org/java.html | Java | Complete |
+| [BouncyCastle 1.7 for C#, 7 April 2011](#user-content-bouncycastle-17-for-c-7-april-2011) | http://www.bouncycastle.org/csharp/    | C#   | Ongoing  |
+| [OpenSSL](#user-content-openssl) | http://www.openssl.org/ | C    | Complete  |
+| [NaCl](#user-content-nacl)  | http://nacl.cr.yp.to/                  | C    | Complete |
+| [Nettle](#user-content-nettle)  | http://www.lysator.liu.se/~nisse/nettle/ | C    | Complete  |
+| [Cryptlib](#user-content-cryptlib)   |   http://www.cryptlib.com/  | C    | Complete  |
+| [libmcrypt](#user-content-libmcrypt) | http://mcrypt.sourceforge.net/         | C    | Private/shared key only  |
+| [libtomcrypt](#user-content-libtomcrypt) | http://libtom.org/?page=features       | C    | Complete  |
+| [MIRACL](#user-content-miracl) | http://www.certivox.com/miracl/        | C    | Complete |
+| OpenAES           |                                        | C    | Ongoing  |
+| [RELIC](#user-content-relic) | https://code.google.com/p/relic-toolkit/  | C    | Complete  |
 | ffmpeg | http://www.ffmpeg.org/ | C, C++ | Ongoing |
 | Android crypto | Originally seen in Mozilla's repo under ./mozilla/mobile/android/base/sync/crypto/ and ./mobile/android/base/sync/jpake/ | Java | Not Archived |
 | Java SDK | javax.crypto | Java | Not Archived |
@@ -27,16 +27,21 @@ Relevant Libraries
 | Mozilla SRTP | | C | Ongoing |
 | [Mozilla NSS](#user-content-mozilla-nss) | https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS | C | Complete |
 | [PolarSSL](#user-content-polarssl) | https://polarssl.org/ | C | Complete | 
-| [OpenBSD Framework](#user-content-openbsd-framework) | http://www.openbsd.org/crypto.html | Complete | 
-| [Sodium](#user-content-sodium) | https://github.com/jedisct1/libsodium | Complete |
+| [OpenBSD Framework](#user-content-openbsd-framework) | http://www.openbsd.org/crypto.html | C | Complete |
+| [FreeBSD Framework] | | C | Not Started |
+| [NetBSD Framework] | | C | Not Started |
+| [Sodium](#user-content-sodium) | https://github.com/jedisct1/libsodium | C | Complete |
+| libressl from OpenBSD foundation |  | C | Not Started |
+| Google's boringssl | | C | Not Started |
+| Google's JavaScript library | | Javascript | Not Started |
 
-Sodium,
+Sodium
 ---------------------------
 | | |
 |------|----------------|
 | Size | 17K C, 1K asm |
 | Age | 2013-current |
-| Key Metrics | 4K crypto-sign, 4K crypto-stream, 1K generichash, 1K pwhash (generichash and pwhash are not in NaCl|
+| Key Metrics | 4K crypto-sign, 4K crypto-stream, 1K generic hash, 1K pwhash (generic hash and pwhash are not in NaCl) |
 | Documentation | [README](https://github.com/jedisct1/libsodium/blob/master/README.markdown), most of the NaCl documentation applies|
 | License | [ISC license](http://en.wikipedia.org/wiki/ISC_license) |
 | Feature Description | Portable NaCl plus generic hash, password hash, short hash, and additional (simpler) api functions|
@@ -165,7 +170,7 @@ PolarSSL
 | Published Materials | |
 | Other Comments | [security center, listing attacks and bugs](https://polarssl.org/security)|
 
-OpenSSL,
+OpenSSL
 ---------------------------
 | | |
 |------|----------------|
@@ -192,7 +197,7 @@ OpenSSL,
 | Published Materials | |
 | Other Comments | |
 
-RELIC,
+RELIC
 ---------------------------
 | | |
 |------|----------------|
@@ -335,7 +340,7 @@ NaCl
 | Other Comments | engineering practices seem verification friendly, not sure about large amounts of asm |
 
 
-BouncyCastle 1.50 for Java, 
+BouncyCastle 1.50 for Java
 ---------------------------
 | | |
 |------|----------------|
@@ -365,7 +370,7 @@ BouncyCastle 1.50 for Java,
 BouncyCastle 1.7 for C#, 7 April 2011
 -------------------------------------
 
-template,
+template
 ---------------------------
 | | |
 |------|----------------|

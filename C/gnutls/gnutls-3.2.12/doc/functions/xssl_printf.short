@@ -1,0 +1,1 @@
+@item @var{ssize_t} @ref{xssl_printf} (xssl_t @var{sb}, const char * @var{fmt},  @var{...})

@@ -1,0 +1,47 @@
+<!-- ##### SECTION Title ##### -->
+gnutls_dh
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### FUNCTION gnutls_calc_dh_key ##### -->
+<para>
+
+</para>
+
+@key: 
+@f: 
+@x: 
+@prime: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gnutls_calc_dh_secret ##### -->
+<para>
+
+</para>
+
+@ret_y: 
+@ret_x: 
+@g: 
+@Param4: 
+@q_bits: 
+@Returns: 
+
+

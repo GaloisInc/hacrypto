@@ -1,0 +1,57 @@
+<!-- ##### SECTION Title ##### -->
+gnutls_mem
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### USER_FUNCTION _gnutls_is_secure_memory ##### -->
+<para>
+
+</para>
+
+@Param1: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gnutls_realloc_fast ##### -->
+<para>
+
+</para>
+
+@ptr: 
+@size: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gnutls_secure_calloc ##### -->
+<para>
+
+</para>
+
+@nmemb: 
+@size: 
+@Returns: 
+
+
+<!-- ##### TYPEDEF svoid ##### -->
+<para>
+
+</para>
+
+
