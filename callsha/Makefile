@@ -1,2 +1,2 @@
 all:
-	gcc callsha.c -L/usr/local/lib -lsodium
+	gcc callsha.c sha.c -L/usr/local/lib -lsodium
