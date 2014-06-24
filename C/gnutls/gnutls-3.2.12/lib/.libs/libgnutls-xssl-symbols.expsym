@@ -1,0 +1,12 @@
+_xssl_client_init
+_xssl_cred_deinit
+_xssl_cred_init
+_xssl_deinit
+_xssl_flush
+_xssl_get_session
+_xssl_getdelim
+_xssl_printf
+_xssl_read
+_xssl_server_init
+_xssl_sinit
+_xssl_write

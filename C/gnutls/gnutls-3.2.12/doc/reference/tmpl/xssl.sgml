@@ -1,0 +1,212 @@
+<!-- ##### SECTION Title ##### -->
+xssl
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### MACRO GNUTLS_SBUF_WRITE_FLUSHES ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### ENUM gnutls_cinput_contents_t ##### -->
+<para>
+
+</para>
+
+@GNUTLS_CINPUT_CAS: 
+@GNUTLS_CINPUT_CRLS: 
+@GNUTLS_CINPUT_TOFU_DB: 
+@GNUTLS_CINPUT_KEYPAIR: 
+
+<!-- ##### STRUCT gnutls_cinput_st ##### -->
+<para>
+
+</para>
+
+@type: 
+@contents: 
+@fmt: 
+@future_pad: 
+
+<!-- ##### ENUM gnutls_cinput_type_t ##### -->
+<para>
+
+</para>
+
+@GNUTLS_CINPUT_TYPE_FILE: 
+@GNUTLS_CINPUT_TYPE_MEM: 
+@GNUTLS_CINPUT_TYPE_PIN_FUNC: 
+
+<!-- ##### ENUM gnutls_vmethod_t ##### -->
+<para>
+
+</para>
+
+@GNUTLS_VMETHOD_NO_AUTH: 
+@GNUTLS_VMETHOD_TOFU: 
+@GNUTLS_VMETHOD_GIVEN_CAS: 
+@GNUTLS_VMETHOD_SYSTEM_CAS: 
+
+<!-- ##### FUNCTION xssl_client_init ##### -->
+<para>
+
+</para>
+
+@isb: 
+@hostname: 
+@service: 
+@fd: 
+@priority: 
+@cred: 
+@status: 
+@flags: 
+@Returns: 
+
+
+<!-- ##### FUNCTION xssl_cred_deinit ##### -->
+<para>
+
+</para>
+
+@cred: 
+
+
+<!-- ##### FUNCTION xssl_cred_init ##### -->
+<para>
+
+</para>
+
+@c: 
+@vflags: 
+@aux: 
+@aux_size: 
+@Returns: 
+
+
+<!-- ##### TYPEDEF xssl_cred_t ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION xssl_deinit ##### -->
+<para>
+
+</para>
+
+@sb: 
+
+
+<!-- ##### FUNCTION xssl_flush ##### -->
+<para>
+
+</para>
+
+@sb: 
+@Returns: 
+
+
+<!-- ##### FUNCTION xssl_get_session ##### -->
+<para>
+
+</para>
+
+@sb: 
+@Returns: 
+
+
+<!-- ##### FUNCTION xssl_getdelim ##### -->
+<para>
+
+</para>
+
+@sbuf: 
+@lineptr: 
+@n: 
+@delimiter: 
+@Returns: 
+
+
+<!-- ##### MACRO xssl_getline ##### -->
+<para>
+
+</para>
+
+@sbuf: 
+@ptr: 
+@n: 
+
+
+<!-- ##### FUNCTION xssl_printf ##### -->
+<para>
+
+</para>
+
+@sb: 
+@fmt: 
+@Returns: 
+
+
+<!-- ##### FUNCTION xssl_read ##### -->
+<para>
+
+</para>
+
+@sb: 
+@data: 
+@data_size: 
+@Returns: 
+
+
+<!-- ##### FUNCTION xssl_server_init ##### -->
+<para>
+
+</para>
+
+@isb: 
+@fd: 
+@priority: 
+@cred: 
+@status: 
+@flags: 
+@Returns: 
+
+
+<!-- ##### FUNCTION xssl_sinit ##### -->
+<para>
+
+</para>
+
+@isb: 
+@session: 
+@flags: 
+@Returns: 
+
+
+<!-- ##### TYPEDEF xssl_t ##### -->
+<para>
+
+</para>
+
+

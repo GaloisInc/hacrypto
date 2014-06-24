@@ -1,0 +1,24 @@
+strerror-override.lo strerror-override.o: strerror-override.c ../config.h \
+  strerror-override.h /usr/include/errno.h /usr/include/sys/errno.h \
+  /usr/include/sys/cdefs.h /usr/include/sys/_symbol_aliasing.h \
+  /usr/include/sys/_posix_availability.h \
+  /usr/include/sys/_types/_errno_t.h \
+  /usr/local/Cellar/apple-gcc42/4.2.1-5666.3/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include/stddef.h
+
+../config.h:
+
+strerror-override.h:
+
+/usr/include/errno.h:
+
+/usr/include/sys/errno.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/sys/_symbol_aliasing.h:
+
+/usr/include/sys/_posix_availability.h:
+
+/usr/include/sys/_types/_errno_t.h:
+
+/usr/local/Cellar/apple-gcc42/4.2.1-5666.3/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include/stddef.h:

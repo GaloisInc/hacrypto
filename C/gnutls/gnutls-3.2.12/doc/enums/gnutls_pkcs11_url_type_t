@@ -1,0 +1,29 @@
+
+@subheading int
+@anchor{int}
+@deftypefun {typedef} {int} (* @var{gnutls_pkcs11_token_callback_t})
+@var{gnutls_pkcs11_token_callback_t}: -- undescribed --
+
+Token callback function. The callback will be used to ask the user
+to re-insert the token with given (null terminated) label.  The
+callback should return zero if token has been inserted by user and
+a negative error code otherwise.  It might be called multiple times
+if the token is not detected and the retry counter will be
+increased.
+
+@strong{Returns:} @code{GNUTLS_E_SUCCESS}  (0) on success or a negative error code
+on error.
+
+@strong{Since:} 2.12.0
+@end deftypefun
+
+
+@c gnutls_pkcs11_url_type_t
+@table @code
+@item GNUTLS_@-PKCS11_@-URL_@-GENERIC
+A generic-purpose URL.
+@item GNUTLS_@-PKCS11_@-URL_@-LIB
+A URL that specifies the library used as well.
+@item GNUTLS_@-PKCS11_@-URL_@-LIB_@-VERSION
+A URL that specifies the library and its version.
+@end table

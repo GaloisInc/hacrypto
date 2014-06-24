@@ -1,0 +1,15 @@
+
+
+
+
+@deftypefun {ssize_t} {xssl_flush} (xssl_t @var{sb})
+@var{sb}: is a @code{xssl_t}  structure.
+
+This function flushes the buffer  @code{sb} . All the data stored are transmitted.
+
+This function must only be used with blocking sockets.
+
+@strong{Returns:} On success, the number of bytes sent, otherwise a negative error code.
+
+@strong{Since:} 3.1.7
+@end deftypefun
