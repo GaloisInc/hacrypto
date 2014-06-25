@@ -140,6 +140,21 @@ void sha256_block_data_order (SHA256_CTX *ctx, const void *in)
        return;
 }
 
+
+/* the following is Macro expanded from 
+#define	HASH_UPDATE	SHA256_Update
+#define	HASH_TRANSFORM	SHA256_Transform
+#define	HASH_FINAL		SHA256_Final
+#define	HASH_BLOCK_DATA_ORDER	sha256_block_data_order
+#ifndef SHA256_ASM
+static
+#endif
+
+void sha256_block_data_order (SHA256_CTX *ctx, const void *in, size_t num);
+
+#include "md32_common.h"
+*/
+
 void SHA256_Init (SHA256_CTX *c)
 	{
 	c->h[0]=0x6a09e667UL;	c->h[1]=0xbb67ae85UL;
