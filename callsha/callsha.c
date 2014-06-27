@@ -13,6 +13,11 @@ int sha256_VST(unsigned char *in, unsigned char *out, unsigned long long inlen)
 	return 1;
 }
 
+int sha256_NSS(unsigned char *in, unsigned char *out, unsigned long long inlen)
+{
+	return SHA256_Hash(out, in, inlen);			   
+}
+
 void print_result(unsigned char *out, int length)
 {
 	int i;
@@ -38,6 +43,7 @@ int try_SHA(unsigned char *input){
 	printf ("Running SHA256 on input %s \n\n", input);
 	unsigned char sodium_result[crypto_hash_sha256_BYTES] = "";
 	unsigned char VST_result[crypto_hash_sha256_BYTES] = "";
+	unsigned char NSS_result[crypto_hash_sha256_BYTES] = "";
 	
 	sha256_sodium(input, sodium_result, strlen(input));
 	printf ("sodium : ");
@@ -50,7 +56,12 @@ int try_SHA(unsigned char *input){
 	print_result (VST_result, crypto_hash_sha256_BYTES);
 	printf ("\n");
 	
-	if(compare_results(sodium_result, VST_result, crypto_hash_sha256_BYTES))
+	sha256_NSS(input, NSS_result, strlen(input));
+	printf ("NSS    : ");
+	print_result (NSS_result, crypto_hash_sha256_BYTES);
+	printf ("\n");
+	
+	if(compare_results(sodium_result, VST_result, crypto_hash_sha256_BYTES) && compare_results(sodium_result, NSS_result, crypto_hash_sha256_BYTES))
 	{
 		printf ("results match");
 		return 1;
@@ -64,7 +75,7 @@ int try_SHA(unsigned char *input){
 
 main()
 {	
-	unsigned char input[] = "The quick brown fox jumps over the lazy dog.";
+	unsigned char input[] = "The quick brown fox jumps over the lazy dog";
 	sodium_init();
 	try_SHA(input);
 	
