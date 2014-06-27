@@ -1,0 +1,163 @@
+cluster_chart CIPHERS
+indexing
+  wikipedia: "http://en.wikipedia.org/wiki/Cipher"
+explanation
+  "@todo"
+class ASYMMETRIC_CIPHER
+description
+  "@todo"
+class SYMMETRIC_CIPHER
+description
+  "@todo"
+class BLOCK_CIPHER
+description
+  "@todo"
+class STREAM_CIPHER
+description
+  "@todo"
+cluster PUBLIC_KEY_CRYPTOGRAPHY
+description
+  "@todo"
+cluster SYMMETRIC_CIPHERS
+description
+  "@todo"
+cluster BLOCK_CIPHER_MODES
+description
+  "@todo"
+end
+
+cluster_chart SYMMETRIC_CIPHERS
+indexing
+  wikipedia: "http://en.wikipedia.org/wiki/Symmetric-key_algorithm"
+explanation
+  "@todo"
+class AES
+description
+  "@todo"
+class BLOWFISH
+description
+  "@todo"
+class CAMELLIA
+description
+  "@todo"
+class CAST_128
+description
+  "@todo"
+class DES
+description
+  "@todo"
+class IDEA
+description
+  "@todo"
+class RC2
+description
+  "@todo"
+class RC5
+description
+  "@todo"
+class RC6
+description
+  "@todo"
+class SEED 
+description
+  "@todo"
+class SERPENT
+description
+  "@todo"
+class SKIPJACK
+description
+  "@todo"
+class TEA
+description
+  "@todo"
+class TRIPLE_DES
+description
+  "@todo"
+class TWOFISH
+description
+  "@todo"
+class XTEA
+description
+  "@todo"
+end
+
+cluster_chart BLOCK_CIPHER_MODES
+class ECB
+  description "An encryption mode where a plaintext is divided into blocks \
+             \ and each block is encrypted separately."
+class CBC
+  description "An encryption mode where each block of plaintext is XORed \
+             \ with the previous ciphertext block before being encrypted."
+class PCBC
+  description "A mode which is designed to cause small changes in the \
+             \ ciphertext to propagate indefinitely when decrypting, as \
+             \ well as when encrypting."
+class CFB
+  description "A mode which makes a block cipher into a self-synchronizing \
+             \ stream cipher."
+class OFB
+  description "A mode which makes a block cipher into a stream cipher by \
+             \ generating keystream blocks which are then XORed with the \
+             \ plaintext blocks to get the ciphertext."
+class CTR
+  description "A mode which makes a block cipher into a stream cipher by \
+             \ generating the next keystream block by encrypting successive \
+             \ values of a counter."
+end
+
+cluster_chart PUBLIC_KEY_CRYPTOGRAPHY
+explanation
+  ""
+class PUBLIC_KEY
+description
+  "@todo"
+class PRIVATE_KEY
+description
+  "@todo"
+class FINGERPRINT
+description
+  "@todo"
+cluster PUBLIC_KEY_ALGORITHMS
+description
+  "@todo"
+cluster PUBLIC_KEY_IMPLEMENTATIONS
+description
+  "@todo"
+end
+
+cluster_chart PUBLIC_KEY_ALGORITHMS
+class DSS
+description
+  "@todo"
+class DSA
+description
+  "@todo"
+class PAILLIER
+description
+  "@todo"
+class RSA
+description
+  "@todo"
+class CRAMER_SHOUP
+description
+  "@todo"
+class DIFFIE_HELLMAN
+description
+  "@todo"
+class ELGAMAL
+description
+  "@todo"
+end
+
+cluster_chart PUBLIC_KEY_IMPLEMENTATIONS
+class PGP
+description
+  "@todo"
+class GPG
+description
+  "@todo"
+class OTR
+description
+  "@todo"
+end
+

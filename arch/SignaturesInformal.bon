@@ -1,0 +1,14 @@
+cluster_chart SIGNATURES
+explanation
+  "The core concepts of cryptography."
+class DIGITAL_SIGNATURE
+description
+  "@todo"
+class SIGNATURE
+description
+  "@todo"
+class SCHNORR_SIGNATURE
+description
+  "@todo"
+end
+

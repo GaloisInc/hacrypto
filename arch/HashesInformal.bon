@@ -1,0 +1,188 @@
+cluster_chart HASHES
+explanation
+  "@todo"
+class WHIRLPOOL
+description "http://en.wikipedia.org/wiki/WHIRLPOOL"
+class RIPEMD_160
+description "http://en.wikipedia.org/wiki/RIPEMD"
+class DES
+description "http://en.wikipedia.org/wiki/Data_Encryption_Standard"
+class CRYPT
+description "http://en.wikipedia.org/wiki/Crypt_(C)"
+cluster HASH_DESIGNS
+description
+  "@todo"
+cluster HASH_STANDARDIZATION
+description
+  "@todo"
+cluster MD_FAMILY
+description
+  "@todo"
+cluster SHA_FAMILY
+description
+  "@todo"
+end
+
+cluster_chart HASH_DESIGNS
+class AVALANCHE_EFFECT
+description
+  "@todo"
+class HASH_COLLISION
+description
+  "@todo"
+class MERKLE_DAMGAARD_CONSTRUCTION
+description
+  "@todo"
+class HASH_CHAIN
+description
+  "@todo"
+end
+
+cluster_chart HASH_STANDARDIZATION
+class CRYPTREC
+description
+  "@todo"
+class NESSIE
+description
+  "@todo"
+class NIST_HASH_FUNCTION_COMPETITION
+description
+  "@todo"
+end
+
+cluster_chart SHA_3_FINALISTS
+class BLAKE
+description
+  "@todo"
+class GROSTL
+description
+  "@todo"
+class JH
+description
+  "@todo"
+class KECCAK
+  description "Aka SHA-3."
+class SKEIN
+description
+  "@todo"
+end
+
+cluster_chart MD_FAMILY
+class MD2
+description "http://en.wikipedia.org/wiki/MD2_(cryptography)"
+class MD4
+description "http://en.wikipedia.org/wiki/MD4"
+class MD5
+description "http://en.wikipedia.org/wiki/MD5"
+class MD6
+description "http://en.wikipedia.org/wiki/MD6"
+end
+
+cluster_chart SHA_FAMILY
+class SHA_2
+description "http://en.wikipedia.org/wiki/SHA-2"
+class SHA_3
+description "http://en.wikipedia.org/wiki/SHA-3"
+class SHACAL_2
+description "http://en.wikipedia.org/wiki/SHACAL"
+cluster SHA_1_FAMILY
+description "http://en.wikipedia.org/wiki/SHA-1"
+cluster SHA_2_FAMILY
+description "http://en.wikipedia.org/wiki/SHA-2"
+cluster SHA_3_FAMILY
+description "http://en.wikipedia.org/wiki/SHA-2"
+cluster SHA_3_FINALISTS
+description
+  "@todo"
+end
+
+cluster_chart SHA_1_FAMILY
+indexing
+  wikipedia: "http://en.wikipedia.org/wiki/SHA-1";
+  fips: "FIPS PUB 180";
+  certifications: "FIPS", "CRYPTREC"
+explanation
+  "The NIST-standardized SHA-1 cryptographic hash function family."
+class SHA_1
+description
+  "@todo"
+end
+
+class_chart SHA_1
+explanation
+  "@todo"
+query
+  "What is the SHA-1 digest of this message?"
+constraint
+  "The digest is guaranteed to be 160 bits long.",
+  "The maximum message size is 2e64-1.",
+  "The algorithm runs 80 rounds.",
+  "The algorithm provides under 80 bits of security."
+end
+
+cluster_chart SHA_2_FAMILY
+class SHA_224
+description
+  "@todo"
+class SHA_256
+description
+  "@todo"
+class SHA_384
+description
+  "@todo"
+class SHA_512
+description
+  "@todo"
+end
+
+class_chart SHA_224
+explanation
+  "@todo"
+query
+  "What is the SHA-224 digest of this message?"
+constraint
+  "The digest is guaranteed to be 224 bits long.",
+  "The maximum message size is 2e64-1.",
+  "The algorithm runs 64 rounds.",
+  "The algorithm provides 112 bits of security."
+end
+
+class_chart SHA_256
+explanation
+  "@todo"
+query
+  "What is the SHA-256 digest of this message?"
+constraint
+  "The digest is guaranteed to be 256 bits long.",
+  "The maximum message size is 2e64-1.",
+  "The algorithm runs 64 rounds.",
+  "The algorithm provides 128 bits of security."
+end
+
+class_chart SHA_384
+explanation
+  "@todo"
+query
+  "What is the SHA-384 digest of this message?"
+constraint
+  "The digest is guaranteed to be 384 bits long.",
+  "The maximum message size is 2e128-1.",
+  "The algorithm runs 80 rounds.",
+  "The algorithm provides 192 bits of security."
+end
+
+class_chart SHA_512
+explanation
+  "@todo"
+query
+  "What is the SHA-512 digest of this message?"
+constraint
+  "The digest is guaranteed to be 512 bits long.",
+  "The maximum message size is 2e128-1.",
+  "The algorithm runs 80 rounds.",
+  "The algorithm provides 256 bits of security."
+end
+
+cluster_chart SHA_3_FAMILY
+end
+

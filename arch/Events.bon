@@ -1,0 +1,20 @@
+event_chart HACRYPTO_API
+incoming
+explanation
+  ""
+-- part
+--   "1/2"
+event
+  "@todo_1"
+involves
+  PIGGIE, (FOO)
+end
+
+event_chart HACRYPTO_OUTBOUND
+outgoing
+event
+  "@todo_2"
+involves
+  PIGGIES, (FOO)
+end
+

@@ -1,0 +1,112 @@
+cluster_chart CORE_CONCEPTS
+indexing
+  references: "Schneier. Applied Cryptography, 1996. \
+             \ Ferguson, Schneier, and Kohno. Cryptography Engineering, 2010. \
+             \ Ferguson and Schneier. Practical Cryptography, 2003.";
+explanation
+  "The core concepts of cryptography."
+class CODE
+  description "http://en.wikipedia.org/wiki/Code_(cryptography)"
+class CIPHER
+  description "http://en.wikipedia.org/wiki/Cipher"
+class HASH
+  description "A function that converts a message into a digest."
+class MODE
+  description "http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation"
+class SALT
+  description "http://en.wikipedia.org/wiki/Salt_(cryptography)"
+cluster ALGORITHM_DESIGNS
+description
+  "@todo"
+cluster AUTHENTICATED_ENCRYPTION_MODES
+description
+  "@todo"
+cluster STANDARDIZATION
+description
+  "@todo"
+end
+
+cluster_chart ALGORITHM_DESIGNS
+class FEISTEL_NETWORK
+description
+  "@todo"
+class KEY_SCHEDULE
+description
+  "@todo"
+class LAI_MASSEY_SCHEME
+description
+  "@todo"
+class PRODUCT_CIPHER
+description
+  "@todo"
+class S_BOX
+description
+  "@todo"
+class P_BOX
+description
+  "@todo"
+class SPN
+description
+  "@todo"
+class AVALANCHE_EFFECT
+description
+  "@todo"
+class BLOCK_SIZE
+description
+  "@todo"
+class KEY_SIZE
+description
+  "@todo"
+class KEY_WHITENING
+description
+  "@todo"
+class ELLIPTIC_CURVE_CRYPTOGRAPHY
+description
+  "@todo"
+class DISCRETE_LOGARITHM
+description
+  "@todo"
+end
+
+cluster_chart AUTHENTICATED_ENCRYPTION_MODES
+class CCM
+description
+  "@todo"
+class CWC
+description
+  "@todo"
+class EAX
+description
+  "@todo"
+class GCM
+description
+  "@todo"
+class IAPM
+description
+  "@todo"
+class OCB
+description
+  "@todo"
+end
+
+cluster_chart STANDARDIZATION
+class FIPS
+description
+  "@todo"
+class SUITE_B
+description
+  "@todo"
+end
+
+class_chart HASH
+indexing
+  wikipedia: "http://en.wikipedia.org/wiki/Cryptographic_hash_function"
+explanation
+  "A (typically one-way) function that converts a message into a digest."
+query
+  "What is the digest of this message?",
+  "What is the printable representation of this digest?",
+  "What is the size of a digest?",
+  "How many bits of security are provided?"
+end
+

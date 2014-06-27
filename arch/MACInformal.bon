@@ -1,0 +1,18 @@
+cluster_chart MESSAGE_AUTHENTICATION
+class MAC
+description
+  "@todo"
+class HMAC
+description
+  "@todo"
+class EMAC
+description
+  "@todo"
+class TTMAC
+description
+  "@todo"
+class UMAC
+description
+  "@todo"
+end
+

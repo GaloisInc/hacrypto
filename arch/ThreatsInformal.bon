@@ -1,0 +1,90 @@
+cluster_chart THREATS
+cluster GENERAL_ATTACKS
+description
+  "@todo"
+cluster HASH_ATTACKS
+description
+  "@todo"
+cluster BLOCK_CIPHER_ATTACKS
+description
+  "@todo"
+end
+
+cluster_chart GENERAL_ATTACKS
+class BRUTE_FORCE
+description
+  "@todo"
+class MAN_IN_THE_MIDDLE
+description
+  "@todo"
+end
+
+cluster_chart BLOCK_CIPHER_ATTACKS
+class LINEAR
+description
+  "@todo"
+class DIFFERENTIAL
+description
+  "@todo"
+class DIFFERENTIAL_LINEAR
+description
+  "@todo"
+class INTEGRAL
+description
+  "@todo"
+class BOOMERANG
+description
+  "@todo"
+class SLIDE
+description
+  "@todo"
+class ROTATIONAL
+description
+  "@todo"
+class TIMING
+description
+  "@todo"
+class XSL
+description
+  "@todo"
+class INTERPOLATION
+description
+  "@todo"
+class PARTITIONING
+description
+  "@todo"
+class DAVIES
+description
+  "@todo"
+class REBOUND
+description
+  "@todo"
+class WEAK_KEY
+description
+  "@todo"
+end
+
+cluster_chart HASH_ATTACKS
+class COLLISION
+description
+  "@todo"
+class PREIMAGE
+description
+  "@todo"
+class BIRTHDAY
+description
+  "@todo"
+class RAINBOW
+description
+  "@todo"
+class DISTINGUISHING
+description
+  "@todo"
+class SIDE_CHANNEL
+description
+  "@todo"
+class LENGTH_EXTENSION
+description
+  "@todo"
+end
+

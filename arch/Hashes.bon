@@ -1,0 +1,41 @@
+static_diagram
+component
+  deferred class HASH
+  feature
+    digest: SEQUENCE[BIT]
+      -> message: SEQUENCE[BIT]
+      ensure
+        Result.count = size
+      end
+    print: STRING
+      -> digest: SEQUENCE[BIT]
+    size: NATURAL
+    security: NATURAL
+  end
+
+  class SHA_1
+    inherit HASH
+  feature
+    redefine digest: SEQUENCE[BIT]
+      -> message: SEQUENCE[BIT]
+      require
+        digest.count < INTEGER.exp(2,64) - 1
+      end
+  invariant
+    size = 160;
+    security < 80;
+  end -- class SHA_1
+
+  class SHA_256
+    inherit HASH
+  feature
+    redefine digest: SEQUENCE[BIT]
+      -> message: SEQUENCE[BIT]
+      require
+        digest.count < INTEGER.exp(2,64) - 1
+      end
+  invariant
+    size = 256;
+    security = 128;
+  end -- class SHA_256
+end

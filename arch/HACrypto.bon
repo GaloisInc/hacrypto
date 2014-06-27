@@ -1,0 +1,52 @@
+-- This hacrypto system specification is written in the EBON
+-- specification language, based upon the BON specification language
+-- from Walden and Nerson.  See http://bon-method.com/ for more
+-- information about BON and http://kindsoftware.com/ for more
+-- information about EBON.  Tool support for EBON is provided by the
+-- BON compiler, bonc, and several other tools.  See
+-- https://github.com/kiniry/BON for more information.
+
+-- Informal Charts
+
+-- BON Domain Model
+
+system_chart HACRYPTO_SYSTEM
+indexing
+  author: "Joseph Kiniry <kiniry@galois.com>";
+  organization: "Galois, Inc.";
+  keywords: "high-assurance", "cryptography", "verification", "Galois";
+  created: "Wed Jun 25 11:02:35 PDT 2014";
+  github: "https://github.com/GaloisInc/hacrypto";
+explanation
+  "@todo"
+cluster CORE_CONCEPTS
+description
+  "@todo"
+cluster THREATS
+description
+  "@todo"
+cluster CRYPTOGRAPHIC_KEY_CONCEPTS
+description
+  "@todo"
+cluster CIPHERS
+description
+  "@todo"
+cluster TEXT
+description
+  "@todo"
+cluster SIGNATURES
+description
+  "@todo"
+cluster HASHES
+description
+  "@todo"
+cluster MESSAGE_AUTHENTICATION
+description
+  "@todo"
+end
+
+-- @todo kiniry 27 June 2014 - To add?
+-- ELLIPTIC_CURVE_CRYPTOGRAPHY
+-- ELLIPTIC_CURVE_DIFFIE_HELLMAN (aka ECDH)
+-- MARS
+

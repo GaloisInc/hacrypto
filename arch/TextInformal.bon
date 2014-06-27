@@ -1,0 +1,23 @@
+cluster_chart TEXT
+class PLAINTEXT
+  description "http://en.wikipedia.org/wiki/Plaintext"
+class CIPHERTEXT
+  description "http://en.wikipedia.org/wiki/Ciphertext"
+class STREAM
+  description "An unbounded length sequence of bits."
+class KEYSTREAM
+  description "http://en.wikipedia.org/wiki/Keystream"
+class BLOCK
+  description "A fixed length sequence of bits."
+cluster PADDING
+  description "http://en.wikipedia.org/wiki/Padding_(cryptography)"
+end
+
+cluster_chart PADDING
+class OAEP
+  description "http://en.wikipedia.org/wiki/OAEP"
+class RSA_OAEP
+description
+  "@todo"
+end
+

@@ -1,0 +1,47 @@
+scenario_chart HACRYPTO_CLIENT_DEVELOPER
+explanation
+  "@todo"
+scenario
+  "ChooseHash"
+description
+  "Choose an appropriate hash function for a given context."
+scenario
+  "PerformHash"
+description
+  "Compute the hash digest of a message."
+end
+
+scenario_chart HASHES
+explanation
+  "Scenarios describing the correct and incorrect uses of hashes."
+scenario
+  "Idempotence"
+description
+  "Hashing the same messages twice results in equal digests."
+scenario
+  "NoCollisions"
+description
+  "Hashing two different messages results in two different hashes."
+scenario
+  "Sensitive"
+description
+  "A small change in a message results in a large change in its digest."
+scenario
+  "Cheap"
+description
+  "It is easy to compute the digest of any message."
+scenario
+  "Pre-image resistance"
+description
+  "It should be difficult to find any message for a given digest."
+scenario
+  "Second pre-image resistance"
+description
+  "Given an message, it should be difficult to find a different message such \
+ \ that their digests are equal."
+scenario
+  "Collision resistance"
+description
+  "It should be difficult to find two different messages that have equal digests."
+end
+
