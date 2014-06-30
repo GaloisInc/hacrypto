@@ -3,7 +3,7 @@ package hacrypto;
 public interface Hash {
   //@ public normal_behavior
   //@   ensures \result.length == size();
-  public byte[] digest(byte[] digest);
+  public byte[] digest(byte[] message);
 
   // @refines print
   public String toString(byte[] digest);
