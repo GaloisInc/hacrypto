@@ -1,0 +1,92 @@
+body {
+ font: 12px "Lucida Grande", Helvetica, "Arial Unicode", Arial, sans-serif;
+}
+
+div#left-pane {
+ width: 20%; 
+ position: absolute; 
+ z-index: 1;
+}
+
+div#side-bar {
+ padding: 30px 0px 0px 10px;
+}
+
+div#search-pane {
+ position: absolute;
+}
+
+div#right-pane {
+ position: absolute; 
+ width: 80%;
+ left: 20%;
+ top: 0px;
+ z-index: 1;
+}
+
+div#main-display {
+ padding: 10px;
+ border-left: 1px solid black;
+}
+
+#search-box {
+ width: 150px;
+ position: fixed;
+ top: 5px;
+ font-size: 12px;
+ z-index: 3;
+}
+
+#search-results {
+ border: 1px solid #999;
+ background-color: #fff;
+ font-size: 16px;
+ z-index: 3;
+}
+ 
+#search-pane ul {
+ list-style: none;
+ margin:0px;
+ padding:0px;
+}
+
+#search-pane li {
+ padding: 2px 3px;
+}
+ 
+#search-pane strong {
+ text-decoration: underline;
+ font-weight: bold;
+}
+ 
+#search-pane li.selected {
+ color: #fff;
+ background-color: #8c1000;
+}
+
+#related ul {
+ list-style: none;
+ margin: 0px;
+ padding: 0px;
+}
+
+.invisible {
+ display: none;
+}
+
+.indexing dd {
+  margin-left: 20px;
+}
+
+.indexing dt {
+  font-variant: small-caps;
+  letter-spacing: 1px;
+}
+
+.methodsig {
+  font-size: 18px;
+}
+
+.showspecslink, #showallspecslink, .showsourcelink, #showallsourcelink {
+  font-size: 8px;
+}

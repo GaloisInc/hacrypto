@@ -1,0 +1,64 @@
+
+
+<h2>SHA_256</h2>
+
+<h3>Description</h3>
+<p>No description
+</p>
+
+
+
+<h3>Parents</h3>
+<p><a href="" onclick="return navTo('class:HASH:doc');">HASH</a></p>
+<h3>Features</h3>
+  <hr/>
+  <p id="class:SHA_256:doc:redefine">
+   <span class="methodsig">Void <a href="#class:SHA_256:doc:redefine">redefine</a></span>
+    <div class="invisible sourcediv" id="redefine-sourcetoggle">
+     <pre  class="brush: bon; toolbar: false; first-line: 32;">
+          redefine digest: SEQUENCE[BIT]
+     </pre>
+    </div>
+   <a href="" class="showsourcelink" onclick="return toggleShow('#redefine-sourcetoggle',this,'Show source','Hide source');">Show source</a>
+  </p>
+  <hr/>
+  <p id="class:SHA_256:doc:digest">
+   <span class="methodsig"><a href="" onclick="return navTo('class:SEQUENCE:doc');">SEQUENCE</a>[<a href="" onclick="return navTo('class:BIT:doc');">BIT</a>] <a href="#class:SHA_256:doc:digest">digest</a>(<a href="" onclick="return navTo('class:SEQUENCE:doc');">SEQUENCE</a>[<a href="" onclick="return navTo('class:BIT:doc');">BIT</a>] message)</span>
+    <br/>
+    <div class="invisible specsdiv" id="digest-spectoggle">
+      Requires:<br/>
+<img src="SHA_256.digest-precondition1.png" height="23" width="379"/>
+       <br/>
+    </div>
+    <div class="invisible sourcediv" id="digest-sourcetoggle">
+     <pre  class="brush: bon; toolbar: false; first-line: 32;">
+          redefine digest: SEQUENCE[BIT]
+            -> message: SEQUENCE[BIT]
+            require
+              digest.count < INTEGER.exp(2,64) - 1
+            end
+     </pre>
+    </div>
+   <a href="" class="showspecslink" onclick="return toggleShow('#digest-spectoggle',this,'Show specs','Hide specs');">Show specs</a>
+   <a href="" class="showsourcelink" onclick="return toggleShow('#digest-sourcetoggle',this,'Show source','Hide source');">Show source</a>
+  </p>
+<hr/>
+<div class="invisible specsdiv">
+ <p>
+  <h3>Invariants</h3>
+<img src="SHA_256-invariant1.png" height="19" width="98"/>
+  <br/>
+<img src="SHA_256-invariant2.png" height="19" width="135"/>
+  <br/>
+ </p>
+  <div class="invisible sourcediv" id="SHA_256-invariant-sourcetoggle">
+   <pre  class="brush: bon; toolbar: false; first-line: 38;">
+        size = 256;
+        security = 128;
+   </pre>
+  </div>
+</div>
+<p>
+ <a id="showallspecslink" href="#" onclick="return toggleShowAll('specs');">Show all specs</a>
+ <a id="showallsourcelink" href="#" onclick="return toggleShowAll('source');">Show all source</a>
+</p>

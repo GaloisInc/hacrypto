@@ -1,0 +1,70 @@
+
+
+<h2>HASH</h2>
+
+<h3>Description</h3>
+<p>No description
+</p>
+
+
+
+<h3>Children</h3>
+<p><a href="" onclick="return navTo('class:SHA_1');">SHA_1</a>, <a href="" onclick="return navTo('class:SHA_256');">SHA_256</a></p>
+<h3>Features</h3>
+  <hr/>
+  <p id="class:HASH:doc:digest">
+   <span class="methodsig"><a href="" onclick="return navTo('class:SEQUENCE:doc');">SEQUENCE</a>[<a href="" onclick="return navTo('class:BIT:doc');">BIT</a>] <a href="#class:HASH:doc:digest">digest</a>(<a href="" onclick="return navTo('class:SEQUENCE:doc');">SEQUENCE</a>[<a href="" onclick="return navTo('class:BIT:doc');">BIT</a>] message)</span>
+    <br/>
+    <div class="invisible specsdiv" id="digest-spectoggle">
+      Ensures:<br/>
+<img src="HASH.digest-postcondition1.png" height="21" width="181"/>
+       <br/>
+    </div>
+    <div class="invisible sourcediv" id="digest-sourcetoggle">
+     <pre  class="brush: bon; toolbar: false; first-line: 5;">
+          digest: SEQUENCE[BIT]
+            -> message: SEQUENCE[BIT]
+            ensure
+              Result.count = size
+            end
+     </pre>
+    </div>
+   <a href="" class="showspecslink" onclick="return toggleShow('#digest-spectoggle',this,'Show specs','Hide specs');">Show specs</a>
+   <a href="" class="showsourcelink" onclick="return toggleShow('#digest-sourcetoggle',this,'Show source','Hide source');">Show source</a>
+  </p>
+  <hr/>
+  <p id="class:HASH:doc:print">
+   <span class="methodsig"><a href="" onclick="return navTo('class:STRING:doc');">STRING</a> <a href="#class:HASH:doc:print">print</a>(<a href="" onclick="return navTo('class:SEQUENCE:doc');">SEQUENCE</a>[<a href="" onclick="return navTo('class:BIT:doc');">BIT</a>] digest)</span>
+    <div class="invisible sourcediv" id="print-sourcetoggle">
+     <pre  class="brush: bon; toolbar: false; first-line: 10;">
+          print: STRING
+            -> digest: SEQUENCE[BIT]
+     </pre>
+    </div>
+   <a href="" class="showsourcelink" onclick="return toggleShow('#print-sourcetoggle',this,'Show source','Hide source');">Show source</a>
+  </p>
+  <hr/>
+  <p id="class:HASH:doc:size">
+   <span class="methodsig"><a href="" onclick="return navTo('class:NATURAL:doc');">NATURAL</a> <a href="#class:HASH:doc:size">size</a></span>
+    <div class="invisible sourcediv" id="size-sourcetoggle">
+     <pre  class="brush: bon; toolbar: false; first-line: 12;">
+          size: NATURAL
+     </pre>
+    </div>
+   <a href="" class="showsourcelink" onclick="return toggleShow('#size-sourcetoggle',this,'Show source','Hide source');">Show source</a>
+  </p>
+  <hr/>
+  <p id="class:HASH:doc:security">
+   <span class="methodsig"><a href="" onclick="return navTo('class:NATURAL:doc');">NATURAL</a> <a href="#class:HASH:doc:security">security</a></span>
+    <div class="invisible sourcediv" id="security-sourcetoggle">
+     <pre  class="brush: bon; toolbar: false; first-line: 13;">
+          security: NATURAL
+     </pre>
+    </div>
+   <a href="" class="showsourcelink" onclick="return toggleShow('#security-sourcetoggle',this,'Show source','Hide source');">Show source</a>
+  </p>
+<hr/>
+<p>
+ <a id="showallspecslink" href="#" onclick="return toggleShowAll('specs');">Show all specs</a>
+ <a id="showallsourcelink" href="#" onclick="return toggleShowAll('source');">Show all source</a>
+</p>
