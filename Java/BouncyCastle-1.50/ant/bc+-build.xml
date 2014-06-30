@@ -98,7 +98,9 @@
                 <mkdir dir="${build.dir}/@{target}/classes" />
                 <mkdir dir="${artifacts.dir}/@{target}" />
 
-                <javac source="${bc.javac.source}" target="${bc.javac.target}"
+                <javac source="${bc.javac.source}"
+                       target="${bc.javac.target}"
+                       encoding="UTF-8"
                     srcdir="${artifacts.dir}/@{target}/src"
                     destdir="${build.dir}/@{target}/classes"
                     debug="${release.debug}">
@@ -134,7 +136,9 @@
                 <mkdir dir="${build.dir}/@{target}/classes" />
                 <mkdir dir="${artifacts.dir}/@{target}" />
 
-                <javac source="${bc.javac.source}" target="${bc.javac.target}"
+                <javac source="${bc.javac.source}"
+                       target="${bc.javac.target}"
+                       encoding="UTF-8"
                     srcdir="${artifacts.dir}/@{target}/src"
                     destdir="${build.dir}/@{target}/classes"
                     debug="${release.debug}">
@@ -203,10 +207,11 @@
             <mkdir dir="@{docsDir}" />
             <javadoc sourcepath="@{srcDir}"
                      destdir="@{docsDir}"
+                     encoding="UTF-8"
+                     breakiterator="true"
                      windowtitle="Bouncy Castle Library ${release.name} API Specification"
                      header="&lt;b&gt;Bouncy Castle Cryptography Library ${release.name}&lt;/b&gt;">
                 <docElements/>
-                <arg value="${javadoc.args}" />
                 <classpath>
                     <path refid="project.classpath" /> 
                     <fileset dir="${artifacts.jars.dir}">
@@ -265,9 +270,13 @@
         </copy>
 
         <javac source="${bc.javac.source}" target="${bc.javac.target}"
+               encoding="UTF-8"
             srcdir="${lcrypto.target.src.dir}"
             destdir="${lcrypto.target.classes.dir}"
             debug="${release.debug}">
+          <classpath>
+            <path refid="project.classpath" /> 
+          </classpath>
         </javac>
     </target>
 

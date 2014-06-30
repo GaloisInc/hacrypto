@@ -2,14 +2,13 @@
 
 <project name="crypto1.5" default="build" basedir="..">
 
-    <property name="bc.javac.source" value="1.5" />
-    <property name="bc.javac.target" value="1.5" />
+    <property name="bc.javac.source" value="8" />
+    <property name="bc.javac.target" value="8" />
     <property name="build.dir" value="build" />
     <property name="jdk.name" value="jdk1.5" />
     <property name="artifacts.dir" value="${build.dir}/artifacts/${jdk.name}" />
     <property name="src.dir" value="${build.dir}/${jdk.name}" />
     <property name="target.prefix" value="jdk15on" />
-    <property name="javadoc.args" value="-breakiterator" />
 
     <target name="init">
         <mkdir dir="${src.dir}" />
