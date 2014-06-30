@@ -15,10 +15,15 @@ BON_FILES = $(INFORMAL_BON_FILES) $(FORMAL_BON_FILES) $(REQUIREMENTS)
 
 .PHONY: all java
 
-all: hacrypto-iig.dot index.txt index.html html/index.html java
+all: hacrypto-iig.dot index.txt index.html html/index.html java jmlunitng
 
 java:
+	CLASSPATH=".:../Java/BouncyCastle-1.50/jars/bcprov-jdk15on-150.jar:" ;\
 	javac hacrypto/*.java
+
+jmlunitng:
+	CLASSPATH=".:../Java/BouncyCastle-1.50/jars/bcprov-jdk15on-150.jar:" ;\
+	mkdir -p validation && jmlunitng -d hacrypto/validation --children --literals --spec-literals hacrypto
 
 hacrypto-icg.dot: $(BON_FILES)
 	bonc -g ICG $(BON_FILES) > hacrypto-icg.dot
