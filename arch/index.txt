@@ -1,0 +1,483 @@
+-- Generated using BONc (version: bonc-0.2.7) plain text output, Jun 27, 2014 4:15:51 PM.
+
+cluster_chart HASHES
+  explanation
+    "@todo"
+  class WHIRLPOOL description "http://en.wikipedia.org/wiki/WHIRLPOOL"
+  class RIPEMD_160 description "http://en.wikipedia.org/wiki/RIPEMD"
+  class DES description "http://en.wikipedia.org/wiki/Data_Encryption_Standard"
+  class CRYPT description "http://en.wikipedia.org/wiki/Crypt_(C)"
+  cluster HASH_DESIGNS description "@todo"
+  cluster HASH_STANDARDIZATION description "@todo"
+  cluster MD_FAMILY description "@todo"
+  cluster SHA_FAMILY description "@todo"
+end
+
+
+cluster_chart HASH_DESIGNS
+  class AVALANCHE_EFFECT description "@todo"
+  class HASH_COLLISION description "@todo"
+  class MERKLE_DAMGAARD_CONSTRUCTION description "@todo"
+  class HASH_CHAIN description "@todo"
+end
+
+
+cluster_chart HASH_STANDARDIZATION
+  class CRYPTREC description "@todo"
+  class NESSIE description "@todo"
+  class NIST_HASH_FUNCTION_COMPETITION description "@todo"
+end
+
+
+cluster_chart SHA_3_FINALISTS
+  class BLAKE description "@todo"
+  class GROSTL description "@todo"
+  class JH description "@todo"
+  class KECCAK description "Aka SHA-3."
+  class SKEIN description "@todo"
+end
+
+
+cluster_chart MD_FAMILY
+  class MD2 description "http://en.wikipedia.org/wiki/MD2_(cryptography)"
+  class MD4 description "http://en.wikipedia.org/wiki/MD4"
+  class MD5 description "http://en.wikipedia.org/wiki/MD5"
+  class MD6 description "http://en.wikipedia.org/wiki/MD6"
+end
+
+
+cluster_chart SHA_FAMILY
+  class SHA_2 description "http://en.wikipedia.org/wiki/SHA-2"
+  class SHA_3 description "http://en.wikipedia.org/wiki/SHA-3"
+  class SHACAL_2 description "http://en.wikipedia.org/wiki/SHACAL"
+  cluster SHA_1_FAMILY description "http://en.wikipedia.org/wiki/SHA-1"
+  cluster SHA_2_FAMILY description "http://en.wikipedia.org/wiki/SHA-2"
+  cluster SHA_3_FAMILY description "http://en.wikipedia.org/wiki/SHA-2"
+  cluster SHA_3_FINALISTS description "@todo"
+end
+
+
+cluster_chart SHA_1_FAMILY
+  indexing
+    wikipedia: "http://en.wikipedia.org/wiki/SHA-1";
+    fips: "FIPS PUB 180";
+    certifications: "FIPS", "CRYPTREC";
+  explanation
+    "The NIST-standardized SHA-1 cryptographic hash function family."
+  class SHA_1 description "@todo"
+end
+
+
+class_chart SHA_1
+  explanation
+    "@todo"
+query
+    "What is the SHA-1 digest of this message?"
+constraint
+    "The digest is guaranteed to be 160 bits long.",
+    "The maximum message size is 2e64-1.",
+    "The algorithm runs 80 rounds.",
+    "The algorithm provides under 80 bits of security."
+end
+
+
+cluster_chart SHA_2_FAMILY
+  class SHA_224 description "@todo"
+  class SHA_256 description "@todo"
+  class SHA_384 description "@todo"
+  class SHA_512 description "@todo"
+end
+
+
+class_chart SHA_224
+  explanation
+    "@todo"
+query
+    "What is the SHA-224 digest of this message?"
+constraint
+    "The digest is guaranteed to be 224 bits long.",
+    "The maximum message size is 2e64-1.",
+    "The algorithm runs 64 rounds.",
+    "The algorithm provides 112 bits of security."
+end
+
+
+class_chart SHA_256
+  explanation
+    "@todo"
+query
+    "What is the SHA-256 digest of this message?"
+constraint
+    "The digest is guaranteed to be 256 bits long.",
+    "The maximum message size is 2e64-1.",
+    "The algorithm runs 64 rounds.",
+    "The algorithm provides 128 bits of security."
+end
+
+
+class_chart SHA_384
+  explanation
+    "@todo"
+query
+    "What is the SHA-384 digest of this message?"
+constraint
+    "The digest is guaranteed to be 384 bits long.",
+    "The maximum message size is 2e128-1.",
+    "The algorithm runs 80 rounds.",
+    "The algorithm provides 192 bits of security."
+end
+
+
+class_chart SHA_512
+  explanation
+    "@todo"
+query
+    "What is the SHA-512 digest of this message?"
+constraint
+    "The digest is guaranteed to be 512 bits long.",
+    "The maximum message size is 2e128-1.",
+    "The algorithm runs 80 rounds.",
+    "The algorithm provides 256 bits of security."
+end
+
+
+cluster_chart SHA_3_FAMILY
+end
+cluster_chart CIPHERS
+  indexing
+    wikipedia: "http://en.wikipedia.org/wiki/Cipher";
+  explanation
+    "@todo"
+  class ASYMMETRIC_CIPHER description "@todo"
+  class SYMMETRIC_CIPHER description "@todo"
+  class BLOCK_CIPHER description "@todo"
+  class STREAM_CIPHER description "@todo"
+  cluster PUBLIC_KEY_CRYPTOGRAPHY description "@todo"
+  cluster SYMMETRIC_CIPHERS description "@todo"
+  cluster BLOCK_CIPHER_MODES description "@todo"
+end
+
+
+cluster_chart SYMMETRIC_CIPHERS
+  indexing
+    wikipedia: "http://en.wikipedia.org/wiki/Symmetric-key_algorithm";
+  explanation
+    "@todo"
+  class AES description "@todo"
+  class BLOWFISH description "@todo"
+  class CAMELLIA description "@todo"
+  class CAST_128 description "@todo"
+  class DES description "@todo"
+  class IDEA description "@todo"
+  class RC2 description "@todo"
+  class RC5 description "@todo"
+  class RC6 description "@todo"
+  class SEED description "@todo"
+  class SERPENT description "@todo"
+  class SKIPJACK description "@todo"
+  class TEA description "@todo"
+  class TRIPLE_DES description "@todo"
+  class TWOFISH description "@todo"
+  class XTEA description "@todo"
+end
+
+
+cluster_chart BLOCK_CIPHER_MODES
+  class ECB description "An encryption mode where a plaintext is divided into blocks \
+             \ and each block is encrypted separately."
+  class CBC description "An encryption mode where each block of plaintext is XORed \
+             \ with the previous ciphertext block before being encrypted."
+  class PCBC description "A mode which is designed to cause small changes in the \
+             \ ciphertext to propagate indefinitely when decrypting, as \
+             \ well as when encrypting."
+  class CFB description "A mode which makes a block cipher into a self-synchronizing \
+             \ stream cipher."
+  class OFB description "A mode which makes a block cipher into a stream cipher by \
+             \ generating keystream blocks which are then XORed with the \
+             \ plaintext blocks to get the ciphertext."
+  class CTR description "A mode which makes a block cipher into a stream cipher by \
+             \ generating the next keystream block by encrypting successive \
+             \ values of a counter."
+end
+
+
+cluster_chart PUBLIC_KEY_CRYPTOGRAPHY
+  explanation
+    ""
+  class PUBLIC_KEY description "@todo"
+  class PRIVATE_KEY description "@todo"
+  class FINGERPRINT description "@todo"
+  cluster PUBLIC_KEY_ALGORITHMS description "@todo"
+  cluster PUBLIC_KEY_IMPLEMENTATIONS description "@todo"
+end
+
+
+cluster_chart PUBLIC_KEY_ALGORITHMS
+  class DSS description "@todo"
+  class DSA description "@todo"
+  class PAILLIER description "@todo"
+  class RSA description "@todo"
+  class CRAMER_SHOUP description "@todo"
+  class DIFFIE_HELLMAN description "@todo"
+  class ELGAMAL description "@todo"
+end
+
+
+cluster_chart PUBLIC_KEY_IMPLEMENTATIONS
+  class PGP description "@todo"
+  class GPG description "@todo"
+  class OTR description "@todo"
+end
+cluster_chart MESSAGE_AUTHENTICATION
+  class MAC description "@todo"
+  class HMAC description "@todo"
+  class EMAC description "@todo"
+  class TTMAC description "@todo"
+  class UMAC description "@todo"
+end
+static_diagram 
+component
+  deferred class HASH 
+    feature
+       digest: SEQUENCE[BIT] 
+        -> message:SEQUENCE[BIT]
+        ensure
+          Result.count = size;
+        end
+       print: STRING 
+        -> digest:SEQUENCE[BIT]
+       size: NATURAL 
+       security: NATURAL 
+  end
+  class SHA_1 
+    inherit HASH;
+    feature
+       redefine
+       digest: SEQUENCE[BIT] 
+        -> message:SEQUENCE[BIT]
+        require
+          digest.count < INTEGER.exp(2, 64) - 1;
+        end
+    invariant
+      size = 160;
+      security < 80;
+  end
+  class SHA_256 
+    inherit HASH;
+    feature
+       redefine
+       digest: SEQUENCE[BIT] 
+        -> message:SEQUENCE[BIT]
+        require
+          digest.count < INTEGER.exp(2, 64) - 1;
+        end
+    invariant
+      size = 256;
+      security = 128;
+  end
+end
+system_chart HACRYPTO_SYSTEM
+  indexing
+    author: "Joseph Kiniry <kiniry@galois.com>";
+    organization: "Galois, Inc.";
+    keywords: "high-assurance", "cryptography", "verification", "Galois";
+    created: "Wed Jun 25 11:02:35 PDT 2014";
+    github: "https://github.com/GaloisInc/hacrypto";
+  explanation
+    "@todo"
+  cluster CORE_CONCEPTS description "@todo"
+  cluster THREATS description "@todo"
+  cluster CRYPTOGRAPHIC_KEY_CONCEPTS description "@todo"
+  cluster CIPHERS description "@todo"
+  cluster TEXT description "@todo"
+  cluster SIGNATURES description "@todo"
+  cluster HASHES description "@todo"
+  cluster MESSAGE_AUTHENTICATION description "@todo"
+end
+cluster_chart CRYPTOGRAPHIC_KEY_CONCEPTS
+  class KEY description "@todo"
+  class KEY_STRETCHING description "@todo"
+  class KEY_DERIVATION description "@todo"
+  cluster KEY_DERIVATION_FUNCTIONS description "@todo"
+  cluster KEY_MANAGEMENT description "@todo"
+  cluster KEY_EXCHANGE description "@todo"
+end
+
+
+cluster_chart KEY_DERIVATION_FUNCTIONS
+  class PBKDF_2 description "@todo"
+  class BCRYPT description "@todo"
+  class SCRIPT description "@todo"
+end
+
+
+cluster_chart KEY_MANAGEMENT
+  class X509 description "@todo"
+  class PKI description "@todo"
+end
+
+
+cluster_chart KEY_EXCHANGE
+  class KEY_EXCHANGE description "@todo"
+  class NEEDHAM_SCHROEDER description "@todo"
+  class RSA_KEM description "@todo"
+  class PSEC_KEM description "@todo"
+end
+cluster_chart TEXT
+  class PLAINTEXT description "http://en.wikipedia.org/wiki/Plaintext"
+  class CIPHERTEXT description "http://en.wikipedia.org/wiki/Ciphertext"
+  class STREAM description "An unbounded length sequence of bits."
+  class KEYSTREAM description "http://en.wikipedia.org/wiki/Keystream"
+  class BLOCK description "A fixed length sequence of bits."
+  cluster PADDING description "http://en.wikipedia.org/wiki/Padding_(cryptography)"
+end
+
+
+cluster_chart PADDING
+  class OAEP description "http://en.wikipedia.org/wiki/OAEP"
+  class RSA_OAEP description "@todo"
+end
+cluster_chart THREATS
+  cluster GENERAL_ATTACKS description "@todo"
+  cluster HASH_ATTACKS description "@todo"
+  cluster BLOCK_CIPHER_ATTACKS description "@todo"
+end
+
+
+cluster_chart GENERAL_ATTACKS
+  class BRUTE_FORCE description "@todo"
+  class MAN_IN_THE_MIDDLE description "@todo"
+end
+
+
+cluster_chart BLOCK_CIPHER_ATTACKS
+  class LINEAR description "@todo"
+  class DIFFERENTIAL description "@todo"
+  class DIFFERENTIAL_LINEAR description "@todo"
+  class INTEGRAL description "@todo"
+  class BOOMERANG description "@todo"
+  class SLIDE description "@todo"
+  class ROTATIONAL description "@todo"
+  class TIMING description "@todo"
+  class XSL description "@todo"
+  class INTERPOLATION description "@todo"
+  class PARTITIONING description "@todo"
+  class DAVIES description "@todo"
+  class REBOUND description "@todo"
+  class WEAK_KEY description "@todo"
+end
+
+
+cluster_chart HASH_ATTACKS
+  class COLLISION description "@todo"
+  class PREIMAGE description "@todo"
+  class BIRTHDAY description "@todo"
+  class RAINBOW description "@todo"
+  class DISTINGUISHING description "@todo"
+  class SIDE_CHANNEL description "@todo"
+  class LENGTH_EXTENSION description "@todo"
+end
+creation_chart HACRYPTO_SYSTEM
+  explanation
+    ""
+  creator PIGGIE creates FOO
+end
+event_chart HACRYPTO_API incoming
+  explanation
+    ""
+  event "@todo_1"  involves PIGGIE, FOO
+end
+
+
+event_chart HACRYPTO_OUTBOUND outgoing
+  event "@todo_2"  involves PIGGIES, FOO
+end
+cluster_chart CORE_CONCEPTS
+  indexing
+    references: "Schneier. Applied Cryptography, 1996. \
+             \ Ferguson, Schneier, and Kohno. Cryptography Engineering, 2010. \
+             \ Ferguson and Schneier. Practical Cryptography, 2003.";
+  explanation
+    "The core concepts of cryptography."
+  class CODE description "http://en.wikipedia.org/wiki/Code_(cryptography)"
+  class CIPHER description "http://en.wikipedia.org/wiki/Cipher"
+  class HASH description "A function that converts a message into a digest."
+  class MODE description "http://en.wikipedia.org/wiki/Block_cipher_modes_of_operation"
+  class SALT description "http://en.wikipedia.org/wiki/Salt_(cryptography)"
+  cluster ALGORITHM_DESIGNS description "@todo"
+  cluster AUTHENTICATED_ENCRYPTION_MODES description "@todo"
+  cluster STANDARDIZATION description "@todo"
+end
+
+
+cluster_chart ALGORITHM_DESIGNS
+  class FEISTEL_NETWORK description "@todo"
+  class KEY_SCHEDULE description "@todo"
+  class LAI_MASSEY_SCHEME description "@todo"
+  class PRODUCT_CIPHER description "@todo"
+  class S_BOX description "@todo"
+  class P_BOX description "@todo"
+  class SPN description "@todo"
+  class AVALANCHE_EFFECT description "@todo"
+  class BLOCK_SIZE description "@todo"
+  class KEY_SIZE description "@todo"
+  class KEY_WHITENING description "@todo"
+  class ELLIPTIC_CURVE_CRYPTOGRAPHY description "@todo"
+  class DISCRETE_LOGARITHM description "@todo"
+end
+
+
+cluster_chart AUTHENTICATED_ENCRYPTION_MODES
+  class CCM description "@todo"
+  class CWC description "@todo"
+  class EAX description "@todo"
+  class GCM description "@todo"
+  class IAPM description "@todo"
+  class OCB description "@todo"
+end
+
+
+cluster_chart STANDARDIZATION
+  class FIPS description "@todo"
+  class SUITE_B description "@todo"
+end
+
+
+class_chart HASH
+  indexing
+    wikipedia: "http://en.wikipedia.org/wiki/Cryptographic_hash_function";
+  explanation
+    "A (typically one-way) function that converts a message into a digest."
+query
+    "What is the digest of this message?",
+    "What is the printable representation of this digest?",
+    "What is the size of a digest?",
+    "How many bits of security are provided?"
+end
+scenario_chart HACRYPTO_CLIENT_DEVELOPER
+  explanation
+    "@todo"
+  scenario "ChooseHash" description "Choose an appropriate hash function for a given context."
+  scenario "PerformHash" description "Compute the hash digest of a message."
+end
+
+
+scenario_chart HASHES
+  explanation
+    "Scenarios describing the correct and incorrect uses of hashes."
+  scenario "Idempotence" description "Hashing the same messages twice results in equal digests."
+  scenario "NoCollisions" description "Hashing two different messages results in two different hashes."
+  scenario "Sensitive" description "A small change in a message results in a large change in its digest."
+  scenario "Cheap" description "It is easy to compute the digest of any message."
+  scenario "Pre-image resistance" description "It should be difficult to find any message for a given digest."
+  scenario "Second pre-image resistance" description "Given an message, it should be difficult to find a different message such \
+ \ that their digests are equal."
+  scenario "Collision resistance" description "It should be difficult to find two different messages that have equal digests."
+end
+cluster_chart SIGNATURES
+  explanation
+    "The core concepts of cryptography."
+  class DIGITAL_SIGNATURE description "@todo"
+  class SIGNATURE description "@todo"
+  class SCHNORR_SIGNATURE description "@todo"
+end
