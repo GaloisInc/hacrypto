@@ -13,7 +13,7 @@ import org.bouncycastle.asn1.DEROctetString;
 
 /**
  * an Iso7816CertificateBody structure.
- * <p/>
+ * <p>
  * <pre>
  *  CertificateBody ::= SEQUENCE {
  *      // version of the certificate format. Must be 0 (version 1)

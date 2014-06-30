@@ -60,9 +60,9 @@ public class NameOrPseudonym
 
     /**
      * Constructor from DirectoryString.
-     * <p/>
+     * <p>
      * The sequence is of type NameOrPseudonym:
-     * <p/>
+     * <p>
      * <pre>
      *       NameOrPseudonym ::= CHOICE {
      *            surAndGivenName SEQUENCE {
@@ -81,9 +81,9 @@ public class NameOrPseudonym
 
     /**
      * Constructor from ASN1Sequence.
-     * <p/>
+     * <p>
      * The sequence is of type NameOrPseudonym:
-     * <p/>
+     * <p>
      * <pre>
      *       NameOrPseudonym ::= CHOICE {
      *            surAndGivenName SEQUENCE {
@@ -159,9 +159,9 @@ public class NameOrPseudonym
 
     /**
      * Produce an object suitable for an ASN1OutputStream.
-     * <p/>
+     * <p>
      * Returns:
-     * <p/>
+     * <p>
      * <pre>
      *       NameOrPseudonym ::= CHOICE {
      *            surAndGivenName SEQUENCE {

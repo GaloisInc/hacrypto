@@ -511,7 +511,7 @@ public abstract class TlsProtocol
 
     /**
      * Send some application data to the remote system.
-     * <p/>
+     * <p>
      * The method will handle fragmentation internally.
      *
      * @param buf    The buffer with the data.

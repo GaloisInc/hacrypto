@@ -33,7 +33,7 @@ import org.bouncycastle.util.encoders.Hex;
 
 /**
  * A simple test designed to conduct a TLS handshake with an external TLS server.
- * <p/>
+ * <p>
  * Please refer to GnuTLSSetup.txt or OpenSSLSetup.txt, and x509-*.pem files in this package for
  * help configuring an external TLS server.
  */

@@ -98,7 +98,7 @@ public class GMSSKeyPairGenerator
     /**
      * The standard constructor tries to generate the GMSS algorithm identifier
      * with the corresponding OID.
-     * <p/>
+     * <p>
      *
      * @param digestProvider     provider for digest implementations.
      */
@@ -363,7 +363,7 @@ public class GMSSKeyPairGenerator
      * This method initializes the GMSS KeyPairGenerator using an integer value
      * <code>keySize</code> as input. It provides a simple use of the GMSS for
      * testing demands.
-     * <p/>
+     * <p>
      * A given <code>keysize</code> of less than 10 creates an amount 2^10
      * signatures. A keySize between 10 and 20 creates 2^20 signatures. Given an
      * integer greater than 20 the key pair generator creates 2^40 signatures.

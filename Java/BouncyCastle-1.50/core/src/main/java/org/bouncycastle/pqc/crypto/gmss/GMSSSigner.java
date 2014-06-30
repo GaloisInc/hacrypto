@@ -214,7 +214,7 @@ public class GMSSSigner
 
     /**
      * Signs a message.
-     * <p/>
+     * <p>
      *
      * @return the signature.
      */

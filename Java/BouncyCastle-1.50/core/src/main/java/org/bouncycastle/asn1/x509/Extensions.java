@@ -43,7 +43,7 @@ public class Extensions
 
     /**
      * Constructor from ASN1Sequence.
-     * <p/>
+     * <p>
      * the extensions are a list of constructed sequences, either with (OID, OctetString) or (OID, Boolean, OctetString)
      */
     private Extensions(

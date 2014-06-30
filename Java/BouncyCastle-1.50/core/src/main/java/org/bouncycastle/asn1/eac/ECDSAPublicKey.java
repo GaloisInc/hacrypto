@@ -15,7 +15,7 @@ import org.bouncycastle.asn1.DERTaggedObject;
 
 /**
  * an Iso7816ECDSAPublicKeyStructure structure.
- * <p/>
+ * <p>
  * <pre>
  *  Certificate Holder Authorization ::= SEQUENCE {
  *      ASN1TaggedObject primeModulusP;        // OPTIONAL

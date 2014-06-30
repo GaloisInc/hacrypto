@@ -18,7 +18,7 @@ import org.bouncycastle.asn1.x500.DirectoryString;
 /**
  * Contains personal data for the otherName field in the subjectAltNames
  * extension.
- * <p/>
+ * <p>
  * <pre>
  *     PersonalData ::= SEQUENCE {
  *       nameOrPseudonym NameOrPseudonym,
@@ -60,9 +60,9 @@ public class PersonalData
 
     /**
      * Constructor from ASN1Sequence.
-     * <p/>
+     * <p>
      * The sequence is of type NameOrPseudonym:
-     * <p/>
+     * <p>
      * <pre>
      *     PersonalData ::= SEQUENCE {
      *       nameOrPseudonym NameOrPseudonym,
@@ -169,9 +169,9 @@ public class PersonalData
 
     /**
      * Produce an object suitable for an ASN1OutputStream.
-     * <p/>
+     * <p>
      * Returns:
-     * <p/>
+     * <p>
      * <pre>
      *     PersonalData ::= SEQUENCE {
      *       nameOrPseudonym NameOrPseudonym,

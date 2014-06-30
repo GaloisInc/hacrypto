@@ -291,7 +291,7 @@ public class GF2mField
 
     /**
      * checks if given object is equal to this field.
-     * <p/>
+     * <p>
      * The method returns false whenever the given object is not GF2m.
      *
      * @param other object
@@ -322,7 +322,7 @@ public class GF2mField
 
     /**
      * Returns a human readable form of this field.
-     * <p/>
+     * <p>
      *
      * @return a human readable form of this field.
      */

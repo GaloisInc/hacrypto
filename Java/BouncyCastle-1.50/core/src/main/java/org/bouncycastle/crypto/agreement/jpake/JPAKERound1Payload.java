@@ -6,19 +6,19 @@ import org.bouncycastle.util.Arrays;
 
 /**
  * The payload sent/received during the first round of a J-PAKE exchange.
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * Each {@link JPAKEParticipant} creates and sends an instance
  * of this payload to the other {@link JPAKEParticipant}.
  * The payload to send should be created via
  * {@link JPAKEParticipant#createRound1PayloadToSend()}.
- * <p/>
- * <p/>
+ * <p>
+ * <p>
  * Each {@link JPAKEParticipant} must also validate the payload
  * received from the other {@link JPAKEParticipant}.
  * The received payload should be validated via
  * {@link JPAKEParticipant#validateRound1PayloadReceived(JPAKERound1Payload)}.
- * <p/>
+ * <p>
  */
 public class JPAKERound1Payload
 {
@@ -39,14 +39,14 @@ public class JPAKERound1Payload
 
     /**
      * The zero knowledge proof for x1.
-     * <p/>
+     * <p>
      * This is a two element array, containing {g^v, r} for x1.
      */
     private final BigInteger[] knowledgeProofForX1;
 
     /**
      * The zero knowledge proof for x2.
-     * <p/>
+     * <p>
      * This is a two element array, containing {g^v, r} for x2.
      */
     private final BigInteger[] knowledgeProofForX2;

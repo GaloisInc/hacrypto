@@ -32,7 +32,7 @@ public class GMSSParameters
 
     /**
      * The constructor for the parameters of the GMSSKeyPairGenerator.
-     * <p/>
+     * <p>
      *
      * @param layers              the number of authentication tree layers
      * @param heightOfTrees       the height of the authentication trees

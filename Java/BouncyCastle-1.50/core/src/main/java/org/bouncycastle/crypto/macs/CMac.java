@@ -58,7 +58,7 @@ public class CMac implements Mac
     /**
      * create a standard MAC based on a block cipher with the size of the
      * MAC been given in bits.
-     * <p/>
+     * <p>
      * Note: the size of the MAC must be at least 24 bits (FIPS Publication 81),
      * or 16 bits if being used as a data authenticator (FIPS Publication 113),
      * and in general should be less than the size of the block cipher as it reduces

@@ -12,7 +12,7 @@ import org.bouncycastle.asn1.x500.X500Name;
 
 /**
  * Parsing and encoding of a <i>CertificateRequest</i> struct from RFC 4346.
- * <p/>
+ * <p>
  * <pre>
  * struct {
  *     ClientCertificateType certificate_types<1..2^8-1>;

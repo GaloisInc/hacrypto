@@ -15,7 +15,7 @@ import org.bouncycastle.asn1.DEROctetString;
 
 /**
  * an iso7816Certificate structure.
- * <p/>
+ * <p>
  * <pre>
  *  Certificate ::= SEQUENCE {
  *      CertificateBody         Iso7816CertificateBody,

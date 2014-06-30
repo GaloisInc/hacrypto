@@ -54,7 +54,7 @@ import org.bouncycastle.asn1.DERTaggedObject;
  *       ELSE version MUST be 1
  * </pre>
  * <p>
- * @todo Check possible update for this to RFC 5652 level
+ * todo Check possible update for this to RFC 5652 level
  */
 public class SignedData
     extends ASN1Object

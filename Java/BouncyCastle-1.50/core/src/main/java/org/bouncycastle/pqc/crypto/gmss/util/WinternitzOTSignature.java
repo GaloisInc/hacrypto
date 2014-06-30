@@ -50,7 +50,7 @@ public class WinternitzOTSignature
     /**
      * The constructor generates an OTS key pair, using <code>seed0</code> and
      * the PRNG
-     * <p/>
+     * <p>
      *
      * @param seed0    the seed for the PRGN
      * @param digest an array of strings, containing the name of the used hash

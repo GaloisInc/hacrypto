@@ -978,7 +978,7 @@ public class PolynomialGF2mSmallM
 
     /**
      * checks if given object is equal to this polynomial.
-     * <p/>
+     * <p>
      * The method returns false whenever the given object is not polynomial over
      * GF(2^m).
      *
@@ -1045,7 +1045,7 @@ public class PolynomialGF2mSmallM
 
     /**
      * Returns a human readable form of the polynomial.
-     * <p/>
+     * <p>
      *
      * @return a human readable form of the polynomial.
      */

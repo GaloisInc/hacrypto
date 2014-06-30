@@ -75,16 +75,16 @@ public class ProcurationSyntax
 
     /**
      * Constructor from ASN1Sequence.
-     * <p/>
+     * <p>
      * The sequence is of type ProcurationSyntax:
-     * <p/>
+     * <p>
      * <pre>
      *               ProcurationSyntax ::= SEQUENCE {
      *                 country [1] EXPLICIT PrintableString(SIZE(2)) OPTIONAL,
      *                 typeOfSubstitution [2] EXPLICIT DirectoryString (SIZE(1..128)) OPTIONAL,
      *                 signingFor [3] EXPLICIT SigningFor
      *               }
-     * <p/>
+     * <p>
      *               SigningFor ::= CHOICE
      *               {
      *                 thirdPerson GeneralName,
@@ -132,8 +132,8 @@ public class ProcurationSyntax
 
     /**
      * Constructor from a given details.
-     * <p/>
-     * <p/>
+     * <p>
+     * <p>
      * Either <code>generalName</code> or <code>certRef</code> MUST be
      * <code>null</code>.
      *
@@ -154,8 +154,8 @@ public class ProcurationSyntax
 
     /**
      * Constructor from a given details.
-     * <p/>
-     * <p/>
+     * <p>
+     * <p>
      * Either <code>generalName</code> or <code>certRef</code> MUST be
      * <code>null</code>.
      *
@@ -196,16 +196,16 @@ public class ProcurationSyntax
 
     /**
      * Produce an object suitable for an ASN1OutputStream.
-     * <p/>
+     * <p>
      * Returns:
-     * <p/>
+     * <p>
      * <pre>
      *               ProcurationSyntax ::= SEQUENCE {
      *                 country [1] EXPLICIT PrintableString(SIZE(2)) OPTIONAL,
      *                 typeOfSubstitution [2] EXPLICIT DirectoryString (SIZE(1..128)) OPTIONAL,
      *                 signingFor [3] EXPLICIT SigningFor
      *               }
-     * <p/>
+     * <p>
      *               SigningFor ::= CHOICE
      *               {
      *                 thirdPerson GeneralName,

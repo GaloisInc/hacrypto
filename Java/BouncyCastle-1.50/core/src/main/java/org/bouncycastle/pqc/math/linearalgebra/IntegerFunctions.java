@@ -38,7 +38,7 @@ public final class IntegerFunctions
      * Computes the value of the Jacobi symbol (A|B). The following properties
      * hold for the Jacobi symbol which makes it a very efficient way to
      * evaluate the Legendre symbol
-     * <p/>
+     * <p>
      * (A|B) = 0 IF gcd(A,B) > 1<br>
      * (-1|B) = 1 IF n = 1 (mod 1)<br>
      * (-1|B) = -1 IF n = 3 (mod 4)<br>
@@ -47,7 +47,7 @@ public final class IntegerFunctions
      * (A|B) = (C|B) IF A = C (mod B)<br>
      * (2|B) = 1 IF N = 1 OR 7 (mod 8)<br>
      * (2|B) = 1 IF N = 3 OR 5 (mod 8)
-     * <p/>
+     * <p>
      *
      * @param A integer value
      * @param B integer value

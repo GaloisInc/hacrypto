@@ -11,7 +11,7 @@ import org.bouncycastle.asn1.ASN1Primitive;
 
 /**
  * Parsing and encoding of a <i>Certificate</i> struct from RFC 4346.
- * <p/>
+ * <p>
  * <pre>
  * opaque ASN.1Cert<2^24-1>;
  *

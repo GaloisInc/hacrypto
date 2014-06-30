@@ -17,11 +17,11 @@ import org.bouncycastle.asn1.DERSequence;
  * since January 1, 2004. For the sake of backward compatibility with
  * certificates already in use, components SHOULD support MonetaryLimit (as well
  * as QcEuLimitValue).
- * <p/>
+ * <p>
  * Indicates a monetary limit within which the certificate holder is authorized
  * to act. (This value DOES NOT express a limit on the liability of the
  * certification authority).
- * <p/>
+ * <p>
  * <pre>
  *    MonetaryLimitSyntax ::= SEQUENCE
  *    {
@@ -30,9 +30,9 @@ import org.bouncycastle.asn1.DERSequence;
  *      exponent INTEGER
  *    }
  * </pre>
- * <p/>
+ * <p>
  * currency must be the ISO code.
- * <p/>
+ * <p>
  * value = amount�10*exponent
  */
 public class MonetaryLimit
@@ -72,8 +72,8 @@ public class MonetaryLimit
 
     /**
      * Constructor from a given details.
-     * <p/>
-     * <p/>
+     * <p>
+     * <p>
      * value = amount�10^exponent
      *
      * @param currency The currency. Must be the ISO code.
@@ -104,9 +104,9 @@ public class MonetaryLimit
 
     /**
      * Produce an object suitable for an ASN1OutputStream.
-     * <p/>
+     * <p>
      * Returns:
-     * <p/>
+     * <p>
      * <pre>
      *    MonetaryLimitSyntax ::= SEQUENCE
      *    {

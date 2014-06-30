@@ -15,7 +15,7 @@ import org.bouncycastle.util.Integers;
 
 /**
  * Parameters for the Skein hash function - a series of byte[] strings identified by integer tags.
- * <p/>
+ * <p>
  * Parameterised Skein can be used for:
  * <ul>
  * <li>MAC generation, by providing a {@link SkeinParameters.Builder#setKey(byte[]) key}.</li>
@@ -177,7 +177,7 @@ public class SkeinParameters
          * Sets a parameters to apply to the Skein hash function.<br>
          * Parameter types must be in the range 0,5..62, and cannot use the value {@value
          * SkeinParameters#PARAM_TYPE_MESSAGE} (reserved for message body).
-         * <p/>
+         * <p>
          * Parameters with type < {@value SkeinParameters#PARAM_TYPE_MESSAGE} are processed before
          * the message content, parameters with type > {@value SkeinParameters#PARAM_TYPE_MESSAGE}
          * are processed after the message and prior to output.

@@ -23,7 +23,7 @@ public class GMac implements Mac
 
     /**
      * Creates a GMAC based on the operation of a block cipher in GCM mode.
-     * <p/>
+     * <p>
      * This will produce an authentication code the length of the block size of the cipher.
      * 
      * @param cipher

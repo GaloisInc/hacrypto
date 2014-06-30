@@ -68,9 +68,9 @@ public class CertificatePair
 
     /**
      * Constructor from ASN1Sequence.
-     * <p/>
+     * <p>
      * The sequence is of type CertificatePair:
-     * <p/>
+     * <p>
      * <pre>
      *       CertificatePair ::= SEQUENCE {
      *         forward        [0]    Certificate OPTIONAL,
@@ -123,9 +123,9 @@ public class CertificatePair
 
     /**
      * Produce an object suitable for an ASN1OutputStream.
-     * <p/>
+     * <p>
      * Returns:
-     * <p/>
+     * <p>
      * <pre>
      *       CertificatePair ::= SEQUENCE {
      *         forward        [0]    Certificate OPTIONAL,
