@@ -1,0 +1,32 @@
+digraph "System: HACRYPTO_SYSTEM" {
+
+//Classes
+"SHA_512" [shape=octagon,comment="Class: SHA_512"];
+"NUMBER" [shape=octagon,comment="Class: NUMBER"];
+"FLOAT" [shape=octagon,comment="Class: FLOAT"];
+"SHA_256" [shape=octagon,comment="Class: SHA_256"];
+"ARRAY" [shape=octagon,comment="Class: ARRAY"];
+"SET" [shape=octagon,comment="Class: SET"];
+"SHA_224" [shape=octagon,comment="Class: SHA_224"];
+"VALUE" [shape=octagon,comment="Class: VALUE"];
+"ANY" [shape=octagon,comment="Class: ANY"];
+"SHA_1" [shape=octagon,comment="Class: SHA_1"];
+"BOOLEAN" [shape=octagon,comment="Class: BOOLEAN"];
+"TUPLE" [shape=octagon,comment="Class: TUPLE"];
+"HASH" [shape=octagon,comment="Class: HASH"];
+"TABLE" [shape=octagon,comment="Class: TABLE"];
+"STRING" [shape=octagon,comment="Class: STRING"];
+"TREE" [shape=octagon,comment="Class: TREE"];
+"FILE" [shape=octagon,comment="Class: FILE"];
+"LIST" [shape=octagon,comment="Class: LIST"];
+"SHA_384" [shape=octagon,comment="Class: SHA_384"];
+"INTEGER" [shape=octagon,comment="Class: INTEGER"];
+
+//Class inheritance links
+"VALUE" -> "NUMBER";
+"NUMBER" -> "BOOLEAN";
+"NUMBER" -> "INTEGER";
+"NUMBER" -> "FLOAT";
+"VALUE" -> "STRING";
+
+}

@@ -1,0 +1,711 @@
+Graphing...
+XML graph: 
+
+<tree>
+  <declarations>
+    <attributeDecl name="name" type="String"/>
+    <attributeDecl name="cluster" type="Boolean"/>
+    <attributeDecl name="class" type="Boolean"/>
+    <attributeDecl name="system" type="Boolean"/>
+  </declarations>
+  <branch>
+    <attribute name="name" value="HACRYPTO_SYSTEM"/>
+    <attribute name="system" value="true"/>
+    <branch>
+      <attribute name="name" value="CORE_CONCEPTS"/>
+      <attribute name="cluster" value="true"/>
+      <branch>
+        <attribute name="name" value="ALGORITHM_DESIGNS"/>
+        <attribute name="cluster" value="true"/>
+        <leaf>
+          <attribute name="name" value="AVALANCHE_EFFECT"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="BLOCK_SIZE"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="DISCRETE_LOGARITHM"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="ELLIPTIC_CURVE_CRYPTOGRAPHY"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="FEISTEL_NETWORK"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="KEY_SCHEDULE"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="KEY_SIZE"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="KEY_WHITENING"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="LAI_MASSEY_SCHEME"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="PRODUCT_CIPHER"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="P_BOX"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="SPN"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="S_BOX"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+      </branch>
+      <branch>
+        <attribute name="name" value="AUTHENTICATED_ENCRYPTION_MODES"/>
+        <attribute name="cluster" value="true"/>
+        <leaf>
+          <attribute name="name" value="CCM"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="CWC"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="EAX"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="GCM"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="IAPM"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="OCB"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+      </branch>
+      <branch>
+        <attribute name="name" value="STANDARDIZATION"/>
+        <attribute name="cluster" value="true"/>
+        <leaf>
+          <attribute name="name" value="FIPS"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="SUITE_B"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+      </branch>
+      <leaf>
+        <attribute name="name" value="CIPHER"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="CODE"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="HASH"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="MODE"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="SALT"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+    </branch>
+    <branch>
+      <attribute name="name" value="THREATS"/>
+      <attribute name="cluster" value="true"/>
+      <branch>
+        <attribute name="name" value="BLOCK_CIPHER_ATTACKS"/>
+        <attribute name="cluster" value="true"/>
+        <leaf>
+          <attribute name="name" value="BOOMERANG"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="DAVIES"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="DIFFERENTIAL"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="DIFFERENTIAL_LINEAR"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="INTEGRAL"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="INTERPOLATION"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="LINEAR"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="PARTITIONING"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="REBOUND"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="ROTATIONAL"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="SLIDE"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="TIMING"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="WEAK_KEY"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="XSL"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+      </branch>
+      <branch>
+        <attribute name="name" value="GENERAL_ATTACKS"/>
+        <attribute name="cluster" value="true"/>
+        <leaf>
+          <attribute name="name" value="BRUTE_FORCE"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="MAN_IN_THE_MIDDLE"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+      </branch>
+      <branch>
+        <attribute name="name" value="HASH_ATTACKS"/>
+        <attribute name="cluster" value="true"/>
+        <leaf>
+          <attribute name="name" value="BIRTHDAY"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="COLLISION"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="DISTINGUISHING"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="LENGTH_EXTENSION"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="PREIMAGE"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="RAINBOW"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="SIDE_CHANNEL"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+      </branch>
+    </branch>
+    <branch>
+      <attribute name="name" value="CRYPTOGRAPHIC_KEY_CONCEPTS"/>
+      <attribute name="cluster" value="true"/>
+      <branch>
+        <attribute name="name" value="KEY_DERIVATION_FUNCTIONS"/>
+        <attribute name="cluster" value="true"/>
+        <leaf>
+          <attribute name="name" value="BCRYPT"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="PBKDF_2"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="SCRIPT"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+      </branch>
+      <branch>
+        <attribute name="name" value="KEY_EXCHANGE"/>
+        <attribute name="cluster" value="true"/>
+        <leaf>
+          <attribute name="name" value="KEY_EXCHANGE"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="NEEDHAM_SCHROEDER"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="PSEC_KEM"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="RSA_KEM"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+      </branch>
+      <branch>
+        <attribute name="name" value="KEY_MANAGEMENT"/>
+        <attribute name="cluster" value="true"/>
+        <leaf>
+          <attribute name="name" value="PKI"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="X509"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+      </branch>
+      <leaf>
+        <attribute name="name" value="KEY"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="KEY_DERIVATION"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="KEY_STRETCHING"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+    </branch>
+    <branch>
+      <attribute name="name" value="CIPHERS"/>
+      <attribute name="cluster" value="true"/>
+      <branch>
+        <attribute name="name" value="BLOCK_CIPHER_MODES"/>
+        <attribute name="cluster" value="true"/>
+        <leaf>
+          <attribute name="name" value="CBC"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="CFB"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="CTR"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="ECB"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="OFB"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="PCBC"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+      </branch>
+      <branch>
+        <attribute name="name" value="PUBLIC_KEY_CRYPTOGRAPHY"/>
+        <attribute name="cluster" value="true"/>
+        <branch>
+          <attribute name="name" value="PUBLIC_KEY_ALGORITHMS"/>
+          <attribute name="cluster" value="true"/>
+          <leaf>
+            <attribute name="name" value="CRAMER_SHOUP"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+          <leaf>
+            <attribute name="name" value="DIFFIE_HELLMAN"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+          <leaf>
+            <attribute name="name" value="DSA"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+          <leaf>
+            <attribute name="name" value="DSS"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+          <leaf>
+            <attribute name="name" value="ELGAMAL"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+          <leaf>
+            <attribute name="name" value="PAILLIER"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+          <leaf>
+            <attribute name="name" value="RSA"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+        </branch>
+        <branch>
+          <attribute name="name" value="PUBLIC_KEY_IMPLEMENTATIONS"/>
+          <attribute name="cluster" value="true"/>
+          <leaf>
+            <attribute name="name" value="GPG"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+          <leaf>
+            <attribute name="name" value="OTR"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+          <leaf>
+            <attribute name="name" value="PGP"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+        </branch>
+        <leaf>
+          <attribute name="name" value="FINGERPRINT"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="PRIVATE_KEY"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="PUBLIC_KEY"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+      </branch>
+      <branch>
+        <attribute name="name" value="SYMMETRIC_CIPHERS"/>
+        <attribute name="cluster" value="true"/>
+        <leaf>
+          <attribute name="name" value="AES"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="BLOWFISH"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="CAMELLIA"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="CAST_128"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="DES"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="IDEA"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="RC2"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="RC5"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="RC6"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="SEED"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="SERPENT"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="SKIPJACK"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="TEA"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="TRIPLE_DES"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="TWOFISH"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="XTEA"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+      </branch>
+      <leaf>
+        <attribute name="name" value="ASYMMETRIC_CIPHER"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="BLOCK_CIPHER"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="STREAM_CIPHER"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="SYMMETRIC_CIPHER"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+    </branch>
+    <branch>
+      <attribute name="name" value="TEXT"/>
+      <attribute name="cluster" value="true"/>
+      <branch>
+        <attribute name="name" value="PADDING"/>
+        <attribute name="cluster" value="true"/>
+        <leaf>
+          <attribute name="name" value="OAEP"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="RSA_OAEP"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+      </branch>
+      <leaf>
+        <attribute name="name" value="BLOCK"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="CIPHERTEXT"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="KEYSTREAM"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="PLAINTEXT"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="STREAM"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+    </branch>
+    <branch>
+      <attribute name="name" value="SIGNATURES"/>
+      <attribute name="cluster" value="true"/>
+      <leaf>
+        <attribute name="name" value="DIGITAL_SIGNATURE"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="SCHNORR_SIGNATURE"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="SIGNATURE"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+    </branch>
+    <branch>
+      <attribute name="name" value="HASHES"/>
+      <attribute name="cluster" value="true"/>
+      <branch>
+        <attribute name="name" value="HASH_DESIGNS"/>
+        <attribute name="cluster" value="true"/>
+        <leaf>
+          <attribute name="name" value="AVALANCHE_EFFECT"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="HASH_CHAIN"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="HASH_COLLISION"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="MERKLE_DAMGAARD_CONSTRUCTION"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+      </branch>
+      <branch>
+        <attribute name="name" value="HASH_STANDARDIZATION"/>
+        <attribute name="cluster" value="true"/>
+        <leaf>
+          <attribute name="name" value="CRYPTREC"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="NESSIE"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="NIST_HASH_FUNCTION_COMPETITION"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+      </branch>
+      <branch>
+        <attribute name="name" value="MD_FAMILY"/>
+        <attribute name="cluster" value="true"/>
+        <leaf>
+          <attribute name="name" value="MD2"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="MD4"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="MD5"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="MD6"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+      </branch>
+      <branch>
+        <attribute name="name" value="SHA_FAMILY"/>
+        <attribute name="cluster" value="true"/>
+        <branch>
+          <attribute name="name" value="SHA_1_FAMILY"/>
+          <attribute name="cluster" value="true"/>
+          <leaf>
+            <attribute name="name" value="SHA_1"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+        </branch>
+        <branch>
+          <attribute name="name" value="SHA_2_FAMILY"/>
+          <attribute name="cluster" value="true"/>
+          <leaf>
+            <attribute name="name" value="SHA_224"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+          <leaf>
+            <attribute name="name" value="SHA_256"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+          <leaf>
+            <attribute name="name" value="SHA_384"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+          <leaf>
+            <attribute name="name" value="SHA_512"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+        </branch>
+        <branch>
+          <attribute name="name" value="SHA_3_FAMILY"/>
+          <attribute name="cluster" value="true"/>
+        </branch>
+        <branch>
+          <attribute name="name" value="SHA_3_FINALISTS"/>
+          <attribute name="cluster" value="true"/>
+          <leaf>
+            <attribute name="name" value="BLAKE"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+          <leaf>
+            <attribute name="name" value="GROSTL"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+          <leaf>
+            <attribute name="name" value="JH"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+          <leaf>
+            <attribute name="name" value="KECCAK"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+          <leaf>
+            <attribute name="name" value="SKEIN"/>
+            <attribute name="class" value="true"/>
+          </leaf>
+        </branch>
+        <leaf>
+          <attribute name="name" value="SHACAL_2"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="SHA_2"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+        <leaf>
+          <attribute name="name" value="SHA_3"/>
+          <attribute name="class" value="true"/>
+        </leaf>
+      </branch>
+      <leaf>
+        <attribute name="name" value="CRYPT"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="DES"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="RIPEMD_160"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="WHIRLPOOL"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+    </branch>
+    <branch>
+      <attribute name="name" value="MESSAGE_AUTHENTICATION"/>
+      <attribute name="cluster" value="true"/>
+      <leaf>
+        <attribute name="name" value="EMAC"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="HMAC"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="MAC"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="TTMAC"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+      <leaf>
+        <attribute name="name" value="UMAC"/>
+        <attribute name="class" value="true"/>
+      </leaf>
+    </branch>
+  </branch>
+</tree>
