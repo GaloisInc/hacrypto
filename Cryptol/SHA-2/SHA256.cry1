@@ -1,5 +1,16 @@
+// Copyright (c) 2007-2014, Galois, Inc.
+//
+// Author: Sigbjorn Finne
+
 // Based on spec in FIPS180-2 doc:
 //  http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
+
+// @kiniry 8 July 2014
+// This is a Cryptol version 1 specification of SHA-256 that we are
+// keeping for historical reasons.  It was used to generate a C 
+// version of SHA-256 that we use as another case study for our
+// High Assurance Crypto experiments.
+// https://github.com/GaloisInc/hacrypto
 
 sha256 : {a} (64 >= width(a*8), 512*((a+72)/64)-8*a >= 65) => [a][8] -> [256];
 sha256 msg = join(reverse(Hs@(width(Hs)-1)))

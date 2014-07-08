@@ -1,5 +1,17 @@
+// Copyright (c) 2007-2014, Galois, Inc.
+//
+// Author: Sigbjorn Finne, Dylan McNamee, Joe Kiniry, Joey Dodds
+
 // Based on spec in FIPS180-2 doc:
 //  http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
+
+// @kiniry 8 July 2014
+// This is a---munged by Dylan, Joe K. and Joey---version of the Cryptol 
+// version 1 specification of SHA-256 that we are keeping for historical 
+// reasons.  It is a partial conversion to Cryptol 2 of the original
+// ugly SHA256 from Sigbjorn.  We have not finished with endian conversion
+// nor do we have any certainty that the spec is right; it only typechecks.
+// https://github.com/GaloisInc/hacrypto
 
 sha256 : {a} (64 >= width (a * 8),
               512 * ((a + 72) / 64) - 8 * a >= 65) =>
