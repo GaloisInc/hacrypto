@@ -9,7 +9,8 @@
 
 //little endian machine
 #define IS_LITTLE_ENDIAN 1
-
+//asm swap should be on for analyses that can't reason about assembly
+#define ASM_SWAP 0
 //ports
 #define PORT_Alloc(size) malloc(size)
 #define PORT_New(type) (type*)PORT_Alloc(sizeof(type))
@@ -90,6 +91,45 @@ static const PRUint32 H256[8] = {
 };
 
 
+static inline void be32enc(void *pp, PRUint32 x)
+{
+    PRUint8 * p = (PRUint8 *)pp;
+
+    p[3] = x & 0xff;
+    p[2] = (x >> 8) & 0xff;
+    p[1] = (x >> 16) & 0xff;
+    p[0] = (x >> 24) & 0xff;
+}
+
+static void
+be32enc_vect(unsigned char *dst, const PRUint32 *src, size_t len)
+{
+    size_t i;
+
+    for (i = 0; i < len / 4; i++) {
+        be32enc(dst + i * 4, src[i]);
+    }
+}
+
+static void be32enc_vect_inplace(PRUint32 *src, size_t len){
+    size_t i;
+    PRUint32 tmp;
+    void *pt;
+
+    for(i=0; i<len/4; i++){
+	/*be32enc(&tmp, src[i]);
+	*pt = pt + 4;
+	pt=tmp;*/
+    }	
+}
+
+#define HOST_c2l(c,l)	(l =(((unsigned long)(*((c)++)))<<24),		\
+			 l|=(((unsigned long)(*((c)++)))<<16),		\
+			 l|=(((unsigned long)(*((c)++)))<< 8),		\
+			 l|=(((unsigned long)(*((c)++)))    ),		\
+			 l)
+
+
 static __inline__ PRUint32 swap4b(PRUint32 value)
 {
     __asm__("bswap %0" : "+r" (value));
@@ -144,6 +184,9 @@ SHA256_Compress(SHA256Context *ctx)
     register PRUint32 t1, t2;
 
 #if defined(IS_LITTLE_ENDIAN)
+#if !ASM_SWAP
+    be32enc_vect_inplace(W, 64);
+#else 
     BYTESWAP4(W[0]);
     BYTESWAP4(W[1]);
     BYTESWAP4(W[2]);
@@ -160,6 +203,7 @@ SHA256_Compress(SHA256Context *ctx)
     BYTESWAP4(W[13]);
     BYTESWAP4(W[14]);
     BYTESWAP4(W[15]);
+#endif
 #endif
 
 #define INITW(t) W[t] = (s1(W[t-2]) + W[t-7] + s0(W[t-15]) + W[t-16])
@@ -405,8 +449,13 @@ SHA256_End(SHA256Context *ctx, unsigned char *digest,
     SHA256_Update_nss(ctx, pad, padLen);
 
 #if defined(IS_LITTLE_ENDIAN)
+#if !ASM_SWAP
+    be32enc(&W[14], hi);
+    be32enc(&W[15], lo);
+#else
     W[14] = SHA_HTONL(hi);
     W[15] = SHA_HTONL(lo);
+#endif
 #else
     W[14] = hi;
     W[15] = lo;
@@ -415,6 +464,9 @@ SHA256_End(SHA256Context *ctx, unsigned char *digest,
 
     /* now output the answer */
 #if defined(IS_LITTLE_ENDIAN)
+#if !ASM_SWAP
+    be32enc_vect(digest, H, 32);
+#else 
     BYTESWAP4(H[0]);
     BYTESWAP4(H[1]);
     BYTESWAP4(H[2]);
@@ -424,8 +476,11 @@ SHA256_End(SHA256Context *ctx, unsigned char *digest,
     BYTESWAP4(H[6]);
     BYTESWAP4(H[7]);
 #endif
+#endif
     padLen = PR_MIN(SHA256_LENGTH, maxDigestLen);
+#if ASM_SWAP
     memcpy(digest, H, padLen);
+#endif
     if (digestLen)
 	*digestLen = padLen;
 }

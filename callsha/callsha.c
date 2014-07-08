@@ -77,11 +77,42 @@ int try_SHA(unsigned char *input){
 	}
 }
 
+int vst_entry (){
+	unsigned char input[] = "This is a test string";
+	unsigned char result[crypto_hash_sha256_BYTES] = "";
+	
+	return sha256_VST(input, result, 21); // 21 is strlen(input)
+	
+}
+
+
+int nss_entry (){
+	unsigned char input[] = "This is a test string";
+	unsigned char result[crypto_hash_sha256_BYTES] = "";
+	
+	return sha256_NSS(input, result, 21); // 21 is strlen(input)
+	
+}
+
+int compare_vst_NSS(){
+	unsigned char input[] = "This is a test string";
+	unsigned char nss_result[crypto_hash_sha256_BYTES] = "";
+	unsigned char vst_result[crypto_hash_sha256_BYTES] = "";
+	
+	sha256_VST(input, vst_result, 21);
+	sha256_NSS(input, nss_result, 21);
+	
+	int result = compare_results(vst_result, nss_result, crypto_hash_sha256_BYTES);
+
+	return result;
+}
+
 main()
 {	
 	unsigned char input[] = "The quick brown fox jumps over the lazy dog";
 	sodium_init();
-	try_SHA(input);
+	try_SHA(input); 
+	printf("%d\n", compare_vst_NSS());
 	
   return 0;
 }
