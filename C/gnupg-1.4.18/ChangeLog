@@ -1,0 +1,733 @@
+2014-06-30  Werner Koch  <wk@gnupg.org>
+
+	Release 1.4.18.
+
+	Limit keysize for unattended key generation to useful values.
+	* g10/keygen.c (gen_elg): Enforce keysize 1024 to 4096.
+	(gen_rsa): Enforce keysize 1024 to 4096.
+	(gen_dsa): Enforce keysize 768 to 3072.
+
+	Make screening of keyserver result work with multi-key commands.
+	* g10/keyserver.c (ks_retrieval_filter_arg_s): new.
+	(keyserver_retrieval_filter): Use new struct and check all
+	descriptions.
+	(keyserver_spawn): Pass filter arg suing the new struct.
+
+2014-06-23  Werner Koch  <wk@gnupg.org>
+
+	Release 1.4.17.
+
+	doc: Update from master.
+
+	Fix syntax error introduced with 60bd6488.
+	* g10/apdu.c (pcsc_dword_t): Fix syntax error.
+
+2014-06-23  Stefan Tomanek  <tomanek@internet-sicherheit.de>
+
+	Screen keyserver responses.
+	* g10/main.h: Typedef import_filter for filter callbacks.
+	* g10/import.c (import): Add filter callbacks to param list.
+	(import_one): Ditto.
+	(import_secret_one): Ditto.
+	(import_keys_internal): Ditto.
+	(import_keys_stream): Ditto.
+	* g10/keyserver.c (keyserver_retrieval_filter): New.
+	(keyserver_spawn): Pass filter to import_keys_stream()
+
+2014-06-23  Werner Koch  <wk@gnupg.org>
+
+	Print hash algorithm in sig records.
+	* g10/keylist.c (list_keyblock_colon): Print field 16.
+
+	Remove useless diagnostic in MDC verification.
+	* g10/encr-data.c (decrypt_data): Do not distinguish between a bad MDC
+	packet header and a bad MDC.
+
+	intl: Fix for uClibc.
+	* intl/localename.c (gl_locale_name_thread_unsafe): Take care of
+	uCLIBC.
+
+	PC/SC cleanup.
+	* g10/apdu.c (pcsc_dword_t): New.  It was named as DWORD (double-word)
+	when a word was 16-bit.
+	(struct reader_table_s): Fixes for types.
+	(struct pcsc_readerstate_s) [__APPLE__]: Enable #pragma pack(1).
+	Throughout: Fixes for types.
+
+	gpg: Use more specific reason codes for INV_RECP.
+	* g10/pkclist.c (build_pk_list): Use more specific reasons codes for
+	INV_RECP.
+
+	doc: Remove outdated Russian man page.
+	* configure.ac (DOCBOOK_TO_MAN): Remove.
+	* doc/gpg.ru.sgml: Remove.
+	* doc/Makefile.am: Remove all gpg.ru related code.
+
+2014-06-20  Werner Koch  <wk@gnupg.org>
+
+	gpg: Avoid infinite loop in uncompressing garbled packets.
+	* g10/compress.c (do_uncompress): Limit the number of extra FF bytes.
+
+2014-03-06  Werner Koch  <wk@gnupg.org>
+
+	gpg: Need to init the trustdb for import.
+	* g10/trustdb.c (clear_ownertrusts): Init trustdb.
+
+2014-01-23  Werner Koch  <wk@gnupg.org>
+
+	Support building using the latest mingw-w64 toolchain.
+	* acinclude.m4 (GNUPG_SYS_SYMBOL_UNDERSCORE): Change mingw detection.
+
+2013-12-13  Werner Koch  <wk@gnupg.org>
+
+	Release 1.4.16.
+
+2013-12-11  Werner Koch  <wk@gnupg.org>
+
+	Change --show-session-key to print the session key earlier.
+	* g10/mainproc.c (proc_encrypted): Move show_session_key code to ...
+	* g10/decrypt-data.c (decrypt_data): here.
+
+2013-12-10  Werner Koch  <wk@gnupg.org>
+
+	Update config.{guess,sub} and some copyright notices.
+	* scripts/config.guess, scripts/config.sub: Update to version
+	2013-11-29.
+
+2013-12-05  Werner Koch  <wk@gnupg.org>
+
+	Prepare for newer automakes which default to parallel tests.
+	* checks/Makefile.am: Add a list of test dependencies.
+
+2013-12-03  Werner Koch  <wk@gnupg.org>
+
+	Normalize the MPIs used as input to secret key functions.
+	* cipher/rsa.c (secret): Normalize the INPUT.
+	(rsa_decrypt): Pass reduced data to secret.
+	* cipher/elgamal.c (decrypt): Normalize A and B.
+	* cipher/dsa.c (sign): Normalize HASH.
+
+	Use blinding for the RSA secret operation.
+	* cipher/random.c (randomize_mpi): New.
+	* g10/gpgv.c (randomize_mpi): New stub.
+	* cipher/rsa.c (USE_BLINDING): Define macro.
+	(secret): Implement blinding.
+
+2013-11-27  Werner Koch  <wk@gnupg.org>
+
+	gpg: Change armor Version header to emit only the major version.
+	* g10/options.h (opt): Rename field no_version to emit_version.
+	* g10/gpg.c (main): Init opt.emit_vesion to 1.  Change --emit-version
+	to bump up opt.emit_version.
+	* g10/armor.c (armor_filter): Implement different --emit-version
+	values.
+
+2013-10-18  Werner Koch  <wk@gnupg.org>
+
+	mpi: mpi-pow improvements.
+	* mpi/mpi-pow.c (USE_ALGORITHM_SIMPLE_EXPONENTIATION): New.
+	(mul_mod) [!USE_ALGORITHM_SIMPLE_EXPONENTIATION]: New.
+	(mpi_powm) [!USE_ALGORITHM_SIMPLE_EXPONENTIATION]: New implementation
+	of left-to-right k-ary exponentiation.
+
+	Print the keyid for key packets with --list-packets.
+	* g10/parse-packet.c (parse_key): Add keyid printing.
+
+2013-10-11  Werner Koch  <wk@gnupg.org>
+
+	mpi: Fix syntax error for mips64 and gcc < 4.4.
+	* mpi/longlong.h [__mips && gcc < 4.4]: Fix cpp syntax error.
+
+	gpg: Do not require a trustdb with --always-trust.
+	* g10/tdbio.c (tdbio_set_dbname): Add arg R_NOFILE.
+	* g10/trustdb.c (trustdb_args): Add field no_trustdb.
+	(init_trustdb): Set that field.
+	(revalidation_mark):  Take care of a nonexistent trustdb file.
+	(read_trust_options): Ditto.
+	(get_ownertrust): Ditto.
+	(get_min_ownertrust): Ditto.
+	(update_ownertrust): Ditto.
+	(update_min_ownertrust): Ditto.
+	(clear_ownertrusts): Ditto.
+	(cache_disabled_value): Ditto.
+	(check_trustdb_stale): Ditto.
+	(get_validity): Ditto.
+	* g10/gpg.c (main): Do not create a trustdb with most commands for
+	trust-model always.
+
+2013-10-04  Werner Koch  <wk@gnupg.org>
+
+	Release 1.4.15.
+
+	doc: Update from master.
+
+	gpg: Print a "not found" message for an unknown key in --key-edit.
+	* g10/keyedit.c (keyedit_menu): Print message.
+
+	gpg: Protect against rogue keyservers sending secret keys.
+	* g10/options.h (IMPORT_NO_SECKEY): New.
+	* g10/keyserver.c (keyserver_spawn, keyserver_import_cert): Set new
+	flag.
+	* g10/import.c (import_secret_one): Deny import if flag is set.
+
+2013-10-04  Daniel Kahn Gillmor  <dkg@fifthhorseman.net>
+
+	gpg: Allow setting of all zero key flags.
+	* g10/keygen.c (do_add_key_flags): Do not check for empty key flags.
+	(cherry picked from commit b693ec02c467696bf9d7324dd081e279f9965151)
+	(cherry picked from commit dd868acb0d13a9f119c0536777350a6c237a66a1)
+
+2013-10-04  Werner Koch  <wk@gnupg.org>
+
+	gpg: Distinguish between missing and cleared key flags.
+	* include/cipher.h (PUBKEY_USAGE_NONE): New.
+	* g10/getkey.c (parse_key_usage): Set new flag.
+
+	keyserver: Allow use of cURL's default CA store.
+	* keyserver/gpgkeys_curl.c (main): Set CURLOPT_CAINFO only if a file
+	has been given.
+	* keyserver/gpgkeys_hkp.c (main): Ditto.
+
+	gpg: Limit the nesting level of I/O filters.
+	* until/iobuf.c (MAX_NESTING_FILTER): New.
+	(iobuf_push_filter2): Limit the nesting level.
+
+2013-10-02  Werner Koch  <wk@gnupg.org>
+
+	gpg: Fix bug with deeply nested compressed packets.
+	* g10/mainproc.c (MAX_NESTING_DEPTH): New.
+	(proc_compressed): Return an error code.
+	(check_nesting): New.
+	(do_proc_packets): Check packet nesting depth.  Handle errors from
+	check_compressed.
+
+2013-09-16  Werner Koch  <wk@gnupg.org>
+
+	Fix bug in mpi_tdiv_q_2exp.
+	* mpi/mpi-internal.h (MPN_COPY_INCR): Make it work.
+
+2013-08-30  Werner Koch  <wk@gnupg.org>
+
+	gpg: Use 2048 as the default keysize in batch mode.
+	* g10/keygen.c (gen_elg, gen_dsa, gen_rsa): Set default keysize to
+	2048.
+
+2013-08-02  Werner Koch  <wk@gnupg.org>
+
+	gpg: No need to create a trustdb when encrypting with --always-trust.
+	* g10/gpg.c (main): Special case setup_trustdb for --encrypt.
+
+2013-07-25  Werner Koch  <wk@gnupg.org>
+
+	Release 1.4.14.
+
+2013-07-25  Jedi Lin  <Jedi@Jedi.org>
+
+	Update Chinese translation.
+
+2013-07-25  Werner Koch  <wk@gnupg.org>
+
+	Update to modern beta release numbering scheme.
+	* configure.ac: s/my_/mym4_/.  Add new release building code.
+
+	Prepare for a forthcoming new algorithm id.
+	* include/cipher.h (PUBKEY_ALGO_ECC): New.
+	* g10/keyid.c (pubkey_letter): Add letter 'C'.
+
+	Mitigate a flush+reload cache attack on RSA secret exponents.
+	* mpi/mpi-pow.c (mpi_powm): Always perform the mpi_mul for exponents
+	hold in secure memory.
+
+	Fix git revision parsing.
+	* configure.ac: Use git rev-parse to retrieve the revision.
+
+2013-07-16  NIIBE Yutaka  <gniibe@fsij.org>
+
+	gpg: fix previous change.
+	* g10/gpgv.c: Fix void dotlock_remove_lockfiles.
+
+2013-07-12  NIIBE Yutaka  <gniibe@fsij.org>
+
+	gpg: signal handling fix.
+	* include/dotlock.h (dotlock_remove_lockfiles_reclaim): New.
+	  (dotlock_destroy, dotlock_remove_lockfiles): Add a flag to reclaim
+	  memory or not.
+	* util/dotlock.c (dotlock_create): Use
+	  dotlock_remove_lockfiles_reclaim for atexit.
+	  (dotlock_destroy_unix, dotlock_destroy)
+	  (dotlock_remove_lockfiles): Add a reclaim flag.
+	  (dotlock_remove_lockfiles_reclaim): New.
+	* g10/signal.c (got_fatal_signal): Disable flag of reclaim memory to
+	  avoid non-async-face call.
+	* g10/keydb.c (maybe_create_keyring): Follow the API change.
+	* g10/gpgv.c: Follow the API change.
+
+2013-03-03  David Shaw  <dshaw@jabberwocky.com>
+
+	Differentiate between success (full or partial), not-found, and failure.
+	* keyserver/gpgkeys_hkp.c (get_key): Use curl_easy_setinfo to get the
+	  HTTP status code so we can tell the difference between a successful
+	  retrieval, a partial retrieval, a not-found, or a server failed.
+
+	Emulate curl_easy_getinfo and CURLINFO_RESPONSE_CODE in curl-shim.
+	* keyserver/curl-shim.h, keyserver/curl-shim.c (curl_easy_getinfo):
+	  New. Return the HTTP status code for the last transfer.
+
+2013-01-30  David Shaw  <dshaw@jabberwocky.com>
+
+	Fix DNS check for recent OS X releases.
+	* configure.ac: OS X now needs BIND_8_COMPAT and -lresolv
+
+2013-01-11  Werner Koch  <wk@gnupg.org>
+
+	Automake 1.13 compatibility fix.
+	* configure.ac: s/AM_CONFIG_HEADER/AC_CONFIG_HEADERS/.
+
+	Fix idea.c for big endian CPUs.
+	* cipher/idea.c: Replace use of WORDS_BIGENDIAN by BIG_ENDIAN_HOST.
+
+2013-01-11  Christian Aistleitner  <christian@quelltextlich.at>
+
+	Fix honoring --cert-digest-algo when recreating a cert.
+	* g10/sign.c (update_keysig_packet): Override original signature's
+	digest algo in hashed data.
+
+2012-12-20  Werner Koch  <wk@gnupg.org>
+
+	Release 1.4.13.
+
+	Last fix for the SRV record patches.
+	* keyserver/gpgkeys_hkp.c (srv_replace): Make sure SRVCOUNT is
+	always initialized.
+
+	Update manuals from master.
+	* doc/Makefile.am (update-source): Copy from Git master.
+	(update-source-from-gnupg-2): Remove.
+	* doc/gpg.texi: Fix minor typos and grammar bugs.
+	* doc/yat2m.c: Change diagnostics to updated coding standards.
+
+	Update config.{guess,sub} to version 2012-07-31.
+	* scripts/config.guess, scripts/config.sub: Update.
+
+2012-12-20  Joe Hansen  <joedalton2@yahoo.dk>
+
+	po: Update Danish translation.
+	* po/da.po: Update.
+
+2012-12-20  Werner Koch  <wk@gnupg.org>
+
+	gpg: Suppress "public key already present" in quiet mode.
+	* g10/pkclist.c (build_pk_list): Print two diagnostics only in
+	non-quiet mode.
+
+	Import only packets which are allowed in a keyblock.
+	* g10/import.c (valid_keyblock_packet): New.
+	(read_block): Store only valid packets.
+
+2012-12-19  David Shaw  <dshaw@jabberwocky.com>
+
+	Issue 1447: Pass proper Host header and SNI when SRV is used with curl.
+	* configure.ac: Check for inet_ntop.
+
+	* m4/libcurl.m4: Provide a #define for the version of the curl
+	  library.
+
+	* keyserver/gpgkeys_hkp.c (main, srv_replace): Call getaddrinfo() on
+	  each target.  Once we find one that resolves to an address (whether
+	  IPv4 or IPv6), pass it into libcurl via CURLOPT_RESOLVE using the
+	  SRV name as the "host".  Force the HTTP Host header to be the same.
+
+	Backported from 6b1f71055ebab36989e2089cfde319d2ba40ada7
+
+	* keyserver/gpgkeys_hkp.c (main): Only default try-dns-srv to on if we
+	  have SRV support in the first place.
+
+	Backported from 732f3d1d4786239db5f31f82cc04ec79326cc13c
+
+	Part of issue 1447: Pass proper Host header when SRV is used.
+	* common/http.c (send_request, connect_server): Set proper Host header
+	  (no :port, host is that of the SRV) when SRV is used in the
+	  curl-shim.
+
+	Backported from cbe98b2cb1e40ba253300e604996681ae191e363
+
+2012-12-19  Werner Koch  <wk@gnupg.org>
+
+	Fix last commit.
+	* util/http.c (connect_server): Bump SRVINDEX and not SRV.
+
+2012-12-19  David Shaw  <dshaw@jabberwocky.com>
+
+	Fix issue 1446: honor ports given in SRV responses.
+	* common/http.c (send_request, connect_server, http_open): Use a
+	  struct srv instead of a single srvtag so we can pass the chosen host
+	  and port back to the caller.
+	  (connect_server): Use the proper port in the HAVE_GETADDRINFO case.
+
+	* keyserver/curl-shim.c (curl_easy_perform): Use struct srv and log
+	  chosen host and port.
+
+	* keyserver/gpgkeys_hkp.c (main): Properly take the port given by SRV.
+
+	Backported from ba9e974f1fd85b3dbbfb5e26d7a14f71d07c7cf2
+
+2012-12-18  Werner Koch  <wk@gnupg.org>
+
+	Add meta option ignore-invalid-option.
+	* util/argparse.c (iio_item_def_s, IIO_ITEM_DEF): New.
+	(initialize): Init field IIO_LIST.
+	(ignore_invalid_option_p): New.
+	(ignore_invalid_option_add): New.
+	(ignore_invalid_option_clear): New.
+	(optfile_parse): Implement meta option.
+
+2012-12-15  Werner Koch  <wk@gnupg.org>
+
+	Fix potential heap corruption in "gpg -v --version"
+	* g10/gpg.c (build_list): Rewrite to cope with buffer overflow in
+	certain locales.
+	* util/membuf.c (put_membuf_str): New.
+	(get_membuf): Make LEN optional.
+
+2012-12-14  Werner Koch  <wk@gnupg.org>
+
+	Workaround for a gettext problem during "make distcheck".
+	* configure.ac: Add comment string "GNU gnupg".
+
+	gettext: Upgrade to version 0.18.
+	* configure.ac (AM_GNU_GETTEXT_VERSION): Bump to 0.18.
+	* po/Makefile.in.in: Upgrade to gettext-0.18.  Keep option --previous
+	of msgmerge.
+	* intl/: Upgrade to gettext-0.18.
+	* m4/gettext.m4: Upgrade to gettext-0.18.1.
+	* m4/iconv.m4: Upgrade to gettext-0.18.1.
+	* m4/lib-ld.m4: Upgrade to gettext-0.18.1.
+	* m4/lib-link.m4: Upgrade to gettext-0.18.1.
+	* m4/lib-prefix.m4: Upgrade to gettext-0.18.1.
+	* m4/nls.m4: Upgrade to gettext-0.18.1.
+	* m4/po.m4: Upgrade to gettext-0.18.1.
+	* m4/progtest.m4: Upgrade to gettext-0.18.1.
+	* m4/codeset.m4: Upgrade to gettext-0.18.1.
+	* m4/fcntl-o.m4: New file, from gettext-0.18.1.
+	* m4/glibc2.m4: Upgrade to gettext-0.18.1.
+	* m4/glibc21.m4: Upgrade to gettext-0.18.1.
+	* m4/intdiv0.m4: Upgrade to gettext-0.18.1.
+	* m4/intl.m4: Upgrade to gettext-0.18.1.
+	* m4/intldir.m4: Upgrade to gettext-0.18.1.
+	* m4/intlmacosx.m4: Upgrade to gettext-0.18.1.
+	* m4/intmax.m4: Upgrade to gettext-0.18.1.
+	* m4/inttypes_h.m4: Upgrade to gettext-0.18.1.
+	* m4/inttypes-pri.m4: Upgrade to gettext-0.18.1.
+	* m4/lcmessage.m4: Upgrade to gettext-0.18.1.
+	* m4/lock.m4: Upgrade to gettext-0.18.1.
+	* m4/longlong.m4: Upgrade to gettext-0.18.1.
+	* m4/printf-posix.m4: Upgrade to gettext-0.18.1.
+	* m4/size_max.m4: Upgrade to gettext-0.18.1.
+	* m4/stdint_h.m4: Upgrade to gettext-0.18.1.
+	* m4/threadlib.m4: New file, from gettext-0.18.1.
+	* m4/uintmax_t.m4: Upgrade to gettext-0.18.1.
+	* m4/visibility.m4: Upgrade to gettext-0.18.1.
+	* m4/wchar_t.m4: Upgrade to gettext-0.18.1.
+	* m4/wint_t.m4: Upgrade to gettext-0.18.1.
+	* m4/xsize.m4: Upgrade to gettext-0.18.1.
+	* m4/Makefile.am (EXTRA_DIST): Add the new files.
+
+2012-12-13  Werner Koch  <wk@gnupg.org>
+
+	Support NetBSD m68K ELF targets.
+	* mpi/config.links (m68k*-*-netbsdelf): New.
+
+2012-12-13  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Card: Fix the process of writing key or generating key.
+	* g10/app-openpgp.c (store_fpr): Flush KEY-FPR and KEY-TIME.
+
+2012-11-30  David Shaw  <dshaw@jabberwocky.com>
+
+	Fix mksamplekeys awk to not leave out the whitespace altogether.
+
+	Refresh sample keys.
+	* mksamplekeys: Tweak awk script to not add trailing whitespace to
+	  blank lines (makes git pre-commit hook unhappy).
+
+	* samplekeys.asc: Refresh.
+
+2012-11-29  David Shaw  <dshaw@jabberwocky.com>
+
+	The keyserver search menu should honor --keyid-format.
+	* keyserver.c (print_keyrec): Honor --keyid-format when getting back
+	  full fingerprints from the keyserver (the comment in the code was
+	  correct, the code was not).
+
+2012-11-08  Werner Koch  <wk@gnupg.org>
+
+	tests: Skip secret key import check in SELinux mode.
+	* configure.ac (ENABLE_SELINUX_HACKS): New am_conditional.
+	* checks/Makefile.am (prepared.stamp): Replace by defs-config.inc.
+	(defs-config.inc): Create and set enable_selinux_hacks variable.
+	* checks/defs.inc: Include defs-config.inc.
+
+	* checks/armor.test: Do not run the last test in selinux mode.
+
+	GnuPG-bug-id: 1390
+
+	de.po: Grammar fix.
+	* po/de.po: Grammar fix by Daniel Leidert
+
+	Create off-line card encryption key with the right size.
+	* g10/keygen.c (gen_card_key_with_backup): Get the size of the key
+	from the card.
+
+	Support the not anymore patented IDEA cipher algorithm.
+	* cipher/idea.c: New.  Take from Libgcrypt master and adjust for
+	direct use in GnuPG.
+	* cipher/idea-stub.c: Remove.
+	* cipher/Makefile.am: Add idea.c and remove idea-stub.c rules.
+	* configure.ac: Remove idea-stub code.
+	* g10/gpg.c (check_permissions): Remove code path for ITEM==2.
+	(main): Make --load-extension a dummy option.
+	* g10/keygen.c (keygen_set_std_prefs): Include IDEA only in PGP2
+	compatibility mode.
+	* g10/misc.c (idea_cipher_warn): Remove.  Also remove all callers.
+	* g10/seckey-cert.c (do_check): Remove emitting of STATUS_RSA_OR_IDEA.
+	* g10/status.c (get_status_string): Remove STATUS_RSA_OR_IDEA.
+	* g10/status.h (STATUS_RSA_OR_IDEA): Remove.
+
+2012-11-07  Werner Koch  <wk@gnupg.org>
+
+	Fix usage of dlerror to conform to POSIX.
+	* cipher/idea-stub.c: Clear last error before dlsym.
+
+	Improve handling of random_seed read errors.
+	* cipher/random.c (read_seed_file): Distinguish between errors and
+	short reads.
+
+2012-11-06  Thomas Klausner  <wiz@NetBSD.org>
+
+	Handle systems which have uint64_t but not the UINT64_C macro.
+	* include/types.h (U64_C) [!UINT64_C]: Add simple replacement.
+
+2012-11-06  Werner Koch  <wk@gnupg.org>
+
+	Fix extern inline use for gcc > 4.3 in c99 mode.
+	* mpi/mpi-inline.h [!G10_MPI_INLINE_DECL]: Take care of changed extern
+	inline semantics in gcc.
+
+2012-08-24  Werner Koch  <wk@gnupg.org>
+
+	Update translations to adjust for typo fixes.
+
+2012-08-24  David Prévot  <taffit@debian.org>
+
+	Update French translation.
+	* po/fr.po: Update.
+
+2012-08-24  Werner Koch  <wk@gnupg.org>
+
+	Fix typos spotted during translations.
+	* g10/gpg.c: uppercase after Syntax
+	* util/secmem.c (print_warn): Update URL.
+
+2012-08-24  David Prévot  <taffit@debian.org>
+
+	Keep previous msgids of translated messages.
+	* po/Makefile.in.in: Use option --previous with msgmerge.
+
+2012-04-29  Werner Koch  <wk@gnupg.org>
+
+	With --quiet do not print reading passphrase from fd message.
+	Fix for bug#1403.
+	* g10/passphrase.c (read_passphrase_from_fd): Act on --quiet.
+
+2012-02-01  David Shaw  <dshaw@jabberwocky.com>
+
+	Honor --cert-digest-algo when recreating a cert.
+	* g10/sign.c (update_keysig_packet): Honor --cert-digest-algo when
+	  recreating a cert.
+
+	This is used by various things in --edit-key like setpref, primary,
+	etc.  Suggested by Christian Aistleitner.
+
+2012-01-30  Werner Koch  <wk@gnupg.org>
+
+	Release 1.4.12.
+
+	Fix ChangeLog creation rule.
+	* Makefile.am (gen-ChangeLog): Use set -e.  Fixes commit b99e77d5.
+
+	Add Ukrainian translation.
+	* po/uk.po: New.
+	* po/LINGUAS: Add uk.po.
+
+	Update GNU helper files.
+	* scripts/config.guess, scripts/config.rpath: Update to version
+	2012-01-01.
+	* scripts/config.rpath, scripts/compile, scripts/depcomp: Update to
+	modern version.
+	* scripts/texinfo.tex: Update from current gnulib.
+
+	Update documentation.
+	* doc/gpg.texi, doc/specify-user-id.texi, doc/yat2m.c: Update from
+	current GnuPG master (commit bdde44a).
+
+	Require gitlog-to-changelog to be installed.
+	* Makefile.am (GITLOG_TO_CHANGELOG): New.
+	(gen-ChangeLog): Use installed version of gitlog-to-changelog.
+
+2012-01-20  Werner Koch  <wk@gnupg.org>
+
+	Do not copy default merge commit log entries into the ChangeLog.
+	* scripts/gitlog-to-changelog: Skip merge commits.
+
+2012-01-20  David Shaw  <dshaw@jabberwocky.com>
+
+	Changes to --min-cert-level should cause a trustdb rebuild (issue 1366)
+	* g10/gpgv.c, g10/trustdb.c (read_trust_options): Add min_cert_level
+
+	* g10/trustdb.c (check_trustdb_stale): Request a rebuild if
+	  pending_check_trustdb is true (set when we detect a trustdb
+	  parameter has changed).
+
+	* g10/keylist.c (public_key_list): Use 'l' in the "tru" with-colons
+	  listing for min_cert_level not matching.
+
+	* g10/tdbio.c (tdbio_update_version_record, create_version_record,
+	  tdbio_db_matches_options, tdbio_dump_record, tdbio_read_record,
+	  tdbio_write_record): Add a byte for min_cert_level in the tdbio
+	  version record.
+
+2012-01-16  Werner Koch  <wk@gnupg.org>
+
+	w32: Always build with -fno-omit-frame-pointer.
+	This is required due to a bug in the mingw32 runtime.
+	* configure.ac (HAVE_W32_SYSTEM): Force use of -fno-omit-frame-pointer.
+
+	w32: Allow passing a relative name for the tarball.
+	* scripts/mk-w32-dist: Prepend PWD to TARBALL.
+
+	Automate W32 installer building.
+	* doc/README.W32: Document new installer build procedure.
+	* scripts/autogen.sh: Pass all args to the installer (regression fix).
+	* scripts/conf-w32/README: Remove from repo.
+	* scripts/conf-w32/bzip2-1.diff: Remove from repo.
+	* scripts/mk-w32-dist: Rewrite.
+	* scripts/w32installer.nsi [WITH_PATCHES]: Use constant patch file
+	name.
+
+2012-01-13  Werner Koch  <wk@gnupg.org>
+
+	Add a DECRYPTION_INFO status.
+	* g10/status.h (STATUS_DECRYPTION_INFO): New.
+	* g10/status.c (get_status_string): Add new status string.
+	* g10/encr-data.c: Include status.h.
+	(decrypt_data): Print STATUS_DECRYPTION_INFO.
+
+	Include bzip2 code to ease building for W32.
+	* bzlib/: Include bzip2 code.
+	* configure.ac [W32]: Force use of included bzip2 code.
+	* scripts/autogen.sh <--build-w32>: Do not pass --with-bzip option.
+	* Makefile.am (SUBDIRS): Add bzip.  Use it only under W32.
+
+2012-01-12  Werner Koch  <wk@gnupg.org>
+
+	Allow building with the 32 bit mingw-w64 toolchain.
+	* scripts/autogen.sh <--build-w32>: Support i686-w64-mingw32 and use
+	it by default if installed.
+	* keyserver/gpgkeys_ldap.c (my_ldap_start_tls_s): Define macro
+	depending on compiler version.
+	(main): Use new macro.
+	* util/miscutil.c [!HAVE_TIMEGM]: Add prototype for the timegm
+	autoconf replacement function.
+
+	gpg: Remove unused fields from a trust data structure.
+	The functions tdbio_read_record and tdbio_write_record control the
+	actual on-disk format.  Thus there is no need to keep reserved fields
+	in the internal data structure.
+
+	* g10/tdbio.h (struct trust_record): Remove reserved fields.
+
+	Typo fixes and comment re-formatting.
+
+2012-01-11  David Shaw  <dshaw@jabberwocky.com>
+
+	Distribute dotlock.h.
+
+2012-01-10  David Shaw  <dshaw@jabberwocky.com>
+
+	Refresh sample keys.
+
+2012-01-10  Werner Koch  <wk@gnupg.org>
+
+	Allow use of a standard space separated fingerprint.
+	We allow a single or a double space in the middle of the fingerprint
+	to help with c+p fingerprints from an HTML pages which are not being
+	enclosed in a "pre" tag.
+	* g10/getkey.c (classify_user_id): Check for space separated GPG
+	fingerprint.
+
+	Replace file locking by the new portable dotlock code.
+	* include/dotlock.h: New.  From current gnupg master.
+	* util/dotlock.c: Ditto.  Include util.h.  The major changes done in
+	master are: Factor Unix and W32 specific code out into specific
+	functions.  Define HAVE_POSIX_SYSTEM.  Rearrange some functions.
+	(disable_dotlock): Rename to dotlock_disable.
+	(create_dotlock): Rename to dotlock_create and add a dummy arg.
+	(destroy_dotlock): Rename to dotlock_destroy.
+	(make_dotlock): Rename to dotlock_take.
+	(release_dotlock): Rename to dotlock_release.
+	(remove_lockfiles): Rename to dotlock_remove_lockfiles.
+
+	Update copyright years.
+	* util/argparse.c (default_strusage): Update printed copyright year.
+
+	Use gcc pragmas to suppress some warnings.
+	* configure.ac (AH_BOTTOM): Add GNUPG_GCC_VERSION macro.
+	* util/estream-printf.c (pr_float): Use new gcc pragma to ignore a
+	warning about a non-literal format.
+	* util/miscutil.c (asctimestamp): Ditto.
+	* cipher/md.c (md_stop_debug): Use new gcc pragme to ignore a warning
+	* about a set but unused variable.
+
+	Update gitlog-to-changelog.
+	* scripts/gitlog-to-changelog: Update from gnupg master.
+	* Makefile.am (gen-ChangeLog): Add new options.
+	* scripts/autogen.sh: Fix typo in URL.  Reported by Gilles Espinasse.
+
+2011-12-28  David Shaw  <dshaw@jabberwocky.com>
+
+	Use the longest key ID available when talking to a HKP server.
+	This is issue 1340.  Now that PKSD is dead, and SKS supports long key
+	IDs, this is safe to do.  Patch from Daniel Kahn Gillmor
+	<dkg@fifthhorseman.net>.
+
+2011-12-02  Werner Koch  <wk@gnupg.org>
+
+	Generate the ChangeLog from commit logs.
+	* scripts/gitlog-to-changelog: New script.  Taken from gnulib.
+	* scripts/git-log-fix: New file.
+	* scripts/git-log-footer: New file.
+	* scripts/git-hooks/commit-msg: New script.
+	* autogen.sh: Install commit-msg hook for git.
+	* doc/HACKING: Describe the ChangeLog policy.
+	* Makefile.am (EXTRA_DIST): Add new files.
+	(gen-ChangeLog): New.
+	(dist-hook): Run gen-ChangeLog.
+
+	Rename all ChangeLog files to ChangeLog-2011.
+	* ChangeLog: New file.
+
+2011-12-01  Werner Koch  <wk@gnupg.org>
+
+	NB: Changes done before December 1st, 2011 are described in
+	per directory files named ChangeLog-2011.  See doc/HACKING for
+	details.
+
+        -----
+	Copyright (C) 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005,
+	              2006, 2007, 2008, 2009, 2010, 2011,
+	              2012 Free Software Foundation, Inc.
+
+	Copying and distribution of this file and/or the original GIT
+	commit log messages, with or without modification, are
+	permitted provided the copyright notice and this notice are
+	preserved.
