@@ -1,5 +1,9 @@
-#include <sodium.h>
 #include <string.h>
+#include <stdio.h>
+#include "hashes.h"
+
+
+#define crypto_hash_sha256_BYTES 32
 
 int sha256_sodium(unsigned char *in, unsigned char *out,
 						unsigned long long inlen)
@@ -15,7 +19,7 @@ int sha256_VST(unsigned char *in, unsigned char *out, unsigned long long inlen)
 
 int sha256_NSS(unsigned char *in, unsigned char *out, unsigned long long inlen)
 {
-	return SHA256_Hash(out, in, inlen);			   
+	return SHA256_HashBuf(out, in, inlen);			   
 }
 
 void print_result(unsigned char *out, int length)
@@ -63,12 +67,12 @@ int try_SHA(unsigned char *input){
 	
 	if(compare_results(sodium_result, VST_result, crypto_hash_sha256_BYTES) && compare_results(sodium_result, NSS_result, crypto_hash_sha256_BYTES))
 	{
-		printf ("results match");
+		printf ("results match\n");
 		return 1;
 	}
 	else
 	{
-		printf ("results don't match");
+		printf ("results don't match\n");
 		return 0;
 	}
 }
