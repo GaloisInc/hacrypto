@@ -1,7 +1,6 @@
 // Copyright (c) 2007-2009, Galois, Inc.
 //
 // Author: Sigbjorn Finne
-// 
 
 // Based on spec in FIPS180-2 doc: http://csrc.nist.gov/publications/fips/fips180-2/fips180-2withchangenotice.pdf
 
@@ -53,7 +52,6 @@ Block512_Inner Ws [h, g, f, e, d, c, b, a, t] = [h', g', f', e', d', c', b', a',
     t1 = Block512_T1 h e f g (Ws@t) (Ks512@t)
     t2 = Block512_T2 a b c
     t' = t + 1
-  
 
 iv384 : [8][64]
 iv384 = [ 0xcbbb9d5dc1059ed8,
@@ -71,15 +69,15 @@ sha384 msg = take`{384} (join(Hs ! 0))
   Hs : [3][8][64]
   Hs = [iv384] #
        [block512(H, split M)
-        | H <- Hs
-        | M <- pad512(join msg)]
+            | H <- Hs
+            | M <- pad512(join msg)]
 
 block512 : ([8][64], [16][64]) -> [8][64]
 block512 ([H0, H1, H2, H3, H4, H5, H6, H7], M) = [ (H0+a), (H1+b), (H2+c), (H3+d),
                                                    (H4+e), (H5+f), (H6+g), (H7+h) ]
  where
   Ws : [80][64]
-  Ws = M # [ Block512_W W2 W7 W15 W16 
+  Ws = M # [ Block512_W W2 W7 W15 W16
             | W16 <- drop`{16 - 16} Ws
             | W15 <- drop`{16 - 15} Ws
             | W7  <- drop`{16 -  7} Ws
