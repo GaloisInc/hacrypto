@@ -114,15 +114,14 @@ be32enc_vect(unsigned char *dst, const PRUint32 *src, size_t len)
 static void be32enc_vect_inplace(PRUint32 *src, size_t len){
     size_t i;
     PRUint32 tmp;
-    void *pt;
+    PRUint32 * pt;
 
     for(i=0; i<len/4; i++){
-	/*be32enc(&tmp, src[i]);
-	*pt = pt + 4;
-	pt=tmp;*/
-    }	
-}
+	be32enc(&tmp, src[i]);
+        src[i] = tmp;
+    }
 
+}
 #define HOST_c2l(c,l)	(l =(((unsigned long)(*((c)++)))<<24),		\
 			 l|=(((unsigned long)(*((c)++)))<<16),		\
 			 l|=(((unsigned long)(*((c)++)))<< 8),		\
