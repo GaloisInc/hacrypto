@@ -1,0 +1,1489 @@
+2014-06-30  Werner Koch  <wk@gnupg.org>
+
+	Release 2.0.25.
+
+	estream: Fix minor glitch in "%.*s" format.
+	* common/estream-printf.c (pr_string): Take care of non-nul terminated
+	strings.
+
+2014-06-27  Werner Koch  <wk@gnupg.org>
+
+	scd: Support reader Gemalto IDBridge CT30.
+	* scd/ccid-driver.c (parse_ccid_descriptor): Add quirk for that
+	reader.
+	(GEMPC_CT30): New product id.
+
+	gpg: Limit keysize for unattended key generation to useful values.
+	* g10/keygen.c (gen_elg): Enforce keysize 1024 to 4096.
+	(gen_rsa): Enforce keysize 1024 to 4096.
+	(gen_dsa): Enforce keysize 768 to 3072.
+
+2014-06-25  Werner Koch  <wk@gnupg.org>
+
+	agent: Let gpg-protect-tool pass envvars to pinentry.
+	* agent/protect-tool.c (opt_session_env): New.
+	(main): Pass session environment object to
+	gnupg_prepare_get_passphrase.
+
+	gpg: Make screening of keyserver result work with multi-key commands.
+	* g10/keyserver.c (ks_retrieval_filter_arg_s): new.
+	(keyserver_retrieval_filter): Use new struct and check all
+	descriptions.
+	(keyserver_spawn): Pass filter arg suing the new struct.
+
+2014-06-24  Werner Koch  <wk@gnupg.org>
+
+	Release 2.0.24.
+
+2014-06-24  Kristian Fiskerstrand  <kf@sumptuouscapital.com>
+
+	gpg: Fix a couple of spelling errors.
+
+2014-06-24  Werner Koch  <wk@gnupg.org>
+
+	gpg: Do not link gpgv against libassuan.
+	* g10/Makefile.am (gpgv2_LDADD): Remove LIBASSUAN_LIBS.
+
+	po: Update de.po.
+
+	common: Fix commit ceef5568 so that it builds with libgcrypt < 1.6.
+	* common/ssh-utils.c (get_fingerprint): Use GCRY_PK_ECC only if
+	defined.
+
+	Remove thread callbacks for libgcrypt >= 1.6.
+	* agent/gpg-agent.c (GCRY_THREAD_OPTION_PTH_IMPL): Do not use with
+	libgcrypt >= 1.6.
+	(main): Ditto.
+	* scd/scdaemon.c (GCRY_THREAD_OPTION_PTH_IMPL): Ditto.
+	(main): Ditto.
+
+	gpg: Use more specific reason codes for INV_RECP.
+	* g10/pkclist.c (build_pk_list): Use more specific reasons codes for
+	INV_RECP.
+
+	gpg: Make show-uid-validity the default.
+
+2014-06-24  Stefan Tomanek  <tomanek@internet-sicherheit.de>
+
+	gpg: Screen keyserver responses.
+	* g10/main.h (import_filter_t): New.
+	* g10/import.c (import): Add filter callbacks to param list.
+	(import_one): Ditto.
+	(import_secret_one): Ditto.
+	(import_keys_internal): Ditto.
+	(import_keys_stream): Ditto.
+	* g10/keyserver.c (keyserver_retrieval_filter): New.
+	(keyserver_spawn): Pass filter to import_keys_stream()
+
+2014-06-24  Werner Koch  <wk@gnupg.org>
+
+	gpg: Allow key-to-card upload for cert-only keys.
+	* g10/card-util.c (card_store_subkey): Allo CERT usage for key 0.
+
+2014-06-23  Werner Koch  <wk@gnupg.org>
+
+	ssh: Fix for newer Libgcrypt versions.
+	* common/ssh-utils.c (get_fingerprint): Add GCRY_PK_ECC case.
+
+2014-06-20  Werner Koch  <wk@gnupg.org>
+
+	gpg: Avoid infinite loop in uncompressing garbled packets.
+	* g10/compress.c (do_uncompress): Limit the number of extra FF bytes.
+
+2014-06-03  Werner Koch  <wk@gnupg.org>
+
+	doc: Update for modern makeinfo.
+	* doc/texi.css: Remove.
+	* doc/Makefile.am (AM_MAKEINFOFLAGS): Use --css-ref.
+
+	Release 2.0.23.
+
+	doc: Adjust Makefile for fixed yat2m.
+	* doc/Makefile.am (yat2m-stamp): Remove dirmngr-client hack.
+
+	gpg: New %U expando for the photo viewer.
+	* g10/photoid.c (show_photos): Set namehash.
+	* g10/misc.c (pct_expando): Add "%U" expando.
+
+	common: Add z-base-32 encoder.
+	* common/zb32.c: New.
+	* common/t-zb32.c: New.
+	* common/Makefile.am (common_sources): Add zb82.c
+
+	gpg: Reject signatures made with MD5.
+	* g10/gpg.c: Add option --allow-weak-digest-algos.
+	(main): Set option also in PGP2 mode.
+	* g10/options.h (struct opt): Add flags.allow_weak_digest_algos.
+	* g10/sig-check.c (do_check): Reject MD5 signatures.
+	* tests/openpgp/gpg.conf.tmpl: Add allow_weak_digest_algos.
+
+	gpg: Remove useless diagnostic in MDC verification.
+	* g10/decrypt-data.c (decrypt_data): Do not distinguish between a bad
+	MDC packer header and a bad MDC.
+
+	gpg: Fix glitch entering a full expiration time.
+	* g10/keygen.c (ask_expire_interval): Get the current time after the
+	prompt.
+
+2014-06-02  Werner Koch  <wk@gnupg.org>
+
+	gpg: Graceful skip reading of corrupt MPIs.
+	* g10/parse-packet.c (mpi_read): Change error message on overflow.
+
+	gpg: Simplify default key listing.
+	* g10/mainproc.c (list_node): Rework.
+
+	gpgsm: Handle re-issued CA certificates in a better way.
+	* sm/certchain.c (find_up_search_by_keyid): Consider all matching
+	certificates.
+	(find_up): Add some debug messages.
+
+	gpgsm: Add a way to save a found state.
+	* kbx/keybox-defs.h (keybox_found_s): New.
+	(keybox_handle): Factor FOUND out to above.  Add saved_found.
+	* kbx/keybox-init.c (keybox_release): Release saved_found.
+	(keybox_push_found_state, keybox_pop_found_state): New.
+
+	* sm/keydb.c (keydb_handle): Add field saved_found.
+	(keydb_new): Init it.
+	(keydb_push_found_state, keydb_pop_found_state): New.
+
+	gpg: Fix bug parsing a zero length user id.
+	* g10/getkey.c (get_user_id): Do not call xmalloc with 0.
+
+	* common/xmalloc.c (xmalloc, xcalloc): Take extra precaution not to
+	pass 0 to the arguments.
+
+2014-04-22  Werner Koch  <wk@gnupg.org>
+
+	gpg: Print a warning if GKR has hijacked gpg-agent.
+	* g10/call-agent.c (check_hijacking): New.
+	(start_agent): Call it.
+	(membuf_data_cb, default_inq_cb): Move more to the top.
+
+2014-04-16  Werner Koch  <wk@gnupg.org>
+
+	gpg: Fix use of deprecated RSA_E and RSA_E with newer libgcrypts.
+	* g10/misc.c (pubkey_get_npkey): Map RSA_E and RSA_S to RSA.
+	(pubkey_get_nskey): Ditto.
+	(pubkey_get_nsig): Ditto.
+	(pubkey_get_nenc): Ditto.
+	(pubkey_nbits): Take care of RSA_E and RSA_S.
+
+2014-03-12  Werner Koch  <wk@gnupg.org>
+
+	scd: Skip S/N reading for the "undefined" application.
+	* scd/app.c (select_application): Skip serial number reading.
+
+2013-12-11  Werner Koch  <wk@gnupg.org>
+
+	gpg: Change --show-session-key to print the session key earlier.
+	* g10/cpr.c (write_status_strings): New.
+	(write_status_text): Replace code by a call to write_status_strings.
+	* g10/mainproc.c (proc_encrypted): Remove show_session_key code.
+	* g10/decrypt-data.c (decrypt_data): Add new show_session_key code.
+
+2013-11-27  Werner Koch  <wk@gnupg.org>
+
+	Silence annoying ABI change warning.
+	* configure.ac [GCC]: Pass -Wno-psabi for gcc >= 4.6.  Avoid some gcc
+	option tests for gcc >= 4.6
+
+	scd: Fix two compiler warnings.
+	* scd/apdu.c (pcsc_vendor_specific_init): Add suggested parens.
+	* scd/ccid-driver.c (ccid_get_atr): Cast DEBUGOUT_1 arg to int.
+
+	gpg: Change armor Version header to emit only the major version.
+	* g10/options.h (opt): Rename field no_version to emit_version.
+	* g10/gpg.c (main): Init opt.emit_vesion to 1.  Change --emit-version
+	to bump up opt.emit_version.
+	* g10/armor.c (armor_filter): Implement different --emit-version
+	values.
+
+2013-11-15  Werner Koch  <wk@gnupg.org>
+
+	common: Fix build problem with Sun Studio compiler.
+	* common/estream.c (ESTREAM_MUTEX_UNLOCK): Use int dummy dummy
+	functions.
+	(ESTREAM_MUTEX_INITIALIZE): Ditto.
+
+2013-11-13  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: more pinpad input fix for PC/SC.
+	* scd/apdu.c (check_pcsc_pinpad): Set default values here.
+	(pcsc_pinpad_verify, pcsc_pinpad_modify): Remove setting default
+	values, as it's too late.
+
+2013-11-11  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: more pinpad fix.
+	* scd/apdu.c (check_pcsc_pinpad): Set ->minlen and ->maxlen only when
+	those are specified.
+	(pcsc_pinpad_modify): Remove old check code.
+
+2013-10-29  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: pinpad fix for PC/SC on Windows.
+	* scd/apdu.c (SCARD_CTL_CODE): Fix for Windows.
+
+2013-10-25  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: fix pinpad input on Windows.
+	* scd/apdu.c (open_pcsc_reader_direct): Don't call
+	pcsc_vendor_specific_init here, but...
+	(connect_pcsc_card): Call it here.
+
+2013-10-23  NIIBE Yutaka  <gniibe@fsij.org>
+
+	po: Update Japanese translation.
+
+2013-10-16  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: add pinpad readers information for PC/SC service.
+	* scd/apdu.c (pcsc_vendor_specific_init): Add information for Cherry
+	ST-2xxx, Reiner cyberJack, Vasco DIGIPASS, FSIJ Gnuk Token, and KAAN
+	Advance.
+
+2013-10-15  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: remove pin length check.
+	* scd/apdu.c (pcsc_pinpad_verify): Remove old check code for pin
+	length.
+
+2013-10-11  Werner Koch  <wk@gnupg.org>
+
+	gpg: Do not require a trustdb with --always-trust.
+	* g10/tdbio.c (tdbio_set_dbname): Add arg R_NOFILE.
+	* g10/trustdb.c (trustdb_args): Add field no_trustdb.
+	(init_trustdb): Set that field.
+	(revalidation_mark):  Take care of a nonexistent trustdb file.
+	(read_trust_options): Ditto.
+	(get_ownertrust): Ditto.
+	(get_min_ownertrust): Ditto.
+	(update_ownertrust): Ditto.
+	(update_min_ownertrust): Ditto.
+	(clear_ownertrusts): Ditto.
+	(cache_disabled_value): Ditto.
+	(check_trustdb_stale): Ditto.
+	(get_validity): Ditto.
+	* g10/gpg.c (main): Do not create a trustdb with most commands for
+	trust-model always.
+
+	gpg: Fix --version output and explicitly disable ECC.
+	* g10/misc.c (openpgp_pk_algo_name): New.  Replace all calls in g10/
+	to gcry_pk_algo_name by a call to this function.
+	(map_pk_openpgp_to_gcry): Map algo PUBKEY_ALGO_ELGAMAL_E to GCRY_PK_ELG.
+	(openpgp_pk_test_algo): Use PUBKEY_ALGO_ELGAMAL_E instead of
+	GCRY_PK_ELG_E.  Return an error for ECC algos.
+	(openpgp_pk_test_algo2):  Return an error for ECC algos.
+	* g10/gpg.c (build_list): Avoid printing ECC two times.
+	* include/cipher.h: Do not use GCRY_PK_* macros for PUBKEY_ALGO_*.
+
+2013-10-04  Werner Koch  <wk@gnupg.org>
+
+	Release 2.0.22.
+
+	doc: Update from master.
+
+	gpg: Print a "not found" message for an unknown key in --key-edit.
+	* g10/keyedit.c (keyedit_menu): Print message.
+
+	gpg: Kludge not to bail out on ECC if build with Libgcrypt 1.6.
+	* g10/misc.c (print_pubkey_algo_note): Map the algo.
+	(openpgp_pk_test_algo, openpgp_pk_test_algo2): Ditto.
+	(pubkey_get_npkey, pubkey_get_nskey, pubkey_get_nsig)
+	(pubkey_get_nenc): Return 0 for ECC algorithms.
+
+	po: Update Czech translation.
+
+	gpg: Protect against rogue keyservers sending secret keys.
+	* g10/options.h (IMPORT_NO_SECKEY): New.
+	* g10/keyserver.c (keyserver_spawn, keyserver_import_cert): Set new
+	flag.
+	* g10/import.c (import_secret_one): Deny import if flag is set.
+
+2013-10-04  Daniel Kahn Gillmor  <dkg@fifthhorseman.net>
+
+	gpg: Allow setting of all zero key flags.
+	* g10/keygen.c (do_add_key_flags): Do not check for empty key flags.
+	(cherry picked from commit b693ec02c467696bf9d7324dd081e279f9965151)
+
+2013-10-04  Werner Koch  <wk@gnupg.org>
+
+	gpg: Distinguish between missing and cleared key flags.
+	* include/cipher.h (PUBKEY_USAGE_NONE): New.
+	* g10/getkey.c (parse_key_usage): Set new flag.
+
+	keyserver: Allow use of cURL's default CA store.
+	* keyserver/gpgkeys_curl.c (main): Set CURLOPT_CAINFO only if a file
+	has been given.
+	* keyserver/gpgkeys_hkp.c (main): Ditto.
+
+	gpg: Limit the nesting level of I/O filters.
+	* common/iobuf.c (MAX_NESTING_FILTER): New.
+	(iobuf_push_filter2): Limit the nesting level.
+
+	* g10/mainproc.c (mainproc_context): New field ANY.  Change HAVE_DATA
+	and ANY_SIG_SIGN to bit fields of ANY.  Add bit field
+	UNCOMPRESS_FAILED.
+	(proc_compressed): Avoid printing multiple Bad Data messages.
+	(check_nesting): Return GPG_ERR_BAD_DATA instead of UNEXPECTED_DATA.
+
+2013-10-02  Werner Koch  <wk@gnupg.org>
+
+	gpg: Fix bug with deeply nested compressed packets.
+	* g10/mainproc.c (MAX_NESTING_DEPTH): New.
+	(proc_compressed): Return an error code.
+	(check_nesting): New.
+	(do_proc_packets): Check packet nesting depth.  Handle errors from
+	check_compressed.
+
+2013-09-18  Marcus Brinkmann  <mb@g10code.com>
+
+	2009-11-10  Marcus Brinkmann  <marcus@g10code.de>
+		* server.c (cmd_getauditlog): Don't dup FD for es_fdopen_nc as
+		this leaks the FD here.
+
+	(cherry picked from commit b3cda3f45cdbf3c66538589c7e108cbf73adc850)
+
+	Resolved Conflicts:
+		sm/ChangeLog-2011 - Removed.
+
+	GnuPG-bug-id: 1535
+
+2013-08-30  Werner Koch  <wk@gnupg.org>
+
+	gpg: Use 2048 as the default keysize in batch mode.
+	* g10/keygen.c (gen_elg, gen_dsa, gen_rsa): Set default keysize to
+	2048.
+
+	gpgtar: Fix building for systems with a separate libintl.
+	* tools/Makefile.am (gpgtar_LDADD): Add LIBINTL.
+
+2013-08-30  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: PC/SC pinpad input improvement.
+	* scd/apdu.c (struct reader_table_s): Add members: PINMIN, PINMAX, and
+	PINPAD_VERLEN_SUPPORTED.
+	(CM_IOCTL_VENDOR_IFD_EXCHANGE, FEATURE_GET_TLV_PROPERTIES,
+	PCSCv2_PART10_PROPERTY_*): New.
+	(new_reader_slot): Initialize pinpad_varlen_supported, pinmin, pinmax.
+	(pcsc_vendor_specific_init): New.
+	(open_pcsc_reader_direct, open_pcsc_reader_wrapped): Call
+	pcsc_vendor_specific_init.
+	(check_pcsc_pinpad): Not detect here but use the result of
+	pcsc_vendor_specific_init.
+	(pcsc_pinpad_verify, pcsc_pinpad_modify): Specify bNumberMessage.
+
+2013-08-29  Jonas Borgström  <jonas@borgstrom.se>
+
+	scd: add support for RSA_CRT and RSA_CRT_N key import.
+	* scd/app-openpgp.c (do_writekey): Added RSA_CRT and RSA_CRT_N support.
+
+2013-08-27  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: fix parsing login-data DO.
+	* scd/app-openpgp.c (parse_login_data): Release RELPTR.  Fix parsing.
+
+	scd: fix Vega for Alpha reader.
+	* scd/ccid-driver.c (ccid_vendor_specific_init): Fix error handling
+	and size of command.
+
+2013-08-21  Werner Koch  <wk@gnupg.org>
+
+	scd: Make SPRx32 pinpad work with PC/SC on Windows.
+	* scd/apdu.c (CM_IOCTL_GET_FEATURE_REQUEST): Use SCARD_CTL_CODE.
+	(SCARD_CTL_CODE): Define if not defined.
+	(reader_table_s): Add is_spr532.
+	(new_reader_slot): Clear it.
+	(check_pcsc_pinpad): Set it.
+	(pcsc_pinpad_verify, pcsc_pinpad_modify): Add fix for SPR532.
+
+	(cherry picked from commit 5c5e52df4b92e23045ac87abac09357de58920d4)
+
+	scd: Improve --enable-pinpad-varlen.
+	* tools/gpgconf-comp.c (gc_options_scdaemon): Add
+	enable-pinpad-varlen.
+	* scd/apdu.c (check_pcsc_pinpad): Detect SPRx32 reader.
+
+	(cherry picked from commit 7bde2bf3b0ddb5d3515a44879e1a7ddb581a5c0b)
+
+2013-08-19  Werner Koch  <wk@gnupg.org>
+
+	Release 2.0.21.
+
+	Require libgpg-error 1.11.
+	* configure.ac (NEED_GPG_ERROR_VERSION): Set to 1.11.
+	* common/util.h: Remove GPG_ERR_ replacements.
+
+2013-08-19  Jakub Bogusz  <qboosh@pld-linux.org>
+
+	Update the Polish translation.
+
+2013-08-19  Werner Koch  <wk@gnupg.org>
+
+	agent: Fix UPDATESTARTUPTTY for ssh.
+	* agent/command-ssh.c (setup_ssh_env): Fix env setting.
+
+	tests: Make sure not to create files outside the build directory.
+	* tests/openpgp/Makefile.am (./gpg_dearmor): Add option --homedir.
+
+	gpgv: Init Libgcrypt to avoid syslog warning.
+	* g10/gpgv.c (main): Check libgcrypt version and disable secure
+	memory.
+
+2013-08-08  Werner Koch  <wk@gnupg.org>
+
+	agent: Extend cmd KEYINFO to return data from sshcontrol.
+	* agent/command-ssh.c (struct control_file_s): Rename to
+	ssh_control_file_s.
+	(ssh_open_control_file, ssh_close_control_file)
+	(ssh_read_control_file, ssh_search_control_file): New.
+	(control_file_t):  Rename and move to ...
+	* agent/agent.h (ssh_control_file_t): here.
+	* agent/command.c (do_one_keyinfo): Add args is_ssh, ttl, disabled,
+	and confirm. Rename unknown keytype indicator from '-' to 'X'.  Extend
+	output.
+	(cmd_keyinfo): Add options --ssh-list and --with-ssh.
+
+2013-08-06  Werner Koch  <wk@gnupg.org>
+
+	Improve libcurl detection.
+	* m4/libcurl.m4: Do not use AC_PATH_PROG if --with-libcurl as been
+	given.  Suggested by John Marshall.
+
+	gpg: Remove legacy keyserver examples from the template conf file.
+	* g10/options.skel: Update.
+
+2013-08-02  Werner Koch  <wk@gnupg.org>
+
+	gpg: No need to create a trustdb when encrypting with --always-trust.
+	* g10/gpg.c (main): Special case setup_trustdb for --encrypt.
+
+2013-08-01  Werner Koch  <wk@gnupg.org>
+
+	w32: Add code to support a portable use of GnuPG.
+	* common/homedir.c (w32_bin_is_bin, w32_portable_app) [W32]: New.
+	(check_portable_app) [W32]: New.
+	(standard_homedir, default_homedir) [W32]: Support the portable flag.
+	(w32_rootdir, w32_commondir) [W32]: Ditto.
+	(gnupg_bindir) [W32]: Ditto.
+
+	w32: Always require libiconv.
+	* configure.ac (missing_iconv): Set and die if we have no libiconv.
+	* m4/iconv.m4: Update from libiconv 1.14.
+	* tools/Makefile.am (gpgtar_LDADD): Add LIBICONV.
+	* jnlib/utf8conv.c: Always include iconv.h
+	(load_libiconv): Remove this w32 only function.
+	(iconv_open, iconv, iconv_close): Remove W32 function pointer.
+	(set_native_charset): Do not call load_libiconv.
+	(jnlib_iconv_open, jnlib_iconv, jnlib_iconv_close): Ditto.
+
+	w32: Remove unused code.
+	* jnlib/w32-reg.c (write_w32_registry_string): Remove.
+
+2013-07-03  Werner Koch  <wk@gnupg.org>
+
+	Update the German translation.
+
+	agent: Make --allow-mark-trusted the default.
+	* agent/gpg-agent.c (opts, main): Add option --no-allow-mark-trusted.
+	Put this option into the gpgconf-list.
+	(main): Enable opt.allow_mark_trusted by default.
+	* tools/gpgconf-comp.c (gc_options_gpg_agent): Replace
+	allow-mark-trusted by no-allow-mark-trusted.
+
+	* agent/trustlist.c (agent_marktrusted): Always set the "relax" flag.
+
+	Update the German translation.
+
+	ssh: Add support for Putty.
+	* agent/gpg-agent.c [W32]: Include Several Windows header.
+	(opts): Change help text for enable-ssh-support.
+	(opts, main): Add option --enable-putty-support
+	(putty_support, PUTTY_IPC_MAGIC, PUTTY_IPC_MAXLEN): New for W32.
+	(agent_init_default_ctrl): Add and asssert call.
+	(putty_message_proc, putty_message_thread): New.
+	(handle_connections) [W32]: Start putty message thread.
+	* common/sysutils.c (w32_get_user_sid): New for W32 only
+	* tools/gpgconf-comp.c (gc_options_gpg_agent): Add
+	--enable-ssh-support and --enable-putty-support.  Make the
+	configuration group visible at basic level.
+	* agent/command-ssh.c (serve_mmapped_ssh_request): New for W32 only.
+
+	agent: Fix binary vs. text mode problem in ssh.
+	* agent/command-ssh.c (file_to_buffer)
+	(ssh_handler_request_identities): Open streams in binary mode.
+	(start_command_handler_ssh): Factor some code out to ..
+	(setup_ssh_env): new function.
+
+	Silence deprecated warnings from gcc 4.6.3.
+	* configure.ac (AH_BOTTOM): Define GCRYPT_NO_DEPRECATED.
+
+	estream: Backport es_fopemem_init from master.
+	* common/estream.c (es_fopenmem_init): New.
+
+2013-07-01  Werner Koch  <wk@gnupg.org>
+
+	ssh: Mark unused arg.
+	* agent/command-ssh.c (ssh_signature_encoder_ecdsa): Cast spec to
+	void.
+
+	ssh: Support ECDSA keys.
+	* agent/command-ssh.c (SPEC_FLAG_IS_ECDSA): New.
+	(struct ssh_key_type_spec): Add fields CURVE_NAME and HASH_ALGO.
+	(ssh_key_types): Add types ecdsa-sha2-nistp{256,384,521}.
+	(ssh_signature_encoder_t): Add arg spec and adjust all callers.
+	(ssh_signature_encoder_ecdsa): New.
+	(sexp_key_construct, sexp_key_extract, ssh_receive_key)
+	(ssh_convert_key_to_blob): Support ecdsa.
+	(ssh_identifier_from_curve_name): New.
+	(ssh_send_key_public): Retrieve and pass the curve_name.
+	(key_secret_to_public): Ditto.
+	(data_sign): Add arg SPEC and change callers to pass it.
+	(ssh_handler_sign_request): Get the hash algo from SPEC.
+	* common/ssh-utils.c (get_fingerprint): Support ecdsa.
+
+	* agent/protect.c (protect_info): Add flag ECC_HACK.
+	(agent_protect): Allow the use of the "curve" parameter.
+	* agent/t-protect.c (test_agent_protect): Add a test case for ecdsa.
+
+	* agent/command-ssh.c (ssh_key_grip): Print a better error code.
+
+	estream: New function es_fclose_snatch.
+	* common/estream.c (cookie_ioctl_function_t): New type.
+	(es_fclose_snatch): New function.
+	(COOKIE_IOCTL_SNATCH_BUFFER): New constant.
+	(struct estream_internal): Add field FUNC_IOCTL.
+	(es_initialize): Clear FUNC_IOCTL.
+	(es_func_mem_ioctl): New function.
+	(es_fopenmem): Init FUNC_IOCTL.
+
+	ssh: Rewrite a function for better maintainability.
+	* agent/command-ssh.c (ssh_signature_encoder_dsa): Rewrite.
+
+	ssh: Improve key lookup for many keys.
+	* agent/command-ssh.c: Remove dirent.h.
+	(control_file_s): Add struct item.
+	(rewind_control_file): New.
+	(search_control_file): Factor code out to ...
+	(read_control_file_item): New.
+	(ssh_handler_request_identities): Change to iterate over entries in
+	sshcontrol.
+
+	ssh: Cleanup sshcontrol file access code.
+	* agent/command-ssh.c (SSH_CONTROL_FILE_NAME): New macro to replace
+	the direct use of the string.
+	(struct control_file_s, control_file_t): New.
+	(open_control_file, close_control_file): New.  Use them instead of
+	using fopen/fclose directly.
+
+	ssh: Do not look for a card based ssh key if scdaemon is disabled.
+	* agent/command-ssh.c (ssh_handler_request_identities): Do not call
+	card_key_available if the scdaemon is disabled.
+
+	ssh: Make the mode extension "x" portable by a call to es_fopen.
+	* agent/command-ssh.c (open_control_file): Use_es_fopen to support
+	the "wx" mode flag.
+
+2013-05-11  Werner Koch  <wk@gnupg.org>
+
+	Fix syntax error for building on APPLE.
+	* scd/pcsc-wrapper.c [__APPLE__]: Fix syntax error.
+
+2013-05-10  Werner Koch  <wk@gnupg.org>
+
+	Release 2.0.20.
+
+	Update gpg-error, libgcrypt, and ksba m4 scripts.
+	* m4/gpg-error.m4: Update from libgpg-error repo.
+	* m4/ksba.m4: Likewise.
+	* m4/libgcrypt.m4: Likewise.
+
+2013-05-10  Yuri Chornoivan  <yurchor@ukr.net>
+
+	Update Ukrainian translation.
+
+2013-05-07  Werner Koch <wk@gnupg.org>
+
+	w32: Add icons and version information.
+	* common/gnupg.ico: New.  Take from artwork/gnupg-favicon-1.ico.
+	* agent/gpg-agent-w32info.rc: New.
+	* g10/gpg-w32info.rc: New.
+	* scd/scdaemon-w32info.rc: New.
+	* sm/gpgsm-w32info.rc: New.
+	* tools/gpg-connect-agent-w32info.rc: New.
+	* common/w32info-rc.h.in: New.
+	* configure.ac (BUILD_REVISION, BUILD_FILEVERSION, BUILD_TIMESTAMP)
+	(BUILD_HOSTNAME): New.
+	(AC_CONFIG_FILES): Add w32info-rc.h.
+	* am/cmacros.am (.rc.o): New rule.
+	* agent/Makefile.am, common/Makefile.am, g10/Makefile.am
+	* scd/Makefile.am, sm/Makefile.am, tools/Makefile.am: Add stuff to
+	build resource files.
+
+2013-05-07  Ian Abbott  <abbotti@mev.co.uk>
+
+	doc: fix some Texinfo warnings.
+	* doc/gpg.texi: Fix syntax and add missing menu entries.
+	* doc/gpgsm.texi: Fix subsectioning.
+
+2013-04-24  Jedi  <jedi@jedi.org>
+
+	Update helper scripts.
+	* compile, config.guess, config.rpath, config.sub, depcomp,
+	* install-sh, mdate-sh, mkinstalldirs: Update to Feb 25 versions from
+	gnulib.
+
+2013-04-24  Joe Hansen  <joedalton2@yahoo.dk>
+
+	Update Danish translation.
+	* po/da.po: Update.
+
+2013-04-24  Jaime Suarez  <jaime.suma@gmail.com>
+
+	Update Spanish translation.
+
+2013-04-24  Werner Koch  <wk@gnupg.org>
+
+	Update de.po and fr.po for keypad->pinpad change.
+
+2013-04-24  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: Add pinpad support for REINER SCT cyberJack go.
+	* scd/ccid-driver.c (VENDOR_REINER, CYBERJACK_GO): New.
+	(ccid_transceive_secure): Handle the case for VENDOR_REINER.
+	Original work was by Alina Friedrichsen (tiny change).
+
+2013-04-23  Werner Koch  <wk@gnupg.org>
+
+	Allow building gpgkeys_ldap with the 32 bit mingw-w64 toolchain.
+	* keyserver/gpgkeys_ldap.c (my_ldap_start_tls_s): Define macro
+	depending on compiler version.
+	(main): Use new macro.
+
+2013-04-22  Werner Koch  <wk@gnupg.org>
+
+	Fix potential heap corruption in "gpg -v --version".
+	* g10/gpg.c (build_list): Rewrite to cope with buffer overflow in
+	certain locales.
+
+	Switch to the new automagic beta numbering scheme.
+	* configure.ac: Add all the required m4 magic.
+
+	Update docs from master.
+	* doc/gpg-agent.texi: Update from master.
+	* doc/gpg.texi: Ditto.
+	* doc/gpgsm.texi: Ditto.
+	* doc/gpl.texi: Ditto.
+	* doc/yat2m.c: Ditto.
+
+	Ignore obsolete option --disable-keypad.
+	* scd/scdaemon.c (opts): Ignore --disable-keypad.
+
+	Allow marking options as ignored.
+	* jnlib/argparse.h (ARGPARSE_OPT_IGNORE): New.
+	(ARGPARSE_TYPE_MASK): New, for internal use.
+	(ARGPARSE_ignore): New.
+	* jnlib/argparse.c (optfile_parse, arg_parse): Replace remaining
+	constants by macros.
+	(optfile_parse): Implement ARGPARSE_OPT_IGNORE.
+	(arg_parse): Exclide ignore options from --dump-options.
+
+	Do not mix test result with progress lines.
+	This makes parsing of the results easier.  Fixes bug#1400.
+
+	* tests/openpgp/defs.inc (progress_cancel, progress_end)
+	(progress_new): New.
+	* tests/openpgp/conventional-mdc.test: Use progress functions
+	* tests/openpgp/conventional.test: Ditto.
+	* tests/openpgp/encrypt-dsa.test: Ditto.
+	* tests/openpgp/encrypt.test: Ditto.
+	* tests/openpgp/sigs.test: Ditto.
+
+2013-04-01  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: move SCDaemon to libexecdir.
+	* common/homedir.c (gnupg_module_name): It's now libexecdir.
+	* scd/Makefile.am (libexec_PROGRAMS): Add scdaemon
+	(bin_PROGRAMS): Remove scdaemon.
+
+2013-03-26  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: PC/SC status fix.
+	* scd/apdu.c (pcsc_get_status_direct): Check PCSC_STATE_MUTE only when
+	PCSC_STATE_PRESENT.
+
+	* scd/pcsc-wrapper.c (handle_status): Ditto.
+
+	scd: PC/SC cleanup (more).
+	* scd/apdu.c (control_pcsc_direct, control_pcsc_wrapped, control_pcsc)
+	(check_pcsc_pinpad, pcsc_pinpad_verify, pcsc_pinpad_modify): Use
+	pcsc_dword_t.
+
+	scd: call update_card_removed only when detecting removal.
+	* scd/command.c (update_reader_status_file): Add condition
+	ss->status == 0.
+
+2013-03-22  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: PC/SC cleanup.
+	* scd/apdu.c (pcsc_dword_t): New.  It was named as DWORD (double-word)
+	when a word was 16-bit.
+	(struct reader_table_s): Fixes for types.
+	(struct pcsc_readerstate_s) [__APPLE__]: Enable #pragma pack(1).
+	Throughout: Fixes for types.
+
+	* scd/pcsc-wrapper.c: Likewise.
+
+2013-03-21  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: change default value of pinpad maxlen.
+	* scd/apdu.c (pcsc_pinpad_verify, pcsc_pinpad_modify): Default value
+	of maxlen for pinpad input is now 15 (was: 25).
+
+	* scd/ccid-driver.c (ccid_transceive_secure): Likewise.
+
+2013-03-15  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: ccid-driver supporting larger APDU.
+	* scd/ccid-driver.c (ccid_transceive_apdu_level): Support larger
+	APDU.
+
+2013-03-03  David Shaw  <dshaw@jabberwocky.com>
+
+	Differentiate between success (full or partial), not-found, and failure.
+	* keyserver/gpgkeys_hkp.c (get_key): Use curl_easy_setinfo to get the
+	  HTTP status code so we can tell the difference between a successful
+	  retrieval, a partial retrieval, a not-found, or a server failed.
+
+	Emulate curl_easy_getinfo and CURLINFO_RESPONSE_CODE in curl-shim.
+	* keyserver/curl-shim.h, keyserver/curl-shim.c (curl_easy_getinfo):
+	  New. Return the HTTP status code for the last transfer.
+
+2013-02-28  David Shaw  <dshaw@jabberwocky.com>
+
+	Bring the fix for bug 739 on 1.4 over to 2.0 (bug 1479)
+	* http.h, http.c (http_wait_response, main): Remove
+	  HTTP_FLAG_NO_SHUTDOWN.
+
+2013-02-12  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Japanese: minor doc update.
+	* doc/help.ja.txt: Update.
+
+	Japanese: updated po and doc.
+	* doc/help.ja.txt, po/ja.po: Updated.
+
+2013-02-08  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: Rename 'keypad' to 'pinpad'.
+	* NEWS: Mention scd changes.
+
+	* agent/divert-scd.c (getpin_cb): Change message.
+
+	* agent/call-scd.c (inq_needpin): Change the protocol to
+	POPUPPINPADPROMPT and DISMISSPINPADPROMPT.
+	* scd/command.c (pin_cb): Likewise.
+
+	* scd/apdu.c (struct reader_table_s): Rename member functions.
+	(check_pcsc_pinpad, pcsc_pinpad_verify, pcsc_pinpad_modify,
+	check_ccid_pinpad, ccid_pinpad_operation, apdu_check_pinpad
+	apdu_pinpad_verify, apdu_pinpad_modify): Rename.
+
+	* scd/apdu.h (SW_HOST_NO_PINPAD, apdu_check_pinpad)
+	(apdu_pinpad_verify, apdu_pinpad_modify): Rename.
+
+	* scd/iso7816.h (iso7816_check_pinpad): Rename.
+
+	* scd/iso7816.c (map_sw): Use SW_HOST_NO_PINPAD.
+	(iso7816_check_pinpad): Rename.
+	(iso7816_verify_kp, iso7816_change_reference_data_kp): Follow
+	the change.
+
+	* scd/ccid-driver.h (CCID_DRIVER_ERR_NO_PINPAD): Rename.
+	* scd/ccid-driver.c (ccid_transceive_secure): Use it.
+
+	* scd/app-dinsig.c (verify_pin): Follow the change.
+	* scd/app-nks.c (verify_pin): Follow the change.
+
+	* scd/app-openpgp.c (check_pinpad_request): Rename.
+	(parse_login_data, verify_a_chv, verify_chv3, do_change_pin): Follow
+	the change.
+
+	* scd/scdaemon.c (oDisablePinpad, oEnablePinpadVarlen): Rename.
+
+	* scd/scdaemon.h (opt): Rename to disable_pinpad,
+	enable_pinpad_varlen.
+
+	* tools/gpgconf-comp.c (gc_options_scdaemon): Rename to
+	disable-pinpad.
+
+2013-02-05  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: Fix check_keypad_request.
+	* scd/app-openpgp.c (check_keypad_request): 0 means not to use pinpad.
+
+	scd: Clean up.
+	* apdu.h (apdu_send_simple_kp): Remove.
+	* apdu.c (apdu_send_simple_kp): Remove.
+
+	SCD: Add vendor specific initalization.
+	* scd/ccid-driver.c (ccid_vendor_specific_init): New.
+	(ccid_open_reader): Call ccid_vendor_specific_init.
+
+	SCD: Support P=N format for login data.
+	* scd/app-openpgp.c (parse_login_data): Support P=N format.
+
+	SCD: Better interoperability.
+	* scd/apdu.c: Fill bTeoPrologue[2] field.
+
+	SCD: Defaults to use pinpad if the reader has the capability.
+	* scd/app-openpgp.c (struct app_local_s): Remove VARLEN.
+	(parse_login_data): "P=0" means to disable pinpad.
+	(check_keypad_request): Default is to use pinpad if available.
+
+	SCD: handle keypad request on the card.
+	* scd/app-openpgp.c: Add 2013.
+	(struct app_local_s): Add keypad structure.
+	(parse_login_data): Add parsing keypad request on the card.
+	(check_keypad_request): New.
+	(verify_a_chv, verify_chv3, do_change_pin): Call check_keypad_request
+	to determine use of keypad.
+
+	SCD: Minor fix of ccid-driver.
+	* scd/ccid-driver.c (VENDOR_VEGA): Fix typo.
+
+	SCD: Add support of Covadis VEGA_ALPHA reader.
+	* scd/ccid-driver.c: Add 2013.
+	(VENDER_VEGA, VEGA_ALPHA):New.
+	(ccid_transceive_secure): VEGA_ALPHA is same firmware as GEMPC_PINPAD.
+	Change bNumberMessage to 0x01, as it works better (was: 0xff).
+
+	SCD: Support fixed length PIN input for keypad (PC/SC).
+	* scd/apdu.c (pcsc_keypad_verify): SUpport fixed length PIN input for
+	keypad.
+	(pcsc_keypad_modify): Likewise.
+	* scd/ccid-driver.c (ccid_transceive_secure): Clean up.
+
+	SCD: Support fixed length PIN input for keypad.
+	* scd/iso7816.h (struct pininfo_s): Remove MODE and add FIXEDLEN.
+	* scd/app-dinsig.c (verify_pin): Initialize FIXEDLEN to unknown.
+	* scd/app-nks.c (verify_pin): Likewise.
+	* scd/app-openpgp.c (verify_a_chv, verify_chv3, do_change_pin):
+	Likewise.
+	* scd/apdu.c (check_pcsc_keypad): Add comment.
+	(pcsc_keypad_verify, pcsc_keypad_modify): PC/SC driver only support
+	readers with the feature of variable length input (yet).
+	(apdu_check_keypad): Set FIXEDLEN.
+	* scd/ccid-driver.c (ccid_transceive_secure): Add GEMPC_PINPAD
+	specific settings.
+	Support fixed length PIN input for keypad.
+
+	SCD: API cleanup for keypad handling.
+	* scd/iso7816.h (struct pininfo_s): Rename from iso7816_pininfo_s.
+	Change meaning of MODE.
+	(pininfo_t): Rename from iso7816_pininfo_t.
+	* scd/sc-copykeys.c: Include "iso7816.h".
+	* scd/scdaemon.c, scd/command.c: Likewise.
+	* scd/ccid-driver.c: Include "scdaemon.h" and "iso7816.h".
+	(ccid_transceive_secure): Follow the change of PININFO_T.
+	* scd/app.c: Include "apdu.h" after "iso7816.h".
+	* scd/iso7816.c (iso7816_check_keypad, iso7816_verify_kp)
+	(iso7816_change_reference_data_kp): Follow the change of API.
+	* scd/apdu.c (struct reader_table_s): Change API of CHECK_KEYPAD,
+	KEYPAD_VERIFY, KEYPAD_MODIFY to have arg of PININFO_T.
+	(check_pcsc_keypad, check_ccid_keypad): Likewise.
+	(apdu_check_keypad, apdu_keypad_verify, apdu_keypad_modify): Likewise.
+	(pcsc_keypad_verify, pcsc_keypad_modify, ct_send_apdu)
+	(pcsc_send_apdu_direct,  pcsc_send_apdu_wrapped, pcsc_send_apdu)
+	(send_apdu_ccid, ccid_keypad_operation, my_rapdu_send_apdu, send_apdu)
+	(send_le): Follow the change of API.
+	* scd/apdu.h (apdu_check_keypad, apdu_keypad_verify)
+	(apdu_keypad_modify): Change the API.
+	* scd/app-dinsig.c, scd/app-nks.c, scd/app-openpgp.c: Follow the
+	change.
+
+	SCD: Clean up.  Remove PADLEN for keypad input.
+	* scd/apdu.c (struct pininfo_s): Use iso7816_pininfo_s.
+	(struct reader_table_s): Remove last arg from check_keypad method.
+	(check_pcsc_keypad, check_pcsc_keypad): Remove PIN_PADLEN.
+	(pcsc_keypad_verify, pcsc_keypad_modify): Don't check PIN_PADLEN.
+	(send_apdu_ccid, ccid_keypad_operation): Remove PIN_PADLEN.
+	(apdu_check_keypad, apdu_keypad_verify, apdu_keypad_modify):
+	Likewise.
+
+	* scd/apdu.h (apdu_check_keypad, apdu_keypad_verify)
+	(apdu_keypad_modify): Remove PIN_PADLEN.
+
+	* scd/ccid-driver.c (ccid_transceive_secure): Remove PIN_PADLEN.
+
+	* scd/ccid-driver.h (ccid_transceive_secure): Remove PIN_PADLEN.
+
+	* scd/iso7816.c (iso7816_check_keypad, iso7816_verify_kp)
+	(iso7816_change_reference_data_kp): Remove PADLEN.
+
+	* scd/iso7816.h (struct iso7816_pininfo_s): Remove PADLEN, PADCHAR.
+
+	SCD: Add option enable-keypad-varlen and support for GEMPC_PINPAD.
+	* scd/scdaemon.h (opt): Add enable_keypad_varlen.
+	* scd/scdaemon.c (cmd_and_opt_values): Add oEnableKeypadVarlen.
+	(opts, main): Add oEnableKeypadVarlen.
+	* scd/ccid-driver.c (GEMPC_PINPAD): New.
+	(ccid_transceive_secure): Add enable_varlen handling.
+	Enable GEMPC_PINPAD.
+
+	SCD: Support not-so-smart card readers.
+	* scd/ccid-driver.c (struct ccid_driver_s): Add auto_voltage,
+	auto_param, and auto_pps.
+	(parse_ccid_descriptor): Set auto_voltage, auto_param, and auto_pps.
+	Support non-autoconf readers.
+	(update_param_by_atr): New.
+	(ccid_get_atr): Use 5V for PowerOn when auto_voltage is not supported.
+	Use 0x10 when nonnull_nad for SetParameters.
+	Call update_param_by_atr for parsing ATR, and use param for
+	SetParameters.
+	Send PPS if reader requires it and card is negotiable.
+	When bNadValue in the return values of SetParameters == 0,
+	clear handle->nonnull_nad flag.
+
+2013-02-04  NIIBE Yutaka  <gniibe@fsij.org>
+
+	SCD: Hold lock for pinpad input.
+	* scd/apdu.c (apdu_check_keypad, apdu_keypad_verify)
+	(apdu_keypad_modify): Hold lock to serialize communication.
+
+	agent: kill pinentry by SIGINT, fixing a bug to be killed by SIGINT.
+	* agent/call-pinentry.c (atfork_cb): Reset signal mask and signal
+	handler for child process.
+	(agent_popup_message_stop): Send SIGINT (was: SIGKILL).
+
+2013-01-11  Christian Aistleitner  <christian@quelltextlich.at>
+
+	gpg: Fix honoring --cert-digest-algo when recreating a cert.
+	* g10/sign.c (update_keysig_packet): Override original signature's
+	digest algo in hashed data and for hash computation.
+
+2013-01-07  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Update Japanese Translation.
+	* po/ja.po: Fix wrong translations for designated revocation.
+	Reported by Hideki Saito.
+
+2013-01-03  Werner Koch  <wk@gnupg.org>
+
+	gpg: Detect Keybox files and print a diagnostic.
+	* g10/keydb.c (KEYDB_RESOURCE_TYPE_KEYBOX): New.
+	(keydb_add_resource): Handle scheme "gnupg-kbx:".  Detect Keybox
+	magic.  Print wanrning note for Keybox.
+	(keydb_new, keydb_release, keydb_get_resource_name)
+	(lock_all, unlock_all, keydb_get_keyblock)
+	(keydb_update_keyblock, keydb_insert_keyblock, keydb_delete_keyblock)
+	(keydb_locate_writable, keydb_rebuild_caches, keydb_search_reset)
+	(keydb_search2): Ignore Keybox type in switches.
+	* g10/gpg.h (G10ERR_UNSUPPORTED): Map to correct gpg-error value.
+
+2012-12-29  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Update Japanese Translation.
+	* po/ja.po: Fix terms and expressions.
+
+	Update Japanese Translation.
+	* po/ja.po: Translate all untranslated messages.
+
+2012-12-27  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Update Japanese Translation.
+	* po/ja.po: Fix all fuzzy translations.  Fill some of unstanslated
+	messages.
+
+	Update Japanese Translation.
+	* po/ja.po: Remove old entries.
+
+	Update Japanese Translation.
+	* po/ja.po: Fix headers.  Update by msgmerge -U ja.po gnupg2.pot.
+
+	Update Japanese tranlation.
+	* po/ja.po: Change the encoding to UTF-8 (was: EUC-JP).
+
+2012-12-21  David Shaw  <dshaw@jabberwocky.com>
+
+	Make sure srvcount is initialized.
+	* keyserver/gpgkeys_hkp.c (srv_replace): Initialize srvcount.
+
+2012-12-20  Werner Koch  <wk@gnupg.org>
+
+	gpg: Import only packets which are allowed in a keyblock.
+	* g10/import.c (valid_keyblock_packet): New.
+	(read_block): Store only valid packets.
+
+2012-12-19  Werner Koch  <wk@gnupg.org>
+
+	gpg: Make commit 258192d4 actually work.
+	* g10/sign.c (update_keysig_packet): Use digest_algo.
+
+	gpg: Suppress "public key already present" in quiet mode.
+	* g10/pkclist.c (build_pk_list): Print two diagnostics only in
+	non-quiet mode.
+
+2012-12-18  Werner Koch  <wk@gnupg.org>
+
+	jnlib: Add meta option ignore-invalid-option.
+	* jnlib/argparse.c (iio_item_def_s, IIO_ITEM_DEF): New.
+	(initialize): Init field IIO_LIST.
+	(ignore_invalid_option_p): New.
+	(ignore_invalid_option_add): New.
+	(ignore_invalid_option_clear): New.
+	(optfile_parse): Implement meta option.
+
+2012-12-18  David Shaw  <dshaw@jabberwocky.com>
+
+	No point in defaulting try-dns-srv to on if we don't have SRV support.
+	* keyserver/gpgkeys_hkp.c (main): Only default try-dns-srv to on if we
+	  have SRV support in the first place.
+
+	Issue 1447: Pass proper Host header and SNI when SRV is used with curl.
+	* configure.ac: Check for inet_ntop.
+
+	* m4/libcurl.m4: Provide a #define for the version of the curl
+	  library.
+
+	* keyserver/gpgkeys_hkp.c (main, srv_replace): Call getaddrinfo() on
+	  each target.  Once we find one that resolves to an address (whether
+	  IPv4 or IPv6), pass it into libcurl via CURLOPT_RESOLVE using the
+	  SRV name as the "host".  Force the HTTP Host header to be the same.
+
+2012-12-15  David Shaw  <dshaw@jabberwocky.com>
+
+	Part of issue 1447: Pass proper Host header when SRV is used.
+	* common/http.c (send_request, connect_server): Set proper Host header
+	  (no :port, host is that of the SRV) when SRV is used in the
+	  curl-shim.
+
+	Fix issue 1446: honor ports given in SRV responses.
+	* common/http.c (send_request, connect_server, http_open): Use a
+	  struct srv instead of a single srvtag so we can pass the chosen host
+	  and port back to the caller.
+	  (connect_server): Use the proper port in the HAVE_GETADDRINFO case.
+
+	* keyserver/curl-shim.c (curl_easy_perform): Use struct srv and log
+	  chosen host and port.
+
+	* keyserver/gpgkeys_hkp.c (main): Properly take the port given by SRV.
+
+2012-12-13  NIIBE Yutaka  <gniibe@fsij.org>
+
+	SCD: Fix the process of writing key or generating key.
+	* scd/app-openpgp.c (store_fpr): Flush KEY-FPR and KEY-TIME.
+
+2012-12-07  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Revert SCD changes of 2010-05-03 (scd/ChangeLog 2010-03-17).
+	* scd/apdu.c (pcsc_no_service): Remove.
+	(open_pcsc_reader_direct, open_pcsc_reader_wrapped): Remove
+	pcsc_no_service support.
+	(apdu_open_reader): Remove R_NO_SERVICE.
+	* scd/apdu.h (apdu_open_reader): Remove R_NO_SERVICE.
+	* scd/command.c (reader_disabled): Remove.
+	(get_reader_slot): Follow the change of R_NO_SERVICE.
+	(open_card, cmd_serialno, scd_command_handler): Remove reader_disabled
+	support.
+	* scd/sc-copykeys.c (main): Follow the change of R_NO_SERVICE.
+
+	Don't keep opening unavailable card reader.
+	* scd/command.c (update_reader_status_file): Don't call
+	get_reader_slot.
+
+2012-11-30  David Shaw  <dshaw@jabberwocky.com>
+
+	Update sample keys.
+
+2012-11-29  David Shaw  <dshaw@jabberwocky.com>
+
+	The keyserver search menu should honor --keyid-format.
+	* keyserver.c (print_keyrec): Honor --keyid-format when getting back
+	  full fingerprints from the keyserver (the comment in the code was
+	  correct, the code was not).
+
+2012-11-27  Werner Koch  <wk@gnupg.org>
+
+	Fix printing of ECC algo names in hkp keyserver listings.
+	* g10/misc.c (map_pk_openpgp_to_gcry): New.
+	* g10/keyserver.c (print_keyrec): Map OpenPGP algorithm ids.
+
+2012-11-06  Werner Koch  <wk@gnupg.org>
+
+	Allow decryption with card keys > 3072 bit.
+	* scd/command.c (MAXLEN_SETDATA): New.
+	(cmd_setdata): Add option --append.
+	* g10/call-agent.c (agent_scd_pkdecrypt): Use new option for long data
+
+	* scd/app-openpgp.c (struct app_local_s): Add field manufacturer.
+	(app_select_openpgp): Store manufacturer.
+	(do_decipher): Print a note for broken cards.
+
+2012-11-02  NIIBE Yutaka  <gniibe@fsij.org>
+
+	agent: Fix wrong use of gcry_sexp_build_array.
+	* findkey.c (agent_public_key_from_file): Fix use of
+	gcry_sexp_build_array.
+
+2012-10-31  NIIBE Yutaka  <gniibe@fsij.org>
+
+	SCD: Upon error, open_pcsc_reader_wrapped does same as _direct.
+	* scd/apdu.c (PCSC_E_NO_SERVICE): New.
+	(open_pcsc_reader_direct): Use PCSC_E_NO_SERVICE.
+	(open_pcsc_reader_wrapped): Set pcsc_no_service.
+
+2012-08-24  Werner Koch  <wk@gnupg.org>
+
+	Update French translation.
+	* po/fr.po: Update.
+
+2012-08-24  David Prévot  <taffit@debian.org>
+
+	Fix typos spotted during translations.
+	agent/genkey.c: s/to to/to/
+	sm/*.c: s/failed to allocated/failed to allocate/
+	sm/certlist.c: s/should have not/should not have/
+
+	Consistency fix:
+
+	* g10/gpg.c, kbx/kbxutil.c, sm/gpgsm.c: uppercase after Syntax
+
+	Actually show translators comments in PO files.
+
+	Keep previous msgids of translated messages.
+	* po/Makefile.in.in: Use --previous with msgmerge.
+
+2012-07-20  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: Add forgotten VENDOR_FSIJ to ccid-driver.
+	* scd/ccid-driver.c (ccid_transceive_secure): Handle VENDOR_FSIJ.
+
+2012-06-25  NIIBE Yutaka  <gniibe@fsij.org>
+
+	scd: handle reader/token removal. * scd/apdu.c (pcsc_error_to_sw): PCSC_E_UNKNOWN_READER means SW_HOST_NO_READER.
+
+	scd: Fix updating slot status. * scd/comman.c (do_reset): Let clear card_removed flag.
+
+	scd: acquire lock in new_reader_slot.
+	* scd/apdu.c (new_reader_slot): Acquire lock.
+	  (open_ct_reader, open_pcsc_reader_direct, open_pcsc_reader_wrapped)
+	  (open_ccid_reader, open_rapdu_reader): Release lock.
+
+	scd: move lock_slot, trylock_slot, unlock_slot functions.
+	* scd/apdu.c (lock_slot, trylock_slot, unlock_slot): Move.
+
+	scd: Fix merge mistake. * scd/iso7816.c (iso7816_reset_retry_counter): Implement.
+
+2012-06-25  Werner Koch  <wk@gnupg.org>
+
+	scd: Prefer application Geldkarte over DINSIG.
+	* scd/app.c (select_application): Reorder application tests.
+
+2012-06-25  Werner Koch  <wk@gnupg.org>
+	    Ben Kibbey  <bjk@luxsci.net>
+
+	scd: Fix for card change returning GPG_ERR_CARD_RESET.
+	* scd/apdu.c (apdu_connect): Do not test for zero atrlen.
+
+2012-06-25  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Merge ccid_driver_improvement branch. (backport)
+	* scd/apdu.c (ccid_keypad_operation): Rename from ccid_keypad_verify.
+	(open_ccid_reader): Use ccid_keypad_operation for verify and modify.
+
+	* scd/ccid-driver.c (VENDOR_VASCO, VASCO_920): New.
+	(ccid_transceive_apdu_level): Permit sending packet where
+	apdulen <= 289.  Support receiving packets in a chain.
+	(ccid_transceive_secure): Maximum is 15 for VASCO DIGIPASS 920.
+	Support keypad_modify method such as CHANGE_REFERENCE_DATA: 0x24.
+
+	Add error log and debug log for pcsc_keypad_verify and pcsc_keypad_modify.
+	* scd/apdu.c (pcsc_keypad_verify): Add debug log and error log.
+	(pcsc_keypad_modify): Likewise.
+
+	Fix pinpad input support for passphrase modification. (backport)
+	* apdu.c (pcsc_keypad_verify): Have dummy Lc field with value 0.
+	(pcsc_keypad_modify): Likewise.
+	(pcsc_keypad_modify): It's only for ISO7816_CHANGE_REFERENCE_DATA.
+	bConfirmPIN value is determined by the parameter p0.
+
+	* app-openpgp.c (do_change_pin): The flag use_keypad should be 0 when
+	reset_mode is on, or resetcode is on.  use_keypad only makes sense for
+	iso7816_change_reference_data_kp.
+
+	* iso7816.h (iso7816_put_data_kp): Remove.
+	(iso7816_reset_retry_counter_kp): Remove.
+	(iso7816_reset_retry_counter_with_rc_kp): Remove.
+	(iso7816_change_reference_data_kp): Add an argument: IS_EXCHANGE.
+
+	* iso7816.c (iso7816_put_data_kp): Remove.
+	(iso7816_reset_retry_counter_kp): Remove.
+	(iso7816_reset_retry_counter_with_rc_kp): Remove.
+	(iso7816_change_reference_data_kp): Add an argument: IS_EXCHANGE.
+
+	scd: Fix pinpad input support (backport from master)
+	* app-openpgp.c (do_change_pin): Fix pincb messages when
+	use_keypad == 1.
+
+	scd: PC/SC pinpad support (pinpad input for modify pass phrase). (backport)
+	* iso7816.h (iso7816_change_reference_data_kp): Remove arguments
+	of OLDCHV, OLDCHVLEN, NEWCHV, and NEWCHVLEN.
+
+	* iso7816.c (iso7816_change_reference_data_kp): Call
+	apdu_keypad_modify.
+	(iso7816_change_reference_data): Don't call
+	iso7816_change_reference_data_kp.
+
+	* apdu.h (apdu_keypad_modify): New.
+
+	* apdu.c (pcsc_keypad_modify, apdu_keypad_modify): New.
+	(struct reader_table_s): New memeber function keypad_modify.
+	(new_reader_slot, open_ct_reader, open_ccid_reader)
+	(open_rapdu_reader): Initialize keypad_modify.
+
+	* app-openpgp.c (do_change_pin): Handle keypad and call
+	iso7816_change_reference_data_kp if it is the case.
+
+	scd: PC/SC pinpad support.  (Backported from master.)
+	* iso7816.h (iso7816_verify_kp): Remove arguments of CHV and CHVLEN.
+
+	* iso7816.c (iso7816_verify_kp): Call apdu_keypad_verify. Only
+	handle thecase with PININFO.
+	(iso7816_verify): Call apdu_send_simple.
+
+	* app-openpgp.c (verify_a_chv, verify_chv3): Follow the change of
+	iso7816_verify_kp.
+
+	* app-nks.c (verify_pin): Likewise.
+
+	* app-dinsig.c (verify_pin): Likewise.
+
+	* apdu.c: Include "iso7816.h".
+	(struct reader_table_s): New memeber function keypad_verify.
+	Add fields verify_ioctl and modify_ioctl in pcsc.
+	(CM_IOCTL_GET_FEATURE_REQUEST, FEATURE_VERIFY_PIN_DIRECT)
+	(FEATURE_MODIFY_PIN_DIRECT): New.
+	(pcsc_control): New.
+	(control_pcsc_direct, control_pcsc_wrapped, control_pcsc)
+	(check_pcsc_keypad, pcsc_keypad_verify): New.
+	(ccid_keypad_verify, apdu_keypad_verify): New.
+	(new_reader_slot): Initialize with check_pcsc_keypad,
+	pcsc_keypad_verify, verify_ioctl and modify_ioctl.
+	(open_ct_reader): Initialize keypad_verify with NULL.
+	(open_ccid_reader): Initialize keypad_verify.
+	(open_rapdu_reader): Initialize keypad_verify with NULL.
+	(apdu_open_reader): Initialize pcsc_control.
+
+	* pcsc-wrapper.c (load_pcsc_driver): Initialize pcsc_control.
+	(handle_control): New.
+	(main): Handle the case 6 of handle_control.
+
+	scd fixes on error.
+	* scd/apdu.c (open_pcsc_reader_wrapped): Show error number.
+
+	* scd/command.c (get_reader_slot): Return -1 on error.
+
+	scd: Fix the changes of scd/command.c.
+	* scd/command.c (do_reset): Assign slot after setting slot_table.
+
+2012-06-25  Werner Koch  <wk@gnupg.org>
+
+	scd: Fix resetting and closing of the reader.  (Backported by gniibe)
+	* scd/command.c (update_card_removed): Do no act on an invalid VRDR.
+	(do_reset): Ignore apdu_reset error codes for no and inactive card.
+	Close the reader before setting the slot to -1.
+	(update_reader_status_file): Notify the application before closing the
+	reader.
+
+	scd: Retry command SERIALNO for an inactive card.
+	* scd/command.c (cmd_serialno): Retry once for an inactive card.
+
+	Fix detection of card removal and insertion.
+	* scd/apdu.c (apdu_connect): Return status codes for no card available
+	and inactive card.
+	* scd/command.c (TEST_CARD_REMOVAL): Also test for GPG_ERR_CARD_RESET.
+	(open_card): Map apdu_connect status to GPG_ERR_CARD_RESET.
+
+	Support the Cherry ST-2000 card reader.
+	* scd/ccid-driver.c (SCM_SCR331, SCM_SCR331DI, SCM_SCR335)
+	(SCM_SCR3320, SCM_SPR532, CHERRY_ST2000): New constants.
+	(parse_ccid_descriptor): Use them.
+	(scan_or_find_usb_device, ccid_transceive_secure): Handle Cherry
+	ST-2000.  Suggested by Matthias-Christian Ott.
+
+2012-06-25  NIIBE Yutaka  <gniibe@fsij.org>
+
+	fix wLangId in ccid-driver.c.
+
+2012-05-24  Werner Koch  <wk@gnupg.org>
+
+	Add provisions to build with Libgcrypt 1.6.
+	Replace gcry_md_start_debug by gcry_md_debug in all files.
+
+	* agent/gpg-agent.c (fixed_gcry_pth_init): Use only if
+	GCRY_THREAD_OPTION_VERSION is 0
+	* scd/scdaemon.c (fixed_gcry_pth_init): Ditto.
+
+	Print the hash algorithm in colon mode key listing.
+	* g10/keylist.c (list_keyblock_colon): Print digest_algo.
+
+2012-05-08  Werner Koch  <wk@gnupg.org>
+
+	common: Remove generated files only during maintainer-clean.
+	* common/Makefile.am (CLEANFILES): Rename to MAINTAINERCLEANFILES.
+
+	Fix copyright years.
+	* scripts/git-log-footer: Add more years; we actually published the
+	first code in 1997.
+
+2012-03-30  Werner Koch  <wk@gnupg.org>
+
+	Cast second value of a ?: to void in estream.c.
+	* common/estream.c (ESTREAM_MUTEX_LOCK): Cast pth_mutex_acquire result
+	to void.  Some compilers choke on mixing void and int in an
+	conditional operator.  Reported by Nelson H. F. Beebe.
+
+2012-03-27  Werner Koch  <wk@gnupg.org>
+
+	Release 2.0.19.
+
+	Update zh_TW translation.
+
+	Update config.{sub,guess} to version 2012-02-10.
+	* scripts/config.guess, scripts/config.sub: Update.
+
+	Update texinfo source from master.
+	* doc/gpg-agent.texi, doc/gpg.texi, doc/gpgsm.texi
+	* doc/scdaemon.texi,  doc/tools.texi: Update.
+	* doc/yat2m.c: Update.
+
+	Add target to update the texinfo files from master.
+	* doc/Makefile.am (update-source): New.
+
+2012-03-26  Werner Koch  <wk@gnupg.org>
+
+	Fix make rules for audit-events.h et al.
+	* common/Makefile.am (audit-events.h, status-codes.h): Fix target file
+	name.
+
+	Update samplekeys and NEWS.
+	* doc/samplekeys.asc: Update.
+
+	Allow compressed data with algorithm 0.
+	* g10/mainproc.c (proc_compressed): Remove superfluous check for
+	an algorithm number of 0.  This is bug#1326.
+
+2012-02-01  David Shaw  <dshaw@jabberwocky.com>
+
+	Honor --cert-digest-algo when recreating a cert.
+	* g10/sign.c (update_keysig_packet): Honor --cert-digest-algo when
+	  recreating a cert.
+
+	This is used by various things in --edit-key like setpref, primary,
+	etc.  Suggested by Christian Aistleitner.
+
+2012-01-31  Werner Koch  <wk@gnupg.org>
+
+	Update copyright year.
+
+	Require an installed gitlog_to_changelog for make dist.
+	* scripts/gitlog-to-changelog: Remove.
+	* Makefile.am (GITLOG_TO_CHANGELOG): New.
+	(gen-ChangeLog): Use it.  Add set -e.
+
+	Add Ukrainian translation.
+	* po/uk.po: New.
+	* po/LINGUAS: Add uk.po.
+
+	estream: Avoid printing leading zeroes by %p on 32 bit systems.
+	* common/estream-printf.c (pr_pointer): Synchronize definition of
+	AULONG with its use.
+
+	gpg: Add a DECRYPTION_INFO status.
+	* common/status.h (STATUS_DECRYPTION_INFO): New.
+	* g10/encr-data.c: Include status.h.
+	(decrypt_data): Emit STATUS_DECRYPTION_INFO line.
+
+2012-01-20  Werner Koch  <wk@gnupg.org>
+
+	Do not copy default merge commit log entries into the ChangeLog.
+	* scripts/gitlog-to-changelog: Skip merge commits.
+
+	Add files to .gitignore.
+
+2012-01-20  David Shaw  <dshaw@jabberwocky.com>
+
+	Changes to --min-cert-level should cause a trustdb rebuild (issue 1366)
+	* g10/gpgv.c, g10/trustdb.c (read_trust_options): Add min_cert_level
+
+	* g10/trustdb.c (check_trustdb_stale): Request a rebuild if
+	  pending_check_trustdb is true (set when we detect a trustdb
+	  parameter has changed).
+
+	* g10/keylist.c (public_key_list): Use 'l' in the "tru" with-colons
+	  listing for min_cert_level not matching.
+
+	* g10/tdbio.c (tdbio_update_version_record, create_version_record,
+	  tdbio_db_matches_options, tdbio_dump_record, tdbio_read_record,
+	  tdbio_write_record): Add a byte for min_cert_level in the tdbio
+	  version record.
+
+2012-01-11  David Shaw  <dshaw@jabberwocky.com>
+
+	Refresh sample keys.
+
+2012-01-03  Werner Koch  <wk@gnupg.org>
+
+	Terminate csh commands with a semicolon.
+	Fixes bug#1386.
+
+	* agent/gpg-agent.c (main): Terminate csh style output with a semicolon.
+	* scd/scdaemon.c: Ditto.
+
+2011-12-28  David Shaw  <dshaw@jabberwocky.com>
+
+	Use the longest key ID available when talking to a HKP server.
+	This is issue 1340.  Now that PKSD is dead, and SKS supports long key
+	IDs, this is safe to do.  Patch from Daniel Kahn Gillmor
+	<dkg@fifthhorseman.net>.
+
+2011-12-15  David Shaw  <dshaw@jabberwocky.com>
+
+	Merge fix for issue 1331 from 1.4.
+	* photoid.c (generate_photo_id): Check for the JPEG magic numbers
+	instead of JFIF since some programs generate an EXIF header first.
+
+2011-12-02  Werner Koch  <wk@gnupg.org>
+
+	Generate the ChangeLog from commit logs.
+	* scripts/gitlog-to-changelog: New script.  Taken from gnulib.
+	* scripts/git-log-fix: New file.
+	* scripts/git-log-footer: New file.
+	* scripts/git-hooks/commit-msg: New script.
+	* autogen.sh: Install commit-msg hook for git.
+	* doc/HACKING: Describe the ChangeLog policy.
+	* ChangeLog: New file.
+	* Makefile.am (EXTRA_DIST): Add new files.
+	(gen-ChangeLog): New.
+	(dist-hook): Run gen-ChangeLog.
+
+	Rename all ChangeLog files to ChangeLog-2011.
+
+2011-12-01  Werner Koch  <wk@gnupg.org>
+
+	NB: Changes done before December 1st, 2011 are described in
+	per directory files named ChangeLog-2011.  See doc/HACKING for
+	details.
+
+        -----
+	Copyright (C) 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004,
+                      2005, 2006, 2007, 2008, 2009, 2010, 2011,
+                      2012 Free Software Foundation, Inc.
+
+	Copying and distribution of this file and/or the original GIT
+	commit log messages, with or without modification, are
+	permitted provided the copyright notice and this notice are
+	preserved.

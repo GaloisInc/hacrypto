@@ -1,0 +1,4216 @@
+2014-01-29  Werner Koch  <wk@gnupg.org>
+
+	Release 1.6.1.
+	* configure.ac: Set LT version to C20/A0/R1.
+
+	Reserve control code for FIPS extensions.
+	* src/gcrypt.h.in (GCRYCTL_INACTIVATE_FIPS_FLAG): New.
+	(GCRYCTL_REACTIVATE_FIPS_FLAG): New.
+	* src/global.c (_gcry_vcontrol): Add them but return not_implemented.
+
+	(cherry picked from commit aea96a64fbc58a0b6f9f435e97e93294c6eb1052)
+
+	Support non weak symbol pthread platforms.
+	* m4/lock.m4, m4/threadlib.m4: New.  From libgpg-error master.
+	* m4/Makefile.am (EXTRA_DIST): Add them.
+	* configure.ac (HAVE_PTHREAD): Remove test and ac_define.
+	(gl_LOCK): Do not use under Windows.
+	(LIBGCRYPT_CONFIG_LIBS): Add LIBTHREAD to support non-ELF pthread
+	systems.
+	* src/Makefile.am (dumpsexp_LDADD, mpicalc_LDADD, hmac256_LDADD)
+	(gcryptrnd_LDADD): Add LIBTHREAD.
+	* src/ath.c: Include pthread for any pthread version.
+	(ath_init, ath_install, ath_mutex_init, ath_mutex_destroy)
+	(ath_mutex_lock, ath_mutex_unlock): Support non-weak symbol pthread
+	systems.
+	* tests/Makefile.am (LDADD): Add LIBTHREAD.
+	* tests/t-lock.c: Replace HAVE_PTHREAD by USE_POSIX_THREADS
+	(run_test): Run only under W32 or pthread.
+
+	tests: Remove non-portable format specifiers.
+	* tests/basic.c: Replace "%zi" by "%d" and casts.
+
+2014-01-29  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Fix RSA Blinding.
+	* cipher/rsa.c (rsa_decrypt): Loop to get multiplicative inverse.
+
+	(cherry picked from commit 121a90d8931944974054f7d94f63b7f89df87fa5)
+
+2014-01-28  Werner Koch  <wk@gnupg.org>
+
+	sexp: Fix broken gcry_sexp_nth.
+	* src/sexp.c (_gcry_sexp_nth): Return a valid S-expression for a data
+	element.
+	(NODE): Remove unused typedef.
+	(ST_HINT): Comment unused macro.
+
+	* tests/tsexp.c (bug_1594): New.
+	(main): Run new test.
+
+2014-01-27  Werner Koch  <wk@gnupg.org>
+
+	mpi: Minor fix for Atari-mint.
+	* mpi/config.links [m68k-atari-mint]: Do not assume 68020.  Suggested
+	by Alan Hourihane.
+
+2014-01-27  Dmitry Eremin-Solenikov  <dbaryshkov@gmail.com>
+
+	tests: Pass -no-install to libtool.
+	* tests/Makefile.am: add AM_LDFLAGS = -no-install
+
+	Fix most of memory leaks in tests code.
+	* tests/basic.c (check_ccm_cipher): Close cipher after use.
+	* tests/basic.c (check_one_cipher): Correct length of used buffer.
+	* tests/benchmark.c (cipher_bench): Use xcalloc to make buffer
+	  initialized.
+	* tests/keygen.c (check_ecc_keys): Release generated key.
+	* tests/t-mpi-point.c (context_param): Release mpi Q.
+	* tests/t-sexp.c (check_extract_param): Release extracted number.
+
+	Fix memory leaks in ecc code.
+	* cipher/ecc-curves.c (_gcry_ecc_update_curve_param): Release passed mpi
+	  values.
+	* cipher/ecc.c (compute_keygrip): Fix potential memory leak in error
+	  path.
+	* cipher/ecc.c (_gcry_ecc_get_curve): Release temporary mpi.
+
+2014-01-24  Werner Koch  <wk@gnupg.org>
+
+	Check compiler features only for the relevant platform.
+	* mpi/config.links (mpi_cpu_arch): Always set for ARM.  Set for HPPA.
+	Set to "undefined" for unknown platforms.
+	(try_asm_modules): Act upon only after having detected the CPU.
+	* configure.ac: Move the call to config.links before the platform
+	specific compiler checks.  Check platform specific features only if
+	the platform is targeted.
+
+2014-01-24  Dmitry Eremin-Solenikov  <dbaryshkov@gmail.com>
+
+	Truncate hash values for ECDSA signature scheme.
+	* cipher/dsa-common (_gcry_dsa_normalize_hash): New. Truncate opaque
+	  mpis as required for DSA and ECDSA signature schemas.
+	* cipher/dsa.c (verify): Return gpg_err_code_t value from verify() to
+	  behave like the rest of internal sign/verify functions.
+	* cipher/dsa.c (sign, verify, dsa_verify): Factor out hash truncation.
+	* cipher/ecc-ecdsa.c (_gcry_ecc_ecdsa_sign): Factor out hash truncation.
+	* cipher/ecc-ecdsa.c (_gcry_ecc_ecdsa_verify):
+	  as required by ECDSA scheme, truncate hash values to bitlength of
+	  used curve.
+	* tests/pubkey.c (check_ecc_sample_key): add a testcase for hash
+	  truncation.
+
+	(cherry picked from commit 9edcf1090e0485f9f383b6c54b18ea8ca3d4a225)
+
+2014-01-24  Werner Koch  <wk@gnupg.org>
+
+	Support locking under Windows.
+	* src/ath.c: Add support for Windows.
+	* src/global.c (external_lock_test): New.
+	(_gcry_vcontrol): Call new function with formerly reserved code 61.
+
+	* tests/t-common.h: New. Taken from current libgpg-error.
+	* tests/t-lock.c: New.  Based on t-lock.c from libgpg-error.
+	* configure.ac (HAVE_PTHREAD): Set macro to 1 if defined.
+	(AC_CHECK_FUNCS): Check for flockfile.
+	* tests/Makefile.am (tests_bin): Add t-lock.
+	(noinst_HEADERS): Add t-common.h
+	(LDADD): Move value to ...
+	(default_ldadd): new.
+	(t_lock_LDADD): New.
+
+2014-01-20  Werner Koch  <wk@gnupg.org>
+
+	cipher: Fix commit 77f28793.
+	* cipher/tiger.c (tiger_init): Add arg FLAGS.
+	(tiger1_init, tiger2_init): Ditto.
+
+	(cherry picked from commit dad06e4d1b835bac778b87090b1d3894b7535b14)
+
+	md: Add Whirlpool bug emulation feature.
+	* src/gcrypt.h.in (GCRY_MD_FLAG_BUGEMU1): New.
+	* src/cipher-proto.h (gcry_md_init_t): Add arg FLAGS.  Change all code
+	to implement that flag.
+	* cipher/md.c (gcry_md_context):  Replace SECURE and FINALIZED by bit
+	field FLAGS.  Add flag BUGEMU1.  Change all users.
+	(md_open): Replace args SECURE and HMAC by FLAGS.  Init flags.bugemu1.
+	(_gcry_md_open): Add for GCRY_MD_FLAG_BUGEMU1.
+	(md_enable): Pass bugemu1 flag to the hash init function.
+	(_gcry_md_reset): Ditto.
+
+2014-01-14  Milan Broz  <gmazyland@gmail.com>
+
+	PBKDF2: Use gcry_md_reset to speed up calculation.
+	* cipher/kdf.c (_gcry_kdf_pkdf2): Use gcry_md_reset
+	to speed up calculation.
+
+2014-01-13  Werner Koch  <wk@gnupg.org>
+
+	Fix macro conflict in NetBSD.
+	* cipher/bithelp.h (bswap32): Rename to _gcry_bswap32.
+	(bswap64): Rename to _gcry_bswap64.
+
+2014-01-13  Dmitry Eremin-Solenikov  <dbaryshkov@gmail.com>
+
+	Fix typo in search_oid.
+	* cipher/md.c (search_oid): Invert condition on oid comparison.
+
+	Correct formatting of gcry_mac_get_algo_keylen documentation.
+	* doc/gcrypt.texi: add braces near gcry_mac_get_algo_keylen
+	  documentation.
+
+	Use braces around unsigned int in gcry_mac_get_algo_keylen
+	documentation, otherwise texinfo breaks that and uses 'int' as a
+	function definition.
+
+2014-01-12  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	* cipher/Makefile.am: Add 'blowfish-arm.S' and 'serpent-armv7-neon.S'. --
+	Fix for bug https://bugs.g10code.com/gnupg/issue1584
+
+	(cherry picked from commit 7fef7f481c0a1542be34d1dc831f58d41846ac29)
+
+	Fix buggy/incomplete detection of AVX/AVX2 support.
+	* configure.ac: Also check for 'xgetbv' instruction in AVX and AVX2
+	inline assembly checks.
+	* src/hwf-x86.c [__i386__] (get_xgetbv): New function.
+	[__x86_64__] (get_xgetbv): New function.
+	[HAS_X86_CPUID] (detect_x86_gnuc): Check for OSXSAVE and OS support for
+	XMM&YMM registers and enable AVX/AVX2 only if XMM&YMM registers are
+	supported by OS.
+
+2014-01-10  Werner Koch  <wk@gnupg.org>
+
+	Use the generic autogen.sh script.
+	* autogen.rc: New.
+	* Makefile.am (EXTRA_DIST): Add it.
+	* autogen.sh: Update from current GnuPG.
+
+	(cherry picked from commit b0ac1f9b143aa15855914ba93fef900288d45c9c)
+
+	Move all helper scripts to build-aux/
+	* scripts/: Rename to build-aux/.
+	* compile, config.guess, config.rpath, config.sub
+	* depcomp, doc/mdate-sh, doc/texinfo.tex
+	* install-sh, ltmain.sh, missing: Move to build-aux/.
+	* Makefile.am (EXTRA_DIST): Adjust.
+	* configure.ac (AC_CONFIG_AUX_DIR): New.
+	(AM_SILENT_RULES): New.
+
+	(cherry picked from commit df9b4eabf52faee6f289a4bc62219684442ae383)
+
+2013-12-16  Werner Koch  <wk@gnupg.org>
+
+	Release 1.6.0.
+
+	doc: Change yat2m to allow arbitrary condition names.
+	* doc/yat2m.c (MAX_CONDITION_NESTING): New.
+	(gpgone_defined): Remove.
+	(condition_s, condition_stack, condition_stack_idx): New.
+	(cond_is_active, cond_in_verbatim): New.
+	(add_predefined_macro, set_macro, macro_set_p): New.
+	(evaluate_conditions, push_condition, pop_condition): New.
+	(parse_file): Rewrite to use the condition stack.
+	(top_parse_file): Set prefined macros.
+	(main): Change -D to define arbitrary macros.
+
+	tests: Add SHA-512 to the long hash test.
+	* tests/hashtest.c (testvectors): Add vectors for 256GiB SHA-512.
+	* tests/hashtest-256g.in (algos): Add test for SHA-512.
+
+	Add configure option --enable-large-data-tests.
+	* configure.ac: Add option --enable-large-data-tests.
+	* tests/hashtest-256g.in: New.
+	* tests/Makefile.am (EXTRA_DIST): Add hashtest-256g.in.
+	(TESTS): Split up into tests_bin, tests_bin_last, tests_sh, and
+	tests_sh_last.
+	(tests_sh_last): Add hashtest-256g
+	(noinst_PROGRAMS): Add only tests_bin and tests_bin_last.
+	(bench-slope.log, hashtest-256g.log): New rules to enforce serial run.
+
+	random: Call random progress handler more often.
+	* random/rndlinux.c (_gcry_rndlinux_gather_random): Update progress
+	indicator earlier.
+
+	cipher: Normalize the MPIs used as input to secret key functions.
+	* cipher/dsa.c (sign): Normalize INPUT.
+	* cipher/elgamal.c (decrypt): Normalize A and B.
+	* cipher/rsa.c (secret): Normalize the INPUT.
+	(rsa_decrypt): Reduce DATA before passing to secret.
+
+2013-12-16  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Change dummy variable in mpih-div.c to mpi_limb_t type.
+	* mpi/mpih-div.c (_gcry_mpih_mod_1, _gcry_mpih_divmod_1): Change dummy
+	variable to 'mpi_limb_t' type from 'int'.
+
+	Remove duplicate gcry_mac_hd_t typedef.
+	* cipher/mac-internal.h (gcry_mac_hd_t): Remove.
+
+2013-12-15  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Use u64 for CCM data lengths.
+	* cipher/cipher-ccm.c: Move code inside [HAVE_U64_TYPEDEF].
+	[HAVE_U64_TYPEDEF] (_gcry_cipher_ccm_set_lengths): Use 'u64' for
+	data lengths.
+	[!HAVE_U64_TYPEDEF] (_gcry_cipher_ccm_encrypt)
+	(_gcry_cipher_ccm_decrypt, _gcry_cipher_ccm_set_nonce)
+	(_gcry_cipher_ccm_authenticate, _gcry_cipher_ccm_get_tag)
+	(_gcry_cipher_ccm_check_tag): Dummy functions returning
+	GPG_ERROR_NOT_SUPPORTED.
+	* cipher/cipher-internal.h (gcry_cipher_handle.u_mode.ccm)
+	(_gcry_cipher_ccm_set_lengths): Move inside [HAVE_U64_TYPEDEF] and use
+	u64 instead of size_t for CCM data lengths.
+	* cipher/cipher.c (_gcry_cipher_open_internal, cipher_reset)
+	(_gcry_cipher_ctl) [!HAVE_U64_TYPEDEF]: Return GPG_ERR_NOT_SUPPORTED
+	for CCM.
+	(_gcry_cipher_ctl) [HAVE_U64_TYPEDEF]: Use u64 for
+	GCRYCTL_SET_CCM_LENGTHS length parameters.
+	* tests/basic.c: Do not use CCM if !HAVE_U64_TYPEDEF.
+	* tests/bench-slope.c: Ditto.
+	* tests/benchmark.c: Ditto.
+
+2013-12-14  Werner Koch  <wk@gnupg.org>
+
+	tests: Prevent rare failure of gcry_pk_decrypt test.
+	* tests/basic.c (check_pubkey_crypt): Add special mode 1.
+	(main): Add option --loop.
+
+2013-12-14  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Minor fixes to SHA assembly implementations.
+	* cipher/Makefile.am: Correct 'sha256-avx*.S' to 'sha512-avx*.S'.
+	* cipher/sha1-ssse3-amd64.S: First line, correct filename.
+	* cipher/sha256-ssse3-amd64.S: Return correct stack burn depth.
+	* cipher/sha512-avx-amd64.S: Use 'vzeroall' to clear registers.
+	* cipher/sha512-avx2-bmi2-amd64.S: Ditto and return correct stack burn
+	depth.
+
+	SHA-1/SSSE3: Do not check for Intel syntax assembly support.
+	* cipher/sha1-ssse3-amd64.S: Remove check for
+	HAVE_INTEL_SYNTAX_PLATFORM_AS.
+	* cipher/sha1.c [USE_SSSE3]: Ditto.
+
+2013-12-13  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Convert SHA-1 SSSE3 implementation from mixed asm&C to pure asm.
+	* cipher/Makefile.am: Change 'sha1-ssse3-amd64.c' to
+	'sha1-ssse3-amd64.S'.
+	* cipher/sha1-ssse3-amd64.c: Remove.
+	* cipher/sha1-ssse3-amd64.S: New.
+
+	SHA-1: Add SSSE3 implementation.
+	* cipher/Makefile.am: Add 'sha1-ssse3-amd64.c'.
+	* cipher/sha1-ssse3-amd64.c: New.
+	* cipher/sha1.c (USE_SSSE3): New.
+	(SHA1_CONTEXT) [USE_SSSE3]: Add 'use_ssse3'.
+	(sha1_init) [USE_SSSE3]: Initialize 'use_ssse3'.
+	(transform): Rename to...
+	(_transform): this.
+	(transform): New.
+	* configure.ac [host=x86_64]: Add 'sha1-ssse3-amd64.lo'.
+
+	Add missing register clearing in to SHA-256 and SHA-512 assembly.
+	* cipher/sha256-ssse3-amd64.S: Clear used XMM/YMM registers at return.
+	* cipher/sha512-avx-amd64.S: Ditto.
+	* cipher/sha512-avx2-bmi2-amd64.S: Ditto.
+	* cipher/sha512-ssse3-amd64.S: Ditto.
+
+2013-12-13  Werner Koch  <wk@gnupg.org>
+
+	Update license information.
+	* LICENSES: New.
+	* Makefile.am (EXTRA_DIST): Add LICENSES.
+	* AUTHORS: Add list of copyright holders.
+	* README: Reference AUTHORS.
+
+2013-12-13  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Fix empty clobber in AVX2 assembly check.
+	* configure.ac (gcry_cv_gcc_inline_asm_avx2): Add "cc" as assembly
+	globber.
+
+	Fix W32 build.
+	* random/rndw32.c (register_poll, slow_gatherer): Change gcry_xmalloc to
+	xmalloc, and gcry_xrealloc to xrealloc.
+
+2013-12-12  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	SHA-512: Add AVX and AVX2 implementations for x86-64.
+	* cipher/Makefile.am: Add 'sha512-avx-amd64.S' and
+	'sha512-avx2-bmi2-amd64.S'.
+	* cipher/sha512-avx-amd64.S: New.
+	* cipher/sha512-avx2-bmi2-amd64.S: New.
+	* cipher/sha512.c (USE_AVX, USE_AVX2): New.
+	(SHA512_CONTEXT) [USE_AVX]: Add 'use_avx'.
+	(SHA512_CONTEXT) [USE_AVX2]: Add 'use_avx2'.
+	(sha512_init, sha384_init) [USE_AVX]: Initialize 'use_avx'.
+	(sha512_init, sha384_init) [USE_AVX2]: Initialize 'use_avx2'.
+	[USE_AVX] (_gcry_sha512_transform_amd64_avx): New.
+	[USE_AVX2] (_gcry_sha512_transform_amd64_avx2): New.
+	(transform) [USE_AVX2]: Add call for AVX2 implementation.
+	(transform) [USE_AVX]: Add call for AVX implementation.
+	* configure.ac (HAVE_GCC_INLINE_ASM_BMI2): New check.
+	(sha512): Add 'sha512-avx-amd64.lo' and 'sha512-avx2-bmi2-amd64.lo'.
+	* doc/gcrypt.texi: Document 'intel-cpu' and 'intel-bmi2'.
+	* src/g10lib.h (HWF_INTEL_CPU, HWF_INTEL_BMI2): New.
+	* src/hwfeatures.c (hwflist): Add "intel-cpu" and "intel-bmi2".
+	* src/hwf-x86.c (detect_x86_gnuc): Check for HWF_INTEL_CPU and
+	HWF_INTEL_BMI2.
+
+	SHA-512: Add SSSE3 implementation for x86-64.
+	* cipher/Makefile.am: Add 'sha512-ssse3-amd64.S'.
+	* cipher/sha512-ssse3-amd64.S: New.
+	* cipher/sha512.c (USE_SSSE3): New.
+	(SHA512_CONTEXT) [USE_SSSE3]: Add 'use_ssse3'.
+	(sha512_init, sha384_init) [USE_SSSE3]: Initialize 'use_ssse3'.
+	[USE_SSSE3] (_gcry_sha512_transform_amd64_ssse3): New.
+	(transform) [USE_SSSE3]: Call SSSE3 implementation.
+	* configure.ac (sha512): Add 'sha512-ssse3-amd64.lo'.
+
+	SHA-256: Add SSSE3 implementation for x86-64.
+	* cipher/Makefile.am: Add 'sha256-ssse3-amd64.S'.
+	* cipher/sha256-ssse3-amd64.S: New.
+	* cipher/sha256.c (USE_SSSE3): New.
+	(SHA256_CONTEXT) [USE_SSSE3]: Add 'use_ssse3'.
+	(sha256_init, sha224_init) [USE_SSSE3]: Initialize 'use_ssse3'.
+	(transform): Rename to...
+	(_transform): This.
+	[USE_SSSE3] (_gcry_sha256_transform_amd64_ssse3): New.
+	(transform): New.
+	* configure.ac (HAVE_INTEL_SYNTAX_PLATFORM_AS): New check.
+	(sha256): Add 'sha256-ssse3-amd64.lo'.
+	* doc/gcrypt.texi: Document 'intel-ssse3'.
+	* src/g10lib.h (HWF_INTEL_SSSE3): New.
+	* src/hwfeatures.c (hwflist): Add "intel-ssse3".
+	* src/hwf-x86.c (detect_x86_gnuc): Test for SSSE3.
+
+2013-12-12  Werner Koch  <wk@gnupg.org>
+
+	Add a configuration file to disable hardware features.
+	* src/hwfeatures.c: Inclyde syslog.h and ctype.h.
+	(HWF_DENY_FILE): New.
+	(my_isascii): New.
+	(parse_hwf_deny_file): New.
+	(_gcry_detect_hw_features): Call it.
+
+	* src/mpicalc.c (main): Correctly initialize Libgcrypt.  Add options
+	"--print-config" and "--disable-hwf".
+
+	Move list of hardware features to hwfeatures.c.
+	* src/global.c (hwflist, disabled_hw_features): Move to ..
+	* src/hwfeatures.c: here.
+	(_gcry_disable_hw_feature): New.
+	(_gcry_enum_hw_features): New.
+	(_gcry_detect_hw_features): Remove arg DISABLED_FEATURES.
+	* src/global.c (print_config, _gcry_vcontrol, global_init): Adjust
+	accordingly.
+
+	Remove macro hacks for internal vs. external functions.  Part 2 and last.
+	* src/visibility.h: Remove remaining define/undef hacks for symbol
+	visibility.  Add macros to detect the use of the public functions.
+	Change all affected functions by replacing them by the x-macros.
+	* src/g10lib.h: Add internal prototypes.
+	(xtrymalloc, xtrycalloc, xtrymalloc_secure, xtrycalloc_secure)
+	(xtryrealloc, xtrystrdup, xmalloc, xcalloc, xmalloc_secure)
+	(xcalloc_secure, xrealloc, xstrdup, xfree): New macros.
+
+2013-12-11  Werner Koch  <wk@gnupg.org>
+
+	random: Add a feature to close device file descriptors.
+	* src/gcrypt.h.in (GCRYCTL_CLOSE_RANDOM_DEVICE): New.
+	* src/global.c (_gcry_vcontrol): Call _gcry_random_close_fds.
+	* random/random.c (_gcry_random_close_fds): New.
+	* random/random-csprng.c (_gcry_rngcsprng_close_fds): New.
+	* random/random-fips.c (_gcry_rngfips_close_fds): New.
+	* random/random-system.c (_gcry_rngsystem_close_fds): New.
+	* random/rndlinux.c (open_device): Add arg retry.
+	(_gcry_rndlinux_gather_random): Add mode to close open fds.
+
+	* tests/random.c (check_close_random_device): New.
+	(main): Call new test.
+
+2013-12-10  Werner Koch  <wk@gnupg.org>
+
+	Fix last commit (9a37470c)
+	* src/secmem.c (lock_pool): Remove remaining line.  Reported by Ian
+	Goldberg.
+
+2013-12-09  Werner Koch  <wk@gnupg.org>
+
+	Fix one-off memory leak when build with Linux capability support.
+	* src/secmem.c (lock_pool, secmem_init): Use cap_free.  Reported by
+	Mike Crowe <mac@mcrowe.com>.
+
+2013-12-09  David 'Digit' Turner  <digit@google.com>
+
+	Update libtool to support Android.
+	* m4/libtool.m4: Add "linux*android*" case.  Taken from the libtool
+	repository.
+
+2013-12-09  Werner Koch  <wk@gnupg.org>
+
+	tests: Speed up benchmarks in regression test mode.
+	* tests/tsexp.c (check_extract_param): Fix compiler warning.
+	* tests/Makefile.am (TESTS_ENVIRONMENT): Set GCRYPT_IN_REGRESSION_TEST.
+	* tests/bench-slope.c (main): Speed up if in regression test mode.
+	* tests/benchmark.c (main): Ditto.
+
+	tests: Add --csv option to bench-slope.
+	* tests/bench-slope.c (STR, STR2): New.
+	(cvs_mode): New.
+	(num_measurement_repetitions): New.  Replace use of
+	NUM_MEASUREMENT_REPETITIONS by this.
+	(current_section_name, current_algo_name, current_mode_name): New.
+	(bench_print_result_csv): New.
+	(bench_print_result_std): Rename from bench_print_result.
+	(bench_print_result): New. Divert depending on CSV_MODE.
+	(bench_print_header, bench_print_footer): take care of CSV_MODE.
+	(bench_print_algo, bench_print_mode): New.  Use them instead of
+	explicit printfs.
+	(main): Add options --csv and --repetitions.
+
+2013-12-07  Werner Koch  <wk@gnupg.org>
+
+	sexp: Allow long names and white space in gcry_sexp_extract_param.
+	* src/sexp.c (_gcry_sexp_vextract_param): Skip white space.  Support
+	long parameter names.
+	* tests/tsexp.c (check_extract_param): Add test cases for long parameter
+	names and white space.
+
+2013-12-06  Werner Koch  <wk@gnupg.org>
+
+	ecc: Merge partly duplicated code.
+	* cipher/ecc-eddsa.c (_gcry_ecc_eddsa_sign): Factor A hashing out to ...
+	(_gcry_ecc_eddsa_compute_h_d): new function.
+	* cipher/ecc-misc.c (_gcry_ecc_compute_public): Use new function.
+	(reverse_buffer): Remove.
+
+	ecc: Remove unused internal function.
+	* src/cipher-proto.h (gcry_pk_spec): Remove get_param.
+	* cipher/ecc-curves.c (_gcry_ecc_get_param_sexp): Merge in code from
+	_gcry_ecc_get_param.
+	(_gcry_ecc_get_param): Remove.
+	* cipher/ecc.c (_gcry_pubkey_spec_ecc): Remove _gcry_ecc_get_param.
+
+2013-12-06  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Fix building on mingw32.
+	* src/gcrypt-int.h: Include <types.h>.
+
+2013-12-05  Werner Koch  <wk@gnupg.org>
+
+	ecc: Change OID for Ed25519.
+	* cipher/ecc-curves.c (curve_aliased): Add more suitable OID for
+	Ed25519.
+
+	Remove macro hacks for internal vs. external functions.  Part 1.
+	* src/visibility.h: Remove almost all define/undef hacks for symbol
+	visibility.  Add macros to detect the use of the public functions.
+	Change all affected functions by prefixing them explicitly with an
+	underscore and change all internal callers to call the underscore
+	prefixed versions.  Provide convenience macros from sexp and mpi
+	functions.
+	* src/visibility.c: Change all functions to use only gpg_err_code_t
+	and translate to gpg_error_t only in visibility.c.
+
+2013-12-04  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	mpi: add inline assembly for x86-64.
+	* mpi/longlong.h [__x86_64] (add_ssaaaa, sub_ddmmss, umul_ppmm)
+	(udiv_qrnnd, count_leading_zeros, count_trailing_zeros): New.
+
+2013-12-04  NIIBE Yutaka  <gniibe@fsij.org>
+
+	mpi: fix gcry_mpi_powm for negative base.
+	* mpi/mpi-pow.c (gcry_mpi_powm) [USE_ALGORITHM_SIMPLE_EXPONENTIATION]:
+	Fix for the case where BASE is negative.
+	* tests/mpitests.c (test_powm): Add a test case of (-17)^6 mod 19.
+
+2013-12-03  Werner Koch  <wk@gnupg.org>
+
+	Add build support for ppc64le.
+	* config.guess, config.sub: Update to latest version (2013-11-29).
+	* m4/libtool.m4: Add patches for ppc64le.
+
+2013-12-03  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	rijndael: fix compiler warning on aarch64.
+	* cipher/rijndael.c (do_setkey): Use braces for empty if statement
+	instead of semicolon.
+
+	Add aarch64 (arm64) mpi assembly.
+	* mpi/aarch64/mpi-asm-defs.h: New.
+	* mpi/aarch64/mpih-add1.S: New.
+	* mpi/aarch64/mpih-mul1.S: New.
+	* mpi/aarch64/mpih-mul2.S: New.
+	* mpi/aarch64/mpih-mul3.S: New.
+	* mpi/aarch64/mpih-sub1.S: New.
+	* mpi/config.links [host=aarch64-*-*]: Add configguration for aarch64
+	assembly.
+	* mpi/longlong.h [__aarch64__] (add_ssaaaa, sub_ddmmss, umul_ppmm)
+	(count_leading_zeros): New.
+
+2013-12-02  Werner Koch  <wk@gnupg.org>
+
+	ecc: Use constant time point operation for Twisted Edwards.
+	* mpi/ec.c (_gcry_mpi_ec_mul_point): Try to do a constant time
+	operation if needed.
+	* tests/benchmark.c (main): Add option --use-secmem.
+
+	ecc: Make gcry_pk_testkey work for Ed25519.
+	* cipher/ecc-misc.c (_gcry_ecc_compute_public): Add optional args G
+	and d.  Change all callers.
+	* cipher/ecc.c (gen_y_2): Remove.
+	(check_secret_key): Use generic public key compute function.  Adjust
+	for use with Ed25519 and EdDSA.
+	(nist_generate_key): Do not use the compliant key thingy for Ed25519.
+	(ecc_check_secret_key): Make parameter parsing similar to the other
+	functions.
+	* cipher/ecc-curves.c (domain_parms): Zero prefix some parameters so
+	that _gcry_ecc_update_curve_param works correctly.
+	* tests/keygen.c (check_ecc_keys): Add "param" flag.  Check all
+	Ed25519 keys.
+
+	ecc: Fix eddsa point decompression.
+	* cipher/ecc-eddsa.c (_gcry_ecc_eddsa_recover_x): Fix the negative
+	case.
+
+	ecc: Fix gcry_mpi_ec_curve_point for Weierstrass.
+	* mpi/ec.c (_gcry_mpi_ec_curve_point): Use correct equation.
+	(ec_pow3): New.
+	(ec_p_init): Always copy B.
+
+	mpi: Introduce 4 user flags for gcry_mpi_t.
+	* src/gcrypt.h.in (GCRYMPI_FLAG_USER1, GCRYMPI_FLAG_USER2)
+	(GCRYMPI_FLAG_USER3, GCRYMPI_FLAG_USER4): New.
+	* mpi/mpiutil.c (gcry_mpi_set_flag, gcry_mpi_clear_flag)
+	(gcry_mpi_get_flag, _gcry_mpi_free): Implement them.
+	(gcry_mpi_set_opaque): Keep user flags.
+
+2013-11-29  Vladimir 'φ-coder/phcoder' Serbinenko  <phcoder@gmail.com>
+
+	Fix armv3 compile error.
+	* mpi/longlong.h [__arm__ && __ARM_ARCH < 4] (umul_ppmm): Use
+	__AND_CLOBBER_CC instead of __CLOBBER_CC.
+
+	longlong.h on mips with clang.
+	* mpi/longlong.h [__mips__]: Use C-language version with clang.
+
+2013-11-24  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Camellia: Tweaks for AES-NI implementations.
+	* cipher/camellia-aesni-avx-amd64.S: Align stack to 16 bytes; tweak
+	key-setup for small speed up.
+	* cipher/camellia-aesni-avx2-amd64.S: Use vmovdqu even with aligned
+	stack; reorder vinsert128 instructions; use rbp for stack frame.
+
+2013-11-21  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Add GMAC to MAC API.
+	* cipher/Makefile.am: Add 'mac-gmac.c'.
+	* cipher/mac-gmac.c: New.
+	* cipher/mac-internal.h (gcry_mac_handle): Add 'u.gcm'.
+	(_gcry_mac_type_spec_gmac_aes, _gcry_mac_type_spec_gmac_twofish)
+	(_gcry_mac_type_spec_gmac_serpent, _gcry_mac_type_spec_gmac_seed)
+	(_gcry_mac_type_spec_gmac_camellia): New externs.
+	* cipher/mac.c (mac_list): Add GMAC specifications.
+	* doc/gcrypt.texi: Add mention of GMAC.
+	* src/gcrypt.h.in (gcry_mac_algos): Add GCM algorithms.
+	* tests/basic.c (check_one_mac): Add support for MAC IVs.
+	(check_mac): Add support for MAC IVs and add GMAC test vectors.
+	* tests/bench-slope.c (mac_bench): Iterate algorithm numbers to 499.
+	* tests/benchmark.c (mac_bench): Iterate algorithm numbers to 499.
+
+	GCM: Move gcm_table initialization to setkey.
+	* cipher/cipher-gcm.c: Change all 'c->u_iv.iv' to
+	'c->u_mode.gcm.u_ghash_key.key'.
+	(_gcry_cipher_gcm_setkey): New.
+	(_gcry_cipher_gcm_initiv): Move ghash initialization to function above.
+	* cipher/cipher-internal.h (gcry_cipher_handle): Add
+	'u_mode.gcm.u_ghash_key'; Reorder 'u_mode.gcm' members for partial
+	clearing in gcry_cipher_reset.
+	(_gcry_cipher_gcm_setkey): New prototype.
+	* cipher/cipher.c (cipher_setkey): Add GCM setkey.
+	(cipher_reset): Clear 'u_mode' only partially for GCM.
+
+2013-11-20  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	GCM: Add support for split data buffers and online operation.
+	* cipher/cipher-gcm.c (do_ghash_buf): Add buffering for less than
+	blocksize length input and padding handling.
+	(_gcry_cipher_gcm_encrypt, _gcry_cipher_gcm_decrypt): Add handling
+	for AAD padding and check if data has already being padded.
+	(_gcry_cipher_gcm_authenticate): Check that AAD or data has not being
+	padded yet.
+	(_gcry_cipher_gcm_initiv): Clear padding marks.
+	(_gcry_cipher_gcm_tag): Add finalization and padding; Clear sensitive
+	data from cipher handle, since they are not used after generating tag.
+	* cipher/cipher-internal.h (gcry_cipher_handle): Add 'u_mode.gcm.macbuf',
+	'u_mode.gcm.mac_unused', 'u_mode.gcm.ghash_data_finalized' and
+	'u_mode.gcm.ghash_aad_finalized'.
+	* tests/basic.c (check_gcm_cipher): Rename to...
+	(_check_gcm_cipher): ...this and add handling for different buffer step
+	lengths; Enable per byte buffer testing.
+	(check_gcm_cipher): Call _check_gcm_cipher with different buffer step
+	sizes.
+
+	GCM: Use size_t for buffer sizes.
+	* cipher/cipher-gcm.c (ghash, gcm_bytecounter_add, do_ghash_buf)
+	(_gcry_cipher_gcm_encrypt, _gcry_cipher_gcm_decrypt)
+	(_gcry_cipher_gcm_authenticate, _gcry_cipher_gcm_geniv)
+	(_gcry_cipher_gcm_tag): Use size_t for buffer lengths.
+	* cipher/cipher-internal.h (_gcry_cipher_gcm_encrypt)
+	(_gcry_cipher_gcm_decrypt, _gcry_cipher_gcm_authenticate): Use size_t
+	for buffer lengths.
+
+	GCM: add FIPS mode restrictions.
+	* cipher/cipher-gcm.c (_gcry_cipher_gcm_encrypt)
+	(_gcry_cipher_gcm_get_tag): Do not allow using in FIPS mode is setiv
+	was invocated directly.
+	(_gcry_cipher_gcm_setiv): Rename to...
+	(_gcry_cipher_gcm_initiv): ...this.
+	(_gcry_cipher_gcm_setiv): New setiv function with check for FIPS mode.
+	[TODO] (_gcry_cipher_gcm_getiv): New.
+	* cipher/cipher-internal.h (gcry_cipher_handle): Add
+	'u_mode.gcm.disallow_encryption_because_of_setiv_in_fips_mode'.
+
+	GCM: Add clearing and checking of marks.tag.
+	* cipher/cipher-gcm.c (_gcry_cipher_gcm_encrypt)
+	(_gcry_cipher_gcm_decrypt, _gcry_cipher_gcm_authenticate): Make sure
+	that tag has not been finalized yet.
+	(_gcry_cipher_gcm_setiv): Clear 'marks.tag'.
+
+	GCM: Add stack burning.
+	* cipher/cipher-gcm.c (do_ghash, ghash): Return stack burn depth.
+	(setupM): Wipe 'tmp' buffer.
+	(do_ghash_buf): Wipe 'tmp' buffer and add stack burning.
+
+	Add aggregated bulk processing for GCM on x86-64.
+	* cipher/cipher-gcm.c [__x86_64__] (gfmul_pclmul_aggr4): New.
+	(ghash) [GCM_USE_INTEL_PCLMUL]: Add aggregated bulk processing
+	for __x86_64__.
+	(setupM) [__x86_64__]: Add initialization for aggregated bulk
+	processing.
+
+	GCM: Tweak Intel PCLMUL ghash loop for small speed-up.
+	* cipher/cipher-gcm.c (do_ghash): Mark 'inline'.
+	[GCM_USE_INTEL_PCLMUL] (do_ghash_pclmul): Rename to...
+	[GCM_USE_INTEL_PCLMUL] (gfmul_pclmul): ..this and make inline function.
+	(ghash) [GCM_USE_INTEL_PCLMUL]: Preload data before ghash-pclmul loop.
+
+	GCM: Use counter mode code for speed-up.
+	* cipher/cipher-gcm.c (ghash): Add process for multiple blocks.
+	(gcm_bytecounter_add, gcm_add32_be128, gcm_check_datalen)
+	(gcm_check_aadlen_or_ivlen, do_ghash_buf): New functions.
+	(_gcry_cipher_gcm_encrypt, _gcry_cipher_gcm_decrypt)
+	(_gcry_cipher_gcm_authenticate, _gcry_cipher_gcm_set_iv)
+	(_gcry_cipher_gcm_tag): Adjust to use above new functions and
+	counter mode functions for encryption/decryption.
+	* cipher/cipher-internal.h (gcry_cipher_handle): Remove 'length'; Add
+	'u_mode.gcm.(addlen|datalen|tagiv|datalen_over_limits)'.
+	(_gcry_cipher_gcm_setiv): Return gcry_err_code_t.
+	* cipher/cipher.c (cipher_setiv): Return error code.
+	(_gcry_cipher_setiv): Handle error code from 'cipher_setiv'.
+
+	Add Intel PCLMUL acceleration for GCM.
+	* cipher/cipher-gcm.c (fillM): Rename...
+	(do_fillM): ...to this.
+	(ghash): Remove.
+	(fillM): New macro.
+	(GHASH): Use 'do_ghash' instead of 'ghash'.
+	[GCM_USE_INTEL_PCLMUL] (do_ghash_pclmul): New.
+	(ghash): New.
+	(setupM): New.
+	(_gcry_cipher_gcm_encrypt, _gcry_cipher_gcm_decrypt)
+	(_gcry_cipher_gcm_authenticate, _gcry_cipher_gcm_setiv)
+	(_gcry_cipher_gcm_tag): Use 'ghash' instead of 'GHASH' and
+	'c->u_mode.gcm.u_tag.tag' instead of 'c->u_tag.tag'.
+	* cipher/cipher-internal.h (GCM_USE_INTEL_PCLMUL): New.
+	(gcry_cipher_handle): Move 'u_tag' and 'gcm_table' under
+	'u_mode.gcm'.
+	* configure.ac (pclmulsupport, gcry_cv_gcc_inline_asm_pclmul): New.
+	* src/g10lib.h (HWF_INTEL_PCLMUL): New.
+	* src/global.c: Add "intel-pclmul".
+	* src/hwf-x86.c (detect_x86_gnuc): Add check for Intel PCLMUL.
+
+	GCM: GHASH optimizations.
+	* cipher/cipher-gcm.c [GCM_USE_TABLES] (gcmR, ghash): Replace with new.
+	[GCM_USE_TABLES] [GCM_TABLES_USE_U64] (bshift, fillM, do_ghash): New.
+	[GCM_USE_TABLES] [!GCM_TABLES_USE_U64] (bshift, fillM): Replace with
+	new.
+	[GCM_USE_TABLES] [!GCM_TABLES_USE_U64] (do_ghash): New.
+	(_gcry_cipher_gcm_tag): Remove extra memcpy to outbuf and use
+	buf_eq_const for comparing authentication tag.
+	* cipher/cipher-internal.h (gcry_cipher_handle): Different 'gcm_table'
+	for 32-bit and 64-bit platforms.
+
+	Add some documentation for GCM mode.
+	* doc/gcrypt.texi: Add mention of GCM mode.
+
+2013-11-19  Dmitry Eremin-Solenikov  <dbaryshkov@gmail.com>
+
+	Initial implementation of GCM.
+	* cipher/Makefile.am: Add 'cipher-gcm.c'.
+	* cipher/cipher-ccm.c (_gcry_ciphert_ccm_set_lengths)
+	(_gcry_cipher_ccm_authenticate, _gcry_cipher_ccm_tag)
+	(_gcry_cipher_ccm_encrypt, _gcry_cipher_ccm_decrypt): Change
+	'c->u_mode.ccm.tag' to 'c->marks.tag'.
+	* cipher/cipher-gcm.c: New.
+	* cipher/cipher-internal.h (GCM_USE_TABLES): New.
+	(gcry_cipher_handle): Add 'marks.tag', 'u_tag', 'length' and
+	'gcm_table'; Remove 'u_mode.ccm.tag'.
+	(_gcry_cipher_gcm_encrypt, _gcry_cipher_gcm_decrypt)
+	(_gcry_cipher_gcm_setiv, _gcry_cipher_gcm_authenticate)
+	(_gcry_cipher_gcm_get_tag, _gcry_cipher_gcm_check_tag): New.
+	* cipher/cipher.c (_gcry_cipher_open_internal, cipher_setkey)
+	(cipher_encrypt, cipher_decrypt, _gcry_cipher_authenticate)
+	(_gcry_cipher_gettag, _gcry_cipher_checktag): Add GCM mode handling.
+	* src/gcrypt.h.in (gcry_cipher_modes): Add GCRY_CIPHER_MODE_GCM.
+	(GCRY_GCM_BLOCK_LEN): New.
+	* tests/basic.c (check_gcm_cipher): New.
+	(check_ciphers): Add GCM check.
+	(check_cipher_modes): Call 'check_gcm_cipher'.
+	* tests/bench-slope.c (bench_gcm_encrypt_do_bench)
+	(bench_gcm_decrypt_do_bench, bench_gcm_authenticate_do_bench)
+	(gcm_encrypt_ops, gcm_decrypt_ops, gcm_authenticate_ops): New.
+	(cipher_modes): Add GCM enc/dec/auth.
+	(cipher_bench_one): Limit GCM to block ciphers with 16 byte block-size.
+	* tests/benchmark.c (cipher_bench): Add GCM.
+
+2013-11-19  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Camellia: fix compiler warning.
+	* cipher/camellia-glue.c (camellia_setkey): Use braces around empty if
+	statement.
+
+	Tweak Camellia-AVX key-setup for small speed-up.
+	* cipher/camellia-aesni-avx-amd64.S (camellia_f): Merge S-function output
+	rotation with P-function.
+
+	Add CMAC (Cipher-based MAC) to MAC API.
+	* cipher/Makefile.am: Add 'cipher-cmac.c' and 'mac-cmac.c'.
+	* cipher/cipher-cmac.c: New.
+	* cipher/cipher-internal.h (gcry_cipher_handle.u_mode): Add 'cmac'.
+	* cipher/cipher.c (gcry_cipher_open): Rename to...
+	(_gcry_cipher_open_internal): ...this and add CMAC.
+	(gcry_cipher_open): New wrapper that disallows use of internal
+	modes (CMAC) from outside.
+	(cipher_setkey, cipher_encrypt, cipher_decrypt)
+	(_gcry_cipher_authenticate, _gcry_cipher_gettag)
+	(_gcry_cipher_checktag): Add handling for CMAC mode.
+	(cipher_reset): Do not reset 'marks.key' and do not clear subkeys in
+	'u_mode' in CMAC mode.
+	* cipher/mac-cmac.c: New.
+	* cipher/mac-internal.h: Add CMAC support and algorithms.
+	* cipher/mac.c: Add CMAC algorithms.
+	* doc/gcrypt.texi: Add documentation for CMAC.
+	* src/cipher.h (gcry_cipher_internal_modes): New.
+	(_gcry_cipher_open_internal, _gcry_cipher_cmac_authenticate)
+	(_gcry_cipher_cmac_get_tag, _gcry_cipher_cmac_check_tag)
+	(_gcry_cipher_cmac_set_subkeys): New prototypes.
+	* src/gcrypt.h.in (gcry_mac_algos): Add CMAC algorithms.
+	* tests/basic.c (check_mac): Add CMAC test vectors.
+
+2013-11-16  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Add new MAC API, initially with HMAC.
+	* cipher/Makefile.am: Add 'mac.c', 'mac-internal.h' and 'mac-hmac.c'.
+	* cipher/bufhelp.h (buf_eq_const): New.
+	* cipher/cipher-ccm.c (_gcry_cipher_ccm_tag): Use 'buf_eq_const' for
+	constant-time compare.
+	* cipher/mac-hmac.c: New.
+	* cipher/mac-internal.h: New.
+	* cipher/mac.c: New.
+	* doc/gcrypt.texi: Add documentation for MAC API.
+	* src/gcrypt-int.h [GPG_ERROR_VERSION_NUMBER < 1.13]
+	(GPG_ERR_MAC_ALGO): New.
+	* src/gcrypt.h.in (gcry_mac_handle, gcry_mac_hd_t, gcry_mac_algos)
+	(gcry_mac_flags, gcry_mac_open, gcry_mac_close, gcry_mac_ctl)
+	(gcry_mac_algo_info, gcry_mac_setkey, gcry_mac_setiv, gcry_mac_write)
+	(gcry_mac_read, gcry_mac_verify, gcry_mac_get_algo_maclen)
+	(gcry_mac_get_algo_keylen, gcry_mac_algo_name, gcry_mac_map_name)
+	(gcry_mac_reset, gcry_mac_test_algo): New.
+	* src/libgcrypt.def (gcry_mac_open, gcry_mac_close, gcry_mac_ctl)
+	(gcry_mac_algo_info, gcry_mac_setkey, gcry_mac_setiv, gcry_mac_write)
+	(gcry_mac_read, gcry_mac_verify, gcry_mac_get_algo_maclen)
+	(gcry_mac_get_algo_keylen, gcry_mac_algo_name, gcry_mac_map_name): New.
+	* src/libgcrypt.vers (gcry_mac_open, gcry_mac_close, gcry_mac_ctl)
+	(gcry_mac_algo_info, gcry_mac_setkey, gcry_mac_setiv, gcry_mac_write)
+	(gcry_mac_read, gcry_mac_verify, gcry_mac_get_algo_maclen)
+	(gcry_mac_get_algo_keylen, gcry_mac_algo_name, gcry_mac_map_name): New.
+	* src/visibility.c (gcry_mac_open, gcry_mac_close, gcry_mac_ctl)
+	(gcry_mac_algo_info, gcry_mac_setkey, gcry_mac_setiv, gcry_mac_write)
+	(gcry_mac_read, gcry_mac_verify, gcry_mac_get_algo_maclen)
+	(gcry_mac_get_algo_keylen, gcry_mac_algo_name, gcry_mac_map_name): New.
+	* src/visibility.h (gcry_mac_open, gcry_mac_close, gcry_mac_ctl)
+	(gcry_mac_algo_info, gcry_mac_setkey, gcry_mac_setiv, gcry_mac_write)
+	(gcry_mac_read, gcry_mac_verify, gcry_mac_get_algo_maclen)
+	(gcry_mac_get_algo_keylen, gcry_mac_algo_name, gcry_mac_map_name): New.
+	* tests/basic.c (check_one_mac, check_mac): New.
+	(main): Call 'check_mac'.
+	* tests/bench-slope.c (bench_print_header, bench_print_footer): Allow
+	variable algorithm name width.
+	(_cipher_bench, hash_bench): Update to above change.
+	(bench_hash_do_bench): Add 'gcry_md_reset'.
+	(bench_mac_mode, bench_mac_init, bench_mac_free, bench_mac_do_bench)
+	(mac_ops, mac_modes, mac_bench_one, _mac_bench, mac_bench): New.
+	(main): Add 'mac' benchmark options.
+	* tests/benchmark.c (mac_repetitions, mac_bench): New.
+	(main): Add 'mac' benchmark options.
+
+	Use correct blocksize of 32 bytes for GOSTR3411-94 HMAC.
+	* cipher/md.c (md_open): Set macpads_Bsize to 32 for
+	GCRY_MD_GOST24311_94.
+
+2013-11-15  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	cipher: use size_t for internal buffer lengths.
+	* cipher/arcfour.c (do_encrypt_stream, encrypt_stream): Use 'size_t'
+	for buffer lengths.
+	* cipher/blowfish.c (_gcry_blowfish_ctr_enc, _gcry_blowfish_cbc_dec)
+	(_gcry_blowfish_cfb_dec): Ditto.
+	* cipher/camellia-glue.c (_gcry_camellia_ctr_enc)
+	(_gcry_camellia_cbc_dec, _gcry_blowfish_cfb_dec): Ditto.
+	* cipher/cast5.c (_gcry_cast5_ctr_enc, _gcry_cast5_cbc_dec)
+	(_gcry_cast5_cfb_dec): Ditto.
+	* cipher/cipher-aeswrap.c (_gcry_cipher_aeswrap_encrypt)
+	(_gcry_cipher_aeswrap_decrypt): Ditto.
+	* cipher/cipher-cbc.c (_gcry_cipher_cbc_encrypt)
+	(_gcry_cipher_cbc_decrypt): Ditto.
+	* cipher/cipher-ccm.c (_gcry_cipher_ccm_encrypt)
+	(_gcry_cipher_ccm_decrypt): Ditto.
+	* cipher/cipher-cfb.c (_gcry_cipher_cfb_encrypt)
+	(_gcry_cipher_cfb_decrypt): Ditto.
+	* cipher/cipher-ctr.c (_gcry_cipher_ctr_encrypt): Ditto.
+	* cipher/cipher-internal.h (gcry_cipher_handle->bulk)
+	(_gcry_cipher_cbc_encrypt, _gcry_cipher_cbc_decrypt)
+	(_gcry_cipher_cfb_encrypt, _gcry_cipher_cfb_decrypt)
+	(_gcry_cipher_ofb_encrypt, _gcry_cipher_ctr_encrypt)
+	(_gcry_cipher_aeswrap_encrypt, _gcry_cipher_aeswrap_decrypt)
+	(_gcry_cipher_ccm_encrypt, _gcry_cipher_ccm_decrypt): Ditto.
+	* cipher/cipher-ofb.c (_gcry_cipher_cbc_encrypt): Ditto.
+	* cipher/cipher-selftest.h (gcry_cipher_bulk_cbc_dec_t)
+	(gcry_cipher_bulk_cfb_dec_t, gcry_cipher_bulk_ctr_enc_t): Ditto.
+	* cipher/cipher.c (cipher_setkey, cipher_setiv, do_ecb_crypt)
+	(do_ecb_encrypt, do_ecb_decrypt, cipher_encrypt)
+	(cipher_decrypt): Ditto.
+	* cipher/rijndael.c (_gcry_aes_ctr_enc, _gcry_aes_cbc_dec)
+	(_gcry_aes_cfb_dec, _gcry_aes_cbc_enc, _gcry_aes_cfb_enc): Ditto.
+	* cipher/salsa20.c (salsa20_setiv, salsa20_do_encrypt_stream)
+	(salsa20_encrypt_stream, salsa20r12_encrypt_stream): Ditto.
+	* cipher/serpent.c (_gcry_serpent_ctr_enc, _gcry_serpent_cbc_dec)
+	(_gcry_serpent_cfb_dec): Ditto.
+	* cipher/twofish.c (_gcry_twofish_ctr_enc, _gcry_twofish_cbc_dec)
+	(_gcry_twofish_cfb_dec): Ditto.
+	* src/cipher-proto.h (gcry_cipher_stencrypt_t)
+	(gcry_cipher_stdecrypt_t, cipher_setiv_fuct_t): Ditto.
+	* src/cipher.h (_gcry_aes_cfb_enc, _gcry_aes_cfb_dec)
+	(_gcry_aes_cbc_enc, _gcry_aes_cbc_dec, _gcry_aes_ctr_enc)
+	(_gcry_blowfish_cfb_dec, _gcry_blowfish_cbc_dec)
+	(_gcry_blowfish_ctr_enc, _gcry_cast5_cfb_dec, _gcry_cast5_cbc_dec)
+	(_gcry_cast5_ctr_enc, _gcry_camellia_cfb_dec, _gcry_camellia_cbc_dec)
+	(_gcry_camellia_ctr_enc, _gcry_serpent_cfb_dec, _gcry_serpent_cbc_dec)
+	(_gcry_serpent_ctr_enc, _gcry_twofish_cfb_dec, _gcry_twofish_cbc_dec)
+	(_gcry_twofish_ctr_enc): Ditto.
+
+	Camellia: Add AVX/AES-NI key setup.
+	* cipher/camellia-aesni-avx-amd64.S (key_bitlength, key_table): New
+	order of fields in ctx.
+	(camellia_f, vec_rol128, vec_ror128): New macros.
+	(__camellia_avx_setup128, __camellia_avx_setup256)
+	(_gcry_camellia_aesni_avx_keygen): New functions.
+	* cipher/camellia-aesni-avx2-amd64.S (key_bitlength, key_table): New
+	order of fields in ctx.
+	* cipher/camellia-arm.S (CAMELLIA_TABLE_BYTE_LEN, key_length): Remove
+	unused macros.
+	* cipher/camellia-glue.c (CAMELLIA_context): Move keytable to head for
+	better alignment; Make 'use_aesni_avx' and 'use_aesni_avx2' bitfield
+	members.
+	[USE_AESNI_AVX] (_gcry_camellia_aesni_avx_keygen): New prototype.
+	(camellia_setkey) [USE_AESNI_AVX || USE_AESNI_AVX2]: Read hw features
+	to variable 'hwf' and match features from it.
+	(camellia_setkey) [USE_AESNI_AVX]: Use AES-NI/AVX key setup if
+	available.
+
+	Avoid unneeded stack burning with AES-NI and reduce number of 'decryption_prepared' checks
+	* cipher/rijndael.c (RIJNDAEL_context): Make 'decryption_prepared',
+	'use_padlock' and 'use_aesni' 1-bit members in bitfield.
+	(do_setkey): Move 'hwfeatures' inside [USE_AESNI || USE_PADLOCK].
+	(do_aesni_enc_aligned): Rename to...
+	(do_aesni_enc): ...this, as function does not require aligned input.
+	(do_aesni_dec_aligned): Rename to...
+	(do_aesni_dec): ...this, as function does not require aligned input.
+	(do_aesni): Remove.
+	(rijndael_encrypt): Call 'do_aesni_enc' instead of 'do_aesni'.
+	(rijndael_decrypt): Call 'do_aesni_dec' instead of 'do_aesni'.
+	(check_decryption_preparation): New.
+	(do_decrypt): Remove 'decryption_prepared' check.
+	(rijndael_decrypt): Ditto and call 'check_decryption_preparation'.
+	(_gcry_aes_cbc_dec): Ditto.
+	(_gcry_aes_cfb_enc): Add 'burn_depth' and burn stack only when needed.
+	(_gcry_aes_cbc_enc): Ditto.
+	(_gcry_aes_ctr_enc): Ditto.
+	(_gcry_aes_cfb_dec): Ditto.
+	(_gcry_aes_cbc_dec): Ditto and correct clearing of 'savebuf'.
+
+2013-11-14  Werner Koch  <wk@gnupg.org>
+
+	md: Fix hashing for data >= 256 GB.
+	* cipher/hash-common.h (gcry_md_block_ctx): Add "nblocks_high".
+	* cipher/hash-common.c (_gcry_md_block_write): Bump NBLOCKS_HIGH.
+	* cipher/md4.c (md4_init, md4_final): Take care of NBLOCKS_HIGH.
+	* cipher/md5.c (md5_init, md5_final): Ditto.
+	* cipher/rmd160.c (_gcry_rmd160_init, rmd160_final): Ditto.
+	* cipher/sha1.c (sha1_init, sha1_final): Ditto.
+	* cipher/sha256.c (sha256_init, sha224_init, sha256_final): Ditto.
+	* cipher/sha512.c (sha512_init, sha384_init, sha512_final): Ditto.
+	* cipher/tiger.c (do_init, tiger_final): Ditto.
+	* cipher/whirlpool.c (whirlpool_final): Ditto.
+
+	* cipher/md.c (gcry_md_algo_info): Add GCRYCTL_SELFTEST.
+	(_gcry_md_selftest): Return "not implemented" as required.
+	* tests/hashtest.c: New.
+	* tests/genhashdata.c: New.
+	* tests/Makefile.am (TESTS): Add hashtest.
+	(noinst_PROGRAMS): Add genhashdata
+
+2013-11-13  Christian Grothoff  <christian@grothoff.org>
+
+	ecc: Fix key generation for a plain Ed25519 key.
+	* cipher/ecc.c (nist_generate_key): Use custom code for ED25519.
+
+	ecc: Fix some memory leaks.
+	* cipher/ecc-curves.c (_gcry_mpi_ec_new): Free ec->b before assigning.
+	* cipher/ecc.c (nist_generate_key): Release Q.
+	* cipher/ecc-eddsa.c (_gcry_ecc_eddsa_genkey): Ditto.
+
+2013-11-11  Werner Koch  <wk@gnupg.org>
+
+	ecc: Change keygrip computation for Ed25519+EdDSA.
+	* cipher/ecc.c (compute_keygrip): Rework.
+	* cipher/ecc-eddsa.c (_gcry_ecc_eddsa_ensure_compact): New.
+	* cipher/ecc-curves.c (_gcry_ecc_update_curve_param): New.
+	* tests/keygrip.c (key_grips): Add flag param and test cases for
+	Ed25519.
+
+	mpi: Add special format GCRYMPI_FMT_OPAQUE.
+	* src/gcrypt.h.in (GCRYMPI_FMT_OPAQUE): New.
+	(_gcry_sexp_nth_opaque_mpi): Remove.
+	* src/sexp.c (gcry_sexp_nth_mpi): Add support for GCRYMPI_FMT_OPAQUE.
+	(_gcry_sexp_vextract_param): Replace removed function by
+	GCRYMPI_FMT_OPAQUE.
+
+2013-11-10  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Fix error output in CTR selftest.
+	* cipher/cipher-selftest.c (_gcry_selftest_helper_ctr): Change
+	fprintf(stderr,...) to syslog(); Correct error output for bulk
+	IV check, plaintext mismatch => ciphertext mismatch.
+
+2013-11-09  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Fix Serpent-AVX2 and Camellia-AVX2 counter modes.
+	* cipher/camellia-aesni-avx2-amd64.S
+	(_gcry_camellia_aesni_avx2_ctr_enc): Byte-swap before checking for
+	overflow handling.
+	* cipher/camellia-glue.c (selftest_ctr_128, selftest_cfb_128)
+	(selftest_cbc_128): Add 16 to nblocks.
+	* cipher/cipher-selftest.c (_gcry_selftest_helper_ctr): Add test with
+	non-overflowing IV and modify overflow IV to detect broken endianness
+	handling.
+	* cipher/serpent-avx2-amd64.S (_gcry_serpent_avx2_ctr_enc): Byte-swap
+	before checking for overflow handling; Fix crazy-mixed-endian IV
+	construction to big-endian.
+	* cipher/serpent.c (selftest_ctr_128, selftest_cfb_128)
+	(selftest_cbc_128): Add 8 to nblocks.
+
+2013-11-09  Sergey V  <sftp.mtuci@gmail.com>
+
+	cipher/gost28147: optimization: use precomputed S-box tables.
+	* cipher/gost.h (GOST28147_context): Remove unneeded subst and
+	subst_set members.
+	* cipher/gost28147.c (max): Remove unneeded macro.
+	(test_sbox): Replace with new precomputed tables.
+	(gost_set_subst): Remove function.
+	(gost_val): Use new S-box tables.
+	(gost_encrypt_block, gost_decrypt_block): Tweak to use new ctx and
+	S-box tables.
+
+2013-11-09  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Fix tail handling for AES-NI counter mode.
+	* cipher/rijndael.c (do_aesni_ctr): Fix outputting of updated
+	counter-IV.
+
+2013-11-08  Werner Koch  <wk@gnupg.org>
+
+	ecc: Improve gcry_pk_get_curve.
+	* cipher/ecc-curves.c (_gcry_ecc_fill_in_curve): Factor some code out
+	to ..
+	(find_domain_parms_idx): new.
+	(_gcry_ecc_get_curve): Find by curve name on error.
+
+	cipher: Avoid signed divisions in idea.c.
+	* cipher/idea.c (mul_inv): Use unsigned division.
+
+	ecc: Implement the "nocomp" flag for key generation.
+	* cipher/ecc.c (ecc_generate): Support the "nocomp" flag.
+	* tests/keygen.c (check_ecc_keys): Add a test for it.
+
+	ecc: Make "noparam" the default and replace by "param".
+	* src/cipher.h (PUBKEY_FLAG_NOCOMP): New.
+	(PUBKEY_FLAG_NOPARAM): Remove.
+	(PUBKEY_FLAG_PARAM): New.
+	* cipher/pubkey-util.c (_gcry_pk_util_parse_flaglist): Support the new
+	flags and ignore the obsolete "noparam" flag.
+	* cipher/ecc-curves.c (_gcry_ecc_fill_in_curve): Return the curve name
+	also for curves selected by NBITS.
+	(_gcry_mpi_ec_new): Support the "param" flag.
+	* cipher/ecc.c (ecc_generate, ecc_sign, ecc_verify): Ditto.
+	* tests/keygen.c (check_ecc_keys): Remove the "noparam" flag.
+
+2013-11-07  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Fix decryption function size in AES AMD64 assembly.
+	* cipher/rijndael-amd64.S (_gcry_aes_amd64_decrypt_block): Set '.size'
+	for '_gcry_aes_amd64_decrypt_block', not '..._encrypt_block'.
+
+	Change 64-bit shift to 32-bit in AES AMD64 assembly.
+	* cipher/rijndael-amd64.S (do16bit_shr): Change 'shrq' to 'shrl'.
+
+2013-11-06  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Speed-up AES-NI key setup.
+	* cipher/rijndael.c [USE_AESNI] (m128i_t): Remove.
+	[USE_AESNI] (u128_t): New.
+	[USE_AESNI] (aesni_do_setkey): New.
+	(do_setkey) [USE_AESNI]: Move AES-NI accelerated key setup to
+	'aesni_do_setkey'.
+	(do_setkey): Call _gcry_get_hw_features only once. Clear stack after
+	use in generic key setup part.
+	(rijndael_setkey): Remove stack burning.
+	(prepare_decryption) [USE_AESNI]: Use 'u128_t' instead of 'm128i_t' to
+	avoid compiler generated SSE2 instructions and XMM register usage,
+	unroll 'aesimc' setup loop
+	(prepare_decryption): Clear stack after use.
+	[USE_AESNI] (do_aesni_enc_aligned): Update comment about alignment.
+	(do_decrypt): Do not burning stack after prepare_decryption.
+
+	Avoid burn stack in Arcfour setkey.
+	* cipher/arcfour.c (arcfour_setkey): Remove stack burning.
+
+	Avoid burn_stack in CAST5 setkey.
+	* cipher/cast5.c (do_cast_setkey): Use wipememory instead of memset.
+	(cast_setkey): Remove stack burning.
+
+	Improve Serpent key setup speed.
+	* cipher/serpent.c (SBOX, SBOX_INVERSE): Remove index argument.
+	(serpent_subkeys_generate): Use smaller temporary arrays for subkey
+	generation and perform stack clearing locally.
+	(serpent_setkey_internal): Use wipememory to clear stack and remove
+	_gcry_burn_stack.
+	(serpent_setkey): Remove unneeded _gcry_burn_stack.
+
+	Modify encrypt/decrypt arguments for in-place.
+	* cipher/cipher.c (gcry_cipher_encrypt, gcry_cipher_decrypt): Modify
+	local arguments if in-place operation.
+
+	Speed up Stribog.
+	* cipher/stribog.c (STRIBOG_TABLES): Remove.
+	(Pi): Remove.
+	[!STRIBOG_TABLES] (A, strido): Remove.
+	(stribog_table): New table pre-reordered with Pi values.
+	(strido): Rewrite for new table.
+	(LPSX): Rewrite for new table.
+	(xor): Remove.
+	(g): Small tweaks.
+
+	Tweak AES-NI bulk CTR mode slightly.
+	* cipher/rijndael.c [USE_AESNI] (aesni_cleanup_2_5): Rename to...
+	(aesni_cleanup_2_6): ...this and clear also 'xmm6'.
+	[USE_AESNI && __i386__] (do_aesni_ctr, do_aesni_ctr_4): Prevent
+	inlining only on i386, allow on AMD64.
+	[USE_AESNI] (do_aesni_ctr, do_aesni_ctr_4): Use counter block from
+	'xmm5' and byte-swap mask from 'xmm6'.
+	(_gcry_aes_ctr_enc) [USE_AESNI]: Preload counter block to 'xmm5' and
+	byte-swap mask to 'xmm6'.
+	(_gcry_aes_ctr_enc, _gcry_aes_cfb_dec, _gcry_aes_cbc_dec): Use
+	'aesni_cleanup_2_6'.
+
+	Tweak bench-slope parameters.
+	* tests/bench-slope.c (BUF_STEP_SIZE): Half step size to 64.
+	(NUM_MEASUREMENT_REPETITIONS): Double repetitions to 64.
+
+	Optimize Blowfish weak key check.
+	* cipher/blowfish.c (hashset_elem, val_to_hidx, add_val): New.
+	(do_bf_setkey): Use faster algorithm for detecting weak keys.
+	(bf_setkey): Move stack burning to do_bf_setkey.
+
+	Fix __builtin_bswap32/64 checks.
+	* configure.ac (gcry_cv_have_builtin_bswap32)
+	(gcry_cv_have_builtin_bswap64): Change compile checks to link checks.
+
+	Fix 'u32' build error with Camellia.
+	* cipher/camellia.c: Add include for <config.h> and "types.h".
+	(u32): Remove.
+	(u8): Typedef as 'byte'.
+
+2013-11-06  Werner Koch  <wk@gnupg.org>
+
+	pubkey: Add forward compatibility feature.
+	* cipher/pubkey-util.c (_gcry_pk_util_parse_flaglist): Add
+	"igninvflag".
+
+2013-11-05  Werner Koch  <wk@gnupg.org>
+
+	ecc: Require "eddsa" flag for curve Ed25519.
+	* src/cipher.h (PUBKEY_FLAG_ECDSA): Remove.
+	* cipher/pubkey-util.c (_gcry_pk_util_parse_flaglist): Remove "ecdsa".
+	* cipher/ecc.c (ecc_generate, ecc_sign, ecc_verify): Require "eddsa" flag.
+	* cipher/ecc-misc.c (_gcry_ecc_compute_public): Depend "eddsa" flag.
+	* tests/benchmark.c, tests/keygen.c, tests/pubkey.c
+	* tests/t-ed25519.c, tests/t-mpi-point.c: Adjust for changed flags.
+
+	ecc: Fully implement Ed25519 compression in ECDSA mode.
+	* src/ec-context.h (mpi_ec_ctx_s): Add field FLAGS.
+	* mpi/ec.c (ec_p_init): Add arg FLAGS.  Change all callers to pass it.
+	* cipher/ecc-curves.c (point_from_keyparam): Add arg EC, parse as
+	 opaque mpi and use eddsa decoding depending on the flag.
+	(_gcry_mpi_ec_new): Rearrange to parse Q and D after knowing the
+	curve.
+
+	mpi: Add function gcry_mpi_set_opaque_copy.
+	* src/gcrypt.h.in (gcry_mpi_set_opaque_copy): New.
+	* src/visibility.c (gcry_mpi_set_opaque_copy): New.
+	* src/visibility.h (gcry_mpi_set_opaque_copy): Mark visible.
+	* src/libgcrypt.def, src/libgcrypt.vers: Add new API.
+	* tests/mpitests.c (test_opaque): Add test.
+
+2013-11-04  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Make test vectors 'static const'
+	* cipher/arcfour.c (selftest): Change test vectors to 'static const'.
+	* cipher/blowfish.c (selftest): Ditto.
+	* cipher/camellia-glue.c (selftest): Ditto.
+	* cipher/cast5.c (selftest): Ditto.
+	* cipher/des.c (selftest): Ditto.
+	* cipher/rijndael.c (selftest): Ditto.
+	* tests/basic.c (cipher_cbc_mac_cipher, check_aes128_cbc_cts_cipher)
+	(check_ctr_cipher, check_cfb_cipher, check_ofb_cipher)
+	(check_ccm_cipher, check_stream_cipher)
+	(check_stream_cipher_large_block, check_bulk_cipher_modes)
+	(check_ciphers, check_digests, check_hmac, check_pubkey_sign)
+	(check_pubkey_sign_ecdsa, check_pubkey_crypt, check_pubkey): Ditto.
+
+2013-11-03  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Make jump labels local in Salsa20 assembly.
+	* cipher/salsa20-amd64.S: Rename '._labels' to '.L_labels'.
+	* cipher/salsa20-armv7-neon.S: Ditto.
+
+2013-10-30  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	bithelp: fix undefined behaviour with rol and ror.
+	* cipher/bithelp.h (rol, ror): Mask shift with 31.
+
+2013-10-29  Werner Koch  <wk@gnupg.org>
+
+	tests: Add feature to skip benchmarks.
+	* tests/benchmark.c (main): Add feature to skip the test.
+	* tests/bench-slope.c (main): Ditto.
+	(get_slope): Repace C++ style comment.
+	(double_cmp, cipher_bench, _hash_bench): Repalce system reserved
+	symbols.
+
+	ecc: Finish Ed25519/ECDSA hack.
+	* cipher/ecc.c (ecc_generate): Fix Ed25519/ECDSA case.
+	(ecc_verify): Implement ED25519/ECDSA uncompression.
+
+	ecc: Add flags "noparam" and "comp".
+	* src/cipher.h (PUBKEY_FLAG_NOPARAM, PUBKEY_FLAG_COMP): New.
+	* cipher/pubkey-util.c (_gcry_pk_util_parse_flaglist): Parse new flags
+	and change code for possible faster parsing.
+	* cipher/ecc.c (ecc_generate): Implement the "noparam" flag.
+	(ecc_sign): Ditto.
+	(ecc_verify): Ditto.
+	* tests/keygen.c (check_ecc_keys): Use the "noparam" flag.
+
+	* cipher/ecc.c (ecc_generate): Fix parsing of the deprecated
+	transient-flag parameter.
+	(ecc_verify): Do not make Q optional in the extract-param call.
+
+2013-10-28  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Fix typos in documentation.
+	* doc/gcrypt.texi: Fix some typos.
+
+	Add ARM NEON assembly implementation of Serpent.
+	* cipher/Makefile.am: Add 'serpent-armv7-neon.S'.
+	* cipher/serpent-armv7-neon.S: New.
+	* cipher/serpent.c (USE_NEON): New macro.
+	(serpent_context_t) [USE_NEON]: Add 'use_neon'.
+	[USE_NEON] (_gcry_serpent_neon_ctr_enc, _gcry_serpent_neon_cfb_dec)
+	(_gcry_serpent_neon_cbc_dec): New prototypes.
+	(serpent_setkey_internal) [USE_NEON]: Detect NEON support.
+	(_gcry_serpent_neon_ctr_enc, _gcry_serpent_neon_cfb_dec)
+	(_gcry_serpent_neon_cbc_dec) [USE_NEON]: Use NEON implementations
+	to process eight blocks in parallel.
+	* configure.ac [neonsupport]: Add 'serpent-armv7-neon.lo'.
+
+	Add ARM NEON assembly implementation of Salsa20.
+	* cipher/Makefile.am: Add 'salsa20-armv7-neon.S'.
+	* cipher/salsa20-armv7-neon.S: New.
+	* cipher/salsa20.c [USE_ARM_NEON_ASM]: New macro.
+	(struct SALSA20_context_s, salsa20_core_t, salsa20_keysetup_t)
+	(salsa20_ivsetup_t): New.
+	(SALSA20_context_t) [USE_ARM_NEON_ASM]: Add 'use_neon'.
+	(SALSA20_context_t): Add 'keysetup', 'ivsetup' and 'core'.
+	(salsa20_core): Change 'src' argument to 'ctx'.
+	[USE_ARM_NEON_ASM] (_gcry_arm_neon_salsa20_encrypt): New prototype.
+	[USE_ARM_NEON_ASM] (salsa20_core_neon, salsa20_keysetup_neon)
+	(salsa20_ivsetup_neon): New.
+	(salsa20_do_setkey): Setup keysetup, ivsetup and core with default
+	functions.
+	(salsa20_do_setkey) [USE_ARM_NEON_ASM]: When NEON support detect,
+	set keysetup, ivsetup and core with ARM NEON functions.
+	(salsa20_do_setkey): Call 'ctx->keysetup'.
+	(salsa20_setiv): Call 'ctx->ivsetup'.
+	(salsa20_do_encrypt_stream) [USE_ARM_NEON_ASM]: Process large buffers
+	in ARM NEON implementation.
+	(salsa20_do_encrypt_stream): Call 'ctx->core' instead of directly
+	calling 'salsa20_core'.
+	(selftest): Add test to check large buffer processing and block counter
+	updating.
+	* configure.ac [neonsupport]: 'Add salsa20-armv7-neon.lo'.
+
+	Add AMD64 assembly implementation of Salsa20.
+	* cipher/Makefile.am: Add 'salsa20-amd64.S'.
+	* cipher/salsa20-amd64.S: New.
+	* cipher/salsa20.c (USE_AMD64): New macro.
+	[USE_AMD64] (_gcry_salsa20_amd64_keysetup, _gcry_salsa20_amd64_ivsetup)
+	(_gcry_salsa20_amd64_encrypt_blocks): New prototypes.
+	[USE_AMD64] (salsa20_keysetup, salsa20_ivsetup, salsa20_core): New.
+	[!USE_AMD64] (salsa20_core): Change 'src' to non-constant, update block
+	counter in 'salsa20_core' and return burn stack depth.
+	[!USE_AMD64] (salsa20_keysetup, salsa20_ivsetup): New.
+	(salsa20_do_setkey): Move generic key setup to 'salsa20_keysetup'.
+	(salsa20_setkey): Fix burn stack depth.
+	(salsa20_setiv): Move generic IV setup to 'salsa20_ivsetup'.
+	(salsa20_do_encrypt_stream) [USE_AMD64]: Process large buffers in AMD64
+	implementation.
+	(salsa20_do_encrypt_stream): Move stack burning to this function...
+	(salsa20_encrypt_stream, salsa20r12_encrypt_stream): ...from these
+	functions.
+	* configure.ac [x86-64]: Add 'salsa20-amd64.lo'.
+
+	Add new benchmarking utility, bench-slope.
+	* tests/Makefile.am (TESTS): Add 'bench-slope'.
+	* tests/bench-slope.c: New.
+
+	Change .global to .globl in assembly files.
+	* cipher/blowfish-arm.S: Change '.global' to '.globl'.
+	* cipher/camellia-aesni-avx-amd64.S: Ditto.
+	* cipher/camellia-aesni-avx2-amd64.S: Ditto.
+	* cipher/camellia-arm.S: Ditto.
+	* cipher/cast5-amd64.S: Ditto.
+	* cipher/rijndael-amd64.S: Ditto.
+	* cipher/rijndael-arm.S: Ditto.
+	* cipher/serpent-avx2-amd64.S: Ditto.
+	* cipher/serpent-sse2-amd64.S: Ditto.
+	* cipher/twofish-amd64.S: Ditto.
+	* cipher/twofish-arm.S: Ditto.
+
+2013-10-26  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Deduplicate code for ECB encryption and decryption.
+	* cipher/cipher.c (do_ecb_crypt): New, based on old 'do_ecb_encrypt'.
+	(do_ecb_encrypt): Use 'do_ecb_crypt', pass encryption function.
+	(do_ecb_decrypt): Use 'do_ecb_crypt', pass decryption function.
+
+2013-10-26  Dmitry Eremin-Solenikov  <dbaryshkov@gmail.com>
+
+	Drop _gcry_cipher_ofb_decrypt as it duplicates _gcry_cipher_ofb_encrypt.
+	* cipher/cipher.c (cipher_decrypt): Use _gcry_cipher_ofb_encrypt for OFB
+	  decryption.
+	* cipher/cipher-internal.h: Remove _gcry_cipher_ofb_decrypt declaration.
+	* cipher/cipher-ofb.c (_gcry_cipher_ofb_decrypt): Remove.
+	  (_gcry_cipher_ofb_encrypt): remove copying of IV to lastiv, it's
+	  unused there.
+
+2013-10-25  Werner Koch  <wk@gnupg.org>
+
+	tests: Add tests for mpi_cmp.
+	* tests/mpitests.c (die): Modernize.
+	(fail): New.
+	(test_opaque, test_add, test_sub, test_mul): Use gcry_log_xx
+	(main): Return error count.
+	(test_cmp): New.
+
+2013-10-24  Werner Koch  <wk@gnupg.org>
+
+	ecc: Change algorithm for Ed25519 x recovery.
+	* cipher/ecc-eddsa.c (scanval): Add as temporary hack.
+	(_gcry_ecc_eddsa_recover_x): Use the algorithm from page 15 of the
+	paper.  Return an error code.
+	(_gcry_ecc_eddsa_decodepoint): Take care of the error code.
+	* mpi/mpi-mul.c (gcry_mpi_mulm): Use truncated division.
+
+	ecc: Refactor _gcry_ecc_eddsa_decodepoint.
+	* cipher/ecc-eddsa.c (_gcry_ecc_eddsa_decodepoint): Factor some code
+	out to ..
+	(_gcry_ecc_eddsa_recover_x): new.
+
+2013-10-24  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	ecc-gost: Add missing include.
+	* ecc-gost.c: Include "pubkey-internal.h".
+
+2013-10-23  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Replace architecture specific fast_wipememory2 with generic.
+	* src/g10lib.h (fast_wipememory2): Remove architecture specific
+	implementations and add generic implementation.
+
+	Improve the speed of the cipher mode code.
+	* cipher/bufhelp.h (buf_cpy): New.
+	(buf_xor, buf_xor_2dst): If buffers unaligned, always jump to per-byte
+	processing.
+	(buf_xor_n_copy_2): New.
+	(buf_xor_n_copy): Use 'buf_xor_n_copy_2'.
+	* cipher/blowfish.c (_gcry_blowfish_cbc_dec): Avoid extra memory copy
+	and use new 'buf_xor_n_copy_2'.
+	* cipher/camellia-glue.c (_gcry_camellia_cbc_dec): Ditto.
+	* cipher/cast5.c (_gcry_cast_cbc_dec): Ditto.
+	* cipher/serpent.c (_gcry_serpent_cbc_dec): Ditto.
+	* cipher/twofish.c (_gcry_twofish_cbc_dec): Ditto.
+	* cipher/rijndael.c (_gcry_aes_cbc_dec): Ditto.
+	(do_encrypt, do_decrypt): Use 'buf_cpy' instead of 'memcpy'.
+	(_gcry_aes_cbc_enc): Avoid copying IV, use 'last_iv' pointer instead.
+	* cipher/cipher-cbc.c (_gcry_cipher_cbc_encrypt): Avoid copying IV,
+	update pointer to IV instead.
+	(_gcry_cipher_cbc_decrypt): Avoid extra memory copy and use new
+	'buf_xor_n_copy_2'.
+	(_gcry_cipher_cbc_encrypt, _gcry_cipher_cbc_decrypt): Avoid extra
+	accesses to c->spec, use 'buf_cpy' instead of memcpy.
+	* cipher/cipher-ccm.c (do_cbc_mac): Ditto.
+	* cipher/cipher-cfb.c (_gcry_cipher_cfb_encrypt)
+	(_gcry_cipher_cfb_decrypt): Ditto.
+	* cipher/cipher-ctr.c (_gcry_cipher_ctr_encrypt): Ditto.
+	* cipher/cipher-ofb.c (_gcry_cipher_ofb_encrypt)
+	(_gcry_cipher_ofb_decrypt): Ditto.
+	* cipher/cipher.c (do_ecb_encrypt, do_ecb_decrypt): Ditto.
+
+	bufhelp: enable unaligned memory accesses for AArch64 (64-bit ARM)
+	* cipher/bufhelp.h [__aarch64__] (BUFHELP_FAST_UNALIGNED_ACCESS): Set
+	macro on AArch64.
+
+2013-10-23  Dmitry Eremin-Solenikov  <dbaryshkov@gmail.com>
+
+	Enable assembler optimizations on earlier ARM cores.
+	* cipher/blowfish-armv6.S => cipher/blowfish-arm.S: adapt to pre-armv6 CPUs.
+	* cipher/blowfish.c: enable assembly on armv4/armv5 little-endian CPUs.
+	* cipher/camellia-armv6.S => cipher/camellia-arm.S: adapt to pre-armv6 CPUs.
+	* cipher/camellia.c, cipher-camellia-glue.c: enable assembly on armv4/armv5
+	  little-endian CPUs.
+	* cipher/cast5-armv6.S => cipher/cast5-arm.S: adapt to pre-armv6 CPUs.
+	* cipher/cast5.c: enable assembly on armv4/armv5 little-endian CPUs.
+	* cipher/rijndael-armv6.S => cipher/rijndael-arm.S: adapt to pre-armv6 CPUs.
+	* cipher/rijndael.c: enable assembly on armv4/armv5 little-endian CPUs.
+	* cipher/twofish-armv6.S => cipher/twofish-arm.S: adapt to pre-armv6 CPUs.
+	* cipher/twofish.c: enable assembly on armv4/armv5 little-endian CPUs.
+
+	mpi: enable assembler on all arm architectures.
+	* mpi/config.links: remove check for arm >= v6
+	* mpi/armv6 => mpi/arm: rename directory to reflect that is is generic
+	  enough
+
+	Correct ASM assembly test in configure.ac.
+	* configure.ac: correct HAVE_COMPATIBLE_GCC_ARM_PLATFORM_AS test to
+	  require neither ARMv6, nor thumb mode. Our assembly code works
+	  perfectly even on ARMv4 now.
+
+2013-10-23  Werner Koch  <wk@gnupg.org>
+
+	ecc: Refactor ecc.c.
+	* cipher/ecc-ecdsa.c, cipher/ecc-eddsa.c, cipher/ecc-gost.c: New.
+	* cipher/Makefile.am (EXTRA_libcipher_la_SOURCES): Add new files.
+	* configure.ac (GCRYPT_PUBKEY_CIPHERS): Add new files.
+	* cipher/ecc.c (point_init, point_free): Move to ecc-common.h.
+	(sign_ecdsa): Move to ecc-ecdsa.c as _gcry_ecc_ecdsa_sign.
+	(verify_ecdsa): Move to ecc-ecdsa.c as _gcry_ecc_ecdsa_verify.
+	(sign_gost): Move to ecc-gots.c as _gcry_ecc_gost_sign.
+	(verify_gost): Move to ecc-gost.c as _gcry_ecc_gost_verify.
+	(sign_eddsa): Move to ecc-eddsa.c as _gcry_ecc_eddsa_sign.
+	(verify_eddsa): Move to ecc-eddsa.c as _gcry_ecc_eddsa_verify.
+	(eddsa_generate_key): Move to ecc-eddsa.c as _gcry_ecc_eddsa_genkey.
+	(reverse_buffer): Move to ecc-eddsa.c.
+	(eddsa_encodempi, eddsa_encode_x_y): Ditto.
+	(_gcry_ecc_eddsa_encodepoint, _gcry_ecc_eddsa_decodepoint): Ditto.
+
+	mpi: Fix scanning of negative SSH formats and add more tests.
+	* mpi/mpicoder.c (gcry_mpi_scan): Fix sign setting for SSH format.
+	* tests/t-convert.c (negative_zero): Test all formats.
+	(check_formats): Add tests for PGP and scan tests for SSH and USG.
+
+	* src/gcrypt.h.in (mpi_is_neg): Fix macro.
+
+	* mpi/mpi-scan.c (_gcry_mpi_getbyte, _gcry_mpi_putbyte): Comment out
+	these unused functions.
+
+2013-10-22  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	twofish: add ARMv6 assembly implementation.
+	* cipher/Makefile.am: Add 'twofish-armv6.S'.
+	* cipher/twofish-armv6.S: New.
+	* cipher/twofish.c (USE_ARMV6_ASM): New macro.
+	[USE_ARMV6_ASM] (_gcry_twofish_armv6_encrypt_block)
+	(_gcry_twofish_armv6_decrypt_block): New prototypes.
+	[USE_AMDV6_ASM] (twofish_encrypt, twofish_decrypt): Add.
+	[USE_AMD64_ASM] (do_twofish_encrypt, do_twofish_decrypt): Remove.
+	(_gcry_twofish_ctr_enc, _gcry_twofish_cfb_dec): Use 'twofish_encrypt'
+	instead of 'do_twofish_encrypt'.
+	(_gcry_twofish_cbc_dec): Use 'twofish_decrypt' instead of
+	'do_twofish_decrypt'.
+	* configure.ac [arm]: Add 'twofish-armv6.lo'.
+
+	mpi: allow building with clang on ARM.
+	* mpi/longlong.h [__arm__] (add_ssaaaa, sub_ddmmss, umul_ppmm)
+	(count_leading_zeros): Do not cast assembly output arguments.
+	[__arm__] (umul_ppmm): Remove the extra '%' ahead of assembly comment.
+	[_ARM_ARCH >= 4] (umul_ppmm): Use correct inputs and outputs instead of
+	registers.
+
+	serpent-amd64: do not use GAS macros.
+	* cipher/serpent-avx2-amd64.S: Remove use of GAS macros.
+	* cipher/serpent-sse2-amd64.S: Ditto.
+	* configure.ac [HAVE_COMPATIBLE_GCC_AMD64_PLATFORM_AS]: Do not check
+	for GAS macros.
+
+	Add Counter with CBC-MAC mode (CCM)
+	* cipher/Makefile.am: Add 'cipher-ccm.c'.
+	* cipher/cipher-ccm.c: New.
+	* cipher/cipher-internal.h (gcry_cipher_handle): Add 'u_mode'.
+	(_gcry_cipher_ccm_encrypt, _gcry_cipher_ccm_decrypt)
+	(_gcry_cipher_ccm_set_nonce, _gcry_cipher_ccm_authenticate)
+	(_gcry_cipher_ccm_get_tag, _gcry_cipher_ccm_check_tag)
+	(_gcry_cipher_ccm_set_lengths): New prototypes.
+	* cipher/cipher.c (gcry_cipher_open, cipher_encrypt, cipher_decrypt)
+	(_gcry_cipher_setiv, _gcry_cipher_authenticate, _gcry_cipher_gettag)
+	(_gcry_cipher_checktag, gry_cipher_ctl): Add handling for CCM mode.
+	* doc/gcrypt.texi: Add documentation for GCRY_CIPHER_MODE_CCM.
+	* src/gcrypt.h.in (gcry_cipher_modes): Add 'GCRY_CIPHER_MODE_CCM'.
+	(gcry_ctl_cmds): Add 'GCRYCTL_SET_CCM_LENGTHS'.
+	(GCRY_CCM_BLOCK_LEN): New.
+	* tests/basic.c (check_ccm_cipher): New.
+	(check_cipher_modes): Call 'check_ccm_cipher'.
+	* tests/benchmark.c (ccm_aead_init): New.
+	(cipher_bench): Add handling for AEAD modes and add CCM benchmarking.
+
+	Add API to support AEAD cipher modes.
+	* cipher/cipher.c (_gcry_cipher_authenticate, _gcry_cipher_checktag)
+	(_gcry_cipher_gettag): New.
+	* doc/gcrypt.texi: Add documentation for new API functions.
+	* src/visibility.c (gcry_cipher_authenticate, gcry_cipher_checktag)
+	(gcry_cipher_gettag): New.
+	* src/gcrypt.h.in, src/visibility.h: add declarations of these
+	functions.
+	* src/libgcrypt.defs, src/libgcrypt.vers: export functions.
+
+2013-10-22  NIIBE Yutaka  <gniibe@fsij.org>
+
+	ecc: Correct compliant key generation for Edwards curves.
+	* cipher/ecc.c: Add case for Edwards curves.
+
+2013-10-17  Werner Koch  <wk@gnupg.org>
+
+	tests: Add test options to keygen.
+	* tests/keygen.c (usage): New.
+	(main): Print usage info.  Allow running just one algo.
+
+	mpi: Do not clear the sign of the mpi_mod result.
+	* mpi/mpi-mod.c (_gcry_mpi_mod): Remove sign setting.
+
+	ecc: Put the curve name again into the output of gcry_pk_genkey.
+	* cipher/ecc.c (ecc_generate): Use the correct var.  Release
+	CURVE_FLAGS.
+
+	ecc: Support Weierstrass curves in gcry_mpi_ec_curve_point.
+	* mpi/ec.c (_gcry_mpi_ec_curve_point): Support MPI_EC_WEIERSTRASS.
+
+2013-10-16  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	arcfour: more optimized version for non-i386 architectures.
+	* cipher/arcfour.c (ARCFOUR_context): Reorder members.
+	(do_encrypt_stream) [!__i386__]: Faster implementation for non-i386.
+	(do_arcfour_setkey): Avoid modulo operations.
+
+	Avoid void* pointer arithmetic.
+	* tests/tsexp.c (check_extract_param): Cast void* pointers to char*
+	before doing arithmetics.
+
+2013-10-16  Dmitry Eremin-Solenikov  <dbaryshkov@gmail.com>
+
+	ecc: Add support for GOST R 34.10-2001/-2012 signatures.
+	* src/cipher.h: define PUBKEY_FLAG_GOST
+	* cipher/ecc-curves.c: Add GOST2001-test and GOST2012-test curves
+	  defined in standards. Typical applications would use either those
+	  curves, or curves defined in RFC 4357 (will be added later).
+	* cipher/ecc.c (sign_gost, verify_gost): New.
+	  (ecc_sign, ecc_verify): use sign_gost/verify_gost if PUBKEY_FLAG_GOST
+	  is set.
+	  (ecc_names): add "gost" for gost signatures.
+	* cipher/pubkey-util.c (_gcry_pk_util_parse_flaglist,
+	  _gcry_pk_util_preparse_sigval): set PUBKEY_FLAG_GOST if gost flag
+	  is present in s-exp.
+	* tests/benchmark.c (ecc_bench): also benchmark GOST signatures.
+	* tests/basic.c (check_pubkey): add two public keys from
+	  GOST R 34.10-2012 standard.
+	  (check_pubkey_sign_ecdsa): add two data sets to check gost signatures.
+	* tests/curves.c: correct N_CURVES as we now have 2 more curves.
+
+
+	Removed some comments from the new curve definitions in ecc-curves.c
+	to avoid line wrapping.  Eventually we will develop a precompiler to
+	avoid parsing those hex strings. -wk
+
+	Fix 256-bit ecdsa test key definition.
+	* tests/basic.c (check_pubkey): fix nistp256 testing key declaration -
+	  add missing comma.
+
+2013-10-16  Werner Koch  <wk@gnupg.org>
+
+	sexp: Add function gcry_sexp_extract_param.
+	* src/gcrypt.h.in (_GCRY_GCC_ATTR_SENTINEL): New.
+	(gcry_sexp_extract_param): New.
+	* src/visibility.c (gcry_sexp_extract_param): New.
+	* src/visibility.h (gcry_sexp_extract_param): Add hack to detect
+	internal use.
+	* cipher/pubkey-util.c (_gcry_pk_util_extract_mpis): Move and split
+	into ...
+	* src/sexp.c (_gcry_sexp_vextract_param)
+	(_gcry_sexp_extract_param): this.  Change all callers.  Add support for buffer
+	descriptors and a path option/
+
+	* tests/tsexp.c (die, hex2buffer, hex2mpi, hex2mpiopa): New.
+	(cmp_mpihex, cmp_bufhex): New.
+	(check_extract_param): New.
+
+2013-10-16  NIIBE Yutaka  <gniibe@fsij.org>
+
+	mpi: mpi-pow improvement.
+	* mpi/mpi-pow.c (gcry_mpi_powm): New implementation of left-to-right
+	k-ary exponentiation.
+
+2013-10-15  Werner Koch  <wk@gnupg.org>
+
+	ecc:  Support use of Ed25519 with ECDSA.
+	* src/cipher.h (PUBKEY_FLAG_ECDSA): New.
+	* cipher/pubkey-util.c (_gcry_pk_util_parse_flaglist): Add flag "ecdsa".
+	* cipher/ecc.c (verify_ecdsa, verify_eddsa): Remove some debug output.
+	(ecc_generate, ecc_sign, ecc_verify): Support Ed25519 with ECDSA.
+	* tests/keygen.c (check_ecc_keys): Create such a test key.
+	* tests/pubkey.c (fail, info, data_from_hex, extract_cmp_data): New.
+	Take from dsa-6979.c
+	(check_ed25519ecdsa_sample_key): new.
+	(main): Call new test.
+
+2013-10-14  Werner Koch  <wk@gnupg.org>
+
+	pubkey: Support flags list in gcry_pk_genkey.
+	* src/cipher.h (PUBKEY_FLAG_TRANSIENT_KEY): New.
+	(PUBKEY_FLAG_USE_X931): New.
+	(PUBKEY_FLAG_USE_FIPS186): New.
+	(PUBKEY_FLAG_USE_FIPS186_2): New.
+	* cipher/pubkey-util.c (_gcry_pk_util_parse_flaglist): Rename from
+	parse_flags_list.  Parse new flags.
+	* cipher/dsa.c (dsa_generate): Support flag list.
+	* cipher/ecc.c (ecc_generate): Ditto.
+	* cipher/rsa.c (rsa_generate): Ditto.
+
+	pubkey: Remove duplicated flag parsing code.
+	* cipher/pubkey-util.c (_gcry_pk_util_preparse_encval)
+	(_gcry_pk_util_data_to_mpi): Factor flag parsing code out to ..
+	(parse_flag_list): New.
+	* src/cipher.h (PUBKEY_FLAG_RAW_FLAG): New.
+
+	mpicalc: Accept lowercase hex digits.
+	* src/mpicalc.c (main): Test for lowercase hex digits.
+
+2013-10-11  Werner Koch  <wk@gnupg.org>
+
+	pubkey: Move sexp parsing of remaining fucntions to the modules.
+	* cipher/pubkey.c (release_mpi_array): Remove.
+	(pubkey_check_secret_key): Remove.
+	(sexp_elements_extract): Remove.
+	(sexp_elements_extract_ecc): Remove.
+	(sexp_to_key): Remove.
+	(get_hash_algo): Remove.
+	(gcry_pk_testkey): Revamp.
+	(gcry_pk_get_curve): Revamp.
+	* cipher/rsa.c (rsa_check_secret_key): Revamp.
+	* cipher/elgamal.c (elg_check_secret_key): Revamp.
+	* cipher/dsa.c (dsa_check_secret_key): Revamp.
+	* cipher/ecc.c (ecc_check_secret_key): Revamp.
+	* cipher/ecc-curves.c: Include cipher.h and pubkey-internal.h
+	(_gcry_ecc_get_curve): Revamp.
+
+	* cipher/pubkey-util.c (_gcry_pk_util_extract_mpis): Set passed and
+	used parameters on error to NULL.
+
+	pubkey: Move sexp parsing for gcry_pk_decrypt to the modules.
+	* cipher/rsa.c (rsa_decrypt): Revamp.
+	* cipher/elgamal.c (elg_decrypt): Revamp.
+	* cipher/ecc.c (ecc_decrypt_raw): Revamp.
+	* cipher/pubkey.c (gcry_pk_decrypt): Simplify.
+	(sexp_to_enc): Remove.
+	* cipher/pubkey-util.c (_gcry_pk_util_preparse_encval): New.
+
+	pubkey: Move sexp parsing for gcry_pk_encrypt to the modules.
+	* cipher/rsa.c (rsa_encrypt): Revamp.
+	* cipher/elgamal.c (elg_encrypt): Revamp.
+	* cipher/ecc.c (ecc_encrypt_raw): Revamp.
+	* cipher/pubkey.c (gcry_pk_encrypt): Simplify.
+
+	* tests/basic.c (check_pubkey_crypt): Init plain, ciph, and data so
+	that they are initialized even after an encrypt failure.
+
+	pubkey: Move sexp parsing for gcry_pk_sign to the modules.
+	* cipher/rsa.c (rsa_sign): Revamp.
+	* cipher/dsa.c (dsa_sign): Revamp.
+	* cipher/elgamal.c (elg_sign): Revamp.
+	* cipher/ecc.c (ecc_sign): Revamp.
+	* cipher/pubkey.c (gcry_pk_sign): Simplify.
+
+2013-10-10  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Prevent tail call optimization with _gcry_burn_stack.
+	* configure.ac: New check, HAVE_GCC_ASM_VOLATILE_MEMORY.
+	* src/g10lib.h (_gcry_burn_stack): Rename to __gcry_burn_stack.
+	(__gcry_burn_stack_dummy): New.
+	(_gcry_burn_stack): New macro.
+	* src/misc.c (_gcry_burn_stack): Rename to __gcry_burn_stack.
+	(__gcry_burn_stack_dummy): New.
+
+2013-10-09  Werner Koch  <wk@gnupg.org>
+
+	pubkey: Move sexp parsing for gcry_pk_verify to the modules.
+	* cipher/rsa.c (rsa_verify): Revamp.
+	* cipher/dsa.c (dsa_verify): Revamp.
+	* cipher/elgamal.c (elg_verify): Revamp.
+	* cipher/ecc.c (ecc_verify): Revamp.
+	* cipher/pubkey.c (sexp_to_sig): Remove.
+	(pss_verify_cmp): Move to pubkey-util.c
+	(sexp_data_to_mpi): Ditto.
+	(init_encoding_ctx): Ditto.
+	(gcry_pk_verify): Simplify.
+	* cipher/pubkey-util.c (_gcry_pk_util_init_encoding_ctx): Add. Take
+	from pubkey.c
+	(get_hash_algo): Ditto.
+	(_gcry_pk_util_data_to_mpi): Ditto.
+	(pss_verify_cmp): Ditto.
+	(_gcry_pk_util_extract_mpis): New.
+	(_gcry_pk_util_preparse_sigval): New.
+	(_gcry_pk_util_free_encoding_ctx): New.
+	* cipher/ecc-curves.c (_gcry_ecc_fill_in_curve): Make curve init
+	optional.
+
+	* src/g10lib.h (GCC_ATTR_SENTINEL): New.
+
+	* tests/basic.c (check_pubkey_sign): Print the algo name.
+	(main): Add option --pubkey.
+
+2013-10-08  Werner Koch  <wk@gnupg.org>
+
+	pubkey: Move sexp parsing for gcry_pk_get_nbits to the modules.
+	* cipher/pubkey.c (spec_from_sexp): New.
+	(gcry_pk_get_nbits): Simplify.
+	* cipher/rsa.c (rsa_get_nbits): Take only PARMS as args and do sexp
+	parsing here.
+	* cipher/dsa.c (dsa_get_nbits): Ditto.
+	* cipher/elgamal.c (elg_get_nbits): Ditto.
+	* cipher/ecc.c (ecc_get_nbits): Ditto.
+	* cipher/ecc-curves.c (_gcry_ecc_fill_in_curve): Allow NULL for arg
+	CURVE.
+
+	pubkey: Move sexp parsing for gcry_pk_getkey to the modules.
+	* cipher/pubkey-util.c: New.
+	(_gcry_pk_util_get_nbits): New.  Based on code from gcry_pk_genkey.
+	(_gcry_pk_util_get_rsa_use_e): Ditto.
+	* cipher/pubkey.c (gcry_pk_genkey): Strip most code and pass.
+	* cipher/rsa.c (rsa_generate): Remove args ALGO, NBITS and EVALUE.
+	Call new fucntions to get these values.
+	* cipher/dsa.c (dsa_generate): Remove args ALGO, NBITS and EVALUE.
+	Call _gcry_pk_util_get_nbits to get nbits.  Always parse genparms.
+	* cipher/elgamal.c (elg_generate): Ditto.
+	* cipher/ecc.c (ecc_generate): Ditto.
+
+	cipher: Deprecate GCRY_PK_ELG_E.
+	* cipher/elgamal.c (_gcry_pubkey_spec_elg_e): Remove.
+	* cipher/pubkey.c (pubkey_list): Remove double included
+	_gcry_pubkey_spec_elg.
+	(map_algo): MAke ELG_E to ELG.
+
+2013-10-02  Werner Koch  <wk@gnupg.org>
+
+	Provide Pth compatiblity for use with GnuPG 2.0.
+	* src/ath.c (ath_install): Call ath_init and declare Pth as
+	compatible.
+
+2013-10-02  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	sha512: fix building on ARM.
+	* cipher/sha512.c (transform) [USE_ARM_NEON_ASM]: Fix 'hd' to 'ctx'.
+
+2013-10-02  Werner Koch  <wk@gnupg.org>
+
+	Remove deprecated control codes.
+	* src/gcrypt.h.in (GCRYCTL_SET_KEY): Remove.
+	(GCRYCTL_SET_IV): Remove.
+	(GCRYCTL_SET_CTR): Remove.
+	* cipher/md.c (gcry_md_ctl): Remove deprecated GCRYCTL_SET_KEY.
+	* cipher/cipher.c (gcry_cipher_ctl): Remove deprecated
+	GCRYCTL_SET_KEY, GCRYCTL_SET_IV, GCRYCTL_SET_CTR.
+
+2013-10-02  Dmitry Eremin-Solenikov  <dbaryshkov@gmail.com>
+
+	Fix errors when building with Clang on PPC.
+	* mpi/longlong.h (add_ssaaaa, sub_ddmmss, count_leading_zeros,
+	  umul_ppmm): Do not cast asm output to USItype.
+
+2013-10-02  Werner Koch  <wk@gnupg.org>
+
+	Remove last remains of the former module system.
+	* src/gcrypt-module.h, src/module.c: Remove.
+	* src/visibility.h: Do not include gcrypt-module.h.
+	* src/g10lib.h: Remove all prototypes from module.c
+	(gcry_module): Remove.
+	* cipher/cipher-internal.h (gcry_cipher_handle): Remove unused field.
+
+	Fix missing prototype warning in visibility.c.
+	* src/ec-context.h (_gcry_mpi_ec_new): Move prototype to mpi.h.
+
+	md: Simplify the message digest dispatcher md.c.
+	* src/gcrypt-module.h (gcry_md_spec_t):  Move to ...
+	* src/cipher-proto.h: here.  Merge with md_extra_spec_t.  Add fields
+	ALGO and FLAGS.  Set these fields in all digest modules.
+	* cipher/md.c: Change most code to replace the former module
+	system by a simpler system to gain information about the algorithms.
+
+2013-10-01  Werner Koch  <wk@gnupg.org>
+
+	cipher: Simplify the cipher dispatcher cipher.c.
+	* src/gcrypt-module.h (gcry_cipher_spec_t):  Move to ...
+	* src/cipher-proto.h (gcry_cipher_spec_t): here.  Merge with
+	cipher_extra_spec_t.  Add fields ALGO and FLAGS.  Set these fields in
+	all cipher modules.
+	* cipher/cipher.c: Change most code to replace the former module
+	system by a simpler system to gain information about the algorithms.
+	(disable_pubkey_algo): Simplified.  Not anymore thread-safe, though.
+
+	* cipher/md.c (_gcry_md_selftest): Use correct structure.  Not a real
+	problem because both define the same function as their first field.
+
+	* cipher/pubkey.c (_gcry_pk_selftest): Take care of the disabled flag.
+
+	mpi: Fix gcry_mpi_neg.
+	* mpi/mpiutil.c (_gcry_mpi_neg): Copy U to W.
+
+2013-10-01  Peter Wu  <lekensteyn@gmail.com>
+
+	cipher: Add support for 128-bit keys in RC2.
+	* cipher/rfc2268.c (oids_rfc2268_128): New
+	(_gcry_cipher_spec_rfc2268_128): New.
+	* cipher/cipher.c (cipher_table_entry): Add GCRY_CIPHER_RFC2268_128.
+
+2013-09-30  Werner Koch  <wk@gnupg.org>
+
+	ecc: Use faster b parameter for Ed25519.
+	* cipher/ecc-curves.c (domain_parms): Replace b.
+	* tests/t-mpi-point.c (test_curve): Ditto.
+
+	ecc: Prepare for future Ed25519 optimization.
+	* mpi/ec-ed25519.c: New but empty file.
+	* mpi/ec-internal.h: New.
+	* mpi/ec.c: Include ec-internal.h.
+	(ec_mod): New.
+	(ec_addm): Use ec_mod.
+	(ec_mulm): Remove commented code.  Use ec_mod.
+	(ec_subm): Call simple sub.
+	(ec_pow2): Use ec_mulm.
+	(ec_mul2): New.
+	(dup_point_weierstrass): Use ec_mul2.
+	(dup_point_twistededwards): Add special case for a == -1.  Use
+	ec_mul2.
+	(add_points_weierstrass): Use ec_mul2.
+	(add_points_twistededwards): Add special case for a == -1.
+	(_gcry_mpi_ec_curve_point): Ditto.
+	(ec_p_init): Add hack to test Barrett functions.
+	* src/ec-context.h (mpi_ec_ctx_s): Add P_BARRETT.
+
+	* mpi/mpi-mod.c (_gcry_mpi_mod_barrett): Fix sign problem.
+
+	ecc: Fix recomputing of Q for Ed25519.
+	* cipher/ecc-misc.c (reverse_buffer): New.
+	(_gcry_ecc_compute_public): Add ED255519 specific code.
+	* cipher/ecc.c (sign_eddsa): Allocate DIGEST in secure memory.  Get
+	rid of HASH_D.
+	* tests/t-mpi-point.c (context_param): Test recomputing of Q for
+	Ed25519.
+
+	log: Try to print s-expressions in a more compact format.
+	* src/misc.c (count_closing_parens): New.
+	(_gcry_log_printsxp): Use new function.
+	* mpi/ec.c (_gcry_mpi_point_log): Take care of a NULL point.
+
+2013-09-30  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Make Whirlpool use the _gcry_md_block_write helper.
+	* cipher/whirlpool.c (whirlpool_context_t): Add 'bctx', remove
+	'buffer', 'count' and 'nblocks'.
+	(whirlpool_init): Initialize 'bctx'.
+	(whirlpool_transform): Adjust context argument type and burn stack
+	depth.
+	(whirlpool_add): Remove.
+	(whirlpool_write): Use _gcry_md_block_write.
+	(whirlpool_final, whirlpool_read): Adjust for 'bctx' usage.
+
+	whirlpool: add stack burning after transform.
+	* cipher/whirlpool.c (whirlpool_transform): Return burn stack depth.
+	(whirlpool_add): Do burn_stack.
+
+	whirlpool: do bitcount calculation in finalization part.
+	* cipher/whirlpool.c (whirlpool_context_t): Remove 'length', add
+	'nblocks'.
+	(whirlpool_add): Update 'nblocks' instead of 'length', and add early
+	return at one spot.
+	(whirlpool_write): Check for 'nblocks' overflow.
+	(whirlpool_final): Convert 'nblocks' to bit-counter, and use
+	whirlpool_write instead of whirlpool_add.
+
+2013-09-30  Werner Koch  <wk@gnupg.org>
+
+	Add logging functions to the API.
+	* src/gcrypt.h.in (_GCRY_GCC_ATTR_PRINTF): New.
+	(gcry_log_debug, gcry_log_debughex, gcry_log_debugmpi): New.
+	(gcry_log_debugpnt, gcry_log_debugsxp): New.
+	* src/visibility.c (gcry_log_debug): New.
+	(gcry_log_debughex, gcry_log_debugmpi, gcry_log_debugpnt): New.
+	(gcry_log_debugsxp): New.
+	* src/libgcrypt.def, src/libgcrypt.vers: Add new functions.
+	* src/misc.c (_gcry_logv): Make public.
+	(_gcry_log_printsxp): New.
+	* src/g10lib.h (log_printsxp): New macro.
+
+2013-09-26  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Make libgcrypt build with Clang on i386.
+	* cipher/longlong.h [__i386__] (add_ssaaaa, sub_ddmmss)
+	(umul_ppmm, udiv_qrnnd): Do not cast asm output to USItype.
+
+2013-09-25  Werner Koch  <wk@gnupg.org>
+
+	mpi: Change not yet used _gcry_mpi_set_opaque_copy.
+	* mpi/mpiutil.c (_gcry_mpi_set_opaque_copy): Change prototype.
+	(_gcry_mpi_get_opaque_copy): Take care of gcry_malloc failure.
+
+	sexp: Improve printing of data with a leading zero.
+	* src/sexp.c (suitable_encoding): Detect leading zero byte.
+
+	ecc: Allow the name "q@eddsa" to get/set the public key.
+	* cipher/ecc-curves.c (_gcry_ecc_get_mpi): Support "q@eddsa".
+	(_gcry_ecc_set_mpi): Support "q".
+	* cipher/ecc.c (eddsa_encodepoint): Rename to ...
+	(_gcry_ecc_eddsa_encodepoint): this and make global.  Remove arg
+	MINLEN and take from context.
+	(eddsa_decodepoint): Rename to
+	(_gcry_ecc_eddsa_decodepoint): this and make global. Remove arg LEN
+	and take from context.
+	(sign_eddsa, verify_eddsa): Take B from context.
+	(ecc_sign, ecc_verify): Add hack to set DIALECT.
+	(_gcry_pk_ecc_get_sexp): Use _gcry_ecc_compute_public.  Handle EdDSA.
+	* src/ec-context.h (mpi_ec_ctx_s): Add field NBITS.
+	* mpi/ec.c (ec_p_init): Init NBITS.
+	* tests/t-mpi-point.c (test_curve): Add Ed25519.
+	(sample_ed25519_q): New.
+	(context_param): Check new sample key.
+	(hex2buffer, hex2mpiopa): New.
+	(cmp_mpihex): Take care of opaque MPIs.
+
+	mpicalc: Add statement to compute the number of bits.
+	* src/mpicalc.c (do_nbits): New.
+	(main): Add statement 'b'.
+
+	ecc: Refactor low-level access functions.
+	* mpi/ec.c (point_copy): Move to cipher/ecc-curves.c.
+	(ec_get_reset): Rename to _gcry_mpi_ec_get_reset and make global.
+	(_gcry_mpi_ec_get_mpi): Factor most code out to _gcry_ecc_get_mpi.
+	(_gcry_mpi_ec_get_point): Factor most code out to _gcry_ecc_get_point.
+	(_gcry_mpi_ec_set_mpi): Factor most code out to _gcry_ecc_set_mpi.
+	(_gcry_mpi_ec_set_point): Factor most code out to _gcry_ecc_set_point.
+	* cipher/ecc-curves.c (_gcry_ecc_get_mpi): New.
+	(_gcry_ecc_get_point, _gcry_ecc_set_mpi, _gcry_ecc_set_point): New.
+	* cipher/ecc-misc.c (_gcry_ecc_compute_public): New.
+
+	ecc: Fix highly unlikely endless loop in sign_ecdsa.
+	* cipher/ecc.c (sign_ecdsa): Turn while-do into do-while loops.
+
+2013-09-24  Werner Koch  <wk@gnupg.org>
+
+	ecc: Allow the use of an uncompressed public key.
+	* cipher/ecc.c (eddsa_encodepoint): Factor most code out to ...
+	(eddsa_encode_x_y): new fucntion.
+	(eddsa_decodepoint): Allow use of an uncompressed public key.
+	* tests/t-ed25519.c (N_TESTS): Adjust.
+	* tests/t-ed25519.inp: Add test 1025.
+
+2013-09-23  Werner Koch  <wk@gnupg.org>
+
+	pk: Add algo id GCRY_PK_ECC and deprecate ECDSA and ECDH.
+	* src/gcrypt.h.in (GCRY_PK_ECC): New.
+	* cipher/pubkey.c (map_algo): New.
+	(spec_from_algo, gcry_pk_get_param, _gcry_pk_selftest): Use it.
+	* cipher/ecc.c (selftests_ecdsa): Report using GCRY_PK_ECC.
+	(run_selftests): Simplify.
+	(ecdh_names, ecdsa_names): Merge into a new ecc_names.
+	(_gcry_pubkey_spec_ecdh, _gcry_pubkey_spec_ecdsa): Merge into new
+	_gcry_pubkey_spec_ecc.
+
+	ec: Use mpi_mulm instead of mpi_powm.
+	* mpi/ec.c (ec_pow2): New.
+	(ec_powm): Remove call to mpi_abs.
+	(dup_point_weierstrass, dup_point_twistededwards)
+	(add_points_weierstrass, add_points_twistededwards)
+	(_gcry_mpi_ec_curve_point): Use ec_pow2.
+
+2013-09-21  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	bufhelp: enable fast unaligned memory accesses on powerpc.
+	* cipher/bufhelp.h [__powerpc__] (BUFHELP_FAST_UNALIGNED_ACCESS): Set
+	macro enabled.
+	[__powerpc64__] (BUFHELP_FAST_UNALIGNED_ACCESS): Ditto.
+
+	Remove i386 inline assembly version of rotation functions.
+	* cipher/bithelp.h (rol, ror): Remove i386 version, change
+	macros to inline functions.
+	* src/hmac256.c (ror): Ditto.
+
+	Optimize and cleanup 32-bit and 64-bit endianess transforms.
+	* cipher/bithelp.h (bswap32, bswap64, le_bswap32, be_bswap32)
+	(le_bswap64, be_bswap64): New.
+	* cipher/bufhelp.h (buf_get_be32, buf_get_le32, buf_put_le32)
+	(buf_put_be32, buf_get_be64, buf_get_le64, buf_put_be64)
+	(buf_put_le64): New.
+	* cipher/blowfish.c (do_encrypt_block, do_decrypt_block): Use new
+	endian conversion helpers.
+	(do_bf_setkey): Turn endian specific code to generic.
+	* cipher/camellia.c (GETU32, PUTU32): Use new endian conversion
+	helpers.
+	* cipher/cast5.c (rol): Remove, use rol from bithelp.
+	(F1, F2, F3): Fix to use rol from bithelp.
+	(do_encrypt_block, do_decrypt_block, do_cast_setkey): Use new endian
+	conversion helpers.
+	* cipher/des.c (READ_64BIT_DATA, WRITE_64BIT_DATA): Ditto.
+	* cipher/md4.c (transform, md4_final): Ditto.
+	* cipher/md5.c (transform, md5_final): Ditto.
+	* cipher/rmd160.c (transform, rmd160_final): Ditto.
+	* cipher/salsa20.c (LE_SWAP32, LE_READ_UINT32): Ditto.
+	* cipher/scrypt.c (READ_UINT64, LE_READ_UINT64, LE_SWAP32): Ditto.
+	* cipher/seed.c (GETU32, PUTU32): Ditto.
+	* cipher/serpent.c (byte_swap_32): Remove.
+	(serpent_key_prepare, serpent_encrypt_internal)
+	(serpent_decrypt_internal): Use new endian conversion helpers.
+	* cipher/sha1.c (transform, sha1_final): Ditto.
+	* cipher/sha256.c (transform, sha256_final): Ditto.
+	* cipher/sha512.c (__transform, sha512_final): Ditto.
+	* cipher/stribog.c (transform, stribog_final): Ditto.
+	* cipher/tiger.c (transform, tiger_final): Ditto.
+	* cipher/twofish.c (INPACK, OUTUNPACK): Ditto.
+	* cipher/whirlpool.c (buffer_to_block, block_to_buffer): Ditto.
+	* configure.ac (gcry_cv_have_builtin_bswap32): Check for compiler
+	provided __builtin_bswap32.
+	(gcry_cv_have_builtin_bswap64): Check for compiler provided
+	__builtin_bswap64.
+
+	gostr3411_94: set better burn stack depth estimate.
+	* cipher/gost28147.c (_gcry_gost_enc_one): Account function stack to
+	burn stack depth.
+	* cipher/gostr3411-94.c (max): New macro.
+	(do_hash_step, transform): Return stack burn depth.
+
+	Use hash transform function return type for passing burn stack depth.
+	* cipher/gostr4311-94.c (transform): Return stack burn depth.
+	* cipher/hash-common.c (_gcry_md_block_write): Use stack burn depth
+	returned by 'hd->bwrite'.
+	* cipher/hash-common.h (_gcry_md_block_write_t): Change return type to
+	'unsigned int'.
+	(gry_md_block_ctx_t): Remove 'stack_burn'.
+	* cipher/md4.c (transform): Return stack burn depth.
+	(md4_final): Use stack burn depth from transform.
+	* cipher/md5.c (transform): Return stack burn depth.
+	(md5_final): Use stack burn depth from transform.
+	* cipher/rmd160.c (transform): Return stack burn depth.
+	(rmd160_final): Use stack burn depth from transform.
+	* cipher/sha1.c (transform): Return stack burn depth.
+	(sha1_final): Use stack burn depth from transform.
+	* cipher/sha256.c (transform): Return stack burn depth.
+	(sha256_final): Use stack burn depth from transform.
+	* cipher/sha512.c (__transform, transform): Return stack burn depth.
+	(sha512_final): Use stack burn depth from transform.
+	* cipher/stribog.c (transform64): Return stack burn depth.
+	* cipher/tiger.c (transform): Return stack burn depth.
+	(tiger_final): Use stack burn depth from transform.
+
+	Make STRIBOG use the new _gcry_md_block_write helper.
+	* cipher/stribog.c (STRIBOG_STRUCT): Add 'bctx' and remove 'buf' and
+	'count'.
+	(stribog_init_512): Initialize 'bctx'.
+	(transform64): New function.
+	(stribog_write): Remove.
+	(stribog_final): Use _gcry_md_block_write and bctx.
+	(_gcry_digest_spec_stribog_256, _gcry_digest_spec_stribog_512): Use
+	_gcry_md_block_write.
+
+	Make SHA-512 use the new _gcry_md_block_write helper.
+	* cipher/hash-common.c (_gcry_md_block_write): Check that hd->buf is
+	large enough.
+	* cipher/hash-common.h (MD_BLOCK_MAX_BLOCKSIZE, MD_NBLOCKS_TYPE): New
+	macros.
+	(gcry_md_block_ctx_t): Use above macros for 'nblocks' and 'buf'.
+	* cipher/sha512.c (SHA512_STATE): New struct.
+	(SHA512_CONTEXT): Add 'bctx' and 'state'.
+	(sha512_init, sha384_init): Initialize 'bctx'.
+	(__transform, _gcry_sha512_transform_armv7_neon): Use SHA512_STATE for
+	'hd'.
+	(transform): For now, do not return burn stack.
+	(sha512_write): Remove.
+	(sha512_final): Use _gcry_md_block_write and bctx.
+	(_gcry_digest_spec_sha512, _gcry_digest_spec_sha384): Use
+	_gcry_md_block_write.
+
+2013-09-20  Werner Koch  <wk@gnupg.org>
+
+	sexp: Change internal versions to always use gpg_err_code_t.
+	* src/sexp.c (gcry_sexp_new, gcry_sexp_create, gcry_sexp_build)
+	(gcry_sexp_build_array, gcry_sexp_canon_len): Change error return type
+	from gpg_error_t to gpg_err_code_t.  Remove all calls to gpg_error.
+	* src/visibility.c (gcry_sexp_new, gcry_sexp_create, gcry_sexp_sscan)
+	(gcry_sexp_build, gcry_sexp_build_array, gcry_sexp_canon_len): Map
+	error codes via gpg_error.
+	* cipher/dsa.c, cipher/ecc.c, cipher/elgamal.c, cipher/rsa.c: Remove
+	use gpg_err_code wrappers.
+
+	pk: Move s-exp creation for gcry_pk_decrypt to the modules.
+	* cipher/pubkey.c (sexp_to_enc): Remove RET_MODERN arg and merge it
+	into FLAGS.
+	(gcry_pk_decrypt): Move result s-exp building into the modules.
+	* src/cipher-proto.h (gcry_pk_decrypt_t): Add some args.
+	* cipher/ecc.c (ecc_decrypt_raw): Change to return an s-exp.
+	* cipher/elgamal.c (elg_decrypt): Ditto.
+	* cipher/rsa.c (rsa_decrypt): Ditto.
+	(rsa_blind, rsa_unblind): Merge into rsa_decrypt.  This saves several
+	extra MPI allocations.
+
+	pk: Remove unused function.
+	* cipher/pubkey.c (_gcry_pk_aliased_algo_name): Remove
+
+2013-09-19  Werner Koch  <wk@gnupg.org>
+
+	Beautify debug output of the prime generator.
+	* cipher/primegen.c: Adjust output of log_mpidump to recently changed
+	log_mpidump code changes.
+
+	pk: Move s-expr creation for genkey to the modules.
+	* cipher/pubkey.c (pubkey_generate): Fold into gcry_pk_genkey
+	(gcry_pk_genkey): Move result s-exp creation into the modules.
+	* cipher/dsa.c (dsa_generate): Create result as s-exp.
+	* cipher/elgamal.c (elg_generate): Ditto.
+	* cipher/rsa.c (rsa_generate): Ditto.
+	* cipher/ecc.c (ecc_generate): Ditto.
+	* src/cipher-proto.h (pk_ext_generate_t): Remove type
+	(gcry_pk_spec): and remove from struct.
+
+	tests: Beautify some diagnostics.
+	* tests/benchmark.c (ecc_bench): Print the key sexp in very verbose
+	mode.
+	(main): Add option --pk-count.
+	* tests/keygen.c: Add Elgamal generation and improved diagnostics.
+	* tests/t-ed25519.c (check_ed25519): Print running number of tests
+	done.
+
+	sexp: Improve printing data representing a negative number.
+	* src/sexp.c (suitable_encoding): Detect a negative number.
+
+	pk: Move RSA encoding functions to a new file.
+	* cipher/rsa-common: New.
+	* cipher/pubkey.c (pkcs1_encode_for_encryption): Move to rsa-common.c
+	and rename to _gcry_rsa_pkcs1_encode_for_enc.
+	(pkcs1_decode_for_encryption): Move to rsa-common.c and rename to
+	_gcry_rsa_pkcs1_decode_for_enc.
+	(pkcs1_encode_for_signature): Move to rsa-common.c and rename to
+	_gcry_rsa_pkcs1_encode_for_sig.
+	(oaep_encode): Move to rsa-common.c and rename to
+	_gcry_rsa_oaep_encode.
+	(oaep_decode): Move to rsa-common.c and rename to
+	_gcry_rsa_oaep_decode.
+	(pss_encode): Move to rsa-common.c and rename to _gcry_rsa_pss_encode.
+	(pss_verify): Move to rsa-common.c and rename to _gcry_rsa_pss_decode.
+	(octet_string_from_mpi, mgf1): Move to rsa-common.c.
+
+	pk: Move s-expr creation for sign and encrypt to the modules.
+	* cipher/pubkey.c (pubkey_encrypt): Fold into gcry_pk_encrypt.
+	(pubkey_decrypt): Fold into gcry_pk_decrypt.
+	(pubkey_sign): Fold into gcry_pk_sign.
+	(pubkey_verify): Fold into gcry_pk_verify.
+	(octet_string_from_mpi): Make it a wrapper and factor code out to ...
+	* mpi/mpicoder.c (_gcry_mpi_to_octet_string): New function.
+
+	* src/cipher.h (PUBKEY_FLAG_FIXEDLEN): New.
+	* cipher/pubkey.c (sexp_data_to_mpi): Set flag for some encodings.
+	(gcry_pk_encrypt): Simply by moving the s-expr generation to the modules.
+	(gcry_pk_sign): Ditto.
+	* cipher/dsa.c (dsa_sign): Create s-expr.
+	* cipher/elgamal.c (elg_encrypt, elg_sign): Ditto.
+	* cipher/rsa.c (rsa_encrypt, rsa_sign): Ditto.
+	* cipher/ecc.c (ecc_sign, ecc_encrypt_raw): Ditto.
+	(ecdsa_names): Add "eddsa".
+	* tests/t-ed25519.c (one_test): Expect "eddsa" token.
+
+2013-09-19  Dmitry Eremin-Solenikov  <dbaryshkov@gmail.com>
+
+	Fix Stribog digest on bigendian platforms.
+	* cipher/stribog.c (stribog_final): swap bytes in the result of digest
+	calculations.
+
+2013-09-18  Werner Koch  <wk@gnupg.org>
+
+	pk: Simplify the public key dispatcher pubkey.c.
+	* src/cipher-proto.h (gcry_pk_spec_t): Add fields ALGO and FLAGS.
+	* cipher/dsa.c (_gcry_pubkey_spec_dsa): Set these fields.
+	* cipher/ecc.c (_gcry_pubkey_spec_ecdsa): Ditto.
+	(_gcry_pubkey_spec_ecdh): Ditto.
+	* cipher/rsa.c (_gcry_pubkey_spec_rsa): Ditto.
+	* cipher/elgamal.c (_gcry_pubkey_spec_elg): Ditto
+	(_gcry_pubkey_spec_elg_e): New.
+	* cipher/pubkey.c: Change most code to replace the former module
+	system by a simpler system to gain information about the algorithms.
+	(disable_pubkey_algo): SImplified.  Not anymore thread-safe, though.
+
+	pk: Merge extraspecs struct with standard specs struct.
+	* src/gcrypt-module.h (gcry_pk_spec_t): Move this typedef and the
+	corresponding function typedefs to ...
+	* src/cipher-proto.h: here.
+	(pk_extra_spec_t): Remove typedef and merge fields into
+	gcry_pk_spec_t.
+	* cipher/rsa.c, cipher/dsa.c, cipher/elg.c, cipher/ecc.c: Ditto.
+	* cipher/pubkey.c: Change accordingly.
+	* src/cipher.h (_gcry_pubkey_extraspec_rsa): Remove.
+	(_gcry_pubkey_extraspec_dsa): Remove.
+	(_gcry_pubkey_extraspec_elg): Remove.
+	(_gcry_pubkey_extraspec_ecdsa): Remove.
+
+2013-09-18  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Fix encryption/decryption return type for GOST28147.
+	* cipher/gost.h (_gcry_gost_enc_one): Change return type to
+	'unsigned int'.
+	* cipher/gost28147.c (max): New macro.
+	(gost_encrypt_block, gost_decrypt_block): Return burn stack depth.
+	(_gcry_gost_enc_one): Return burn stack depth from gost_encrypt_block.
+
+2013-09-18  Dmitry Eremin-Solenikov  <dbaryshkov@gmail.com>
+
+	doc: fix building of ps and pdf documentation.
+	* doc/gcrypt.texi, doc/gpl.texi, doc/lgpl.texi: fix texinfo errors.
+
+	Add GOST R 34.11-2012 implementation (Stribog)
+	* src/gcrypt.h.in (GCRY_MD_GOSTR3411_12_256)
+	(GCRY_MD_GOSTR3411_12_512): New.
+	* cipher/stribog.c: New.
+	* configure.ac (available_digests_64): Add stribog.
+	* src/cipher.h: Declare Stribog declarations.
+	* cipher/md.c: Register Stribog digest.
+	* tests/basic.c (check_digests) Add 4 testcases for Stribog from
+	standard.
+	* doc/gcrypt.texi: Document new constants.
+
+	Add basic implementation of GOST R 34.11-94 message digest.
+	* src/gcrypt.h.in (GCRY_MD_GOSTR3411_94): New.
+	* cipher/gostr3411-94.c: New.
+	* configure.ac (available_digests): Add gostr3411-94.
+	* src/cipher.h: Add gostr3411-94 definitions.
+	* cipher/md.c: Register GOST R 34.11-94.
+	* tests/basic.c (check_digests): Add 4 tests for GOST R 34.11-94
+	  hash algo. Two are  defined in the standard itself, two other are
+	  more or less common tests - an empty string an exclamation mark.
+	* doc/gcrypt.texi: Add an entry describing GOST R 34.11-94 to the MD
+	  algorithms table.
+
+	Separate common md block code.
+	* cipher/hash-common.c (_gcry_md_block_write): New function to handle
+	block md operations.  The current implementation is limited to 64 byte
+	buffer and u32 block counter.
+
+	* cipher/md4.c, cipher/md5.c, cipher/rmd.h, cipher/rmd160.c
+	*cipher/sha1.c, cipher/sha256.c, cipher/tiger.c: Convert to use
+	_gcry_md_block_write.
+
+	Add limited implementation of GOST 28147-89 cipher.
+	* src/gcrypt.h.in (GCRY_CIPHER_GOST28147): New.
+	* cipher/gost.h, cipher/gost28147.c: New.
+	* configure.ac (available_ciphers): Add gost28147.
+	* src/cipher.h: Add gost28147 definitions.
+	* cipher/cipher.c: Register gost28147.
+	* tests/basic.c (check_ciphers): Enable simple test for gost28147.
+	* doc/gcrypt.texi: document GCRY_CIPHER_GOST28147.
+
+2013-09-18  Werner Koch  <wk@gnupg.org>
+
+	ecc: Add Ed25519 key generation and prepare for optimizations.
+	* src/mpi.h (enum ecc_dialects): New.
+	* src/ec-context.h (mpi_ec_ctx_s): Add field DIALECT.
+	* cipher/ecc-common.h (elliptic_curve_t): Ditto.
+	* cipher/ecc-curves.c (ecc_domain_parms_t): Ditto.
+	(domain_parms): Add dialect values.
+	(_gcry_ecc_fill_in_curve): Set dialect.
+	(_gcry_ecc_get_curve): Ditto.
+	(_gcry_mpi_ec_new): Ditto.
+	(_gcry_ecc_get_param): Use ECC_DIALECT_STANDARD for now.
+	* cipher/ecc-misc.c (_gcry_ecc_curve_copy): Copy dialect.
+	(_gcry_ecc_dialect2str): New.
+	* mpi/ec.c (ec_p_init): Add arg DIALECT.
+	(_gcry_mpi_ec_p_internal_new): Ditto.
+	(_gcry_mpi_ec_p_new): Ditto.
+
+	* mpi/mpiutil.c (gcry_mpi_set_opaque): Set the secure flag.
+	(_gcry_mpi_set_opaque_copy): New.
+
+	* cipher/ecc-misc.c (_gcry_ecc_os2ec): Take care of an opaque MPI.
+	* cipher/ecc.c (eddsa_generate_key): New.
+	(generate_key): Rename to nist_generate_key and factor some code out
+	to ...
+	(ecc_generate_ext): here.  Divert to eddsa_generate_key if desired.
+	(eddsa_decodepoint): Take care of an opaque MPI.
+	(ecc_check_secret_key): Ditto.
+	(ecc_sign): Ditto.
+	* cipher/pubkey.c (sexp_elements_extract_ecc): Store public and secret
+	key as opaque MPIs.
+	(gcry_pk_genkey): Add the curve_name also to the private key part of
+	the result.
+
+	* tests/benchmark.c (ecc_bench): Support Ed25519.
+	(main): Add option --debug.
+	* tests/curves.c (sample_key_2): Make sure that P and N are positive.
+	* tests/keygen.c (show): New.
+	(check_ecc_keys): Support Ed25519.
+
+2013-09-17  Werner Koch  <wk@gnupg.org>
+
+	mpi: Support printing of negative numbers.
+	* mpi/mpicoder.c (twocompl, onecompl): New.
+	(gcry_mpi_print): Use it for STD and SSH.
+	(gcry_mpi_scan): Use it for STD and SSH.  Always set NSCANNED.
+	(gcry_mpi_aprint): Clear the extra allocated byte.
+	* tests/t-convert.c (showhex, showmpi): New.
+	(mpi2bitstr_nlz): New.
+	(check_formats): New.
+	(main): Call new test.
+
+2013-09-16  Werner Koch  <wk@gnupg.org>
+
+	Fix bug in _gcry_mpi_tdiv_q_2exp.
+	* mpi/mpi-internal.h (MPN_COPY_INCR): Make it work.
+
+	ecc: Implement Curve Ed25519 signing and verification.
+	* cipher/ecc-curves.c (domain_parms): Add curve "Ed25519".
+	* cipher/ecc.c (reverse_buffer): New.
+	(eddsa_encodempi): New.
+	(eddsa_encodepoint): New.
+	(eddsa_decodepoint): New.
+	(sign_eddsa): Implement.
+	(verify_eddsa): Implement.
+	(ecc_sign): Init unused Q.  Pass public key to sign_eddsa.
+	(ecc_verify): Init pk.Q if not used.  Pass public key verbatim to
+	verify_eddsa.
+	* cipher/pubkey.c (sexp_elements_extract): Add arg OPAQUE.  Change all
+	callers to pass 0.
+	(sexp_to_sig): Add arg OPAQUE and pass it to sexp_elements_extract.
+	(sexp_data_to_mpi): Allow for a zero length "value".
+	(gcry_pk_verify): Reorder parameter processing.  Pass OPAQUE flag as
+	required.
+	* mpi/ec.c (ec_invm): Print a warning if the inverse does not exist.
+	(_gcry_mpi_ec_get_affine): Implement for our Twisted Edwards curve
+	model.
+	(dup_point_twistededwards): Implement.
+	(add_points_twistededwards): Implement.
+	(_gcry_mpi_ec_mul_point): Support Twisted Edwards.
+
+	* mpi/mpicoder.c (do_get_buffer): Add arg FILL_LE.
+	(_gcry_mpi_get_buffer): Ditto.  Change all callers.
+	(_gcry_mpi_get_secure_buffer): Ditto.
+
+	* src/sexp.c (_gcry_sexp_nth_opaque_mpi): New.
+
+	* tests/t-ed25519.c: New.
+	* tests/t-ed25519.inp: New.
+	* tests/t-mpi-point.c (basic_ec_math_simplified): Print some output
+	only in debug mode.
+	(twistededwards_math): New test.
+	(main): Call new test.
+
+	mpi: Add internal convenience function.
+	* mpi/mpiutil.c (_gcry_mpi_get_opaque_copy): New.
+
+	mpi: Add debug function to print a point.
+	* mpi/ec.c (_gcry_mpi_point_log): New.
+	* src/mpi.h (log_printpnt): new macro.
+
+	tests: Factor time measurement code out.
+	* tests/benchmark.c (started_at, stopped_at, start_timer, stop_timer)
+	(elapsed time): Factor out to ..
+	* tests/stopwatch.h: new file.
+
+2013-09-12  Werner Koch  <wk@gnupg.org>
+
+	Fix _gcry_log_printmpi to print 00 instead of a sole sign.
+	* src/misc.c: Special case an mpi length of 0.
+
+2013-09-11  Werner Koch  <wk@gnupg.org>
+
+	Streamline the use of the internal mpi and hex debug functions.
+	* mpi/mpicoder.c (gcry_mpi_dump): Remove.
+	(_gcry_log_mpidump): Remove.
+	* src/misc.c (_gcry_log_printhex): Factor all code out to ...
+	(do_printhex): new.  Add line wrapping a and compact printing.
+	(_gcry_log_printmpi): New.
+	* src/mpi.h (log_mpidump): Remove macro.
+	* src/g10lib.h (log_mpidump): Add compatibility macro.
+	(log_printmpi): New macro
+	* src/visibility.c (gcry_mpi_dump): Call _gcry_log_printmpi.
+	* cipher/primegen.c (prime_generate_internal): Replace gcry_mpi_dump
+	by log_printmpi.
+	(gcry_prime_group_generator): Ditto.
+	* cipher/pubkey.c: Remove extra colons from log_mpidump call.
+	* cipher/rsa.c (stronger_key_check): Use log_printmpi.
+
+2013-09-10  Werner Koch  <wk@gnupg.org>
+
+	md: Add function gcry_md_hash_buffers.
+	* src/gcrypt.h.in (gcry_buffer_t): new.
+	(gcry_md_hash_buffers): New.
+	* src/visibility.c, src/visibility.h: Add wrapper for new function.
+	* src/libgcrypt.def, src/libgcrypt.vers: Export new function.
+	* cipher/md.c (gcry_md_hash_buffers): New.
+	* cipher/sha1.c (_gcry_sha1_hash_buffers): New.
+	* tests/basic.c (check_one_md_multi): New.
+	(check_digests): Run that test.
+	* tests/hmac.c (check_hmac_multi): New.
+	(main): Run that test.
+
+	md: Fix Whirlpool flaw.
+	* cipher/whirlpool.c (whirlpool_add): Remove shortcut return so that
+	byte counter is always properly updated.
+
+2013-09-07  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Fix static build on AMD64.
+	* cipher/rijndael-amd64.S: Correct 'RIP' macro for non-PIC build.
+
+	scrypt: fix for big-endian systems.
+	* cipher/scrypt.c (_salsa20_core): Fix endianess issues.
+
+2013-09-07  Werner Koch  <wk@gnupg.org>
+
+	Use gcc "unused" attribute only with gcc >= 3.5.
+	* src/g10lib.h (GCC_ATTR_UNUSED): Fix gcc version detection.
+
+2013-09-07  Dmitry Eremin-Solenikov  <dbaryshkov@gmail.com>
+
+	Add support for Salsa20/12 - 12 round version of Salsa20.
+	* src/gcrypt.h.in (GCRY_CIPHER_SALSA20R12): New.
+	* src/salsa20.c (salsa20_core, salsa20_do_encrypt_stream): Add support
+	for reduced round versions.
+	  (salsa20r12_encrypt_stream, _gcry_cipher_spec_salsa20r12): Implement
+	Salsa20/12 - a 12 round version of Salsa20 selected by eStream.
+	* src/cipher.h: Declsare Salsa20/12 definition.
+	* cipher/cipher.c: Register Salsa20/12
+	* tests/basic.c: (check_stream_cipher, check_stream_cipher_large_block):
+	Populate Salsa20/12 tests with test vectors from ecrypt
+	(check_ciphers): Add simple test for Salsa20/12
+
+2013-09-07  Werner Koch  <wk@gnupg.org>
+
+	Add configure option --disable-amd64-as-feature-detection.
+	* configure.ac: Implement new disable flag.
+
+	mpi: Improve support for non-Weierstrass support.
+	* mpi/ec.c (ec_p_init): Add args MODEL and P.  Change all callers.
+	(_gcry_mpi_ec_p_internal_new): Ditto.
+	(_gcry_mpi_ec_p_new): Ditto.
+	* cipher/ecc-curves.c (_gcry_ecc_fill_in_curve): Return
+	GPG_ERR_UNKNOWN_CURVE instead of invalid value.  Init curve model.
+	* cipher/ecc.c (ecc_verify, ecc_encrypt_raw): Ditto.
+	* cipher/pubkey.c (sexp_data_to_mpi): Fix EDDSA flag error checking.
+
+	mpi: Add gcry_mpi_ec_curve_point.
+	* mpi/ec.c (_gcry_mpi_ec_curve_point): New.
+	(ec_powm): Return the absolute value.
+	* src/visibility.c, src/visibility.c: Add wrappers.
+	* src/libgcrypt.def, src/libgcrypt.vers: Export them.
+
+	mpi: Add functions to manipulate the sign.
+	* src/gcrypt.h.in (gcry_mpi_is_neg): New.
+	(gcry_mpi_neg, gcry_mpi_abs): New.
+	* mpi/mpiutil.c (_gcry_mpi_is_neg): New.
+	(_gcry_mpi_neg, _gcry_mpi_abs): New.
+	* src/visibility.c, src/visibility.h: Add wrappers.
+	* src/libgcrypt.def, src/libgcrypt.vers: Export them.
+	* src/mpi.h (mpi_is_neg): New.  Rename old macro to mpi_has_sign.
+	* mpi/mpi-mod.c (_gcry_mpi_mod_barrett): Use mpi_has_sign.
+	* mpi/mpi-mpow.c (calc_barrett): Ditto.
+	* cipher/primegen.c (_gcry_derive_x931_prime): Ditto
+	* cipher/rsa.c (secret): Ditto.
+
+2013-09-06  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Tune armv6 mpi assembly.
+	* mpi/armv6/mpih-mul1.S: Tune assembly for Cortex-A8.
+	* mpi/armv6/mpih-mul2.S: Ditto.
+	* mpi/armv6/mpih-mul3.S: Ditto.
+
+2013-09-05  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Change _gcry_burn_stack take burn depth as unsigned integer.
+	* src/misc.c (_gcry_burn_stack): Change to handle 'unsigned int' bytes.
+
+	mpicalc: fix building on linux and win32.
+	* src/Makefile.am (mpicalc): Adjust CFLAGS and LDADD.
+
+2013-09-04  Werner Koch  <wk@gnupg.org>
+
+	Change mpicalc to use Libgcrypt and install it.
+	* src/mpicalc.c: Make use of gcry_ functions.
+	(MPICALC_VERSION): New.  Set to 2.0.
+	(strusage): Remove.
+	(scan_mpi): New.  Replaces mpi_fromstr.
+	(print_mpi): New.  Replaces mpi_print.
+	(my_getc): New.
+	(print_help): New.
+	(main): Use simple option parser and print version info.
+	* src/Makefile.am (bin_PROGRAMS): Add mpicalc.
+	(mpicalc_SOURCES, mpicalc_CFLAGS, mpicalc_LDADD): New.
+
+	Add mpicalc.c to help with testing.
+	* src/mpicalc.c: Take from GnuPG 1.4
+
+	Prepare support for EdDSA.
+	* src/cipher.h (PUBKEY_FLAG_EDDSA): New.
+	* cipher/pubkey.c (pubkey_verify): Repalce args CMP and OPAQUEV by
+	CTX.  Pass flags and hash algo to the verify function.  Change all
+	verify functions to accept these args.
+	(sexp_data_to_mpi): Implement new flag "eddsa".
+	(gcry_pk_verify): Pass CTX instead of the compare function to
+	pubkey_verify.
+	* cipher/ecc.c (sign): Rename to sign_ecdsa.  Change all callers.
+	(verify): Rename to verify_ecdsa.  Change all callers.
+	(sign_eddsa, verify_eddsa): New stub functions.
+	(ecc_sign): Divert to sign_ecdsa or sign_eddsa.
+	(ecc_verify): Divert to verify_ecdsa or verify_eddsa.
+
+	Prepare support for non-Weierstrass EC equations.
+	* src/mpi.h (gcry_mpi_ec_models): New.
+	* src/ec-context.h (mpi_ec_ctx_s): Add MODEL.
+	* cipher/ecc-common.h (elliptic_curve_t): Ditto.
+	* cipher/ecc-curves.c (ecc_domain_parms_t): Ditto.
+	(domain_parms): Mark als as Weierstrass.
+	(_gcry_ecc_fill_in_curve): Check model.
+	(_gcry_ecc_get_curve): Set model to Weierstrass.
+	* cipher/ecc-misc.c (_gcry_ecc_model2str): New.
+	* cipher/ecc.c (generate_key, ecc_generate_ext): Print model in the
+	debug output.
+
+	* mpi/ec.c (_gcry_mpi_ec_dup_point): Switch depending on model.
+	Factor code out to ...
+	(dup_point_weierstrass): new.
+	(dup_point_montgomery, dup_point_twistededwards): New stub functions.
+	(_gcry_mpi_ec_add_points): Switch depending on model.  Factor code out
+	to ...
+	(add_points_weierstrass): new.
+	(add_points_montgomery, add_points_twistededwards): New stub
+	functions.
+
+	* tests/Makefile.am (TESTS): Reorder tests.
+
+	mpi: Suppress newer gcc warnings.
+	* src/g10lib.h (GCC_ATTR_UNUSED): Define for gcc >= 3.5.
+	* mpi/mpih-div.c (_gcry_mpih_mod_1, _gcry_mpih_divmod_1): Mark dummy
+	as unused.
+	* mpi/mpi-internal.h (UDIV_QRNND_PREINV): Mark _ql as unused.
+
+	Do not check with cpp for typedefed constants.
+	* src/gcrypt-int.h: Include error code replacements depeding on the
+	version of libgpg-error.
+
+2013-09-04  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Make _gcry_burn_stack use variable length array.
+	* configure.ac (HAVE_VLA): Add check.
+	* src/misc.c (_gcry_burn_stack) [HAVE_VLA]: Add VLA code.
+
+	Move stack burning from block ciphers to cipher modes.
+	* src/gcrypt-module.h (gcry_cipher_encrypt_t)
+	(gcry_cipher_decrypt_t): Return 'unsigned int'.
+	* cipher/cipher.c (dummy_encrypt_block, dummy_decrypt_block): Return
+	zero.
+	(do_ecb_encrypt, do_ecb_decrypt): Get largest stack burn depth from
+	block cipher crypt function and burn stack at end.
+	* cipher/cipher-aeswrap.c (_gcry_cipher_aeswrap_encrypt)
+	(_gcry_cipher_aeswrap_decrypt): Ditto.
+	* cipher/cipher-cbc.c (_gcry_cipher_cbc_encrypt)
+	(_gcry_cipher_cbc_decrypt): Ditto.
+	* cipher/cipher-cfb.c (_gcry_cipher_cfb_encrypt)
+	(_gcry_cipher_cfb_decrypt): Ditto.
+	* cipher/cipher-ctr.c (_gcry_cipher_cbc_encrypt): Ditto.
+	* cipher/cipher-ofb.c (_gcry_cipher_ofb_encrypt)
+	(_gcry_cipher_ofb_decrypt): Ditto.
+	* cipher/blowfish.c (encrypt_block, decrypt_block): Return burn stack
+	depth.
+	* cipher/camellia-glue.c (camellia_encrypt, camellia_decrypt): Ditto.
+	* cipher/cast5.c (encrypt_block, decrypt_block): Ditto.
+	* cipher/des.c (do_tripledes_encrypt, do_tripledes_decrypt)
+	(do_des_encrypt, do_des_decrypt): Ditto.
+	* cipher/idea.c (idea_encrypt, idea_decrypt): Ditto.
+	* cipher/rijndael.c (rijndael_encrypt, rijndael_decrypt): Ditto.
+	* cipher/seed.c (seed_encrypt, seed_decrypt): Ditto.
+	* cipher/serpent.c (serpent_encrypt, serpent_decrypt): Ditto.
+	* cipher/twofish.c (twofish_encrypt, twofish_decrypt): Ditto.
+	* cipher/rfc2268.c (encrypt_block, decrypt_block): New.
+	(_gcry_cipher_spec_rfc2268_40): Use encrypt_block and decrypt_block.
+
+2013-09-01  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	camellia-aesni-avx2-amd64: Move register clearing to assembly functions.
+	* cipher/camellia-aesni-avx2-amd64.S
+	(_gcry_camellia_aesni_avx2_ctr_enc): Add 'vzeroall'.
+	(_gcry_camellia_aesni_avx2_cbc_dec)
+	(_gcry_camellia_aesni_avx2_cfb_dec): Add 'vzeroupper' at head and
+	'vzeroall' at tail.
+	* cipher/camellia-glue.c (_gcry_serpent_ctr_enc, _gcry_serpent_cbc_dec)
+	(_gcry_serpent_avx2_cfb_dec) [USE_AESNI_AVX2]: Remove register
+	clearing.
+
+	camellia-aesni-avx-amd64: Move register clearing to assembly functions.
+	* cipher/camellia-aesni-avx-amd64.S (_gcry_camellia_aesni_avx_ctr_enc)
+	(_gcry_camellia_aesni_avx_cbc_dec)
+	(_gcry_camellia_aesni_avx_cfb_dec): Add 'vzeroupper' at head and
+	'vzeroall' at tail.
+	* cipher/camellia-glue.c (_gcry_serpent_ctr_enc, _gcry_serpent_cbc_dec)
+	(_gcry_serpent_avx2_cfb_dec) [USE_AESNI_AVX]: Remove register clearing.
+
+	serpent-avx2-amd64: Move register clearing to assembly.
+	* cipher/serpent-avx2-amd64.S (_gcry_serpent_avx2_ctr_enc)
+	(_gcry_serpent_avx2_cbc_dec, _gcry_serpent_avx2_cfb_dec): Change last
+	'vzeroupper' to 'vzeroall'.
+	* cipher/serpent.c (_gcry_serpent_ctr_enc, _gcry_serpent_cbc_dec)
+	(_gcry_serpent_avx2_cfb_dec) [USE_AVX2]: Remove register clearing with
+	'vzeroall'.
+
+	Fix building for x32 target.
+	* mpi/amd64/mpi-asm-defs.h: New file.
+	* random/rndhw.c (poll_padlock) [__x86_64__]: Also check if __LP64__ is
+	defined.
+	[USE_DRNG, __x86_64__]: Also check if __LP64__ is defined.
+
+2013-08-31  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	sha512: add ARM/NEON assembly version of transform function.
+	* cipher/Makefile.am: Add 'sha512-armv7-neon.S'.
+	* cipher/sha512-armv7-neon.S: New file.
+	* cipher/sha512.c (USE_ARM_NEON_ASM): New macro.
+	(SHA512_CONTEXT) [USE_ARM_NEON_ASM]: Add 'use_neon'.
+	(sha512_init, sha384_init) [USE_ARM_NEON_ASM]: Enable 'use_neon' if
+	CPU support NEON instructions.
+	(k): Round constant array moved outside of 'transform' function.
+	(__transform): Renamed from 'tranform' function.
+	[USE_ARM_NEON_ASM] (_gcry_sha512_transform_armv7_neon): New prototype.
+	(transform): New wrapper function for different transform versions.
+	(sha512_write, sha512_final): Burn stack by the amount returned by
+	transform function.
+	* configure.ac (sha512) [neonsupport]: Add 'sha512-armv7-neon.lo'.
+
+	sha512: reduce stack use in transform function by 512 bytes.
+	* cipher/sha512.c (transform): Change 'u64 w[80]' to 'u64 w[16]' and
+	inline input expansion to first 64 rounds.
+	(sha512_write, sha512_final): Reduce burn_stack depth by 512 bytes.
+
+	Add ARM HW feature detection module and add NEON detection.
+	* configure.ac: Add option --disable-neon-support.
+	(HAVE_GCC_INLINE_ASM_NEON): New.
+	(ENABLE_NEON_SUPPORT): New.
+	[arm]: Add 'hwf-arm.lo' as HW feature module.
+	* src/Makefile.am: Add 'hwf-arm.c'.
+	* src/g10lib.h (HWF_ARM_NEON): New macro.
+	* src/global.c (hwflist): Add HWF_ARM_NEON entry.
+	* src/hwf-arm.c: New file.
+	* src/hwf-common.h (_gcry_hwf_detect_arm): New prototype.
+	* src/hwfeatures.c (_gcry_detect_hw_features) [HAVE_CPU_ARCH_ARM]: Add
+	call to _gcry_hwf_detect_arm.
+
+	Correct mpi_cpu_arch for ARMv6.
+	* mpi/config.links [armv6]: Set mpi_cpu_arch to "arm", instead of
+	"armv6".
+
+2013-08-30  Werner Koch  <wk@gnupg.org>
+
+	mpi: Make gcry_mpi_print work with negative zeroes.
+	* mpi/mpicoder.c (gcry_mpi_print): Take care of negative zero.
+	(gcry_mpi_aprint): Allocate at least 1 byte.
+	* tests/t-convert.c: New.
+	* tests/Makefile.am (TESTS): Add t-convert.
+
+	Refactor the ECC code into 3 files.
+	* cipher/ecc-common.h, cipher/ecc-curves.c, cipher/ecc-misc.c: New.
+	* cipher/Makefile.am (EXTRA_libcipher_la_SOURCES): Add new files.
+	* configure.ac (GCRYPT_PUBKEY_CIPHERS): Add new .c files.
+	* cipher/ecc.c (curve_aliases, ecc_domain_parms_t, domain_parms)
+	(scanval): Move to ecc-curves.c.
+	(fill_in_curve): Move to ecc-curve.c as _gcry_ecc_fill_in_curve.
+	(ecc_get_curve): Move to ecc-curve.c as _gcry_ecc_get_curve.
+	(_gcry_mpi_ec_ec2os): Move to ecc-misc.c.
+	(ec2os): Move to ecc-misc.c as _gcry_ecc_ec2os.
+	(os2ec): Move to ecc-misc.c as _gcry_ecc_os2ec.
+	(point_set): Move as inline function to ecc-common.h.
+	(_gcry_ecc_curve_free): Move to ecc-misc.c as _gcry_ecc_curve_free.
+	(_gcry_ecc_curve_copy): Move to ecc-misc.c as _gcry_ecc_curve_copy.
+	(mpi_from_keyparam, point_from_keyparam): Move to ecc-curves.c.
+	(_gcry_mpi_ec_new): Move to ecc-curves.c.
+	(ecc_get_param): Move to ecc-curves.c as _gcry_ecc_get_param.
+	(ecc_get_param_sexp): Move to ecc-curves.c as _gcry_ecc_get_param_sexp.
+
+2013-08-22  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	serpent-sse2-amd64: Move register clearing to assembly functions.
+	cipher/serpent-sse2-amd64.S (_gcry_serpent_sse2_ctr_enc)
+	(_gcry_serpent_sse2_cbc_dec, _gcry_serpent_sse2_cfb_dec): Clear used
+	XMM registers.
+	cipher/serpent.c (_gcry_serpent_ctr_enc, _gcry_serpent_cbc_dec)
+	( _gcry_serpent_cfb_dec) [USE_SSE2]: Remove XMM register clearing from
+	bulk functions.
+
+	twofish-amd64: do not make __twofish_dec_blk3 global.
+	* cipher/twofish-amd64.S (__twofish_dec_blk3): Do not export symbol as
+	global.
+	(__twofish_dec_blk3): Mark symbol as function.
+
+2013-08-20  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	mpi: add ARMv6 assembly.
+	* mpi/armv6/mpi-asm-defs.h: New.
+	* mpi/armv6/mpih-add1.S: New.
+	* mpi/armv6/mpih-mul1.S: New.
+	* mpi/armv6/mpih-mul2.S: New.
+	* mpi/armv6/mpih-mul3.S: New.
+	* mpi/armv6/mpih-sub1.S: New.
+	* mpi/config.links [arm]: Enable ARMv6 assembly.
+
+	Move ARMv6 detection to configure.ac.
+	* cipher/blowfish-armv6.S: Replace __ARM_ARCH >= 6 checks with
+	HAVE_ARM_ARCH_V6.
+	* cipher/blowfish.c: Ditto.
+	* cipher/camellia-armv6.S: Ditto.
+	* cipher/camellia.h: Ditto.
+	* cipher/cast5-armv6.S: Ditto.
+	* cipher/cast5.c: Ditto.
+	* cipher/rijndael-armv6.S: Ditto.
+	* cipher/rijndael.c: Ditto.
+	* configure.ac: Add HAVE_ARM_ARCH_V6 check.
+
+2013-08-19  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Add optimized wipememory for ARM.
+	src/g10lib.h [__arm__] (fast_wipememory2_unaligned_head)
+	(fast_wipememory2): New macros.
+
+	cipher: bufhelp: allow unaligned memory accesses on ARM.
+	* cipher/bufhelp.h [__arm__ && __ARM_FEATURE_UNALIGNED]: Enable
+	BUFHELP_FAST_UNALIGNED_ACCESS.
+
+2013-08-17  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Remove burn_stack optimization.
+	* src/misc.c (_gcry_burn_stack): Remove SIZEOF_UNSIGNED_LONG == 4 or 8
+	optimization.
+
+2013-08-16  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	camellia: add ARMv6 assembly implementation.
+	* cipher/Makefile.am: Add 'camellia-armv6.S'.
+	* cipher/camellia-armv6.S: New file.
+	* cipher/camellia-glue.c [USE_ARMV6_ASM]
+	(_gcry_camellia_armv6_encrypt_block)
+	(_gcry_camellia_armv6_decrypt_block): New prototypes.
+	[USE_ARMV6_ASM] (Camellia_EncryptBlock, Camellia_DecryptBlock)
+	(camellia_encrypt, camellia_decrypt): New functions.
+	* cipher/camellia.c [!USE_ARMV6_ASM]: Compile encryption and decryption
+	routines if USE_ARMV6_ASM macro is _not_ defined.
+	* cipher/camellia.h (USE_ARMV6_ASM): New macro.
+	[!USE_ARMV6_ASM] (Camellia_EncryptBlock, Camellia_DecryptBlock): If
+	USE_ARMV6_ASM is defined, disable these function prototypes.
+	(camellia) [arm]: Add 'camellia-armv6.lo'.
+
+	blowfish: add ARMv6 assembly implementation.
+	* cipher/Makefile.am: Add 'blowfish-armv6.S'.
+	* cipher/blowfish-armv6.S: New file.
+	* cipher/blowfish.c (USE_ARMV6_ASM): New macro.
+	[USE_ARMV6_ASM] (_gcry_blowfish_armv6_do_encrypt)
+	(_gcry_blowfish_armv6_encrypt_block)
+	(_gcry_blowfish_armv6_decrypt_block, _gcry_blowfish_armv6_ctr_enc)
+	(_gcry_blowfish_armv6_cbc_dec, _gcry_blowfish_armv6_cfb_dec): New
+	prototypes.
+	[USE_ARMV6_ASM] (do_encrypt, do_encrypt_block, do_decrypt_block)
+	(encrypt_block, decrypt_block): New functions.
+	(_gcry_blowfish_ctr_enc) [USE_ARMV6_ASM]: Use ARMv6 assembly function.
+	(_gcry_blowfish_cbc_dec) [USE_ARMV6_ASM]: Use ARMv6 assembly function.
+	(_gcry_blowfish_cfb_dec) [USE_ARMV6_ASM]: Use ARMv6 assembly function.
+	* configure.ac (blowfish) [arm]: Add 'blowfish-armv6.lo'.
+
+	cast5: add ARMv6 assembly implementation.
+	* cipher/Makefile.am: Add 'cast5-armv6.S'.
+	* cipher/cast5-armv6.S: New file.
+	* cipher/cast5.c (USE_ARMV6_ASM): New macro.
+	(CAST5_context) [USE_ARMV6_ASM]: New members 'Kr_arm_enc' and
+	'Kr_arm_dec'.
+	[USE_ARMV6_ASM] (_gcry_cast5_armv6_encrypt_block)
+	(_gcry_cast5_armv6_decrypt_block, _gcry_cast5_armv6_ctr_enc)
+	(_gcry_cast5_armv6_cbc_dec, _gcry_cast5_armv6_cfb_dec): New prototypes.
+	[USE_ARMV6_ASM] (do_encrypt_block, do_decrypt_block, encrypt_block)
+	(decrypt_block): New functions.
+	(_gcry_cast5_ctr_enc) [USE_ARMV6_ASM]: Use ARMv6 assembly function.
+	(_gcry_cast5_cbc_dec) [USE_ARMV6_ASM]: Use ARMv6 assembly function.
+	(_gcry_cast5_cfb_dec) [USE_ARMV6_ASM]: Use ARMv6 assembly function.
+	(do_cast_setkey) [USE_ARMV6_ASM]: Initialize 'Kr_arm_enc' and
+	'Kr_arm_dec'.
+	* configure.ac (cast5) [arm]: Add 'cast5-armv6.lo'.
+
+2013-08-14  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	rijndael: add ARMv6 assembly implementation.
+	* cipher/Makefile.am: Add 'rijndael-armv6.S'.
+	* cipher/rijndael-armv6.S: New file.
+	* cipher/rijndael.c (USE_ARMV6_ASM): New macro.
+	[USE_ARMV6_ASM] (_gcry_aes_armv6_encrypt_block)
+	(_gcry_aes_armv6_decrypt_block): New prototypes.
+	(do_encrypt_aligned) [USE_ARMV6_ASM]: Use ARMv6 assembly function.
+	(do_encrypt): Disable input/output alignment when USE_ARMV6_ASM.
+	(do_decrypt_aligned) [USE_ARMV6_ASM]: Use ARMv6 assembly function.
+	(do_decrypt): Disable input/output alignment when USE_ARMV6_ASM.
+	* configure.ac (HAVE_COMPATIBLE_GCC_ARM_PLATFORM_AS): New check for
+	gcc/as compatibility with ARM assembly implementations.
+	(aes) [arm]: Add 'rijndael-armv6.lo'.
+
+2013-08-09  NIIBE Yutaka  <gniibe@fsij.org>
+
+	cipher: fix memory leak.
+	* cipher/pubkey.c (gcry_pk_sign): Handle the specific case of ECC,
+	where there is NULL whichi is not the sentinel.
+
+2013-08-08  Werner Koch  <wk@gnupg.org>
+
+	mpi: Clear immutable flag on the result of gcry_mpi_set.
+	* mpi/mpiutil.c (gcry_mpi_set): Reset immutable and const flags.
+	* tests/mpitests.c (test_const_and_immutable): Add a test for this.
+
+2013-08-07  NIIBE Yutaka  <gniibe@fsij.org>
+
+	tests: fix memory leaks.
+	* tests/benchmark.c (dsa_bench): Release SIG.
+
+	* tests/mpitests.c (test_powm): Release BASE, EXP, MOD, and RES.
+
+	* tests/prime.c (check_primes): Release PRIME.
+
+	* tests/tsexp.c (basic): Use intermediate variable M for constant.
+	Release S1, S2 and A.
+
+2013-08-07  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Fix building on W32 (cannot export symbol 'gcry_sexp_get_buffer')
+	* src/libgcrypt.def: Change 'gcry_sexp_get_buffer' to
+	'gcry_sexp_nth_buffer'.
+
+2013-08-06  NIIBE Yutaka  <gniibe@fsij.org>
+
+	cipher: fix another memory leak.
+	* cipher/ecc.c (ecc_get_curve): Free TMP.
+
+	tests: fix memory leaks.
+	* tests/pubkey.c (check_keys_crypt): Release L, X0, and X1.
+	(check_keys): Release X.
+
+	cipher: fix memory leaks.
+	* cipher/elgamal.c (elg_generate_ext): Free XVALUE.
+
+	* cipher/pubkey.c (sexp_elements_extract): Don't use IDX for loop.
+	Call mpi_free.
+	(sexp_elements_extract_ecc): Call mpi_free.
+
+2013-08-05  Werner Koch  <wk@gnupg.org>
+
+	mpi: Improve gcry_mpi_invm to detect bad input.
+	* mpi/mpi-inv.c (gcry_mpi_invm): Return 0 for bad input.
+
+2013-07-31  Dmitry Eremin-Solenikov  <dbaryshkov@gmail.com>
+
+	Correct checks for ecc secret key.
+	* cipher/ecc.c (check_secret_key): replace wrong comparison of Q and
+	sk->Q points with correct one.
+
+2013-07-29  Werner Koch  <wk@gnupg.org>
+
+	sexp: Allow white space anywhere in a hex format.
+	* src/sexp.c (hextobyte): Remove.
+	(hextonibble): New.
+	(vsexp_sscan): Skip whtespace between hex nibbles.
+
+	Implement deterministic ECDSA as specified by rfc-6979.
+	* cipher/ecc.c (sign): Add args FLAGS and HASHALGO.  Convert an opaque
+	MPI as INPUT.  Implement rfc-6979.
+	(ecc_sign): Remove the opaque MPI code and pass FLAGS to sign.
+	(verify): Do not allocate and compute Y; it is not used.
+	(ecc_verify): Truncate the hash value if needed.
+	* tests/dsa-rfc6979.c (check_dsa_rfc6979): Add ECDSA test cases.
+
+2013-07-26  Werner Koch  <wk@gnupg.org>
+
+	Implement deterministic DSA as specified by rfc-6979.
+	* cipher/dsa.c (dsa_sign): Move opaque mpi extraction to sign.
+	(sign): Add args FLAGS and HASHALGO.  Implement deterministic DSA.
+	Add code path for R==0 to comply with the standard.
+	(dsa_verify): Left fill opaque mpi based hash values.
+	* cipher/dsa-common.c (int2octets, bits2octets): New.
+	(_gcry_dsa_gen_rfc6979_k): New.
+	* tests/dsa-rfc6979.c: New.
+	* tests/Makefile.am (TESTS): Add dsa-rfc6979.
+
+	Allow the use of a private-key s-expression with gcry_pk_verify.
+	* cipher/pubkey.c (sexp_to_key): Fallback to private key.
+
+2013-07-25  Werner Koch  <wk@gnupg.org>
+
+	Mitigate a flush+reload cache attack on RSA secret exponents.
+	* mpi/mpi-pow.c (gcry_mpi_powm): Always perfrom the mpi_mul for
+	exponents in secure memory.
+
+2013-07-19  Werner Koch  <wk@gnupg.org>
+
+	pk: Allow the use of a hash element for DSA sign and verify.
+	* cipher/pubkey.c (pubkey_sign): Add arg ctx and pass it to the sign
+	module.
+	(gcry_pk_sign): Pass CTX to pubkey_sign.
+	(sexp_data_to_mpi): Add flag rfc6979 and code to alls hash with *DSA
+	* cipher/rsa.c (rsa_sign, rsa_verify): Return an error if an opaque
+	MPI is given for DATA/HASH.
+	* cipher/elgamal.c (elg_sign, elg_verify): Ditto.
+	* cipher/dsa.c (dsa_sign, dsa_verify): Convert a given opaque MPI.
+	* cipher/ecc.c (ecc_sign, ecc_verify): Ditto.
+	* tests/basic.c (check_pubkey_sign_ecdsa): Add a test for using a hash
+	element with DSA.
+
+	sexp: Add function gcry_sexp_nth_buffer.
+	* src/sexp.c (gcry_sexp_nth_buffer): New.
+	* src/visibility.c, src/visibility.h: Add function wrapper.
+	* src/libgcrypt.vers, src/libgcrypt.def: Add to API.
+	* src/gcrypt.h.in: Add prototype.
+
+2013-07-18  Werner Koch  <wk@gnupg.org>
+
+	Add support for Salsa20.
+	* src/gcrypt.h.in (GCRY_CIPHER_SALSA20): New.
+	* cipher/salsa20.c: New.
+	* configure.ac (available_ciphers): Add Salsa20.
+	* cipher/cipher.c: Register Salsa20.
+	(cipher_setiv): Allow to divert an IV to a cipher module.
+	* src/cipher-proto.h (cipher_setiv_func_t): New.
+	(cipher_extra_spec): Add field setiv.
+	* src/cipher.h: Declare Salsa20 definitions.
+	* tests/basic.c (check_stream_cipher): New.
+	(check_stream_cipher_large_block): New.
+	(check_cipher_modes): Run new test functions.
+	(check_ciphers): Add simple test for Salsa20.
+
+2013-07-17  Werner Koch  <wk@gnupg.org>
+
+	Allow gcry_mpi_dump to print opaque MPIs.
+	* mpi/mpicoder.c (gcry_mpi_dump): Detect abd print opaque MPIs.
+	* tests/mpitests.c (test_opaque): New.
+	(main): Call new test.
+
+	cipher: Prepare to pass extra info to the sign functions.
+	* src/gcrypt-module.h (gcry_pk_sign_t): Add parms flags and hashalgo.
+	* cipher/rsa.c (rsa_sign): Add parms and mark them as unused.
+	* cipher/dsa.c (dsa_sign): Ditto.
+	* cipher/elgamal.c (elg_sign): Ditto.
+	* cipher/pubkey.c (dummy_sign): Ditto.
+	(pubkey_sign): Pass 0 for the new args.
+
+	Fix a special case bug in mpi_powm for e==0.
+	* mpi/mpi-pow.c (gcry_mpi_powm): For a zero exponent, make sure that
+	the result has been allocated.
+
+2013-07-15  Dmitry Eremin-Solenikov  <dbaryshkov@gmail.com>
+
+	Fix memory leak in t-mpi-point test.
+	* tests/t-mpi-point.c (basic_ec_math, basic_ec_math_simplified): add
+	calls to gcry_ctx_release() to free contexts after they become unused.
+
+2013-07-10  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Fix 'Please include winsock2.h before windows.h' warnings with mingw32.
+	* random/rndw32.c: include winsock2.h before windows.h.
+	* src/ath.h [_WIN32]: Ditto.
+	* tests/benchmark.c [_WIN32]: Ditto.
+
+	Remove duplicate header from mpi/amd64/mpih-mul2.S.
+	* mpi/amd64/mpih-mul2.S: remove duplicated header.
+
+	Fix i386/amd64 inline assembly "cc" clobbers.
+	* cipher/bithelp.h [__GNUC__, __i386__] (rol, ror): add "cc" globber
+	for inline assembly.
+	* cipher/cast5.c [__GNUC__, __i386__] (rol): Ditto.
+	* random/rndhw.c [USE_DRNG] (rdrand_long): Ditto.
+	* src/hmac256.c [__GNUC__, __i386__] (ror): Ditto.
+	* mpi/longlong.c [__i386__] (add_ssaaaa, sub_ddmmss, umul_ppmm)
+	(udiv_qrnnd, count_leading_zeros, count_trailing_zeros): Ditto.
+
+	bufhelp: Suppress 'cast increases required alignment' warning.
+	* cipher/bufhelp.h (buf_xor, buf_xor_2dst, buf_xor_n_copy): Cast
+	to larger element pointer through (void *) to suppress -Wcast-error.
+
+	mpi: Add __ARM_ARCH for older GCC.
+	* mpi/longlong.h [__arm__]: Construct __ARM_ARCH if not provided by
+	compiler.
+
+	mpi: add missing "cc" clobber for ARM assembly.
+	* mpi/longlong.h [__arm__] (add_ssaaaa, sub_ddmmss): Add __CLOBBER_CC.
+	[__arm__][__ARM_ARCH <= 3] (umul_ppmm): Ditto.
+
+	Tweak ARM inline assembly for mpi.
+	mpi/longlong.h [__arm__]: Enable inline assembly if __thumb2__ is
+	defined.
+	[__arm__]: Use __ARCH_ARM when defined.
+	[__arm__] [__ARM_ARCH >= 5] (count_leading_zeros): New.
+
+2013-06-26  Werner Koch  <wk@gnupg.org>
+
+	Make gpg-error replacement defines more robust.
+	* configure.ac (AH_BOTTOM): Move GPG_ERR_ replacement defines to ...
+	* src/gcrypt-int.h: new file.
+	* src/visibility.h, src/cipher.h: Replace gcrypt.h by gcrypt-int.h.
+	* tests/: Ditto for all test files.
+
+2013-06-20  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Check if assembler is compatible with AMD64 assembly implementations.
+	* cipher/blowfish-amd64.S: Enable only if
+	HAVE_COMPATIBLE_GCC_AMD64_PLATFORM_AS is defined.
+	* cipher/camellia-aesni-avx-amd64.S: Ditto.
+	* cipher/camellia-aesni-avx2-amd64.S: Ditto.
+	* cipher/cast5-amd64.S: Ditto.
+	* cipher/rinjdael-amd64.S: Ditto.
+	* cipher/serpent-avx2-amd64.S: Ditto.
+	* cipher/serpent-sse2-amd64.S: Ditto.
+	* cipher/twofish-amd64.S: Ditto.
+	* cipher/blowfish.c: Use AMD64 assembly implementation only if
+	HAVE_COMPATIBLE_GCC_AMD64_PLATFORM_AS is defined
+	* cipher/camellia-glue.c: Ditto.
+	* cipher/cast5.c: Ditto.
+	* cipher/rijndael.c: Ditto.
+	* cipher/serpent.c: Ditto.
+	* cipher/twofish.c: Ditto.
+	* configure.ac: Check gcc/as compatibility with AMD64 assembly
+	implementations.
+
+2013-06-09  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Optimize _gcry_burn_stack for 32-bit and 64-bit architectures.
+	* src/misc.c (_gcry_burn_stack): Add optimization for 32-bit and 64-bit
+	architectures.
+
+	Add Camellia AES-NI/AVX2 implementation.
+	* cipher/Makefile.am: Add 'camellia-aesni-avx2-amd64.S'.
+	* cipher/camellia-aesni-avx2-amd64.S: New file.
+	* cipher/camellia-glue.c (USE_AESNI_AVX2): New macro.
+	(CAMELLIA_context) [USE_AESNI_AVX2]: Add 'use_aesni_avx2'.
+	[USE_AESNI_AVX2] (_gcry_camellia_aesni_avx2_ctr_enc)
+	(_gcry_camellia_aesni_avx2_cbc_dec)
+	(_gcry_camellia_aesni_avx2_cfb_dec): New prototypes.
+	(camellia_setkey) [USE_AESNI_AVX2]: Check AVX2+AES-NI capable hardware
+	and set 'ctx->use_aesni_avx2'.
+	(_gcry_camellia_ctr_enc) [USE_AESNI_AVX2]: Add AVX2 accelerated code.
+	(_gcry_camellia_cbc_dec) [USE_AESNI_AVX2]: Add AVX2 accelerated code.
+	(_gcry_camellia_cfb_dec) [USE_AESNI_AVX2]: Add AVX2 accelerated code.
+	(selftest_ctr_128, selftest_cbc_128, selftest_cfb_128): Grow 'nblocks'
+	so that AVX2 codepaths get tested.
+	* configure.ac (camellia) [avx2support, aesnisupport]: Add
+	'camellia-aesni-avx2-amd64.lo'.
+
+	Add Serpent AVX2 implementation.
+	* cipher/Makefile.am: Add 'serpent-avx2-amd64.S'.
+	* cipher/serpent-avx2-amd64.S: New file.
+	* cipher/serpent.c (USE_AVX2): New macro.
+	(serpent_context_t) [USE_AVX2]: Add 'use_avx2'.
+	[USE_AVX2] (_gcry_serpent_avx2_ctr_enc, _gcry_serpent_avx2_cbc_dec)
+	(_gcry_serpent_avx2_cfb_dec): New prototypes.
+	(serpent_setkey_internal) [USE_AVX2]: Check for AVX2 capable hardware
+	and set 'use_avx2'.
+	(_gcry_serpent_ctr_enc) [USE_AVX2]: Use AVX2 accelerated functions.
+	(_gcry_serpent_cbc_dec) [USE_AVX2]: Use AVX2 accelerated functions.
+	(_gcry_serpent_cfb_dec) [USE_AVX2]: Use AVX2 accelerated functions.
+	(selftest_ctr_128, selftest_cbc_128, selftest_cfb_128): Grow 'nblocks'
+	so that AVX2 codepaths are tested.
+	* configure.ac (serpent) [avx2support]: Add 'serpent-avx2-amd64.lo'.
+
+	Add detection for Intel AVX2 instruction set.
+	* configure.ac: Add option --disable-avx2-support.
+	(HAVE_GCC_INLINE_ASM_AVX2): New.
+	(ENABLE_AVX2_SUPPORT): New.
+	* src/g10lib.h (HWF_INTEL_AVX2): New.
+	* src/global.c (hwflist): Add HWF_INTEL_AVX2.
+	* src/hwf-x86.c [__i386__] (get_cpuid): Initialize registers to zero
+	before cpuid.
+	[__x86_64__] (get_cpuid): Initialize registers to zero before cpuid.
+	(detect_x86_gnuc): Store maximum cpuid level.
+	(detect_x86_gnuc) [ENABLE_AVX2_SUPPORT]: Add detection for AVX2.
+
+	twofish: add amd64 assembly implementation.
+	* cipher/Makefile.am: Add 'twofish-amd64.S'.
+	* cipher/twofish-amd64.S: New file.
+	* cipher/twofish.c (USE_AMD64_ASM): New macro.
+	[USE_AMD64_ASM] (_gcry_twofish_amd64_encrypt_block)
+	(_gcry_twofish_amd64_decrypt_block, _gcry_twofish_amd64_ctr_enc)
+	(_gcry_twofish_amd64_cbc_dec, _gcry_twofish_amd64_cfb_dec): New
+	prototypes.
+	[USE_AMD64_ASM] (do_twofish_encrypt, do_twofish_decrypt)
+	(twofish_encrypt, twofish_decrypt): New functions.
+	(_gcry_twofish_ctr_enc, _gcry_twofish_cbc_dec, _gcry_twofish_cfb_dec)
+	(selftest_ctr, selftest_cbc, selftest_cfb): New functions.
+	(selftest): Call new bulk selftests.
+	* cipher/cipher.c (gcry_cipher_open) [USE_TWOFISH]: Register Twofish
+	bulk functions for ctr-enc, cbc-dec and cfb-dec.
+	* configure.ac (twofish) [x86_64]: Add 'twofish-amd64.lo'.
+	* src/cipher.h (_gcry_twofish_ctr_enc, _gcry_twofish_cbc_dec)
+	(gcry_twofish_cfb_dec): New prototypes.
+
+2013-05-29  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	rinjdael: add amd64 assembly implementation.
+	* cipher/Makefile.am: Add 'rijndael-amd64.S'.
+	* cipher/rijndael-amd64.S: New file.
+	* cipher/rijndael.c (USE_AMD64_ASM): New macro.
+	[USE_AMD64_ASM] (_gcry_aes_amd64_encrypt_block)
+	(_gcry_aes_amd64_decrypt_block): New prototypes.
+	(do_encrypt_aligned) [USE_AMD64_ASM]: Use amd64 assembly function.
+	(do_encrypt): Disable input/output alignment when USE_AMD64_ASM is set.
+	(do_decrypt_aligned) [USE_AMD64_ASM]: Use amd64 assembly function.
+	(do_decrypt): Disable input/output alignment when USE_AMD64_AES is set.
+	* configure.ac (aes) [x86-64]: Add 'rijndael-amd64.lo'.
+
+	blowfish: add amd64 assembly implementation.
+	* cipher/Makefile.am: Add 'blowfish-amd64.S'.
+	* cipher/blowfish-amd64.S: New file.
+	* cipher/blowfish.c (USE_AMD64_ASM): New macro.
+	[USE_AMD64_ASM] (_gcry_blowfish_amd64_do_encrypt)
+	(_gcry_blowfish_amd64_encrypt_block)
+	(_gcry_blowfish_amd64_decrypt_block, _gcry_blowfish_amd64_ctr_enc)
+	(_gcry_blowfish_amd64_cbc_dec, _gcry_blowfish_amd64_cfb_dec): New
+	prototypes.
+	[USE_AMD64_ASM] (do_encrypt, do_encrypt_block, do_decrypt_block)
+	(encrypt_block, decrypt_block): New functions.
+	(_gcry_blowfish_ctr_enc, _gcry_blowfish_cbc_dec)
+	(_gcry_blowfish_cfb_dec, selftest_ctr, selftest_cbc, selftest_cfb): New
+	functions.
+	(selftest): Call new bulk selftests.
+	* cipher/cipher.c (gcry_cipher_open) [USE_BLOWFISH]: Register Blowfish
+	bulk functions for ctr-enc, cbc-dec and cfb-dec.
+	* configure.ac (blowfish) [x86_64]: Add 'blowfish-amd64.lo'.
+	* src/cipher.h (_gcry_blowfish_ctr_enc, _gcry_blowfish_cbc_dec)
+	(gcry_blowfish_cfb_dec): New prototypes.
+
+2013-05-24  Werner Koch  <wk@gnupg.org>
+
+	ecc: Simplify the compliant point generation.
+	* cipher/ecc.c (generate_key): Use point_snatch_set, replaces unneeded
+	variable copies, etc.
+
+	ecc: Fix a minor flaw in the generation of K.
+	* cipher/dsa.c (gen_k): Factor code out to ..
+	* cipher/dsa-common.c (_gcry_dsa_gen_k): new file and function.  Add
+	arg security_level and re-indent a bit.
+	* cipher/ecc.c (gen_k): Remove and change callers to _gcry_dsa_gen_k.
+	* cipher/dsa.c: Include pubkey-internal.
+	* cipher/Makefile.am (libcipher_la_SOURCES): Add dsa-common.c
+
+2013-05-24  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	cast5: add amd64 assembly implementation.
+	* cipher/Makefile.am: Add 'cast5-amd64.S'.
+	* cipher/cast5-amd64.S: New file.
+	* cipher/cast5.c (USE_AMD64_ASM): New macro.
+	(_gcry_cast5_s1tos4): Merge arrays s1, s2, s3, s4 to single array to
+	simplify access from assembly implementation.
+	(s1, s2, s3, s4): New macros pointing to subarrays in
+	_gcry_cast5_s1tos4.
+	[USE_AMD64_ASM] (_gcry_cast5_amd64_encrypt_block)
+	(_gcry_cast5_amd64_decrypt_block, _gcry_cast5_amd64_ctr_enc)
+	(_gcry_cast5_amd64_cbc_dec, _gcry_cast5_amd64_cfb_dec): New prototypes.
+	[USE_AMD64_ASM] (do_encrypt_block, do_decrypt_block, encrypt_block)
+	(decrypt_block): New functions.
+	(_gcry_cast5_ctr_enc, _gcry_cast5_cbc_dec, _gcry_cast5_cfb_dec)
+	(selftest_ctr, selftest_cbc, selftest_cfb): New functions.
+	(selftest): Call new bulk selftests.
+	* cipher/cipher.c (gcry_cipher_open) [USE_CAST5]: Register CAST5 bulk
+	functions for ctr-enc, cbc-dec and cfb-dec.
+	* configure.ac (cast5) [x86_64]: Add 'cast5-amd64.lo'.
+	* src/cipher.h (_gcry_cast5_ctr_enc, _gcry_cast5_cbc_dec)
+	(gcry_cast5_cfb_dec): New prototypes.
+
+	cipher-selftest: make selftest work with any block-size.
+	* cipher/cipher-selftest.c (_gcry_selftest_helper_cbc_128)
+	(_gcry_selftest_helper_cfb_128, _gcry_selftest_helper_ctr_128): Renamed
+	functions from '<name>_128' to '<name>'.
+	(_gcry_selftest_helper_cbc, _gcry_selftest_helper_cfb)
+	(_gcry_selftest_helper_ctr): Make work with different block sizes.
+	* cipher/cipher-selftest.h (_gcry_selftest_helper_cbc_128)
+	(_gcry_selftest_helper_cfb_128, _gcry_selftest_helper_ctr_128): Renamed
+	prototypes from '<name>_128' to '<name>'.
+	* cipher/camellia-glue.c (selftest_ctr_128, selftest_cfb_128)
+	(selftest_ctr_128): Change to use new function names.
+	* cipher/rijndael.c (selftest_ctr_128, selftest_cfb_128)
+	(selftest_ctr_128): Change to use new function names.
+	* cipher/serpent.c (selftest_ctr_128, selftest_cfb_128)
+	(selftest_ctr_128): Change to use new function names.
+
+2013-05-23  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	serpent: add parallel processing for CFB decryption.
+	* cipher/cipher.c (gcry_cipher_open): Add bulf CFB decryption function
+	for Serpent.
+	* cipher/serpent-sse2-amd64.S (_gcry_serpent_sse2_cfb_dec): New
+	function.
+	* cipher/serpent.c (_gcry_serpent_sse2_cfb_dec): New prototype.
+	(_gcry_serpent_cfb_dec) New function.
+	(selftest_cfb_128) New function.
+	(selftest) Call selftest_cfb_128.
+	* src/cipher.h (_gcry_serpent_cfb_dec): New prototype.
+
+	camellia: add parallel processing for CFB decryption.
+	* cipher/camellia-aesni-avx-amd64.S
+	(_gcry_camellia_aesni_avx_cfb_dec): New function.
+	* cipher/camellia-glue.c (_gcry_camellia_aesni_avx_cfb_dec): New
+	prototype.
+	(_gcry_camellia_cfb_dec): New function.
+	(selftest_cfb_128): New function.
+	(selftest): Call selftest_cfb_128.
+	* cipher/cipher.c (gry_cipher_open): Add bulk CFB decryption function
+	for Camellia.
+	* src/cipher.h (_gcry_camellia_cfb_dec): New prototype.
+
+	rinjdael: add parallel processing for CFB decryption with AES-NI.
+	* cipher/cipher-selftest.c (_gcry_selftest_helper_cfb_128): New
+	function for CFB selftests.
+	* cipher/cipher-selftest.h (_gcry_selftest_helper_cfb_128): New
+	prototype.
+	* cipher/rijndael.c [USE_AESNI] (do_aesni_enc_vec4): New function.
+	(_gcry_aes_cfb_dec) [USE_AESNI]: Add parallelized CFB decryption.
+	(selftest_cfb_128): New function.
+	(selftest): Call selftest_cfb_128.
+
+2013-05-23  Werner Koch  <wk@gnupg.org>
+
+	Avoid compiler warning due to the global symbol setkey.
+	* cipher/cipher-selftest.c (_gcry_selftest_helper_cbc_128)
+	(_gcry_selftest_helper_ctr_128): Rename setkey to setkey_func.
+
+2013-05-23  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	serpent: add SSE2 accelerated amd64 implementation.
+	* configure.ac (serpent): Add 'serpent-sse2-amd64.lo'.
+	* cipher/Makefile.am (EXTRA_libcipher_la_SOURCES): Add
+	'serpent-sse2-amd64.S'.
+	* cipher/cipher.c (gcry_cipher_open) [USE_SERPENT]: Register bulk
+	functions for CBC-decryption and CTR-mode.
+	* cipher/serpent.c (USE_SSE2): New macro.
+	[USE_SSE2] (_gcry_serpent_sse2_ctr_enc, _gcry_serpent_sse2_cbc_dec):
+	New prototypes to assembler functions.
+	(serpent_setkey): Set 'serpent_init_done' before calling serpent_test.
+	(_gcry_serpent_ctr_enc): New function.
+	(_gcry_serpent_cbc_dec): New function.
+	(selftest_ctr_128): New function.
+	(selftest_cbc_128): New function.
+	(selftest): Call selftest_ctr_128 and selftest_cbc_128.
+	* cipher/serpent-sse2-amd64.S: New file.
+	* src/cipher.h (_gcry_serpent_ctr_enc): New prototype.
+	(_gcry_serpent_cbc_dec): New prototype.
+
+	Serpent: faster S-box implementation.
+	* cipher/serpent.c (SBOX0, SBOX1, SBOX2, SBOX3, SBOX4, SBOX5, SBOX6)
+	(SBOX7, SBOX0_INVERSE, SBOX1_INVERSE, SBOX2_INVERSE, SBOX3_INVERSE)
+	(SBOX4_INVERSE, SBOX5_INVERSE, SBOX6_INVERSE, SBOX7_INVERSE): Replace
+	with new definitions.
+
+2013-05-22  Werner Koch  <wk@gnupg.org>
+
+	w32: Fix installing of .def file.
+	* src/Makefile.am (install-def-file): Create libdir first.
+
+	Add control commands to disable mlock and setuid dropping.
+	* src/gcrypt.h.in (GCRYCTL_DISABLE_LOCKED_SECMEM): New.
+	(GCRYCTL_DISABLE_PRIV_DROP): New.
+	* src/global.c (_gcry_vcontrol): Implement them.
+	* src/secmem.h (GCRY_SECMEM_FLAG_NO_MLOCK): New.
+	(GCRY_SECMEM_FLAG_NO_PRIV_DROP): New.
+	* src/secmem.c (no_mlock, no_priv_drop): New.
+	(_gcry_secmem_set_flags, _gcry_secmem_get_flags): Set and get them.
+	(lock_pool): Handle no_mlock and no_priv_drop.
+
+	Fix libtool 2.4.2 to correctly detect .def files.
+	* ltmain.sh (sed_uncomment_deffile): New.
+	(orig_export_symbols): Uncomment def file before testing for EXPORTS.
+	* m4/libtool.m4: Do the same for the generated code.
+
+2013-05-22  Jussi Kivilinna  <jussi.kivilinna@iki.fi>
+
+	Add AES bulk CBC decryption selftest.
+	* cipher/rinjdael.c (selftest_cbc_128): New.
+	(selftest): Call selftest_cbc_128.
+
+	Change AES bulk CTR encryption selftest use new selftest helper function
+	* cipher/rinjdael.c: (selftest_ctr_128): Change to use new selftest
+	helper function.
+
+	Convert bulk CTR and CBC selftest functions in Camellia to generic selftest helper functions
+	* cipher/Makefile.am (libcipher_la_SOURCES): Add cipher-selftest files.
+	* cipher/camellia-glue.c (selftest_ctr_128, selftest_cbc_128): Change
+	to use the new selftest helper functions.
+	* cipher/cipher-selftest.c: New.
+	* cipher/cipher-selftest.h: New.
+
+	camellia: add bulk CBC decryption selftest.
+	* cipher/camellia-glue.c: (selftest_cbc_128): New selftest function for
+	bulk CBC decryption.
+	(selftest): Add call to selftest_cbc_128.
+
+	camellia: Rename camellia_aesni_avx_x86-64.S to camellia-aesni-avx-amd64.S
+	* cipher/camellia_aesni_avx_x86-64.S: Remove.
+	* cipher/camellia-aesni-avx-amd64.S: New.
+	* cipher/Makefile.am: Use the new filename.
+	* configure.ac: Use the new filename.
+
+2013-05-21  Werner Koch  <wk@gnupg.org>
+
+	Fix indentation and save on string space.
+	* cipher/ecc.c (generate_key): Use the same string for both fatal
+	messages.
+
+2013-05-20  Andrey  <andrey@brainhub.org>
+
+	cipher: Fix segv in last ECC change.
+	* cipher/ecc.c (generate_key): Make sure R is initialized.
+
+2013-05-09  Andrey  <andrey@brainhub.org>
+
+	cipher: Generate compliant ECC keys.
+	* cipher/ecc.c (generate_key): Make sure a key is compliant for
+	using the compact representation.
+
+2013-04-18  Werner Koch  <wk@gnupg.org>
+
+	cipher: Fix regression in Padlock support.
+	* cipher/rijndael.c (do_setkey): Remove dummy padlock key generation case
+	and use the standard one.
+
+	mpi: Yet another fix to get option flag munging right.
+	* cipher/Makefile.am (o_flag_munging): Yet another fix.
+
+	mpi: Make using gcc's -Ofast easier.
+	* cipher/Makefile.am (o_flag_munging): Take -Ofast in account.
+
+	Fix alignment problem in idea.c.
+	* cipher/idea.c (cipher): Rework parameter use to fix alignment
+	problems.
+
+	* cipher/idea.c (FNCCAST_SETKEY, FNCCAST_CRYPT): Remove unused macros.
+
+	Fix alignment problem in idea.c.
+
+	* cipher/idea.c (cipher): Rework parameter use to fix alignment
+	problems.
+
+	* cipher/idea.c (FNCCAST_SETKEY, FNCCAST_CRYPT): Remove unused macros.
+
+
+	(cherry picked from 4cd279556777e02eda79973f68efaa4b741f9175)
+
+2013-04-18  Vladimir Serbinenko  <phcoder@gmail.com>
+
+	Add some const attributes.
+	* cipher/md4.c (transform): Add const attribute.
+	* cipher/md5.c (transform): Ditto.
+	* cipher/rmd160.c (transform): Ditto.
+
+	Fix alignment problem in serpent.c.
+	* cipher/serpent.c (serpent_key_prepare): Fix misaligned access.
+	(serpent_setkey): Likewise.
+	(serpent_encrypt_internal): Likewise.
+	(serpent_decrypt_internal): Likewise.
+	(serpent_encrypt): Don't put an alignment-increasing cast.
+	(serpent_decrypt): Likewise.
+	(serpent_test): Likewise.
+
+2013-04-16  Werner Koch  <wk@wheatstone.g10code.de>
+
+	Fix multiply by zero in gcry_mpi_ec_mul.
+	* mpi/ec.c (_gcry_mpi_ec_mul_point): Handle case of SCALAR == 0.
+	* tests/t-mpi-point.c (basic_ec_math): Add a test case for this.
+
+2013-04-15  Werner Koch  <wk@gnupg.org>
+
+	Add macros to return pre-defined MPIs.
+	* src/gcrypt.h.in (GCRYMPI_CONST_ONE, GCRYMPI_CONST_TWO)
+	(GCRYMPI_CONST_THREE, GCRYMPI_CONST_FOUR, GCRYMPI_CONST_EIGHT): New.
+	(_gcry_mpi_get_const): New private function.
+	* src/visibility.c (_gcry_mpi_get_const): New.
+	* src/visibility.h: Mark it visible.
+
+	Fix addition of EC points.
+	* mpi/ec.c (_gcry_mpi_ec_add_points): Fix case of P1 given in affine
+	coordinates.
+
+2013-04-12  Werner Koch  <wk@gnupg.org>
+
+	Add hack to allow using an "ecc" key for "ecdsa" or "ecdh".
+	* cipher/pubkey.c (sexp_to_key): Add optional arg USE.
+	(gcry_pk_encrypt, gcry_pk_decrypt): Call sexp_to_key with usage sign.
+	(gcry_pk_sign, gcry_pk_verify): Call sexp_to_key with usage encrypt.
+	* tests/basic.c (show_sexp): New.
+	(check_pubkey_sign): Print test number and add cases for ecc.
+	(check_pubkey_sign_ecdsa): New.
+	(do_check_one_pubkey): Divert to new function.
+
+2013-04-11  Werner Koch  <wk@gnupg.org>
+
+	Add gcry_pubkey_get_sexp.
+	* src/gcrypt.h.in (GCRY_PK_GET_PUBKEY): New.
+	(GCRY_PK_GET_SECKEY): New.
+	(gcry_pubkey_get_sexp): New.
+	* src/visibility.c (gcry_pubkey_get_sexp): New.
+	* src/visibility.h (gcry_pubkey_get_sexp): Mark visible.
+	* src/libgcrypt.def, src/libgcrypt.vers: Add new function.
+	* cipher/pubkey-internal.h: New.
+	* cipher/Makefile.am (libcipher_la_SOURCES): Add new file.
+	* cipher/ecc.c: Include pubkey-internal.h
+	(_gcry_pk_ecc_get_sexp): New.
+	* cipher/pubkey.c: Include pubkey-internal.h and context.h.
+	(_gcry_pubkey_get_sexp): New.
+	* src/context.c (_gcry_ctx_find_pointer): New.
+	* src/cipher-proto.h: Add _gcry_pubkey_get_sexp.
+	* tests/t-mpi-point.c (print_sexp): New.
+	(context_param, basic_ec_math_simplified): Add tests for the new
+	function.
+
+	* configure.ac (NEED_GPG_ERROR_VERSION): Set to 1.11.
+	(AH_BOTTOM) Add error codes from gpg-error 1.12
+	* src/g10lib.h (fips_not_operational): Use GPG_ERR_NOT_OPERATIONAL.
+
+	* mpi/ec.c (_gcry_mpi_ec_get_mpi): Fix computation of Q.
+	(_gcry_mpi_ec_get_point): Ditto.
+
+	Remove unused code.
+	* cipher/pubkey.c (_gcry_pk_module_lookup, _gcry_pk_module_release)
+	(_gcry_pk_get_elements): Remove.
+
+2013-04-05  Werner Koch  <wk@gnupg.org>
+
+	Make the Q parameter optional for ECC signing.
+	* cipher/ecc.c (ecc_sign): Remove the need for Q.
+	* cipher/pubkey.c (sexp_elements_extract_ecc): Make Q optional for a
+	private key.
+	(sexp_to_key): Add optional arg R_IS_ECC.
+	(gcry_pk_sign): Do not call gcry_pk_get_nbits for ECC keys.
+	* tests/pubkey.c (die): Make sure to print a LF.
+	(check_ecc_sample_key): New.
+	(main): Call new test.
+
+	Add test case for SCRYPT and rework the code.
+	* tests/t-kdf.c (check_scrypt): New.
+	(main): Call new test.
+
+	* configure.ac: Support disabling of the scrypt algorithm.  Make KDF
+	enabling similar to the other algorithm classes.  Disable scrypt if we
+	don't have a 64 bit type.
+	* cipher/memxor.c, cipher/memxor.h: Remove.
+	* cipher/scrypt.h: Remove.
+	* cipher/kdf-internal.h: New.
+	* cipher/Makefile.am: Remove files.  Add new file.  Move scrypt.c to
+	EXTRA_libcipher_la_SOURCES.
+	(GCRYPT_MODULES): Add GCRYPT_KDFS.
+	* src/gcrypt.h.in (GCRY_KDF_SCRYPT): Change value.
+	* cipher/kdf.c (pkdf2): Rename to _gcry_kdf_pkdf2.
+	(_gcry_kdf_pkdf2): Don't bail out for SALTLEN==0.
+	(gcry_kdf_derive): Allow for a passwordlen of zero for scrypt.  Check
+	for SALTLEN > 0 for GCRY_KDF_PBKDF2.  Pass algo to _gcry_kdf_scrypt.
+	(gcry_kdf_derive) [!USE_SCRYPT]: Return an error.
+	* cipher/scrypt.c: Replace memxor.h by bufhelp.h.  Replace scrypt.h by
+	kdf-internal.h.  Enable code only if HAVE_U64_TYPEDEF is defined.
+	Replace C99 types uint64_t, uint32_t, and uint8_t by libgcrypt types.
+	(_SALSA20_INPUT_LENGTH): Remove underscore from identifier.
+	(_scryptBlockMix): Replace memxor by buf_xor.
+	(_gcry_kdf_scrypt): Use gcry_malloc and gcry_free.  Check for integer
+	overflow.  Add hack to support blocksize of 1 for tests.  Return
+	errors from calls to _gcry_kdf_pkdf2.
+
+	* cipher/kdf.c (openpgp_s2k): Make static.
+
+2013-04-04  Christian Grothoff  <christian@grothoff.org>
+
+	Add the SCRYPT KDF function.
+	* scrypt.c, scrypt.h: New files.
+	* memxor.c, memxor.h: New files.
+	* cipher/Makefile.am: Add new files.
+	* cipher/kdf.c (gcry_kdf_derive): Support GCRY_KDF_SCRYPT.
+	* src/gcrypt.h.in (GCRY_KDF_SCRYPT): New.
+
+2013-03-22  Werner Koch  <wk@gnupg.org>
+
+	Replace deprecated AM_CONFIG_HEADER macro.
+	* configure.ac: s/AM_CONFIG_HEADER/AC_CONFIG_HEADER/
+
+	Disable AES-NI support if as does not support SSSE3.
+	* configure.ac (HAVE_GCC_INLINE_ASM_SSSE3): New test.
+	(ENABLE_AESNI_SUPPORT): Do not define without SSSE3 support.
+	(HAVE_GCC_INLINE_ASM_SSSE3, ENABLE_AVX_SUPPORT): Split up detection
+	and definition.
+
+2013-03-21  Werner Koch  <wk@gnupg.org>
+
+	Fix make dependency regression.
+	* src/Makefile.am (libgcrypt_la_DEPENDENCIES): Add missing backslash.
+	Reported by LRN.
+
+2013-03-20  Werner Koch  <wk@gnupg.org>
+
+	Use finer grained on-the-fly helper computations for EC.
+	* src/ec-context.h (mpi_ec_ctx_s): Replace NEED_SYNC by a bitfield.
+	* mpi/ec.c (ec_p_sync): Remove.
+	(ec_get_reset, ec_get_a_is_pminus3, ec_get_two_inv_p): New.
+	(ec_p_init): Use ec_get_reset.
+	(_gcry_mpi_ec_set_mpi, _gcry_mpi_ec_dup_point)
+	(_gcry_mpi_ec_add_points): Replace ec_p_sync by the ec_get_ accessors.
+
+	Allow building with w64-mingw32.
+	* autogen.sh <--build-w32>: Support the w64-mingw32 toolchain.  Also
+	prepare for 64 bit building.
+
+	Provide GCRYPT_VERSION_NUMBER macro, add build info to the binary.
+	* src/gcrypt.h.in (GCRYPT_VERSION_NUMBER): New.
+	* configure.ac (VERSION_NUMBER): New ac_subst.
+	* src/global.c (_gcry_vcontrol): Move call to above function ...
+	(gcry_check_version): .. here.
+
+	* configure.ac (BUILD_REVISION, BUILD_FILEVERSION)
+	(BUILD_TIMESTAMP): Define on all platforms.
+	* compat/compat.c (_gcry_compat_identification): Include revision and
+	timestamp.
+
+	Fix a memory leak in the new EC code.
+	* cipher/ecc.c (point_from_keyparam): Always call mpi_free on A.
+
+2013-03-19  Werner Koch  <wk@gnupg.org>
+
+	Extend the new EC interface and fix two bugs.
+	* src/ec-context.h (mpi_ec_ctx_s): Add field NEED_SYNC.
+	* mpi/ec.c (ec_p_sync): New.
+	(ec_p_init): Only set NEED_SYNC.
+	(_gcry_mpi_ec_set_mpi): Set NEED_SYNC for 'p' and 'a'.
+	(_gcry_mpi_ec_dup_point, _gcry_mpi_ec_add_points)
+	(_gcry_mpi_ec_mul_point): Call ec_p_sync.
+	(_gcry_mpi_ec_get_point): Recompute 'q' is needed.
+	(_gcry_mpi_ec_get_mpi): Ditto.  Also allow for names 'q', 'q.x',
+	'q.y', and 'g'.
+	* cipher/ecc.c (_gcry_mpi_ec_ec2os): New.
+
+	* cipher/ecc.c (_gcry_mpi_ec_new): Fix init from parameters 'Q'->'q',
+	'G'->'q'.
+
+2013-03-15  Werner Koch  <wk@gnupg.org>
+
+	mpi: Add functions to manipulate an EC context.
+	* src/gcrypt.h.in (gcry_mpi_ec_p_new): Remove.
+	(gcry_mpi_ec_new): New.
+	(gcry_mpi_ec_get_mpi): New.
+	(gcry_mpi_ec_get_point): New.
+	(gcry_mpi_ec_set_mpi): New.
+	(gcry_mpi_ec_set_point): New.
+	* src/visibility.c (gcry_mpi_ec_p_new): Remove.
+	* mpi/ec.c (_gcry_mpi_ec_p_new): Make it an internal function and
+	change to return an error code.
+	(_gcry_mpi_ec_get_mpi): New.
+	(_gcry_mpi_ec_get_point): New.
+	(_gcry_mpi_ec_set_mpi): New.
+	(_gcry_mpi_ec_set_point): New.
+	* src/mpi.h: Add new prototypes.
+	* src/ec-context.h: New.
+	* mpi/ec.c: Include that header.
+	(mpi_ec_ctx_s): Move to ec-context.h, add new fields, and put some
+	fields into an inner struct.
+	(point_copy): New.
+	* cipher/ecc.c (fill_in_curve): Allow passing NULL for R_NBITS.
+	(mpi_from_keyparam, point_from_keyparam): New.
+	(_gcry_mpi_ec_new): New.
+
+	* tests/t-mpi-point.c (test-curve): New.
+	(ec_p_new): New.  Use it instead of the removed gcry_mpi_ec_p_new.
+	(get_and_cmp_mpi, get_and_cmp_point): New.
+	(context_param): New test.
+	(basic_ec_math_simplified): New test.
+	(main): Call new tests.
+
+	* src/context.c (_gcry_ctx_get_pointer): Check for a NULL CTX.
+
+2013-03-13  Werner Koch  <wk@gnupg.org>
+
+	Add GCRYMPI_FLAG_CONST and make use constants.
+	* src/gcrypt.h.in (GCRYMPI_FLAG_CONST): New.
+	* src/mpi.h (mpi_is_const, mpi_const): New.
+	(enum gcry_mpi_constants, MPI_NUMBER_OF_CONSTANTS): New.
+	* mpi/mpiutil.c (_gcry_mpi_init): New.
+	(constants): New.
+	(_gcry_mpi_free): Do not release a constant flagged MPI.
+	(gcry_mpi_copy): Clear the const and immutable flags.
+	(gcry_mpi_set_flag, gcry_mpi_clear_flag, gcry_mpi_get_flag): Support
+	GCRYMPI_FLAG_CONST.
+	(_gcry_mpi_const): New.
+	* src/global.c (global_init): Call _gcry_mpi_init.
+	* mpi/ec.c (mpi_ec_ctx_s): Remove fields one, two, three, four, and
+	eight.  Change all users to call mpi_const() instead.
+
+	* src/mpiutils.c (gcry_mpi_set_opaque): Check the immutable flag.
+
+	Add GCRYMPI_FLAG_IMMUTABLE to help debugging.
+	* src/gcrypt.h.in (GCRYMPI_FLAG_IMMUTABLE): New.
+	* src/mpi.h (mpi_is_immutable): New macro.
+	* mpi/mpiutil.c (gcry_mpi_set_flag, gcry_mpi_clear_flag)
+	(gcry_mpi_get_flag): Implement new flag
+	(_gcry_mpi_immutable_failed): New.
+
+	* mpi/mpiutil.c (_gcry_mpi_clear, _gcry_mpi_free, gcry_mpi_snatch)
+	(gcry_mpi_set, gcry_mpi_randomize): Act upon the immutable flag.
+	* mpi/mpi-bit.c (gcry_mpi_set_bit, gcry_mpi_set_highbit)
+	(gcry_mpi_clear_highbit, gcry_mpi_clear_bit)
+	(_gcry_mpi_rshift_limbs, gcry_mpi_lshift): Ditto.
+	* mpi/mpicoder.c (_gcry_mpi_set_buffer): Ditto.
+
+2013-03-08  Werner Koch  <wk@gnupg.org>
+
+	mpi: Add an API for EC math.
+	* src/context.c, src/context.h: New.
+	* src/Makefile.am (libgcrypt_la_SOURCES): Add new files.
+	* src/gcrypt.h.in (struct gcry_context, gcry_ctx_t): New types.
+	(gcry_ctx_release): New prototype.
+	(gcry_mpi_ec_p_new, gcry_mpi_ec_get_affine, gcry_mpi_ec_dup)
+	(gcry_mpi_ec_add, gcry_mpi_ec_mul): New prototypes.
+	* mpi/ec.c: Include errno.h and context.h.
+	(_gcry_mpi_ec_init): Rename to ..
+	(ec_p_init): this, make static, remove allocation and add arg CTX.
+	(_gcry_mpi_ec_p_internal_new): New; to replace _gcry_mpi_ec_init.
+	Change all callers to use this func.
+	(_gcry_mpi_ec_free): Factor code out to ..
+	(ec_deinit): New func.
+	(gcry_mpi_ec_p_new): New.
+	* src/visibility.c: Include context.h and mpi.h.
+	(gcry_mpi_ec_p_new, gcry_mpi_ec_get_affine, gcry_mpi_ec_dup)
+	(gcry_mpi_ec_add, gcry_mpi_ec_mul)
+	(gcry_ctx_release): New wrapper functions.
+	* src/visibility.h: Mark new wrapper functions visible.
+	* src/libgcrypt.def, src/libgcrypt.vers: Add new symbols.
+	* tests/t-mpi-point.c (print_mpi, hex2mpi, cmp_mpihex): New.
+	(context_alloc): New.
+	(make_point, basic_ec_math): New.
+
+	mpi: Add an API for EC point operations.
+	* mpi/ec.c (gcry_mpi_point_new, gcry_mpi_point_release): New.
+	(gcry_mpi_point_get, gcry_mpi_point_snatch_get): New.
+	(gcry_mpi_point_set, gcry_mpi_point_snatch_set): New.
+	* src/visibility.h, src/visibility.c: Add corresponding macros and
+	wrappers.
+	* src/gcrypt.h.in (struct gcry_mpi_point, gcry_mpi_point_t): New.
+	(gcry_mpi_point_new, gcry_mpi_point_release, gcry_mpi_point_get)
+	(gcry_mpi_point_snatch_get, gcry_mpi_point_set)
+	(gcry_mpi_point_snatch_set): New prototypes.
+	(mpi_point_new, mpi_point_release, mpi_point_get, mpi_point_snatch_get)
+	(mpi_point_set, mpi_point_snatch_set): New macros.
+	* src/libgcrypt.vers (gcry_mpi_point_new, gcry_mpi_point_release)
+	(gcry_mpi_point_get, gcry_mpi_point_snatch_get, gcry_mpi_point_set)
+	(gcry_mpi_point_snatch_set): New symbols.
+	* src/libgcrypt.def: Ditto.
+	* tests/t-mpi-point.c: New.
+	* tests/Makefile.am (TESTS): Add t-mpi-point
+
+2013-03-07  Werner Koch  <wk@gnupg.org>
+
+	mpi: Add mpi_snatch and change an internal typedef.
+	* src/mpi.h (struct mpi_point_s): Rename to struct gcry_mpi_point.
+	(mpi_point_struct): New typedef.
+	(mpi_point_t): Change typedef to a pointer.  Replace all occurrences
+	to use mpi_point_struct.
+	* mpi/ec.c (_gcry_mpi_ec_point_init): Rename to ..
+	(_gcry_mpi_point_init): this.  Change all callers.
+	(_gcry_mpi_ec_point_free): Rename to ..
+	(_gcry_mpi_point_free_parts): this.  Change all callers.
+
+	* mpi/mpiutil.c (gcry_mpi_snatch): New function.
+	* src/gcrypt.h.in (gcry_mpi_snatch, mpi_snatch): Add protoype and
+	macro.
+	* src/visibility.c (gcry_mpi_snatch): Add wrapper.
+	* src/visibility.h (gcry_mpi_snatch): Add macro magic.
+	* src/libgcrypt.def, src/libgcrypt.vers: Add new function.
+
+	Pretty print the configure feedback.
+	* acinclude.m4 (GNUPG_MSG_PRINT): Remove.
+	(GCRY_MSG_SHOW, GCRY_MSG_WRAP): New.
+	* configure.ac: Use new macros for the feedback.
+
+2013-02-20  Werner Koch  <wk@gnupg.org>
+
+	Fix building of hwf-x86.c.
+	* src/Makefile.am (AM_CFLAGS): Set to GPG_ERROR_CFLAGS
+	(AM_CCASFLAGS): Set NOEXECSTACK_FLAGS.
+
+	Remove build hacks for FreeBSD.
+	* configure.ac [freebsd]: Do not add /usr/local to CPPFLAGS and
+	LDFLAGS.
+
+2013-02-19  Jussi Kivilinna  <jussi.kivilinna@mbnet.fi>
+
+	Rinjdael: Fix use of SSE2 outside USE_AESNI/ctx->use_aesni.
+	* cipher/rijndael.c (_gcry_aes_cbc_enc): Check if AES-NI is enabled before
+	calling aesni_prepare() and aesni_cleanup().
+
+	Add AES-NI/AVX accelerated Camellia implementation.
+	* configure.ac: Add option --disable-avx-support.
+	(HAVE_GCC_INLINE_ASM_AVX): New.
+	(ENABLE_AVX_SUPPORT): New.
+	(camellia) [ENABLE_AVX_SUPPORT, ENABLE_AESNI_SUPPORT]: Add
+	camellia_aesni_avx_x86-64.lo.
+	* cipher/Makefile.am (AM_CCASFLAGS): Add.
+	(EXTRA_libcipher_la_SOURCES): Add camellia_aesni_avx_x86-64.S
+	* cipher/camellia-glue.c [ENABLE_AESNI_SUPPORT, ENABLE_AVX_SUPPORT]
+	[__x86_64__] (USE_AESNI_AVX): Add macro.
+	(struct Camellia_context) [USE_AESNI_AVX]: Add use_aesni_avx.
+	[USE_AESNI_AVX] (_gcry_camellia_aesni_avx_ctr_enc)
+	(_gcry_camellia_aesni_avx_cbc_dec): New prototypes to assembly
+	functions.
+	(camellia_setkey) [USE_AESNI_AVX]: Enable AES-NI/AVX if hardware
+	support both.
+	(_gcry_camellia_ctr_enc) [USE_AESNI_AVX]: Add AES-NI/AVX code.
+	(_gcry_camellia_cbc_dec) [USE_AESNI_AVX]: Add AES-NI/AVX code.
+	* cipher/camellia_aesni_avx_x86-64.S: New.
+	* src/g10lib.h (HWF_INTEL_AVX): New.
+	* src/global.c (hwflist): Add HWF_INTEL_AVX.
+	* src/hwf-x86.c (detect_x86_gnuc) [ENABLE_AVX_SUPPORT]: Add detection
+	for AVX.
+
+	camellia.c: Prepare for AES-NI/AVX implementation.
+	* cipher/camellia-glue.c (CAMELLIA_encrypt_stack_burn_size)
+	(CAMELLIA_decrypt_stack_burn_size): Increase stack burn size.
+	* cipher/camellia.c (CAMELLIA_ROUNDSM): Move key-material mixing in
+	the front.
+	(camellia_setup128, camellia_setup256): Remove now unneeded
+	key-material mangling.
+	(camellia_encrypt128, camellia_decrypt128, amellia_encrypt256)
+	(camellia_decrypt256): Copy block to stack, so that compiler can
+	optimize it for register usage.
+
+	Camellia, prepare glue code for AES-NI/AVX implementation.
+	* cipher/camellia-glue.c (ATTR_ALIGNED_16): Add macro.
+	(CAMELLIA_encrypt_stack_burn_size): Add macro.
+	(camellia_encrypt): Use macro above for stack burn size.
+	(CAMELLIA_decrypt_stack_burn_size): Add macro.
+	(camellia_decrypt): Use macro above for stack burn size.
+	(_gcry_camellia_ctr_enc): New function.
+	(_gcry_camellia_cbc_dec): New function.
+	(selftest_ctr_128): New function.
+	(selftest): Call function above.
+	* cipher/cipher.c (gcry_cipher_open) [USE_CAMELLIA]: Register bulk
+	functions for CBC-decryption and CTR-mode.
+	* src/cipher.h (_gcry_camellia_ctr_enc): New prototype.
+	(_gcry_camellia_cbc_dec): New prototype.
+
+2012-12-21  Werner Koch  <wk@gnupg.org>
+
+	Prepare for hardware feature detection on other platforms.
+	* configure.ac (GCRYPT_HWF_MODULES): New.
+	(HAVE_CPU_ARCH_X86, HAVE_CPU_ARCH_ALPHA, HAVE_CPU_ARCH_SPARC)
+	(HAVE_CPU_ARCH_MIPS, HAVE_CPU_ARCH_M68K, HAVE_CPU_ARCH_PPC)
+	(HAVE_CPU_ARCH_ARM): New AC_DEFINEs.
+	* mpi/config.links (mpi_cpu_arch): New.
+	* src/global.c (print_config): Print new tag "cpu-arch".
+	* src/Makefile.am (libgcrypt_la_SOURCES): Add hwf-common.h
+	(EXTRA_libgcrypt_la_SOURCES): New.
+	(gcrypt_hwf_modules): New.
+	(libgcrypt_la_DEPENDENCIES, libgcrypt_la_LIBADD): Add that one.
+	* src/hwfeatures.c: Factor most code out to ...
+	* src/hwf-x86.c: New file.
+	(detect_x86_gnuc): Return the feature vector.
+	(_gcry_hwf_detect_x86): New.
+	* src/hwf-common.h: New.
+	* src/hwfeatures.c (_gcry_detect_hw_features): Dispatch using
+	HAVE_CPU_ARCH_ macros.
+
+2012-12-21  Jussi Kivilinna  <jussi.kivilinna@mbnet.fi>
+
+	Clean up i386/x86-64 cpuid usage in hwfeatures.c.
+	* src/hwfeatures.c [__i386__ && __GNUC__] (detect_ia32_gnuc): Remove.
+	[__x86_64__ && __GNUC__] (detect_x86_64_gnuc): Remove.
+	[__i386__ && __GNUC__] (is_cpuid_available, get_cpuid)
+	(HAS_X86_CPUID): New.
+	[__x86_64__ && __GNUC__] (is_cpuid_available, get_cpuid)
+	(HAS_X86_CPUID): New.
+	[HAS_X86_CPUID] (detect_x86_gnuc): New.
+	(_gcry_detect_hw_features) [__i386__ && GNUC]: Remove detect_ia32_gnuc
+	call.
+	(_gcry_detect_hw_features) [__x86_64__ && GNUC]: Remove
+	detect_x86_64_gnuc call.
+	(_gcry_detect_hw_features) [HAS_X86_CPUID]: Add detect_x86_gnuc call.
+
+2012-12-18  Dmitry Kasatkin  <dmitry.kasatkin@intel.com>
+
+	Add support for using DRNG random number generator.
+	* configure.ac: Add option --disable-drng-support.
+	(ENABLE_DRNG_SUPPORT): New.
+	* random/rndhw.c (USE_DRNG): New.
+	(rdrand_long, rdrand_nlong, poll_drng): New.
+	(_gcry_rndhw_poll_fast, _gcry_rndhw_poll_slow): Call poll function.
+	* src/g10lib.h (HWF_INTEL_RDRAND): New.
+	* src/global.c (hwflist): Add "intel-rdrand".
+	* src/hwfeatures.c (detect_x86_64_gnuc) [ENABLE_DRNG_SUPPORT]: Detect
+	RDRAND.
+	(detect_ia32_gnuc) [ENABLE_DRNG_SUPPORT]: Detect RDRAND.
+
+2012-12-03  Werner Koch  <wk@gnupg.org>
+
+	random: Add a RNG selection interface and system RNG wrapper.
+	* random/random-system.c: New.
+	* random/Makefile.am (librandom_la_SOURCES): Add new module.
+	* random/random.c (struct rng_types): New.
+	(_gcry_set_preferred_rng_type, _gcry_get_rng_type): New.
+	(_gcry_random_initialize, gcry_random_add_bytes, do_randomize)
+	(_gcry_set_random_seed_file, _gcry_update_random_seed_file)
+	(_gcry_fast_random_poll): Dispatch to the actual RNG.
+	* src/gcrypt.h.in (GCRYCTL_SET_PREFERRED_RNG_TYPE): New.
+	GCRYCTL_GET_CURRENT_RNG_TYPE): New.
+	(gcry_rng_types): New.
+	* src/global.c (print_config): Print the TNG type.
+	(global_init, _gcry_vcontrol): Implement the new control codes.
+	* doc/gcrypt.texi (Controlling the library): Document the new control
+	codes.
+
+	* tests/benchmark.c (main): Add options to test the RNG types.
+	* tests/random.c (main): Add new options.
+	(print_hex): Print to stderr.
+	(progress_cb, rng_type): New.
+	(check_rng_type_switching, check_early_rng_type_switching): New.
+	(run_all_rng_tests): New.
+
+	tests: Allow use of random.c under Windows.
+	* tests/Makefile.am (TESTS): Always include random.c
+	* tests/random.c [!W32]: Include sys/wait.h.
+	(inf): New.
+	(check_forking, check_nonce_forking): Print a notice what will be done.
+	(main) [W32]: Do not call signal.
+
+	Make random-fips.c work multi-threaded.
+	* random/random-fips.c (basic_initialization): Fix reversed logic.
+
+	Move nonce creation from csprng backend to random main module.
+	* random/random-csprng.c (_gcry_rngcsprng_create_nonce): Remove.
+	(nonce_buffer_lock): Remove.
+	(initialize_basics): Remove init of nonce_buffer_lock.
+	* random/random.c: Add a few header files.
+	(nonce_buffer_lock):  New.
+	(_gcry_random_initialize): Init nonce_buffer_lock.
+	(gcry_create_nonce): Add code from _gcry_rngcsprng_create_nonce.
+
+	* random/random-daemon.c (_gcry_daemon_create_nonce): Remove.
+
+2012-12-03  Jussi Kivilinna  <jussi.kivilinna@mbnet.fi>
+
+	Fix building with CC="gcc -std=c90".
+	* configure.ac: Add check for missing 'asm' keyword in C90 mode and
+	replacement with '__asm__'.
+
+2012-12-03  Werner Koch  <wk@gnupg.org>
+
+	Try to use inttypes.h if stdint.h is not available.
+	* cipher/bufhelp.h [HAVE_INTTYPES_H]: Include inttypes.h
+
+2012-12-03  Jussi Kivilinna  <jussi.kivilinna@mbnet.fi>
+
+	Optimize buffer xoring.
+	* cipher/Makefile.am (libcipher_la_SOURCES): Add 'bufhelp.h'.
+	* cipher/bufhelp.h: New.
+	* cipher/cipher-aeswrap.c (_gcry_cipher_aeswrap_encrypt)
+	(_gcry_cipher_aeswrap_decrypt): Use 'buf_xor' for buffer xoring.
+	* cipher/cipher-cbc.c (_gcry_cipher_cbc_encrypt)
+	(_gcry_cipher_cbc_decrypt): Use 'buf_xor' for buffer xoring and remove
+	resulting unused variables.
+	* cipher/cipher-cfb.c (_gcry_cipher_cfb_encrypt) Use 'buf_xor_2dst'
+	for buffer xoring and remove resulting unused variables.
+	(_gcry_cipher_cfb_decrypt): Use 'buf_xor_n_copy' for buffer xoring and
+	remove resulting unused variables.
+	* cipher/cipher-ctr.c (_gcry_cipher_ctr_encrypt): Use 'buf_xor' for
+	buffer xoring and remove resulting unused variables.
+	* cipher/cipher-ofb.c (_gcry_cipher_ofb_encrypt)
+	(_gcry_cipher_ofb_decrypt): Use 'buf_xor' for buffer xoring and remove
+	resulting used variables.
+	* cipher/rijndael.c (_gry_aes_cfb_enc): Use 'buf_xor_2dst' for buffer
+	xoring and remove resulting unused variables.
+	(_gry_aes_cfb_dev): Use 'buf_xor_n_copy' for buffer xoring and remove
+	resulting unused variables.
+	(_gry_aes_cbc_enc, _gry_aes_ctr_enc, _gry_aes_cbc_dec): Use 'buf_xor'
+	for buffer xoring and remove resulting unused variables.
+
+2012-11-29  Jussi Kivilinna  <jussi.kivilinna@mbnet.fi>
+
+	Optimize AES-NI CTR mode.
+	* cipher/rijndael.c [USE_AESNI] (do_aesni_ctr, do_aesni_ctr_4): Make
+	handling of 64-bit overflow and carry conditional. Avoid generic to
+	vector register passing of value '1'. Generate and use '-1' instead.
+
+2012-11-28  Werner Koch  <wk@gnupg.org>
+
+	Make a cpp conditional in rijndael.c better readable.
+	* cipher/rijndael.c (USE_AESNI): Modify cpp conditionals for better
+	readability.
+
+2012-11-28  Jussi Kivilinna  <jussi.kivilinna@mbnet.fi>
+
+	Fix building with Clang on x86-64 and i386.
+	* cipher/rijndael.c [USE_AESNI] (do_aesni_enc_aligned)
+	(do_aesni_dec_vec4, do_aesni_cfb, do_aesni_ctr, do_aesni_ctr_4): Add
+	explicit suffix to 'cmp' instructions.
+
+2012-11-26  Jussi Kivilinna  <jussi.kivilinna@mbnet.fi>
+
+	Optimize wipememory2 for i386 and x86-64.
+	* src/g10lib.h (wipememory2): Add call to fast_wipememory2.
+	(fast_wipememory2): New macros for i386 and x86-64 architectures.
+	Empty macro provided for other architectures.
+
+	Fix missing 64bit carry handling in AES-NI CTR mode.
+	* cipher/rijndael.c [USE_AESNI] (do_aesni_ctr, do_aesni_ctr_4): Add
+	carry handling to 64-bit addition.
+	(selftest_ctr_128): New function for testing IV handling in bulk CTR
+	function.
+	(selftest): Add call to selftest_ctr_128.
+
+	Add parallelized AES-NI CBC decryption.
+	* cipher/rijndael.c [USE_AESNI] (aesni_cleanup_5): New macro.
+	[USE_AESNI] (do_aesni_dec_vec4): New function.
+	(_gcry_aes_cbc_dec) [USE_AESNI]: Add parallelized CBC loop.
+	(_gcry_aes_cbc_dec) [USE_AESNI]: Change IV storage register from xmm3
+	to xmm5.
+
+	Clear xmm5 after use in AES-NI CTR mode.
+	* cipher/rijndael.c [USE_AESNI]: Rename aesni_cleanup_2_4 to
+	aesni_cleanup_2_5.
+	[USE_AESNI] (aesni_cleanup_2_5): Clear xmm5 register.
+	(_gcry_aes_ctr_enc, _gcry_aes_cbc_dec) [USE_AESNI]: Use
+	aesni_cleanup_2_5 instead of aesni_cleanup_2_4.
+
+	Optimize AES-NI CBC encryption.
+	* cipher/rijndeal.c (_gcry_aes_cbc_enc) [USE_AESNI]: Add AES-NI
+	spesific loop and use SSE2 assembler for xoring and copying of
+	blocks.
+
+	Improve parallelizability of CBC decryption for AES-NI.
+	* cipher/rijndael.c (_gcry_aes_cbc_dec) [USE_AESNI]: Add AES-NI
+	specific CBC mode loop with temporary block and IV stored in free SSE
+	registers.
+
+	Extend test of chained modes for 128bit ciphers.
+	* tests/basic.c (check_one_cipher_core, check_one_cipher): Increase
+	input and output buffer sizes from 16 bytes to 1024+16=1040 bytes.
+	(check_one_cipher_core): Add asserts to verify sizes of temporary
+	buffers.
+
+2012-11-21  Werner Koch  <wk@gnupg.org>
+
+	Fix for strict aliasing rules.
+	* cipher/rijndael.c (do_setkey, prepare_decryption): Use u32_a_t for
+	casting.
+
+	Do not detect AES-NI support if disabled by configure.
+	* src/hwfeatures.c (detect_ia32_gnuc): Detect AESNI support only if
+	that support has been enabled.
+
+2012-11-21  Jussi Kivilinna  <jussi.kivilinna@mbnet.fi>
+
+	Fix too large burn_stack in camellia-glue.c.
+	* cipher/camellia-glue.c (camellia_encrypt, camellia_decrypt): Do not
+	take full array size of KEY_TABLE_TYPE, but argument size instead.
+
+	Add x86_64 support for AES-NI.
+	* cipher/rijndael.c [ENABLE_AESNI_SUPPORT]: Enable USE_AESNI on x86-64.
+	(do_setkey) [USE_AESNI_is_disabled_here]: Use %[key] and %[ksch]
+	directly as registers instead of using temporary register %%esi.
+	[USE_AESNI] (do_aesni_enc_aligned, do_aesni_dec_aligned, do_aesni_cfb,
+	do_aesni_ctr, do_aesni_ctr_4): Use %[key] directly as register instead
+	of using temporary register %%esi.
+	[USE_AESNI] (do_aesni_cfb, do_aesni_ctr, do_aesni_ctr_4): Change %[key]
+	from generic "g" type to register "r".
+	* src/hwfeatures.c (_gcry_detect_hw_features) [__x86_64__]: Do not
+	clear AES-NI feature flag.
+
+	Fix cpuid vendor-id check for i386 and x86-64.
+	* src/hwfeatures.c (detect_x86_64_gnuc, detect_ia32_gnuc): Allow
+	Intel features be detect from CPU by other vendors too.
+
+	Fix hwdetect assembler clobbers.
+	* src/hwfeatures.c (detect_x86_64_gnuc): Add missing %ebx assembler
+	clobbers.
+	(detect_x86_64_gnuc, detect_ia32_gnuc) [ENABLE_PADLOCK_SUPPORT]: Add
+	missing %ecx assembler clobbers.
+
+2012-11-21  Werner Koch  <wk@gnupg.org>
+
+	Use configure test for aligned attribute.
+	* configure.ac (HAVE_GCC_ATTRIBUTE_ALIGNED): New test and ac_define.
+	* cipher/cipher-internal.h, cipher/rijndael.c, random/rndhw.c: Use new
+	macro instead of a fixed test for __GNUC__.
+
+	Fix segv with AES-NI on some platforms.
+	* cipher/rijndael.c (RIJNDAEL_context): Align on 16 bytes.
+
+2012-11-16  Werner Koch  <wk@gnupg.org>
+
+	Improve parsing of the GIT revision number.
+	* configure.ac (mmm4_revision): Use git rev-parse.
+
+2012-11-08  Werner Koch  <wk@gnupg.org>
+
+	Fix extern inline use for gcc > 4.3 in c99 mode.
+	* mpi/mpi-inline.h [!G10_MPI_INLINE_DECL]: Take care of changed extern
+	inline semantics in gcc.
+
+2012-11-07  Werner Koch  <wk@gnupg.org>
+
+	Fix memory leak in gcry_pk_testkey for ECC.
+	* cipher/ecc.c (check_secret_key): Restructure for easier allocation
+	tracking.  Fix memory leak.
+
+2012-11-05  Werner Koch  <wk@gnupg.org>
+
+	Prepare for a backported interface in 1.5.1.
+	* configure.ac: Bump LT version at C20/A0/R0 to adjust for a planned
+	API update in 1.5.1.
+
+	Adjust for stricter autoconf requirements.
+	* configure.ac: Fix usage of AC_LANG_PROGRAM.
+
+	Update build helper scripts.
+	* config.guess, config.sub: Update to version 2012-07-31.
+	* ltmain.sh: Update to version 2.4.2.
+	* install-sh, m4/libtool.m4, m4/ltoptions.m4, m4/ltversion.m4
+	* m4/lt~obsolete.m4: Update to autoconf 2.69 versions.
+
+	Do not distribute a copy of gitlog-to-changelog.
+	* Makefile.am (GITLOG_TO_CHANGELOG): New.
+	(gen-ChangeLog): Require an installed gitlog-to-changelog.
+	* scripts/gitlog-to-changelog: Remove.
+
+	* README.SVN: Remove.
+	* REMOVE.GIT: New.
+
+	Allow building with w64-mingw32.
+	* autogen.sh <--build-w32>: Support the w64-mingw32 toolchain.  Also
+	prepare for 64 bit building.
+	<git-setup>: Remove option -c from chmod.
+
+	Switch to the new automagic beta numbering scheme.
+	* configure.ac: Add all the required m4 magic.
+
+	Avoid dereferencing pointer right after the end.
+	* mpi/mpicoder.c (do_get_buffer): Check the length before derefing P.
+
+2012-10-30  Werner Koch  <wk@gnupg.org>
+
+	Make ancient test program useful again.
+	* tests/testapi.c (test_sexp): Adjust to current API.  Print the
+	return code.  Mark unused args.
+	(test_genkey): Mark unused args.
+	(main): Do not pass NULL to printf.
+
+	tests: Add ECC key generation tests.
+	* tests/keygen.c (check_generated_ecc_key): New.
+	(check_ecc_keys): New.
+	(main): Call simple ECC checks.
+
+2012-10-30  Milan Broz  <mbroz@redhat.com>
+
+	PBKDF2: Allow empty passphrase.
+	* cipher/kdf.c (gcry_kdf_derive): Allow empty passphrase for PBKDF2.
+	* tests/t-kdf.c (check_pbkdf2): Add test case for above.
+
+2012-08-16  Xi Wang  <xi.wang@gmail.com>
+
+	Replace deliberate division by zero with _gcry_divide_by_zero.
+	* mpi/mpi-pow.c: Replace 1 / msize.
+	* mpi/mpih-div.c: Replace 1 / dsize.
+	* src/misc.c: Add _gcry_divide_by_zero.
+
+2012-06-21  Werner Koch  <wk@gnupg.org>
+
+	Clear AESNI feature flag for x86_64.
+	* src/hwfeatures.c (_gcry_detect_hw_features) [__x86_64__]: Clear
+	AESNI feature flag.
+
+	Beautify last change.
+	* cipher/rijndael.c: Replace C99 feature from last patch.  Keep cpp
+	lines short.
+	* random/rndhw.c: Keep cpp lines short.
+	* src/hwfeatures.c (_gcry_detect_hw_features): Make cpp def chain
+	better readable.
+
+2012-06-21  Rafaël Carré  <funman@videolan.org>
+
+	Enable VIA Padlock on x86_64 platforms.
+	  * cipher/rijndael.c: Duplicate x86 assembly and convert to x86_64.
+	  * random/rndhw.c: Likewise.
+	  * src/hwfeatures.c: Likewise.
+
+2012-05-14  Werner Koch  <wk@gnupg.org>
+
+	Add curve aliases from RFC-5656.
+	* cipher/ecc.c (curve_aliases): Add "nistp???" entries.
+
+2012-04-16  Werner Koch  <wk@gnupg.org>
+
+	State new contribution rules.
+	* doc/DCO: New.
+	* doc/HACKING: Document new rules.
+
+2012-04-04  Tomas Mraz  <tmraz@fedoraproject.org>
+
+	Add GCRYCTL_SET_ENFORCED_FIPS_FLAG command.
+	* doc/gcrypt.texi: Add documentation of the new command.
+	* src/fips.c (_gcry_enforced_fips_mode): Report the enforced fips mode
+	only when fips mode is enabled.
+	(_gcry_set_enforced_fips_mode): New function.
+	* src/g10lib.h: Add the _gcry_set_enforced_fips_mode prototype.
+	* src/gcrypt.h.in: Add the GCRYCTL_SET_ENFORCED_FIPS_FLAG.
+	* src/global.c (_gcry_vcontrol): Handle the new command.
+
+2012-02-17  Ulrich Müller  <ulm@gentoo.org>
+
+	Rework selftest in idea.c.
+	* cipher/idea.c (do_setkey): Execute selftest when first called.
+	(decrypt_block): Remove commented-out code.
+	(selftest): Execute all selftests. Return NULL on success, or
+	string in case of error.
+
+2012-02-16  Werner Koch  <wk@gnupg.org>
+
+	Fix missing prototype.
+	* src/g10lib.h (_gcry_secmem_module_init): Make it a real prototype.
+
+2012-02-16  Ulrich Müller  <ulm@gentoo.org>
+
+	Add support for the IDEA cipher.
+	Adapt idea.c to the Libgcrypt framework.
+	Add IDEA to cipher_table and to the build system.
+
+	Patents on IDEA have expired:
+	  Europe: EP0482154 on 2011-05-16,
+	  Japan:  JP3225440 on 2011-05-16,
+	  U.S.:   5,214,703 on 2012-01-07.
+
+	* configure.ac: Add idea to the list of available ciphers.
+	Define USE_IDEA if idea is enabled.
+	* cipher/cipher.c (cipher_table): Add entry for IDEA.
+	* cipher/idea.c: Update comment about patents.
+	Include proper header files and remove redundant declarations.
+	(expand_key, cipher, do_setkey, encrypt_block, decrypt_block):
+	Define function arguments as const where appropriate.
+	(cipher): Test for !WORDS_BIGENDIAN instead of LITTLE_ENDIAN_HOST.
+	(do_setkey, decrypt_block): Don't call selftest.
+	(idea_setkey): New function, wrapper for do_setkey.
+	(idea_encrypt): New function, wrapper for encrypt_block.
+	(_gcry_cipher_spec_idea): Define.
+	* cipher/Makefile.am (EXTRA_libcipher_la_SOURCES): Add idea.c.
+	* src/cipher.h (_gcry_cipher_spec_idea): Declare.
+	* tests/basic.c (check_ciphers): Add GCRY_CIPHER_IDEA.
+
+2012-01-09  Werner Koch  <wk@gnupg.org>
+
+	Include an IDEA implementation.
+	The code is the old IDEA test code, written by me back in 1997 and
+	distributed on a Danish FTP server.  This commit is only for
+	reference.  To use the code it has to be adjusted to the Libgcrypt
+	framework.
+
+2012-01-03  Marcus Brinkmann  <marcus.brinkmann@ruhr-uni-bochum.de>
+
+	Fix pthread locking and remove defunctional support for static lock init.
+	* src/ath.c: Include assert.h.
+	(ath_mutex_destroy, ath_mutex_lock, ath_mutex_unlock): Dereference LOCK.
+	* src/g10lib.h (_gcry_secmem_module_init): New declaration.
+	* src/global.c (global_init): Call _gcry_secmem_module_init.
+	* src/secmem.c (_gcry_secmem_module_init): New function.
+
+2011-12-16  Werner Koch  <wk@gnupg.org>
+
+	Add alignment tests for the cipher tests.
+	* tests/basic.c (check_one_cipher): Factor most code out to
+	check_one_cipher_core.  Call that core function several times using
+	different alignment settings.
+	(check_one_cipher_core): New.  Add extra args to allow alignment
+	testing.
+
+2011-12-07  Werner Koch  <wk@gnupg.org>
+
+	tests/prime: Add option to create a well known private key.
+	* tests/prime.c (print_mpi, create_42prime): New.
+	(main): Add option --42.
+
+2011-12-01  Werner Koch  <wk@gnupg.org>
+
+	Do not build the random-daemon by make distcheck.
+	* Makefile.am (DISTCHECK_CONFIGURE_FLAGS): Disable building of the
+	random daemon
+
+	Generate the ChangeLog from commit logs.
+	* scripts/gitlog-to-changelog: New script.  Taken from gnulib.
+	* scripts/git-log-fix: New file.
+	* scripts/git-log-footer: New file.
+	* doc/HACKING: Describe the ChangeLog policy
+	* ChangeLog: New file.
+	* Makefile.am (EXTRA_DIST): Add new files.
+	(gen-ChangeLog): New.
+	(dist-hook): Run gen-ChangeLog.
+
+	Rename all ChangeLog files to ChangeLog-2011.
+
+2011-12-01  Werner Koch  <wk@gnupg.org>
+
+	NB: Changes done before December 1st, 2011 are described in
+	per directory files named ChangeLog-2011.  See doc/HACKING for
+	details.
+
+        -----
+	Copyright (C) 2011 Free Software Foundation, Inc.
+
+	Copying and distribution of this file and/or the original GIT
+	commit log messages, with or without modification, are
+	permitted provided the copyright notice and this notice are
+	preserved.

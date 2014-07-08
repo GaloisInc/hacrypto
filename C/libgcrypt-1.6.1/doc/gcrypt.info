@@ -1,0 +1,131 @@
+This is /home/wk/s/libgcrypt/doc/gcrypt.info, produced by makeinfo
+version 4.13 from /home/wk/s/libgcrypt/doc/gcrypt.texi.
+
+This manual is for Libgcrypt (version 1.6.1, 29 January 2014), which is
+GNU's library of cryptographic building blocks.
+
+Copyright (C) 2000, 2002, 2003, 2004, 2006, 2007, 2008, 2009, 2011,
+2012 Free Software Foundation, Inc.
+Copyright (C) 2012, 2013 g10 Code GmbH
+
+     Permission is granted to copy, distribute and/or modify this
+     document under the terms of the GNU General Public License as
+     published by the Free Software Foundation; either version 2 of the
+     License, or (at your option) any later version. The text of the
+     license can be found in the section entitled "GNU General Public
+     License".
+
+INFO-DIR-SECTION GNU Libraries
+START-INFO-DIR-ENTRY
+* libgcrypt: (gcrypt).  Cryptographic function library.
+END-INFO-DIR-ENTRY
+
+
+Indirect:
+gcrypt.info-1: 877
+gcrypt.info-2: 283260
+
+Tag Table:
+(Indirect)
+Node: Top877
+Node: Introduction3312
+Node: Getting Started3684
+Node: Features4565
+Node: Overview5349
+Node: Preparation5980
+Node: Header6903
+Node: Building sources7974
+Node: Building sources using Automake9888
+Node: Initializing the library11070
+Ref: sample-use-suspend-secmem14246
+Ref: sample-use-resume-secmem14867
+Node: Multi-Threading15763
+Ref: Multi-Threading-Footnote-120391
+Node: Enabling FIPS mode20799
+Node: Hardware features22791
+Ref: Hardware features-Footnote-124019
+Node: Generalities24180
+Node: Controlling the library24439
+Node: Error Handling41157
+Node: Error Values43696
+Node: Error Sources48636
+Node: Error Codes50907
+Node: Error Strings54392
+Node: Handler Functions55576
+Node: Progress handler56135
+Node: Allocation handler58280
+Node: Error handler59831
+Node: Logging handler61398
+Node: Symmetric cryptography61990
+Node: Available ciphers62730
+Node: Available cipher modes65347
+Node: Working with cipher handles67440
+Node: General cipher functions77418
+Node: Public Key cryptography80936
+Node: Available algorithms81702
+Node: Used S-expressions82051
+Node: RSA key parameters83168
+Node: DSA key parameters84443
+Node: ECC key parameters85101
+Ref: ecc_keyparam85252
+Node: Cryptographic Functions86997
+Node: General public-key related Functions98416
+Node: Hashing111927
+Node: Available hash algorithms112660
+Node: Working with hash algorithms116552
+Node: Message Authentication Codes129166
+Node: Available MAC algorithms129834
+Node: Working with MAC algorithms133757
+Node: Key Derivation139119
+Node: Random Numbers141513
+Node: Quality of random numbers141796
+Node: Retrieving random numbers142482
+Node: S-expressions143968
+Node: Data types for S-expressions144612
+Node: Working with S-expressions144938
+Node: MPI library158338
+Node: Data types159362
+Node: Basic functions159671
+Node: MPI formats162125
+Node: Calculations165510
+Node: Comparisons167764
+Node: Bit manipulations168763
+Node: EC functions170077
+Ref: gcry_mpi_ec_new172775
+Node: Miscellaneous177536
+Node: Prime numbers181679
+Node: Generation181949
+Node: Checking183233
+Node: Utilities183647
+Node: Memory allocation183959
+Node: Context management185313
+Ref: gcry_ctx_release185750
+Node: Buffer description185911
+Node: Tools186673
+Node: hmac256186839
+Node: Architecture187846
+Ref: fig:subsystems189362
+Ref: Architecture-Footnote-1190447
+Ref: Architecture-Footnote-2190509
+Node: Public-Key Subsystem Architecture190593
+Node: Symmetric Encryption Subsystem Architecture192868
+Node: Hashing and MACing Subsystem Architecture194315
+Node: Multi-Precision-Integer Subsystem Architecture196239
+Node: Prime-Number-Generator Subsystem Architecture197680
+Ref: Prime-Number-Generator Subsystem Architecture-Footnote-1199611
+Node: Random-Number Subsystem Architecture199899
+Node: CSPRNG Description202388
+Ref: CSPRNG Description-Footnote-1203950
+Node: FIPS PRNG Description204073
+Node: Self-Tests206206
+Node: FIPS Mode217716
+Ref: fig:fips-fsm221523
+Ref: tbl:fips-states221625
+Ref: tbl:fips-state-transitions222878
+Node: Library Copying226501
+Node: Copying254620
+Node: Figures and Tables273795
+Node: Concept Index274205
+Node: Function and Data Index283260
+
+End Tag Table
