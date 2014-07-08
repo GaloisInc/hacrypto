@@ -1,3 +1,9 @@
+// @kiniry Tue Jul  8 10:49:33 PDT 2014
+// It looks like this is a snapshot of a very old SHA-512 from
+// libgcrypt circa early 2000s.  It is significantly different
+// than the SHA-512 in the latest releases of libgcrypt and
+// GnuPG 1.4 and 2.0.
+
 /* sha512.c - SHA384 and SHA512 hash functions
  * Copyright (C) 2003, 2008, 2009 Free Software Foundation, Inc.
  *

@@ -1,3 +1,10 @@
+// @sanklesaria Tue Jul  8 10:53:48 PDT 2014
+// Sam Anklesaria <sanklesaria@galois.com>
+// A slightly rewritten version of BouncyCastle 1.50's LongDigest.
+// This version has a bit of abstraction changes, inline memory
+// representation changes, and private methods have been made
+// public for some mysterious reason.
+
 package org.bouncycastle.crypto.digests;
 
 import org.bouncycastle.crypto.ExtendedDigest;
