@@ -17,12 +17,12 @@ sha256 : {a} (64 >= width (a * 8),
               512 * ((a + 72) / 64) - 8 * a >= 65) =>
          [a][8] -> [256]
 sha256 msg =
-    join (reverse (Hs @ (width Hs - 1)))
+    join (Hs @ (width Hs - 1))
     where
       Hs =
           [iv256] #
-          [block (H, [reverse w | w <- split M]) | H <- Hs
-                                                 | M <- pad (join [reverse c | c <- msg])]
+          [block (H, [w | w <- split M]) | H <- Hs
+                                         | M <- pad (join [c | c <- msg])]
 
 
 iv256 : [8][32]
@@ -50,6 +50,15 @@ Ks =
      0x682E6FF3, 0x748F82EE, 0x78A5636F, 0x84C87814, 0x8CC70208,
      0x90BEFFFA, 0xA4506CEB, 0xBEF9A3F7, 0xC67178F2]
 
+sigma0 x = x >>> 7 ^ x >>> 18 ^ x >> 3
+sigma1 y = y >>> 17 ^ y >>> 19 ^ y >> 10
+
+Sigma0 x = x >>> 2 ^ x >>> 13 ^ x >>> 22
+Sigma1 x = x >>> 6 ^ x >>> 11 ^ x >>> 25
+
+Ch x y z  = x && y ^ ~x && z
+Maj x y z = x && y ^ x && z ^ y && z
+
 block : ([8][32], [16][32]) -> [8][32]
 block ([H0, H1, H2, H3, H4, H5, H6, H7], M) =
     [H0 + As @ 64, H1 + Bs @ 64, H2 + Cs @ 64, H3 + Ds @ 64,
@@ -57,15 +66,12 @@ block ([H0, H1, H2, H3, H4, H5, H6, H7], M) =
     where
       Ws : [64][32]
       Ws =
-          M # [W16 + (s0 W15) + W7 + (s1 W2)
-                  | W16 <- drop`{16 - 16} Ws
-                  | W15 <- drop`{16 - 15} Ws
-                  | W7 <- drop`{16 - 7} Ws
+          M # [ (sigma1 W2) + W7 + (sigma0 W15) + W16
                   | W2 <- drop`{16 - 2} Ws
+                  | W7 <- drop`{16 - 7} Ws
+                  | W15 <- drop`{16 - 15} Ws
+                  | W16 <- drop`{16 - 16} Ws
                   | t <- [16 .. 63] ]
-           where
-             s0 x = x >>> 7 ^ x >>> 18 ^ x >> 3
-             s1 y = y >>> 17 ^ y >>> 19 ^ y >> 10
       As =
           [H0] #
           [t1 + t2 | t1 <- T1s
@@ -82,32 +88,23 @@ block ([H0, H1, H2, H3, H4, H5, H6, H7], M) =
       Hs = [H7] # Gs
       T1s : [64][32]
       T1s =
-          [h + (s1 e) + ch + k + w
+          [h + (Sigma1 e) + ch + k + w
                   | e <- Es
                   | h <- Hs
                   | ch <- CHs
                   | k <- Ks
                   | w <- Ws]
-           where
-             s1 x = x >>> 6 ^ x >>> 11 ^ x >>> 25
       CHs : [65][32]
       CHs =
-          [e && f ^ ~e && g | e <- Es
-                            | f <- Fs
-                            | g <- Gs]
+          [Ch e f g | e <- Es
+                    | f <- Fs
+                    | g <- Gs]
       T2s : [65][32]
       T2s =
-          [(s0 a) + (maj a b c)
+          [(Sigma0 a) + (Maj a b c)
                    | a <- As
                    | b <- Bs
                    | c <- Cs]
-           where
-             s0 x = x >>> 2 ^ x >>> 13 ^ x >>> 22
-             maj x y z = x && y ^ x && z ^ y && z
-
-// tests
-TM = split`{16} (pad (join ""))
-// TB = block (iv256, TM@0)
 
 t0 =
     sha256 "" ==
