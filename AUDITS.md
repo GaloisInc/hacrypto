@@ -34,6 +34,7 @@ Relevant Libraries
 | libressl from OpenBSD foundation |  | C | Not Started |
 | Google's boringssl | | C | Not Started |
 | Google's JavaScript library | | Javascript | Not Started |
+| Crypto++ | http://www.cryptopp.com/ | C++ | Not Started| 
 
 Sodium
 ---------------------------
@@ -60,7 +61,7 @@ Sodium
 | Validation | no |
 | Verification | no |
 | Published Materials | no |
-| Other Comments | The portable version of NaCl. Worth looking into how similar implementations are to NaCl, if the same coding practices are used|
+| Other Comments | The portable version of NaCl. Worth looking into how similar implementations are to NaCl, if the same coding practices are used. A decent amount of what is included in this library is gathered from sources other than NaCl. It is not safe to assume that this is a straight port |
 
 Cryptlib
 ---------------------------
