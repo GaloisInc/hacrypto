@@ -17,13 +17,12 @@ sha256 : {a} (64 >= width (a * 8),
               512 * ((a + 72) / 64) - 8 * a >= 65) =>
          [a][8] -> [256]
 sha256 msg =
-    join (Hs @ (width Hs - 1))
+    join (Hs!0)
     where
       Hs =
           [iv256] #
           [block (H, [w | w <- split M]) | H <- Hs
                                          | M <- pad (join [c | c <- msg])]
-
 
 iv256 : [8][32]
 iv256 =
@@ -61,8 +60,9 @@ Maj x y z = x && y ^ x && z ^ y && z
 
 block : ([8][32], [16][32]) -> [8][32]
 block ([H0, H1, H2, H3, H4, H5, H6, H7], M) =
-    [H0 + As @ 64, H1 + Bs @ 64, H2 + Cs @ 64, H3 + Ds @ 64,
-     H4 + Es @ 64, H5 + Fs @ 64, H6 + Gs @ 64, H7 + Hs @ 64]
+    // explain magic 64
+    [H0 + As!0, H1 + Bs!0, H2 + Cs!0, H3 + Ds!0,
+     H4 + Es!0, H5 + Fs!0, H6 + Gs!0, H7 + Hs!0]
     where
       Ws : [64][32]
       Ws =
@@ -72,21 +72,27 @@ block ([H0, H1, H2, H3, H4, H5, H6, H7], M) =
                   | W15 <- drop`{16 - 15} Ws
                   | W16 <- drop`{16 - 16} Ws
                   | t <- [16 .. 63] ]
-      As =
-          [H0] #
-          [t1 + t2 | t1 <- T1s
-                   | t2 <- T2s]
-      Bs = [H1] # As
-      Cs = [H2] # Bs
-      Ds = [H3] # Cs
+      // explain functional/recurrence encoding of their stateful, procedural algorithm
+      As, Bs, Cs, Ds, Es, Fs, Gs, Hs : [65][32]
+      As = 
+          [H0] # [t1 + t2 | t1 <- T1s
+                          | t2 <- T2s]
+      Bs = take`{65}([H1] # As)
+      Cs = take`{65}([H2] # Bs)
+      Ds = take`{65}([H3] # Cs)
       Es =
-          [H4] #
-          [d + t1 | d <- Ds
-                  | t1 <- T1s]
-      Fs = [H5] # Es
-      Gs = [H6] # Fs
-      Hs = [H7] # Gs
-      T1s : [64][32]
+          take`{65}([H4] #
+                          [d + t1 | d <- Ds
+                                  | t1 <- T1s])
+      Fs = take`{65}([H5] # Es)
+      Gs = take`{65}([H6] # Fs)
+      Hs = take`{65}([H7] # Gs)
+      //CHs : [65][32]
+      CHs =
+          [Ch e f g | e <- Es
+                    | f <- Fs
+                    | g <- Gs]
+      // T1s: [64][32]
       T1s =
           [h + (Sigma1 e) + ch + k + w
                   | e <- Es
@@ -94,12 +100,7 @@ block ([H0, H1, H2, H3, H4, H5, H6, H7], M) =
                   | ch <- CHs
                   | k <- Ks
                   | w <- Ws]
-      CHs : [65][32]
-      CHs =
-          [Ch e f g | e <- Es
-                    | f <- Fs
-                    | g <- Gs]
-      T2s : [65][32]
+      //T2s: [65][32]
       T2s =
           [(Sigma0 a) + (Maj a b c)
                    | a <- As
@@ -123,3 +124,6 @@ t4 =
     0x248D6A61D20638B8E5C026930C3E6039A33CE45964FF2167F6ECEDD419DB06C1
 
 test = [t0, t1, t2, t3, t4] == ~zero
+
+no_collisions: ([1][8], [1][8]) -> Bit
+property no_collisions(x, y) = (x == y) || (sha256 x != sha256 y)
