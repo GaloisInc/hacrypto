@@ -123,11 +123,12 @@ sha2_384_block = sha2_block`{variant=SHA384}
 sha2_512_block = sha2_block`{variant=SHA512}
   (sigma0_512, sigma1_512, Sigma0_512, Sigma1_512)
 
-sha2_block : {variant, rounds, wordsize} 
+sha2_block : {variant, rounds, wordsize, prefix} 
               (fin variant, fin rounds,
                SHA256 <= variant, variant <= SHA512, 
                rounds == 64+16*variant,
-               wordsize == 32*(variant+1)) =>
+               wordsize == 32*(variant+1),
+               prefix == rounds+1) =>
              ([wordsize] -> [wordsize], [wordsize] -> [wordsize], 
               [wordsize] -> [wordsize], [wordsize] -> [wordsize]) ->
              ([8][wordsize], [16][wordsize], [rounds][wordsize]) ->
@@ -146,42 +147,37 @@ sha2_block (sigma0, sigma1, Sigma0, Sigma1)
                   | W16 <- drop`{16 - 16} Ws
                   | t <- [16 .. rounds-1]:[_][7] ]
       // explain functional/recurrence encoding of their stateful, procedural algorithm
-      As, Bs, Cs, Ds, Es, Fs, Gs, Hs : [rounds][wordsize]
+      As, Bs, Cs, Ds, Es, Fs, Gs, Hs : [prefix][wordsize]
       As = 
-          take`{rounds}
-          ([H0] # [t1 + t2 | t1 <- T1s
-                           | t2 <- T2s])
-      Bs = take`{rounds}([H1] # As)
-      Cs = take`{rounds}([H2] # Bs)
-      Ds = take`{rounds}([H3] # Cs)
+           take`{prefix}
+           ([H0] # [t1 + t2 | t1 <- T1s
+                            | t2 <- T2s])
+      Bs = take`{prefix}([H1] # As)
+      Cs = take`{prefix}([H2] # Bs)
+      Ds = take`{prefix}([H3] # Cs)
       Es =
-          take`{rounds}([H4] #
-                          [d + t1 | d <- Ds
-                                  | t1 <- T1s])
-      Fs = take`{rounds}([H5] # Es)
-      Gs = take`{rounds}([H6] # Fs)
-      Hs = take`{rounds}([H7] # Gs)
+           take`{prefix}([H4] #
+                         [d + t1 | d <- Ds
+                                 | t1 <- T1s])
+      Fs = take`{prefix}([H5] # Es)
+      Gs = take`{prefix}([H6] # Fs)
+      Hs = take`{prefix}([H7] # Gs)
       CHs =
-          take`{rounds}
-          [Ch e f g | e <- Es
-                    | f <- Fs
-                    | g <- Gs]
-      //T1s : [rounds][wordsize]
+           [Ch e f g | e <- Es
+                     | f <- Fs
+                     | g <- Gs]
       T1s =
-          take`{rounds}
-          [h + (Sigma1 e) + ch + k + w
-                  | e <- Es
-                  | h <- Hs
-                  | ch <- CHs
-                  | k <- Ks
-                  | w <- Ws]
-      //T2s : [rounds][wordsize]
+           [h + (Sigma1 e) + ch + k + w
+                   | e <- Es
+                   | h <- Hs
+                   | ch <- CHs
+                   | k <- Ks
+                   | w <- Ws]
       T2s =
-          take`{rounds}
-          [(Sigma0 a) + (Maj a b c)
-                   | a <- As
-                   | b <- Bs
-                   | c <- Cs]
+           [(Sigma0 a) + (Maj a b c)
+                    | a <- As
+                    | b <- Bs
+                    | c <- Cs]
 
 test_vector0 =
     sha256 "" ==
