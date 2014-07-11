@@ -27,6 +27,30 @@ sha256 msg =
               | H <- Hs
               | M <- pad256 (join [c | c <- msg])]
 
+sha512 : {a} (128 >= width (a * 8),
+              1024 * ((a + 136) / 128) - 8 * a >= 129) =>
+         [a][8] -> [512]
+sha512 msg =
+    join (Hs!0)
+    where
+      Hs =
+          [H0_512] #
+          [sha2_512_block(H, [w | w <- split M], SHA512_Ks) 
+              | H <- Hs
+              | M <- pad512 (join [c | c <- msg])]
+
+// @todo kiniry Add test vectors for padding.
+
+pad256 : {a} (64 >= width a, 512 * ((a + 576) / 512) - a >= 65) =>
+      [a] -> [(a + 65 + 511) / 512][512]
+pad256 msg = split (msg # [True] # zero # (width msg : [64]))
+
+pad512 : {a} (128 >= width a, 1024 * ((a + 1152) / 1024) - a >= 129) =>
+      [a] -> [(a + 129 + 1023) / 1024][1024]
+pad512 msg = split (msg # [True] # zero # (width msg : [128]))
+
+test_pad512 = pad512 (join [c | c <- "abc"]) == [0x6162638000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000018]
+
 // H^{(0)}
 
 H0_256 : [8][32]
@@ -46,10 +70,6 @@ H0_512 =
      0xA54FF53A5F1D36F1, 0x510E527FADE682D1, 0x9B05688C2B3E6C1F,
      0x1F83D9ABFB41BD6B, 0x5BE0CD19137E2179]
 
-pad256 : {a} (64 >= width a, 512 * ((a + 576) / 512) - a >= 65) =>
-      [a] -> [(a + 65 + 511) / 512][512]
-pad256 msg = split (msg # [True] # zero # (width msg : [64]))
-
 SHA256_Ks : [64][32]
 SHA256_Ks =
     [0x428A2F98, 0x71374491, 0xB5C0FBCF, 0xE9B5DBA5, 0x3956C25B,
@@ -66,8 +86,10 @@ SHA256_Ks =
      0x682E6FF3, 0x748F82EE, 0x78A5636F, 0x84C87814, 0x8CC70208,
      0x90BEFFFA, 0xA4506CEB, 0xBEF9A3F7, 0xC67178F2]
 
-SHA384_and_SHA512_Ks : [80][64]
-SHA384_and_SHA512_Ks =
+SHA384_Ks = SHA512_Ks
+
+SHA512_Ks : [80][64]
+SHA512_Ks =
     [0x428A2F98D728AE22, 0x7137449123EF65CD, 0xB5C0FBCFEC4D3B2F,
      0xE9B5DBA58189DBBC, 0x3956C25BF348B538, 0x59F111F1B605D019,
      0x923F82A4AF194F9B, 0xAB1C5ED5DA6D8118, 0xD807AA98A3030242,
@@ -194,6 +216,10 @@ test_vector3 =
 test_vector4 =
     sha256 "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq" ==
     0x248D6A61D20638B8E5C026930C3E6039A33CE45964FF2167F6ECEDD419DB06C1
+
+test_vector5 =
+    sha512 "abc" ==
+    0xDDAF35A193617ABACC417349AE20413112E6FA4E89A97EA20A9EEEE64B55D39A2192992A274FC1A836BA3C23A3FEEBBD454D4423643CE80E2A9AC94FA54CA49F
 
 test_vectors = 
   [test_vector0, test_vector1, test_vector2, test_vector3, test_vector4] == ~zero
