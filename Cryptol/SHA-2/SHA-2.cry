@@ -22,18 +22,33 @@ sha256 msg =
     join (Hs!0)
     where
       Hs =
-          [iv256] #
-          [sha2_block (H, [w | w <- split M], SHA256_Ks) | H <- Hs
-                                                         | M <- pad (join [c | c <- msg])]
+          [H0_256] #
+          [sha2_256_block(H, [w | w <- split M], SHA256_Ks) 
+              | H <- Hs
+              | M <- pad256 (join [c | c <- msg])]
 
-iv256 : [8][32]
-iv256 =
+// H^{(0)}
+
+H0_256 : [8][32]
+H0_256 =
     [0x6A09E667, 0xBB67AE85, 0x3C6EF372, 0xA54FF53A, 0x510E527F,
      0x9B05688C, 0x1F83D9AB, 0x5BE0CD19]
 
-pad : {a} (64 >= width a, 512 * ((a + 576) / 512) - a >= 65) =>
+H0_384 : [8][64]
+H0_384 =
+    [0xCBBB9D5DC1059ED8, 0x629A292A367CD507, 0x9159015A3070DD17,
+     0x152FECD8F70E5939, 0x67332667FFC00B31, 0x8EB44A8768581511,
+     0xDB0C2E0D64F98FA7, 0x47B5481DBEFA4FA4]
+
+H0_512 : [8][64]
+H0_512 =
+    [0x6A09E667F3BCC908, 0xBB67AE8584CAA73B, 0x3C6EF372FE94F82B,
+     0xA54FF53A5F1D36F1, 0x510E527FADE682D1, 0x9B05688C2B3E6C1F,
+     0x1F83D9ABFB41BD6B, 0x5BE0CD19137E2179]
+
+pad256 : {a} (64 >= width a, 512 * ((a + 576) / 512) - a >= 65) =>
       [a] -> [(a + 65 + 511) / 512][512]
-pad msg = split (msg # [True] # zero # (width msg : [64]))
+pad256 msg = split (msg # [True] # zero # (width msg : [64]))
 
 SHA256_Ks : [64][32]
 SHA256_Ks =
@@ -81,11 +96,18 @@ SHA384_and_SHA512_Ks =
      0x431D67C49C100D4C, 0x4CC5D4BECB3E42B6, 0x597F299CFC657E2A,
      0x5FCB6FAB3AD6FAEC, 0x6C44198C4A475817]
 
-sigma0 x = x >>> 7 ^ x >>> 18 ^ x >> 3
-sigma1 y = y >>> 17 ^ y >>> 19 ^ y >> 10
+sigma0_256 : [32] -> [32]
+sigma0_256 x = x >>> 7 ^ x >>> 18 ^ x >> 3
+sigma1_256 y = y >>> 17 ^ y >>> 19 ^ y >> 10
 
-Sigma0 x = x >>> 2 ^ x >>> 13 ^ x >>> 22
-Sigma1 x = x >>> 6 ^ x >>> 11 ^ x >>> 25
+Sigma0_256 x = x >>> 2 ^ x >>> 13 ^ x >>> 22
+Sigma1_256 x = x >>> 6 ^ x >>> 11 ^ x >>> 25
+
+sigma0_512 x = x >>> 1 ^ x >>> 8 ^ x >> 7
+sigma1_512 y = y >>> 19 ^ y >>> 61 ^ y >> 6
+
+Sigma0_512 x = x >>> 28 ^ x >>> 34 ^ x >>> 39
+Sigma1_512 x = x >>> 14 ^ x >>> 18 ^ x >>> 41
 
 Ch x y z  = x && y ^ ~x && z
 Maj x y z = x && y ^ x && z ^ y && z
@@ -94,55 +116,68 @@ type SHA256 = 0
 type SHA512 = 1
 type SHA384 = SHA512
 
-sha2_block : {variant, rounds} (fin variant, fin rounds,
-                                SHA256 <= variant, variant <= SHA512, 
-                                rounds == 63+16*variant) =>
-                 ([8][32], [16][32], [rounds+1][32*(variant+1)]) -> [8][32]
-sha2_block ([H0, H1, H2, H3, H4, H5, H6, H7], M, Ks) =
+sha2_256_block = sha2_block`{variant=SHA256}
+  (sigma0_256, sigma1_256, Sigma0_256, Sigma1_256)
+sha2_384_block = sha2_block`{variant=SHA384}
+  (sigma0_512, sigma1_512, Sigma0_512, Sigma1_512)
+sha2_512_block = sha2_block`{variant=SHA512}
+  (sigma0_512, sigma1_512, Sigma0_512, Sigma1_512)
+
+sha2_block : {variant, rounds, wordsize} 
+              (fin variant, fin rounds,
+               SHA256 <= variant, variant <= SHA512, 
+               rounds == 64+16*variant,
+               wordsize == 32*(variant+1)) =>
+             ([wordsize] -> [wordsize], [wordsize] -> [wordsize], 
+              [wordsize] -> [wordsize], [wordsize] -> [wordsize]) ->
+             ([8][wordsize], [16][wordsize], [rounds][wordsize]) ->
+             [8][wordsize]
+sha2_block (sigma0, sigma1, Sigma0, Sigma1)
+           ([H0, H1, H2, H3, H4, H5, H6, H7], M, Ks) =
            [H0 + As!0, H1 + Bs!0, H2 + Cs!0, H3 + Ds!0,
             H4 + Es!0, H5 + Fs!0, H6 + Gs!0, H7 + Hs!0]
     where
-      Ws : [rounds+1][32]
+      Ws : [rounds][wordsize]
       Ws =
           M # [ (sigma1 W2) + W7 + (sigma0 W15) + W16
                   | W2 <- drop`{16 - 2} Ws
                   | W7 <- drop`{16 - 7} Ws
                   | W15 <- drop`{16 - 15} Ws
                   | W16 <- drop`{16 - 16} Ws
-                  | t <- [16 .. rounds]:[_][7] ]
+                  | t <- [16 .. rounds-1]:[_][7] ]
       // explain functional/recurrence encoding of their stateful, procedural algorithm
-      As, Bs, Cs, Ds, Es, Fs, Gs, Hs : [rounds+1][32]
+      As, Bs, Cs, Ds, Es, Fs, Gs, Hs : [rounds][wordsize]
       As = 
-          take`{rounds+1}
+          take`{rounds}
           ([H0] # [t1 + t2 | t1 <- T1s
                            | t2 <- T2s])
-      Bs = take`{rounds+1}([H1] # As)
-      Cs = take`{rounds+1}([H2] # Bs)
-      Ds = take`{rounds+1}([H3] # Cs)
+      Bs = take`{rounds}([H1] # As)
+      Cs = take`{rounds}([H2] # Bs)
+      Ds = take`{rounds}([H3] # Cs)
       Es =
-          take`{rounds+1}([H4] #
+          take`{rounds}([H4] #
                           [d + t1 | d <- Ds
                                   | t1 <- T1s])
-      Fs = take`{rounds+1}([H5] # Es)
-      Gs = take`{rounds+1}([H6] # Fs)
-      Hs = take`{rounds+1}([H7] # Gs)
+      Fs = take`{rounds}([H5] # Es)
+      Gs = take`{rounds}([H6] # Fs)
+      Hs = take`{rounds}([H7] # Gs)
       CHs =
-          take`{rounds+1}
+          take`{rounds}
           [Ch e f g | e <- Es
                     | f <- Fs
                     | g <- Gs]
-      //T1s : [rounds+1][32]
+      //T1s : [rounds][wordsize]
       T1s =
-          take`{rounds+1}
+          take`{rounds}
           [h + (Sigma1 e) + ch + k + w
                   | e <- Es
                   | h <- Hs
                   | ch <- CHs
                   | k <- Ks
                   | w <- Ws]
-      //T2s : [rounds+1][32]
+      //T2s : [rounds][wordsize]
       T2s =
-          take`{rounds+1}
+          take`{rounds}
           [(Sigma0 a) + (Maj a b c)
                    | a <- As
                    | b <- Bs
