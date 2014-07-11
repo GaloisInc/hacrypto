@@ -35,6 +35,7 @@ Relevant Libraries
 | Google's boringssl | | C | Not Started |
 | Google's JavaScript library | | Javascript | Not Started |
 | Crypto++ | http://www.cryptopp.com/ | C++ | Not Started| 
+| LibreSSL (portable) | http://www.libressl.org/ | C | Not Started | 
 
 Sodium
 ---------------------------
