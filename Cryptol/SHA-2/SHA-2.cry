@@ -27,6 +27,18 @@ sha256 msg =
               | H <- Hs
               | M <- pad256 (join [c | c <- msg])]
 
+sha384 : {a} (128 >= width (a * 8),
+              1024 * ((a + 136) / 128) - 8 * a >= 129) =>
+         [a][8] -> [384]
+sha384 msg =
+    take`{384}(join (Hs!0))
+    where
+      Hs =
+          [H0_384] #
+          [sha2_384_block(H, [w | w <- split M], SHA384_Ks) 
+              | H <- Hs
+              | M <- pad512 (join [c | c <- msg])]
+
 sha512 : {a} (128 >= width (a * 8),
               1024 * ((a + 136) / 128) - 8 * a >= 129) =>
          [a][8] -> [512]
@@ -201,28 +213,48 @@ sha2_block (sigma0, sigma1, Sigma0, Sigma1)
                     | b <- Bs
                     | c <- Cs]
 
-test_vector0 =
+// SHA-256
+test_vector_256_0 =
     sha256 "" ==
     0xE3B0C44298FC1C149AFBF4C8996FB92427AE41E4649B934CA495991B7852B855
-test_vector1 =
+test_vector_256_1 =
     sha256 "The quick brown fox jumps over the lazy dog" ==
     0xD7A8FBB307D7809469CA9ABCB0082E4F8D5651E46D3CDB762D02D0BF37C9E592
-test_vector2 =
+test_vector_256_2 =
     sha256 "The quick brown fox jumps over the lazy cog" ==
     0xE4C4D8F3BF76B692DE791A173E05321150F7A345B46484FE427F6ACC7ECC81BE
-test_vector3 =
+test_vector_256_3 =
     sha256 "abc" ==
     0xBA7816BF8F01CFEA414140DE5DAE2223B00361A396177A9CB410FF61F20015AD
-test_vector4 =
+test_vector_256_4 =
     sha256 "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq" ==
     0x248D6A61D20638B8E5C026930C3E6039A33CE45964FF2167F6ECEDD419DB06C1
 
-test_vector5 =
+// SHA-384
+
+test_vector_384_0 =
+    sha384 "abc" ==
+    0xCB00753F45A35E8BB5A03D699AC65007272C32AB0EDED1631A8B605A43FF5BED8086072BA1E7CC2358BAECA134C825A7
+
+// SHA-512
+test_vector_512_0 =
     sha512 "abc" ==
     0xDDAF35A193617ABACC417349AE20413112E6FA4E89A97EA20A9EEEE64B55D39A2192992A274FC1A836BA3C23A3FEEBBD454D4423643CE80E2A9AC94FA54CA49F
 
 test_vectors = 
-  [test_vector0, test_vector1, test_vector2, test_vector3, test_vector4] == ~zero
+  [test_vector_256_0, test_vector_256_1, test_vector_256_2, 
+   test_vector_256_3, test_vector_256_4,
+   test_vector_384_0, test_vector_512_0] == ~zero
 
-no_collisions: ([1][8], [1][8]) -> Bit
-property no_collisions(x, y) = (x == y) || (sha256 x != sha256 y)
+no_collisions_256: ([1][8], [1][8]) -> Bit
+property no_collisions_256(x, y) = (x == y) || (sha256 x != sha256 y)
+
+no_collisions_384: ([1][8], [1][8]) -> Bit
+property no_collisions_384(x, y) = (x == y) || (sha384 x != sha384 y)
+
+no_collisions_512: ([1][8], [1][8]) -> Bit
+property no_collisions_512(x, y) = (x == y) || (sha512 x != sha512 y)
+
+no_collisions_at_all: ([1][8], [1][8]) -> Bit
+no_collisions_at_all(x, y) = (x == y) || 
+           ((sha256 x != sha256 y) && (sha384 x != sha384 y) && (sha512 x != sha512 y))
