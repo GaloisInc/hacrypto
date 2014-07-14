@@ -36,7 +36,7 @@ Relevant Libraries
 | Google's JavaScript library | | Javascript | Not Started |
 | Crypto++ | http://www.cryptopp.com/ | C++ | Not Started| 
 | LibreSSL (portable) | http://www.libressl.org/ | C | Not Started | 
-| hs-crypthash | https://github.com/vincenthz/hs-cryptohash | C (haskell wrapper) | Complete | 
+| hs-cryptohash | https://github.com/vincenthz/hs-cryptohash | C (haskell wrapper) | Complete | 
 
 Sodium
 ---------------------------
