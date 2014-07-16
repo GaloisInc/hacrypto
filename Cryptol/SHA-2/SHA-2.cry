@@ -150,10 +150,15 @@ type SHA256 = 0
 type SHA512 = 1
 type SHA384 = SHA512
 
+sha2_256_block : ([8][32], [16][32], [64][32]) -> [8][32]
 sha2_256_block = sha2_block`{variant=SHA256}
   (sigma0_256, sigma1_256, Sigma0_256, Sigma1_256)
+  
+sha2_384_block : ([8][64], [16][64], [80][64]) -> [8][64]  
 sha2_384_block = sha2_block`{variant=SHA384}
   (sigma0_512, sigma1_512, Sigma0_512, Sigma1_512)
+  
+sha2_512_block : ([8][64], [16][64], [80][64]) -> [8][64]  
 sha2_512_block = sha2_block`{variant=SHA512}
   (sigma0_512, sigma1_512, Sigma0_512, Sigma1_512)
 
