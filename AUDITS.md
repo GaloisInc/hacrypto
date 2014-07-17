@@ -36,6 +36,7 @@ Relevant Libraries
 | Google's JavaScript library | | Javascript | Not Started |
 | Crypto++ | http://www.cryptopp.com/ | C++ | Not Started| 
 | LibreSSL (portable) | http://www.libressl.org/ | C | Not Started | 
+| hs-cryptohash | https://github.com/vincenthz/hs-cryptohash | C (haskell wrapper) | Complete | 
 
 Sodium
 ---------------------------
@@ -368,6 +369,34 @@ BouncyCastle 1.50 for Java
 | Verification | N/A |
 | Published Materials | [Oracle's Java Cryptography Extensions Architecture (JCE)](http://docs.oracle.com/javase/7/docs/technotes/guides/security/crypto/CryptoSpec.html), [several books have been published about the JCE](http://www.amazon.com/s/ref=nb_sb_noss?url=search-alias%3Daps&field-keywords=Java%20cryptography) |
 | Other Comments | Conforms to JCE |
+
+hs-cryptohash
+---------------------------
+| | |
+|------|----------------|
+| Size |3K C, 2K haskell |
+| Age | 2010 - current |
+| Key Metrics |  |
+| Documentation | [README](C/hs-cryptohash/README.md) |
+| License | BSD like|
+| Feature Description | non-destructive updates (appears to copy contexts before each update, C code is destructive) |
+| Examples | unanotated [tests](Tests/KAT.hs) |
+| Community | no |
+| Wiki | no |
+| Tracker | [github tracker](https://github.com/vincenthz/hs-cryptohash/issues) |
+| Support | [github tracker](https://github.com/vincenthz/hs-cryptohash/issues) |
+| API Design | incremental and one-pass API provided|
+| Architecture Specifications | no |
+| Design Specifications | no |
+| Behavioral Specifications | no |
+| Engineering Practices | non-destructive update |
+| Tests | [one file](Tests/KAT.hs) with 3 vectors |
+| Other Evidence of Correctness | |
+| Validation | tests |
+| Verification | |
+| Published Materials | |
+| Other Comments | It would be interesting to see how much of a hit context copying gives to performance, as well as a discussion of the benefits of doing this.  This library only provides hash functions and does not have a particularly usable C API. It is targeted towards haskell.
+Implementations of at least some of the hashes appear to be done from scratch. |
 
 BouncyCastle 1.7 for C#, 7 April 2011
 -------------------------------------
