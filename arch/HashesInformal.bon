@@ -5,8 +5,6 @@ class WHIRLPOOL
 description "http://en.wikipedia.org/wiki/WHIRLPOOL"
 class RIPEMD_160
 description "http://en.wikipedia.org/wiki/RIPEMD"
-class DES
-description "http://en.wikipedia.org/wiki/Data_Encryption_Standard"
 class CRYPT
 description "http://en.wikipedia.org/wiki/Crypt_(C)"
 cluster HASH_DESIGNS

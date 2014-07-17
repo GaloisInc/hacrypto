@@ -1,5 +1,5 @@
 | Type | Suite B | NaCl | 
--------------------
+|------|---------|------|
 | [Hash](http://en.wikipedia.org/wiki/Hash_function) | [SHA256/384](http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf) | [SHA256/512](http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf) | 
 | [Digital Signature](http://en.wikipedia.org/wiki/Digital_Signature_Algorithm)  | [ECDSA Curve P-256/384](http://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.186-4.pdf) | __ |
 | [Message Authentication](http://en.wikipedia.org/wiki/Message_authentication_code) (symmetric) | __ | [HMAC_SHA](http://csrc.nist.gov/publications/fips/fips198-1/FIPS-198-1_final.pdf), [POLY1305-AES](http://cr.yp.to/mac.html) (one time authentication) | 

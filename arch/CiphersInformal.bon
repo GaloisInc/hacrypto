@@ -12,7 +12,7 @@ description
 class BLOCK_CIPHER
 description
   "@todo"
-class STREAM_CIPHER
+class STREM_CIPHER
 description
   "@todo"
 cluster PUBLIC_KEY_CRYPTOGRAPHY
@@ -44,8 +44,7 @@ class CAST_128
 description
   "@todo"
 class DES
-description
-  "@todo"
+description "http://en.wikipedia.org/wiki/Data_Encryption_Standard"
 class IDEA
 description
   "@todo"
@@ -79,6 +78,9 @@ description
 class XTEA
 description
   "@todo"
+class ZUC
+description
+  "http://en.wikipedia.org/wiki/Zuc_stream_cipher"
 end
 
 cluster_chart BLOCK_CIPHER_MODES
