@@ -1,0 +1,4 @@
+C
+../hashes.h
+-L/usr/local/lib -lsodium
+SHA256 KAT VST NSS sodium

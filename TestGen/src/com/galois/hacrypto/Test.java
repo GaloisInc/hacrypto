@@ -1,8 +1,13 @@
 package com.galois.hacrypto;
 
 
+
 public class Test {
 
+	public enum Language {
+	    C
+	}
+	
 	public static String hexToCUChar(String st){
 		StringBuilder sb = new StringBuilder();
 		
