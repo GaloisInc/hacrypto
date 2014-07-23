@@ -3,6 +3,7 @@ package com.galois.hacrypto;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
@@ -10,7 +11,7 @@ import java.util.Set;
 
 public class KAT {
 
-	private Map<String, String> KATs = new HashMap<String, String>();
+	private Map<String, String> KATs = new LinkedHashMap<String, String>();
 	
 	
 	
@@ -22,7 +23,7 @@ public class KAT {
 				first=false;
 			}
 			else{
-				sb.append("\n");
+				sb.append("\\n");
 			}
 			sb.append(scan.nextLine());
 		} while (!scan.hasNext("!!!"));
@@ -48,11 +49,4 @@ public class KAT {
 		return KATs.entrySet();
 	}
 	
-	public static void main(String args[]){
-		KAT k = new KAT("tests/SHA256_KAT");
-		for(Entry<String,String> entry : k.getEntries()){
-			System.out.println(entry.getKey());
-			System.out.println(entry.getValue());
-		}
-	}
 }
