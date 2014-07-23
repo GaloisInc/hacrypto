@@ -18,4 +18,4 @@ BON specifications for the hacrypto library can be found in the [arch](arch) fol
 Cryptol 2 implementation of SHA256, along with older cryptol implementations, and C implementations generated from those.
 
 ## Verification/Valdiation
-The [callsha](callsha) folder contains experiments with building, calling, and running frama-c value analysis on SHA256 implementations from NSS, Sodium, and a (macro expanded)[http://www.cs.princeton.edu/~appel/papers/verif-sha.pdf] (and verified in coq) OpenSSL.
+The [callsha](callsha) folder contains experiments with building, calling, and running frama-c value analysis on SHA256 implementations from NSS, Sodium, and a [macro expanded and verified in Coq](http://www.cs.princeton.edu/~appel/papers/verif-sha.pdf) OpenSSL.
