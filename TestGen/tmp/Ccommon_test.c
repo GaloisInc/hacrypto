@@ -12,6 +12,14 @@ int compare_results(unsigned char *res1, unsigned char *res2, int length)
 	return 1;
 }
 
+int check_test(unsigned char *result0, unsigned char *result1, int length, unsigned char *errormsg){
+	if(!compare_results(result0, result1, length)){
+		printf(errormsg);
+		return 0;
+	}
+	return 1;
+}
+
 int check_KAT(unsigned char *result,
         unsigned char *expected_result, int length,
         unsigned char *testname){

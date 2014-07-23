@@ -12,7 +12,9 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 
 import javax.management.RuntimeErrorException;
 
@@ -30,6 +32,7 @@ public class CTests {
 	private ST main = stGroup.getInstanceOf("run_tests");
 	private ST makefile = stGroup.getInstanceOf("Makefile");
 	private String fileName;
+	Random rn = new Random();
 	
 	
 	public CTests(String fileName){
@@ -68,15 +71,9 @@ public class CTests {
 		}
 	}
 	
-	private void makeTests(String testString, String outputDirectory, File testDir){
-		Scanner scan = new Scanner(testString);
-		String primitive = scan.next();
-		
-		String testType = scan.next();
-		
-		//TODO: check testType when we have more than one
+	private void makeKAT(String primitive, File testDir, String outputDirectory, Scanner scan){
 		KAT kat = new KAT(testDir.getPath() + File.separator + primitive + "_KAT");
-				
+		
 		while(scan.hasNext()){
 			ST impSt = stGroup.getInstanceOf("Ctests");
 			for(String imp : imports){
@@ -104,7 +101,94 @@ public class CTests {
 			} 
 		}
 		
+		
+	}
+	
+	private String randomCString(int length){
+		StringBuilder sb = new StringBuilder("{ ");
+		
+		for(int i=0; i<length; i++){
+			sb.append(rn.nextInt(256));
+			if(i < length -1){
+				sb.append(", ");
+			}
+		}
+		sb.append(" }");
+		return sb.toString();
+	}
+	
+	private void makeCompare(String primitive, File testDir, String outputDirectory, Scanner scan){
+		int outLength = scan.nextInt();
+		int minLength = scan.nextInt();
+		int maxLength = scan.nextInt();
+		int tests = scan.nextInt();
+		
+		ST compareST = stGroup.getInstanceOf("Ctests");
+		for(String imp : imports){
+			compareST.add("imports", imp);
+		}
+
+		ST oneCompare = stGroup.getInstanceOf("CCompare");
+		oneCompare.add("firstfunc", primitive + "_" + scan.next());
+		while(scan.hasNext()){
+			oneCompare.add("funcs", primitive + "_" + scan.next());
+		}
+		oneCompare.add("outputsize", outLength);
+
+		//	testname, inputsize, input 
+		for(int i=0; i<tests; i++ ){
+			String testname = primitive + "_compare_" + i;
+			oneCompare.add("testname", testname );
+			main.add("testNames", testname);
+			header.add("testNames", testname);
+
+			int length = rn.nextInt(maxLength - minLength) + minLength;
+			oneCompare.add("inputsize", length);
+			oneCompare.add("input", randomCString(length));
+
+			compareST.add("tests", oneCompare.render());
+
+			oneCompare.remove("testname");
+			oneCompare.remove("inputsize");
+			oneCompare.remove("input");
+
+		}
+
+		String filename = primitive + "_compare.c";
+		File outfile = new File(outputDirectory + File.separator + filename);
+		makefile.add("cFiles", filename);
+		try {
+			outfile.createNewFile();
+		} catch (IOException e) {
+			System.err.println("could not create file " + outfile.getAbsolutePath());
+			e.printStackTrace();
+		}
+
+		try {
+			compareST.write(outfile, null);//TODO: figure out what to do for second argument
+		} catch (IOException e) {
+			System.err.println("Problem writing to file " + outfile.getAbsolutePath());
+			e.printStackTrace();
+		} 
+	}
+		
+	
+	private void makeTests(String testString, String outputDirectory, File testDir){
+		Scanner scan = new Scanner(testString);
+		String primitive = scan.next();
+		
+		String testType = scan.next();
+		
+		if(testType.equals("KAT")){
+			makeKAT(primitive, testDir, outputDirectory, scan);
+		}
+		else if(testType.equals("Compare")){
+			makeCompare(primitive, testDir, outputDirectory, scan);
+		}
+		
 		scan.close();
+		//TODO: check testType when we have more than one
+		
 		
 		writeFiles(outputDirectory);//TODO: Move work out of constructor
 	}
@@ -184,8 +268,7 @@ public class CTests {
 			oneKAT.add("testname", testname);
 			oneKAT.add("func", funcname);
 			
-			testST.add("KATtests", oneKAT.render());
-			testST.add("testNames", testname);
+			testST.add("tests", oneKAT.render());
 			
 			main.add("testNames", testname);
 			header.add("testNames", testname);
