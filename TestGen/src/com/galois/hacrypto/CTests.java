@@ -239,28 +239,56 @@ public class CTests {
 		}
 	}
 	
-	//TODO: make this work
-	private String processInput(String s){
-		if(s.length()<4000) return "\"" + s + "\"";
-		
-		StringBuilder sb = new StringBuilder( "{ \"");
-		while (s.length() > 500 ){
-			sb.append(s.substring(0,4000));
-			sb.append("\",\n \"");
-			s = s.substring(4000);
+	private String biteArrayToCString(byte[] bytes){
+		StringBuilder sb = new StringBuilder("{ ");
+		for(byte byt : bytes){
+			sb.append(byt);
+			sb.append(" ,");
 		}
-		sb.append(s + "\"}");
+		sb.deleteCharAt(sb.length()-1); //there'll be an extra comma
+		sb.append("}");
 		return sb.toString();
+	}
+	
+	
+	private String getKiString(KATInput ki){
+		if(ki.inputAs.equals("string") && ki.bytes.length < 500){
+			return ("\"" + new String( ki.bytes) + "\"");
+		}
+		else{
+			return biteArrayToCString(ki.bytes);
+		}
+	}
+	
+	private String processInput(KATInput ki){
+		
+		if (ki.repeat <= 1) {
+			return getKiString(ki);
+		}
+		
+		ST repeat = stGroup.getInstanceOf("repeat");
+		repeat.add("repeats", ki.repeat);
+		repeat.add("string", getKiString(ki));
+		repeat.add("stringlength", ki.bytes.length);
+		return repeat.render();
 	}
 	
 	private void addKATs(String primitive, String implementation, KAT kat, ST testST){
 		int ct=0;
-		for (Entry<String,String> kv : kat.getEntries()){
+		for (Entry<KATInput,String> kv : kat.getEntries()){
 			ST oneKAT = stGroup.getInstanceOf("CKAT");
-			oneKAT.add("inputsize", kv.getKey().length());
+			oneKAT.add("inputsize", kv.getKey().bytes.length * kv.getKey().repeat);
 			oneKAT.add("outputsize", kv.getValue().length()/2);
-			oneKAT.add("input", processInput(kv.getKey()));
-			oneKAT.add("answer", Test.hexToCUChar(kv.getValue()));
+			
+			if(kv.getKey().repeat <= 1){
+				oneKAT.add("input", processInput(kv.getKey()));
+			}
+			else{
+				oneKAT.add("input", "\"\"");
+				oneKAT.add("repeat", processInput(kv.getKey()));
+			}
+			
+			oneKAT.add("answer", Test.hexToCUChar(new String(kv.getValue())));
 			
 			String funcname = primitive + "_" + implementation;
 			String testname = funcname + "_KAT_" + ct ++;

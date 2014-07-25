@@ -1,5 +1,7 @@
 package com.galois.hacrypto;
 
+import javax.management.RuntimeErrorException;
+
 
 
 public class Test {
@@ -10,7 +12,9 @@ public class Test {
 	
 	public static String hexToCUChar(String st){
 		StringBuilder sb = new StringBuilder();
-		
+		if(st.length() % 2 !=0){
+			throw new RuntimeErrorException(null, "String " + st + " is not a valid length for a digest");
+		}
 		for(int i=0; i<st.length(); i=i+2){
 			sb.append("0x");
 			sb.append(st.charAt(i));
