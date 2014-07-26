@@ -3,4 +3,4 @@ C
 -L/usr/local/lib -lsodium
 SHA256 KAT VST NSS sodium
 SHA256 Compare 32 0 10000 1000 VST NSS sodium
-SHA256 XCompare test_defs/SHA256_KAT_auto VST NSS sodium
+SHA256 XCompare SHA256_KAT_auto VST NSS sodium

@@ -23,8 +23,13 @@ public class KAT {
 	private byte[] parseByteArray(String arrayRep){
 		String[] strings = arrayRep.replace("[", "").replace("]", "").split(",");
 		byte[] bytes = new byte[strings.length];
-		for(int i=0; i<strings.length; i++){
-			bytes[i] = Byte.parseByte(strings[i].trim());
+		if(strings[0].equals(" ")){
+			bytes = new byte[0];	
+		}
+		else{
+			for(int i=0; i<strings.length; i++){
+				bytes[i] = Byte.parseByte(strings[i].trim());
+			}
 		}
 		return bytes;
 	}
