@@ -37,7 +37,14 @@ SHA256_VST_KAT_1(){
 } 
 
 SHA256_VST_KAT_2(){
-	unsigned char input[1073] = "this example is wrong... supposed to be a million as.  I'll work on that! aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+	unsigned char input[1000000] = "";
+	char to_repeat[] = "a";
+
+	int i;
+	for(i=0; i<1000000; i++){
+		memcpy(input + i*1, to_repeat, 1);
+	}
+
 	unsigned char result[32];
 	unsigned char expected_result[32] = {
 	0xCD, 0xC7, 0x6E, 0x5C, 0x99, 0x14, 0xFB, 0x92, 
@@ -47,7 +54,7 @@ SHA256_VST_KAT_2(){
 
 	};
 
-	SHA256_VST(input, result, 1073);
+	SHA256_VST(input, result, 1000000);
 	check_KAT(result, expected_result, 32, "SHA256_VST_KAT_2");
 
 } 
@@ -69,7 +76,7 @@ SHA256_VST_KAT_3(){
 } 
 
 SHA256_VST_KAT_4(){
-	unsigned char input[0] = "";
+	unsigned char input[0] = {};
 	unsigned char result[32];
 	unsigned char expected_result[32] = {
 	0xe3, 0xb0, 0xc4, 0x42, 0x98, 0xfc, 0x1c, 0x14, 
@@ -97,5 +104,21 @@ SHA256_VST_KAT_5(){
 
 	SHA256_VST(input, result, 43);
 	check_KAT(result, expected_result, 32, "SHA256_VST_KAT_5");
+
+} 
+
+SHA256_VST_KAT_6(){
+	unsigned char input[3] = { 97 ,98 ,99 };
+	unsigned char result[32];
+	unsigned char expected_result[32] = {
+	0xBA, 0x78, 0x16, 0xBF, 0x8F, 0x01, 0xCF, 0xEA, 
+	0x41, 0x41, 0x40, 0xDE, 0x5D, 0xAE, 0x22, 0x23, 
+	0xB0, 0x03, 0x61, 0xA3, 0x96, 0x17, 0x7A, 0x9C, 
+	0xB4, 0x10, 0xFF, 0x61, 0xF2, 0x00, 0x15, 0xAD
+
+	};
+
+	SHA256_VST(input, result, 3);
+	check_KAT(result, expected_result, 32, "SHA256_VST_KAT_6");
 
 } 

@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Iterator;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.Map.Entry;
@@ -89,6 +90,7 @@ public class CTests {
 		
 		oneCompare.add("outputsize", kat.getEntries().iterator().next().getValue().length()/2); //TODO: de-uglify this
 		
+		Iterator<Entry<KATInput, String>> it = kat.getEntries().iterator();
 		int i=0;
 		for(Entry<KATInput, String> oneKat : kat.getEntries()){
 			String testname = primitive + "_Xcompare_" + i;
@@ -98,7 +100,7 @@ public class CTests {
 	
 			oneCompare.add("inputsize", oneKat.getKey().bytes.length);
 			oneCompare.add("input", processInput(oneKat.getKey()));
-			oneCompare.add("result", "{ " + Test.hexToCUChar(kat.getEntries().iterator().next().getValue()) + " }");
+			oneCompare.add("result", "{ " + Test.hexToCUChar(it.next().getValue()) + " }");
 			
 			
 			xCompareST.add("tests", oneCompare.render());
