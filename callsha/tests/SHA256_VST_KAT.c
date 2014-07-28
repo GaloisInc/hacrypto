@@ -37,7 +37,7 @@ SHA256_VST_KAT_1(){
 } 
 
 SHA256_VST_KAT_2(){
-	unsigned char input[1000000] = "";
+    unsigned char *input = malloc(sizeof(char) * 1000000);
 	char to_repeat[] = "a";
 
 	int i;
@@ -120,5 +120,28 @@ SHA256_VST_KAT_6(){
 
 	SHA256_VST(input, result, 3);
 	check_KAT(result, expected_result, 32, "SHA256_VST_KAT_6");
+
+} 
+
+SHA256_VST_KAT_7(){
+    unsigned char *input = malloc(sizeof(char) * 1073741824);
+	char to_repeat[] = "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmno";
+
+	int i;
+	for(i=0; i<16777216; i++){
+		memcpy(input + i*64, to_repeat, 64);
+	}
+
+	unsigned char result[32];
+	unsigned char expected_result[32] = {
+	0x50, 0xe7, 0x2a, 0x0e, 0x26, 0x44, 0x2f, 0xe2, 
+	0x55, 0x2d, 0xc3, 0x93, 0x8a, 0xc5, 0x86, 0x58, 
+	0x22, 0x8c, 0x0c, 0xbf, 0xb1, 0xd2, 0xca, 0x87, 
+	0x2a, 0xe4, 0x35, 0x26, 0x6f, 0xcd, 0x05, 0x5e
+
+	};
+
+	SHA256_VST(input, result, 1073741824);
+	check_KAT(result, expected_result, 32, "SHA256_VST_KAT_7");
 
 } 

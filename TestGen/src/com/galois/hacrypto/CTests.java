@@ -302,7 +302,7 @@ public class CTests {
 	private String biteArrayToCString(byte[] bytes){
 		StringBuilder sb = new StringBuilder("{ ");
 		for(byte byt : bytes){
-			sb.append(byt  & 0xFF); //convert to unsigned?
+			sb.append(byt  & 0xFF); //convert to unsigned
 			sb.append(" ,");
 		}
 		sb.deleteCharAt(sb.length()-1); //there'll be an extra comma
@@ -337,6 +337,9 @@ public class CTests {
 		int ct=0;
 		for (Entry<KATInput,String> kv : kat.getEntries()){
 			ST oneKAT = stGroup.getInstanceOf("CKAT");
+			if(kv.getKey().repeat > 1){
+				oneKAT.add("malloc", "yup!");
+			}
 			oneKAT.add("inputsize", kv.getKey().bytes.length * kv.getKey().repeat);
 			oneKAT.add("outputsize", kv.getValue().length()/2);
 			
@@ -344,7 +347,7 @@ public class CTests {
 				oneKAT.add("input", processInput(kv.getKey()));
 			}
 			else{
-				oneKAT.add("input", "\"\"");
+				oneKAT.add("input", "malloc(sizeof(char) * " + kv.getKey().bytes.length * kv.getKey().repeat + ")");
 				oneKAT.add("repeat", processInput(kv.getKey()));
 			}
 			
