@@ -34,6 +34,10 @@ public class KAT {
 		return bytes;
 	}
 	
+	//this works assuming a fixed output size, and returns the size of the first result
+	public int getOutputSize(){
+		return KATs.values().iterator().next().length();
+	}
 	
 	//scanner should be at the beginning of a new input output pair
 	private void addkatFromScanner(Scanner scan){

@@ -88,7 +88,7 @@ public class CTests {
 			oneCompare.add("funcs", primitive + "_" + scan.next());
 		}
 		
-		oneCompare.add("outputsize", kat.getEntries().iterator().next().getValue().length()/2); //TODO: de-uglify this
+		oneCompare.add("outputsize", kat.getOutputSize()/2); //divide by two because it is represented in hex and output size is bytes
 		
 		Iterator<Entry<KATInput, String>> it = kat.getEntries().iterator();
 		int i=0;
@@ -113,28 +113,15 @@ public class CTests {
 		}
 		
 		String filename = primitive + "_Xcompare.c";
-		File outfile = new File(outputDirectory + File.separator + filename);
 		makefile.add("cFiles", filename);
-		try {
-			outfile.createNewFile();
-		} catch (IOException e) {
-			System.err.println("could not create file " + outfile.getAbsolutePath());
-			e.printStackTrace();
-		}
-	
-		try {
-			xCompareST.write(outfile, null);//TODO: figure out what to do for second argument
-		} catch (IOException e) {
-			System.err.println("Problem writing to file " + outfile.getAbsolutePath());
-			e.printStackTrace();
-		} 
+		writeSTToOutDir(filename, outputDirectory, xCompareST);
 	}
 		
 	private void makeCompare(String primitive, File testDir, String outputDirectory, Scanner scan){
 		int outLength = scan.nextInt();
 		int minLength = scan.nextInt();
 		int maxLength = scan.nextInt();
-		int tests = scan.nextInt();     //TODO: redo this method to use the random KAT generator... bad code duplication here
+		int tests = scan.nextInt();    
 		
 		ST compareST = stGroup.getInstanceOf("Ctests");
 		for(String imp : imports){
@@ -168,8 +155,14 @@ public class CTests {
 		}
 	
 		String filename = primitive + "_compare.c";
-		File outfile = new File(outputDirectory + File.separator + filename);
 		makefile.add("cFiles", filename);
+		writeSTToOutDir(filename, outputDirectory, compareST);
+		 
+	}
+
+	private void writeSTToOutDir(String filename, String outputDirectory, ST toWrite){
+		File outfile = new File(outputDirectory + File.separator + filename);
+		
 		try {
 			outfile.createNewFile();
 		} catch (IOException e) {
@@ -178,13 +171,13 @@ public class CTests {
 		}
 	
 		try {
-			compareST.write(outfile, null);//TODO: figure out what to do for second argument
+			toWrite.write(outfile, null);//TODO: figure out what to do for second argument
 		} catch (IOException e) {
 			System.err.println("Problem writing to file " + outfile.getAbsolutePath());
 			e.printStackTrace();
-		} 
+		}
 	}
-
+	
 	private void makeKAT(String primitive, File testDir, String outputDirectory, Scanner scan){
 		KAT kat = new KAT(testDir.getPath() + File.separator + primitive + "_KAT");
 		
@@ -198,21 +191,8 @@ public class CTests {
 			
 			
 			String filename = primitive + "_" + implementation + "_" + "KAT.c";
-			File outfile = new File(outputDirectory + File.separator + filename);
 			makefile.add("cFiles", filename);
-			try {
-				outfile.createNewFile();
-			} catch (IOException e) {
-				System.err.println("could not create file " + outfile.getAbsolutePath());
-				e.printStackTrace();
-			}
-			
-			try {
-				impSt.write(outfile, null);//TODO: figure out what to do for second argument
-			} catch (IOException e) {
-				System.err.println("Problem writing to file " + outfile.getAbsolutePath());
-				e.printStackTrace();
-			} 
+			writeSTToOutDir(filename, outputDirectory, impSt);
 		}
 		
 		
@@ -247,38 +227,15 @@ public class CTests {
 			makeXCompare(primitive, testDir, outputDirectory, scan);
 		}
 		scan.close();
-		//TODO: check testType when we have more than one
-		
 		
 		writeFiles(outputDirectory);
 	}
 	
 	private void writeFiles(String outputDirectory){
 		copyStaticFiles(outputDirectory);
-		
-		File header_file = new File(outputDirectory + File.separator + "tests.h");
-		try {
-			header.write(header_file, null);//TODO: figure out what to do for second argument
-		} catch (IOException e) {
-			System.err.println("Problem writing to file " + header_file.getAbsolutePath());
-			e.printStackTrace();
-		}
-		
-		File main_file = new File(outputDirectory + File.separator + "run_tests.c");
-		try {
-			main.write(main_file, null);//TODO: figure out what to do for second argument
-		} catch (IOException e) {
-			System.err.println("Problem writing to file " + main_file.getAbsolutePath());
-			e.printStackTrace();
-		}
-		
-		File Makefile_file = new File(outputDirectory + File.separator + "Makefile");
-		try {
-			makefile.write(Makefile_file, null);//TODO: figure out what to do for second argument
-		} catch (IOException e) {
-			System.err.println("Problem writing to file " + Makefile_file.getAbsolutePath());
-			e.printStackTrace();
-		}
+		writeSTToOutDir("tests.h", outputDirectory, header);
+		writeSTToOutDir("run_tests.c", outputDirectory, main);
+		writeSTToOutDir("Makefile", outputDirectory, makefile);
 	}
 	
 	private void copyStaticFiles(String dest){
@@ -370,8 +327,6 @@ public class CTests {
 	
 	
 	public static void main(String args[]){
-		System.out.println(-127 & 0xFF);
-		new CTests("test_defs/C_tests").writeTestFiles("../callsha/tests");
-		
+		new CTests("test_defs/C_tests").writeTestFiles("../callsha/tests");		
 	}
 }
