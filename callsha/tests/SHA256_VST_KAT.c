@@ -4,6 +4,7 @@
 #include "Ccommon_test.h"
 #include "../hashes.h"
 
+//  abc vector from that place....
 SHA256_VST_KAT_0(){
 	unsigned char input[3] = "abc";
 	unsigned char result[32];
