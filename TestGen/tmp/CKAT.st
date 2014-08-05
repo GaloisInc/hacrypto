@@ -1,4 +1,8 @@
-CKAT(testname, inputsize, input, outputsize, answer, func, repeat, malloc) ::= <<
+CKAT(testname, inputsize, input, outputsize, answer, func, repeat, malloc, comment) ::= <<
+<if(comment)>
+// <comment>
+<else>
+<endif>
 <testname>(){
     <if (malloc)>
     unsigned char *input = malloc(sizeof(char) * <inputsize>);

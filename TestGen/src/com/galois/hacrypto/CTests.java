@@ -294,6 +294,9 @@ public class CTests {
 		int ct=0;
 		for (Entry<KATInput,String> kv : kat.getEntries()){
 			ST oneKAT = stGroup.getInstanceOf("CKAT");
+			if(kv.getKey().comment != null){
+				oneKAT.add("comment", kv.getKey().comment);
+			}
 			if(kv.getKey().repeat > 1){
 				oneKAT.add("malloc", "yup!");
 			}

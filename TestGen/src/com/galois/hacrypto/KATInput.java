@@ -6,12 +6,14 @@ public class KATInput {
 	public int repeat;
 	public byte[] bytes;
 	public String inputAs;
+	public String comment;
 	
 	
-	public KATInput(int repeat, byte[] bytes, String inputAs) {
+	public KATInput(int repeat, byte[] bytes, String inputAs, String comment) {
 		this.repeat = repeat;
 		this.bytes = bytes;
 		this.inputAs = inputAs;
+		this.comment=comment;
 	}
 	
 	public String toString(){

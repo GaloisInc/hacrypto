@@ -15,7 +15,7 @@ import java.util.Set;
 
 import javax.management.RuntimeErrorException;
 
-
+//TODO comment lines 
 public class KAT {
 
 	private Map<KATInput, String> KATs = new LinkedHashMap<KATInput, String>();
@@ -41,7 +41,13 @@ public class KAT {
 	
 	//scanner should be at the beginning of a new input output pair
 	private void addkatFromScanner(Scanner scan){
+		String comment=null;
+		if(scan.hasNext("//")){
+			comment = scan.nextLine().substring(2);
+		}
+		
 		String katType = scan.next();
+		
 		
 		int repeat = 1;
 		if (scan.hasNext("repeat")){
@@ -67,7 +73,7 @@ public class KAT {
 			bytes = sb.toString().getBytes();
 		}
 		else if(katType.equals("array")){
-			bytes = parseByteArray(scan.nextLine()); // if we're failing, remove leading text TODO: remove this!
+			bytes = parseByteArray(scan.nextLine());
 		}
 		else if(katType.equals("empty")){
 			bytes = new byte[0];
@@ -76,7 +82,7 @@ public class KAT {
 		else{
 			throw new RuntimeErrorException(null, "Unsupported KAT type " + katType);
 		}
-		KATs.put(new KATInput(repeat, bytes, katType), scan.nextLine().replaceAll("\\s","").substring(3)); //remove whitespace and leading !!!
+		KATs.put(new KATInput(repeat, bytes, katType, comment), scan.nextLine().replaceAll("\\s","").substring(3)); //remove whitespace and leading !!!
 	}
 	
 	public KAT(int minSize, int maxSize, int testCt, String algorithm) throws NoSuchAlgorithmException{
@@ -92,7 +98,7 @@ public class KAT {
 		    for (byte b : hash) {
 		        sb.append(String.format("%02X", b));
 		    }
-		    KATs.put(new KATInput(1, bytes, "array"), sb.toString());
+		    KATs.put(new KATInput(1, bytes, "array", "Random test" + i), sb.toString());
 		}
 	}
 	
