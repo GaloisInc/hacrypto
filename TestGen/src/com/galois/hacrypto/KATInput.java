@@ -37,4 +37,20 @@ public class KATInput {
 		}
 		return sb.toString();
 	}
+	
+	public static String simpleByteString(byte[] bytes){
+		StringBuilder sb = new StringBuilder();
+		sb.append(bytes.length);
+		sb.append(" ");
+		for(byte b : bytes){ 
+			sb.append(String.format("%02X", b));
+		}
+		
+		return sb.toString();
+	}
+	
+	public String simpleInputString(){
+		return simpleByteString(bytes);
+	}
+	
 }

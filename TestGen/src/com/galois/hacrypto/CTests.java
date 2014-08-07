@@ -12,6 +12,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Iterator;
 import java.util.List;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Scanner;
@@ -23,7 +24,8 @@ import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STErrorListener;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupDir;
-
+//TODO Could this be one generic class that picks the same template?
+//     can templates be written so they all work on the same thing?
 public class CTests {
 
 	private String[] imports;
@@ -31,19 +33,15 @@ public class CTests {
 	private ST header = stGroup.getInstanceOf("header");
 	private ST main = stGroup.getInstanceOf("run_tests");
 	private ST makefile = stGroup.getInstanceOf("Makefile");
-	private String fileName;
-	Random rn = new Random();
 	
+	private Test test;
+	private File outDir;
 	
-	public CTests(String fileName){
-		this.fileName = fileName;
-	}
-	
-	public void writeTestFiles(String outputDirectory){
-		
-		new File(outputDirectory).mkdirs();
-		
-		File testFile = new File(fileName);
+	public void writeTestFiles(File outDir, File inDir, Test test){
+		this.outDir = new File(outDir.getPath() + File.separator + "C_tests");
+		this.outDir.mkdirs();
+		this.test = test;
+		File testFile = new File(inDir.getPath() + File.separator + "C_tests");
 		
 		Scanner scan= null;
 		try {
@@ -53,21 +51,13 @@ public class CTests {
 			e.printStackTrace();
 		}
 		
-		String language = scan.next();
-		/*switch (language) {
-		case "C": break;
-		default: throw new RuntimeErrorException(null, "Language " + language + "  not implemented");
-		}*/
-		//not going to check this now, we'll assume something higher up will pass it down correctly... maybe it'll
-		//even give us the scanner...
-		scan.nextLine();//move down
 		String allImports = scan.nextLine();
 		imports = allImports.split("\\s+");
 		String ccargs = scan.nextLine();
 		makefile.add("ccargs", ccargs);
 		
 		while(scan.hasNext()){
-			makeTests(scan.nextLine(), outputDirectory, testFile.getParentFile());
+			makeTests(scan.nextLine());
 		}
 	}
 	
@@ -114,9 +104,10 @@ public class CTests {
 		
 		String filename = primitive + "_Xcompare.c";
 		makefile.add("cFiles", filename);
-		writeSTToOutDir(filename, outputDirectory, xCompareST);
+		Test.writeSTToOutDir(filename, outputDirectory, xCompareST);
 	}
 		
+	/*
 	private void makeCompare(String primitive, File testDir, String outputDirectory, Scanner scan){
 		int outLength = scan.nextInt();
 		int minLength = scan.nextInt();
@@ -156,49 +147,26 @@ public class CTests {
 	
 		String filename = primitive + "_compare.c";
 		makefile.add("cFiles", filename);
-		writeSTToOutDir(filename, outputDirectory, compareST);
+		Test.writeSTToOutDir(filename, outputDirectory, compareST);
 		 
-	}
+	}*/
 
-	private void writeSTToOutDir(String filename, String outputDirectory, ST toWrite){
-		File outfile = new File(outputDirectory + File.separator + filename);
-		
-		try {
-			outfile.createNewFile();
-		} catch (IOException e) {
-			System.err.println("could not create file " + outfile.getAbsolutePath());
-			e.printStackTrace();
-		}
-	
-		try {
-			toWrite.write(outfile, null);//TODO: figure out what to do for second argument
-		} catch (IOException e) {
-			System.err.println("Problem writing to file " + outfile.getAbsolutePath());
-			e.printStackTrace();
-		}
-	}
-	
-	private void makeKAT(String primitive, File testDir, String outputDirectory, Scanner scan){
-		KAT kat = new KAT(testDir.getPath() + File.separator + primitive + "_KAT");
-		
-		while(scan.hasNext()){
+	private void makeCKAT(String primitive, List<String> libs){
+		KAT kat = test.getKAT(primitive);
+		for(String lib: libs){
 			ST impSt = stGroup.getInstanceOf("Ctests");
 			for(String imp : imports){
 				impSt.add("imports", imp);
 			}
-			String implementation = scan.next();
-			addKATs(primitive, implementation, kat, impSt);
+			addKATs(primitive, lib, kat, impSt);
 			
-			
-			String filename = primitive + "_" + implementation + "_" + "KAT.c";
+			String filename = primitive + "_" + lib + "_" + "KAT.c";
 			makefile.add("cFiles", filename);
-			writeSTToOutDir(filename, outputDirectory, impSt);
-		}
-		
-		
+			Test.writeSTToOutDir(filename, outDir.getPath(), impSt);
+		}		
 	}
 	
-	private String randomCString(int length){
+	/*private String randomCString(int length){
 		StringBuilder sb = new StringBuilder("{ ");
 		
 		for(int i=0; i<length; i++){
@@ -209,33 +177,58 @@ public class CTests {
 		}
 		sb.append(" }");
 		return sb.toString();
-	}
+	}*/
 	
-	private void makeTests(String testString, String outputDirectory, File testDir){
+	private void makeTests(String testString){
 		Scanner scan = new Scanner(testString);
 		String primitive = scan.next();
-		
-		String testType = scan.next();
-		
-		if(testType.equals("KAT")){
-			makeKAT(primitive, testDir, outputDirectory, scan);
+		LinkedList<String> libs = new LinkedList<String>();
+		while(scan.hasNext()){
+			libs.add(scan.next());
 		}
-		else if(testType.equals("Compare")){
-			makeCompare(primitive, testDir, outputDirectory, scan);
+		
+		if(test.getKAT(primitive)!=null){
+			makeCKAT(primitive, libs);
 		}
-		if(testType.equals("XCompare")){
-			makeXCompare(primitive, testDir, outputDirectory, scan);
+		
+		if(test.getTestFile(primitive) != null){
+			makeCompare(primitive, libs);
 		}
 		scan.close();
 		
-		writeFiles(outputDirectory);
+		writeFiles();
 	}
 	
-	private void writeFiles(String outputDirectory){
-		copyStaticFiles(outputDirectory);
-		writeSTToOutDir("tests.h", outputDirectory, header);
-		writeSTToOutDir("run_tests.c", outputDirectory, main);
-		writeSTToOutDir("Makefile", outputDirectory, makefile);
+	private void makeCompare(String primitive, LinkedList<String> libs) {
+		ST compareST = stGroup.getInstanceOf("Ctests");
+		
+		for(String imp : imports){
+			compareST.add("imports", imp);
+		}
+	
+		ST oneCompare = stGroup.getInstanceOf("CCompare");
+		
+		oneCompare.add("algorithm", primitive);
+		oneCompare.add("funcct", libs.size());
+		for(String lib : libs){
+			oneCompare.add("funcs", primitive + "_" + lib);
+		}
+		
+		compareST.add("tests", oneCompare.render());
+		
+		String filename = primitive + "_compare.c";
+		makefile.add("cFiles", filename);
+		main.add("testNames", primitive + "_compare");
+		header.add("testNames", primitive + "_compare");
+		Test.writeSTToOutDir(filename, outDir.getPath(), compareST);
+	
+	}
+
+	private void writeFiles(){
+		copyStaticFiles(outDir.getPath());
+		Test.writeSTToOutDir("tests.h", outDir.getPath(), header);
+		Test.writeSTToOutDir("run_tests.c", outDir.getPath(), main);
+		Test.writeSTToOutDir("Makefile", outDir.getPath(), makefile);
 	}
 	
 	private void copyStaticFiles(String dest){
@@ -328,8 +321,4 @@ public class CTests {
 		}
 	}
 	
-	
-	public static void main(String args[]){
-		new CTests("test_defs/C_tests").writeTestFiles("../callsha/tests");		
-	}
 }

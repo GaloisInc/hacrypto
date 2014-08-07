@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -127,6 +128,7 @@ public class KAT {
 		out.close();
 	}
 	
+	//probably not that useful now...
 	public String toString(){
 		StringBuilder sb = new StringBuilder();
 		for(Entry<KATInput,String> e : KATs.entrySet()){
@@ -138,17 +140,18 @@ public class KAT {
 		return sb.toString();
 	}
 	
-	public static void main(String args[]){
-		try {
-			KAT randKat = new KAT(0, 100, 50, "SHA-256");
-			randKat.toFile("SHA256_KAT_auto");
-		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public Entry<String,String> simpleStrings(){
+		StringBuilder inSb = new StringBuilder();
+		StringBuilder outSb = new StringBuilder();
+		for(Entry<KATInput, String> e : KATs.entrySet()){
+			inSb.append(e.getKey().simpleInputString());
+			inSb.append("\n");
+			outSb.append((e.getValue().length())/2);//division because length is string length, not byte length
+			outSb.append(" ");
+			outSb.append(e.getValue());
+			outSb.append("\n");
 		}
+		return new SimpleEntry<String,String>(inSb.toString(), outSb.toString());
 	}
-	
+		
 }
