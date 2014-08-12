@@ -21,7 +21,24 @@ SHA256_sodium_KAT_0(){
 
 } 
 
+//  abc represented in hex
 SHA256_sodium_KAT_1(){
+	unsigned char input[3] = { 97 ,98 ,99 };
+	unsigned char result[32];
+	unsigned char expected_result[32] = {
+	0xBA, 0x78, 0x16, 0xBF, 0x8F, 0x01, 0xCF, 0xEA, 
+	0x41, 0x41, 0x40, 0xDE, 0x5D, 0xAE, 0x22, 0x23, 
+	0xB0, 0x03, 0x61, 0xA3, 0x96, 0x17, 0x7A, 0x9C, 
+	0xB4, 0x10, 0xFF, 0x61, 0xF2, 0x00, 0x15, 0xAD
+
+	};
+
+	SHA256_sodium(input, result, 3);
+	check_KAT(result, expected_result, 32, "SHA256_sodium_KAT_1");
+
+} 
+
+SHA256_sodium_KAT_2(){
 	unsigned char input[56] = "abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq";
 	unsigned char result[32];
 	unsigned char expected_result[32] = {
@@ -33,11 +50,11 @@ SHA256_sodium_KAT_1(){
 	};
 
 	SHA256_sodium(input, result, 56);
-	check_KAT(result, expected_result, 32, "SHA256_sodium_KAT_1");
+	check_KAT(result, expected_result, 32, "SHA256_sodium_KAT_2");
 
 } 
 
-SHA256_sodium_KAT_2(){
+SHA256_sodium_KAT_3(){
     unsigned char *input = malloc(sizeof(char) * 1000000);
 	char to_repeat[] = "a";
 
@@ -56,11 +73,11 @@ SHA256_sodium_KAT_2(){
 	};
 
 	SHA256_sodium(input, result, 1000000);
-	check_KAT(result, expected_result, 32, "SHA256_sodium_KAT_2");
+	check_KAT(result, expected_result, 32, "SHA256_sodium_KAT_3");
 
 } 
 
-SHA256_sodium_KAT_3(){
+SHA256_sodium_KAT_4(){
 	unsigned char input[112] = "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmnoijklmnopjklmnopqklmnopqrlmnopqrsmnopqrstnopqrstu";
 	unsigned char result[32];
 	unsigned char expected_result[32] = {
@@ -72,11 +89,11 @@ SHA256_sodium_KAT_3(){
 	};
 
 	SHA256_sodium(input, result, 112);
-	check_KAT(result, expected_result, 32, "SHA256_sodium_KAT_3");
+	check_KAT(result, expected_result, 32, "SHA256_sodium_KAT_4");
 
 } 
 
-SHA256_sodium_KAT_4(){
+SHA256_sodium_KAT_5(){
 	unsigned char input[0] = {};
 	unsigned char result[32];
 	unsigned char expected_result[32] = {
@@ -88,11 +105,11 @@ SHA256_sodium_KAT_4(){
 	};
 
 	SHA256_sodium(input, result, 0);
-	check_KAT(result, expected_result, 32, "SHA256_sodium_KAT_4");
+	check_KAT(result, expected_result, 32, "SHA256_sodium_KAT_5");
 
 } 
 
-SHA256_sodium_KAT_5(){
+SHA256_sodium_KAT_6(){
 	unsigned char input[43] = "The quick brown fox jumps over the lazy dog";
 	unsigned char result[32];
 	unsigned char expected_result[32] = {
@@ -104,11 +121,11 @@ SHA256_sodium_KAT_5(){
 	};
 
 	SHA256_sodium(input, result, 43);
-	check_KAT(result, expected_result, 32, "SHA256_sodium_KAT_5");
+	check_KAT(result, expected_result, 32, "SHA256_sodium_KAT_6");
 
 } 
 
-SHA256_sodium_KAT_6(){
+SHA256_sodium_KAT_7(){
 	unsigned char input[3] = { 97 ,98 ,99 };
 	unsigned char result[32];
 	unsigned char expected_result[32] = {
@@ -120,11 +137,11 @@ SHA256_sodium_KAT_6(){
 	};
 
 	SHA256_sodium(input, result, 3);
-	check_KAT(result, expected_result, 32, "SHA256_sodium_KAT_6");
+	check_KAT(result, expected_result, 32, "SHA256_sodium_KAT_7");
 
 } 
 
-SHA256_sodium_KAT_7(){
+SHA256_sodium_KAT_8(){
     unsigned char *input = malloc(sizeof(char) * 1073741824);
 	char to_repeat[] = "abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmno";
 
@@ -143,6 +160,6 @@ SHA256_sodium_KAT_7(){
 	};
 
 	SHA256_sodium(input, result, 1073741824);
-	check_KAT(result, expected_result, 32, "SHA256_sodium_KAT_7");
+	check_KAT(result, expected_result, 32, "SHA256_sodium_KAT_8");
 
 } 
