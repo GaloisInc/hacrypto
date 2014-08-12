@@ -1,6 +1,9 @@
 // abc vector from that place....
 string abc
 !!! BA7816BF 8F01CFEA 414140DE 5DAE2223 B00361A3 96177A9C B410FF61 F20015AD
+// abc represented in hex
+hex 616263
+!!! BA7816BF 8F01CFEA 414140DE 5DAE2223 B00361A3 96177A9C B410FF61 F20015AD
 string abcdbcdecdefdefgefghfghighijhijkijkljklmklmnlmnomnopnopq
 !!! 248D6A61 D20638B8 E5C02693 0C3E6039 A33CE459 64FF2167 F6ECEDD4 19DB06C1
 string repeat 1000000 a

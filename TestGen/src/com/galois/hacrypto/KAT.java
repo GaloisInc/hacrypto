@@ -36,8 +36,23 @@ public class KAT {
 	}
 	
 	//this works assuming a fixed output size, and returns the size of the first result
-	public int getOutputSize(){
+	/*public int getOutputSize(){
 		return KATs.values().iterator().next().length();
+	}*/
+	
+	//from 
+	//http://stackoverflow.com/questions/140131/convert-a-string-representation-of-a-hex-dump-to-a-byte-array-using-java/140861#140861
+	public static byte[] hexStringToByteArray(String s) {
+	    int len = s.length();
+	    if (len %2 != 0){
+	    	throw new RuntimeErrorException(new Error("Invalid hex string length. Must be even, is " + len));
+	    }
+	    byte[] data = new byte[len / 2];
+	    for (int i = 0; i < len; i += 2) {
+	        data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4)
+	                             + Character.digit(s.charAt(i+1), 16));
+	    }
+	    return data;
 	}
 	
 	//scanner should be at the beginning of a new input output pair
@@ -72,6 +87,9 @@ public class KAT {
 				}
 			}
 			bytes = sb.toString().getBytes();
+		}
+		else if(katType.equals("hex")){
+			bytes = hexStringToByteArray(scan.nextLine().replaceAll("\\s",""));
 		}
 		else if(katType.equals("array")){
 			bytes = parseByteArray(scan.nextLine());

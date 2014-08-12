@@ -60,96 +60,6 @@ public class CTests {
 			makeTests(scan.nextLine());
 		}
 	}
-	
-	private void makeXCompare(String primitive, File testDir, String outputDirectory, Scanner scan){
-		KAT kat = new KAT(testDir.getPath() + File.separator + scan.next()); 
-		/*TODO: is reading a file the right thing here? Could generate the random
-		 * things right away. Have to think about multiple languages.
-		 */
-
-		ST xCompareST = stGroup.getInstanceOf("Ctests");
-		for(String imp : imports){
-			xCompareST.add("imports", imp);
-		}
-	
-		ST oneCompare = stGroup.getInstanceOf("CXCompare");
-	
-		while(scan.hasNext()){
-			oneCompare.add("funcs", primitive + "_" + scan.next());
-		}
-		
-		oneCompare.add("outputsize", kat.getOutputSize()/2); //divide by two because it is represented in hex and output size is bytes
-		
-		Iterator<Entry<KATInput, String>> it = kat.getEntries().iterator();
-		int i=0;
-		for(Entry<KATInput, String> oneKat : kat.getEntries()){
-			String testname = primitive + "_Xcompare_" + i;
-			oneCompare.add("testname", testname );
-			main.add("testNames", testname);
-			header.add("testNames", testname);
-	
-			oneCompare.add("inputsize", oneKat.getKey().bytes.length);
-			oneCompare.add("input", processInput(oneKat.getKey()));
-			oneCompare.add("result", "{ " + Test.hexToCUChar(it.next().getValue()) + " }");
-			
-			
-			xCompareST.add("tests", oneCompare.render());
-	
-			oneCompare.remove("testname");
-			oneCompare.remove("inputsize");
-			oneCompare.remove("input");
-			oneCompare.remove("result");
-			i++;
-		}
-		
-		String filename = primitive + "_Xcompare.c";
-		makefile.add("cFiles", filename);
-		Test.writeSTToOutDir(filename, outputDirectory, xCompareST);
-	}
-		
-	/*
-	private void makeCompare(String primitive, File testDir, String outputDirectory, Scanner scan){
-		int outLength = scan.nextInt();
-		int minLength = scan.nextInt();
-		int maxLength = scan.nextInt();
-		int tests = scan.nextInt();    
-		
-		ST compareST = stGroup.getInstanceOf("Ctests");
-		for(String imp : imports){
-			compareST.add("imports", imp);
-		}
-	
-		ST oneCompare = stGroup.getInstanceOf("CCompare");
-		oneCompare.add("firstfunc", primitive + "_" + scan.next());
-		while(scan.hasNext()){
-			oneCompare.add("funcs", primitive + "_" + scan.next());
-		}
-		
-		oneCompare.add("outputsize", outLength);
-	
-		for(int i=0; i<tests; i++ ){
-			String testname = primitive + "_compare_" + i;
-			oneCompare.add("testname", testname );
-			main.add("testNames", testname);
-			header.add("testNames", testname);
-	
-			int length = rn.nextInt(maxLength - minLength) + minLength;
-			oneCompare.add("inputsize", length);
-			oneCompare.add("input", randomCString(length));
-	
-			compareST.add("tests", oneCompare.render());
-	
-			oneCompare.remove("testname");
-			oneCompare.remove("inputsize");
-			oneCompare.remove("input");
-	
-		}
-	
-		String filename = primitive + "_compare.c";
-		makefile.add("cFiles", filename);
-		Test.writeSTToOutDir(filename, outputDirectory, compareST);
-		 
-	}*/
 
 	private void makeCKAT(String primitive, List<String> libs){
 		KAT kat = test.getKAT(primitive);
@@ -165,19 +75,6 @@ public class CTests {
 			Test.writeSTToOutDir(filename, outDir.getPath(), impSt);
 		}		
 	}
-	
-	/*private String randomCString(int length){
-		StringBuilder sb = new StringBuilder("{ ");
-		
-		for(int i=0; i<length; i++){
-			sb.append(rn.nextInt(256));
-			if(i < length -1){
-				sb.append(", ");
-			}
-		}
-		sb.append(" }");
-		return sb.toString();
-	}*/
 	
 	private void makeTests(String testString){
 		Scanner scan = new Scanner(testString);
