@@ -1,5 +1,5 @@
 CC=gcc
-OFILES= callsha.o sha_vst.o sha_nss.o lib.o
+OFILES= callsha.o sha_vst.o sha_nss.o
 
 all: lib 
 
@@ -10,11 +10,9 @@ framac_val_compare:
 
 callsha:
 	$(CC) callsha.c sha_vst.c sha_nss.c lib.c -L/usr/local/lib -L. -lsodium
-	
 
 lib : $(OFILES) 
 	ar rcs test_sha.a $(OFILES)
 
 %.o: %.c 
 	$(CC) -c -o $@ $< 
-	
