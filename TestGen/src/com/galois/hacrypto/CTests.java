@@ -26,196 +26,315 @@ import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupDir;
 //TODO Could this be one generic class that picks the same template?
 //     can templates be written so they all work on the same thing?
+
+/**
+ * Generates C tests for known answer tests and comparison tests
+ * 
+ * @author Joey Dodds
+ */
 public class CTests {
 
+	/**
+	 * Each string will be a single import file in each of the restulting C
+	 * files
+	 */
 	private String[] imports;
+
 	private STGroup stGroup = new STGroupDir("tmp");
+
 	private ST header = stGroup.getInstanceOf("header");
 	private ST main = stGroup.getInstanceOf("run_tests");
 	private ST makefile = stGroup.getInstanceOf("Makefile");
-	
+
 	private Test test;
 	private File outDir;
-	
-	public void writeTestFiles(File outDir, File inDir, Test test){
+
+	/**
+	 * Writes files to execute C tests. This includes a KAT file for each
+	 * algorithm and for each library that is being tested Writes some static
+	 * files common to all tests, as well as a makefile and a header file
+	 * 
+	 * @param outDir
+	 *            top level tests directory. This method outputs files to
+	 *            directory/C_tests
+	 * @param inDir
+	 *            directory to read C_tests file from
+	 * @param test
+	 *            test cases to generate code for
+	 */
+	public void writeTestFiles(File outDir, File inDir, Test test) {
 		this.outDir = new File(outDir.getPath() + File.separator + "C_tests");
 		this.outDir.mkdirs();
 		this.test = test;
 		File testFile = new File(inDir.getPath() + File.separator + "C_tests");
-		
-		Scanner scan= null;
+
+		Scanner scan = null;
 		try {
 			scan = new Scanner(testFile);
 		} catch (FileNotFoundException e) {
 			System.err.println("Could not find file " + testFile);
 			e.printStackTrace();
 		}
-		
+
 		String allImports = scan.nextLine();
 		imports = allImports.split("\\s+");
 		String ccargs = scan.nextLine();
 		makefile.add("ccargs", ccargs);
-		
-		while(scan.hasNext()){
+
+		while (scan.hasNext()) {
 			makeTests(scan.nextLine());
 		}
 	}
 
-	private void makeCKAT(String primitive, List<String> libs){
-		KAT kat = test.getKAT(primitive);
-		for(String lib: libs){
+	/**
+	 * @param algorithm
+	 *            the name of the algorithm to write KATs for
+	 * @param libs
+	 *            List of names of libraries to generate tests for. One test
+	 *            file will be generated for each library
+	 */
+	private void makeCKAT(String algorithm, List<String> libs) {
+		KAT kat = test.getKAT(algorithm);
+		for (String lib : libs) {
 			ST impSt = stGroup.getInstanceOf("Ctests");
-			for(String imp : imports){
+			for (String imp : imports) {
 				impSt.add("imports", imp);
 			}
-			addKATs(primitive, lib, kat, impSt);
-			
-			String filename = primitive + "_" + lib + "_" + "KAT.c";
+			addKATs(algorithm, lib, kat, impSt);
+
+			String filename = algorithm + "_" + lib + "_" + "KAT.c";
 			makefile.add("cFiles", filename);
 			Test.writeSTToOutDir(filename, outDir.getPath(), impSt);
-		}		
+		}
 	}
-	
-	private void makeTests(String testString){
+
+	/**
+	 * Creates tests for a single algorithm. There will be one test file
+	 * generated for each library that is being tested for that algorithm
+	 * 
+	 * @param testString
+	 *            A single line of the C_tests file
+	 */
+	private void makeTests(String testString) {
 		Scanner scan = new Scanner(testString);
 		String primitive = scan.next();
 		LinkedList<String> libs = new LinkedList<String>();
-		while(scan.hasNext()){
+		while (scan.hasNext()) {
 			libs.add(scan.next());
 		}
-		
-		if(test.getKAT(primitive)!=null){
+
+		if (test.getKAT(primitive) != null) {
 			makeCKAT(primitive, libs);
 		}
-		
-		if(test.getTestFile(primitive) != null){
+
+		if (test.getTestFile(primitive) != null) {
 			makeCompare(primitive, libs);
 		}
 		scan.close();
-		
+
 		writeFiles();
 	}
-	
-	private void makeCompare(String primitive, LinkedList<String> libs) {
+
+	/**
+	 * Creates a single C file that gathers pointers to each implementation into
+	 * an array and then calls each on the test files specified in {@link #test}
+	 * 
+	 * @param algorithm
+	 *            algorithm being tested
+	 * @param libs
+	 *            list of libraries being tested
+	 */
+	private void makeCompare(String algorithm, LinkedList<String> libs) {
 		ST compareST = stGroup.getInstanceOf("Ctests");
-		
-		for(String imp : imports){
+
+		for (String imp : imports) {
 			compareST.add("imports", imp);
 		}
-	
+
 		ST oneCompare = stGroup.getInstanceOf("CCompare");
-		
-		oneCompare.add("algorithm", primitive);
+
+		oneCompare.add("algorithm", algorithm);
 		oneCompare.add("funcct", libs.size());
-		for(String lib : libs){
-			oneCompare.add("funcs", primitive + "_" + lib);
+		for (String lib : libs) {
+			oneCompare.add("funcs", algorithm + "_" + lib);
 		}
-		
+
 		compareST.add("tests", oneCompare.render());
-		
-		String filename = primitive + "_compare.c";
+
+		String filename = algorithm + "_compare.c";
 		makefile.add("cFiles", filename);
-		main.add("testNames", primitive + "_compare");
-		header.add("testNames", primitive + "_compare");
+		main.add("testNames", algorithm + "_compare");
+		header.add("testNames", algorithm + "_compare");
 		Test.writeSTToOutDir(filename, outDir.getPath(), compareST);
-	
+
 	}
 
-	private void writeFiles(){
-		copyStaticFiles(outDir.getPath());
+	/**
+	 * Writes the files that need to be written with every test. These include
+	 * {@link #copyStaticFiles(String)}, header files, toplevel file and
+	 * Makefile
+	 */
+	private void writeFiles() {
+		copyStaticFiles();
 		Test.writeSTToOutDir("tests.h", outDir.getPath(), header);
 		Test.writeSTToOutDir("run_tests.c", outDir.getPath(), main);
 		Test.writeSTToOutDir("Makefile", outDir.getPath(), makefile);
 	}
-	
-	private void copyStaticFiles(String dest){
-		copyFiles("tmp" + File.separator + "Ccommon_test.c", dest + File.separator + "Ccommon_test.c");
-		copyFiles("tmp" + File.separator + "Ccommon_test.h", dest + File.separator + "Ccommon_test.h");
-		copyFiles("tmp" + File.separator + "README.md", dest + File.separator + "README.md");
+
+	/**
+	 * Copies common C files, headers and readme into {@link #outDir}
+	 */
+	private void copyStaticFiles() {
+		copyFiles("tmp" + File.separator + "Ccommon_test.c", outDir.getPath()
+				+ File.separator + "Ccommon_test.c");
+		copyFiles("tmp" + File.separator + "Ccommon_test.h", outDir.getPath()
+				+ File.separator + "Ccommon_test.h");
+		copyFiles("tmp" + File.separator + "README.md", outDir.getPath()
+				+ File.separator + "README.md");
 
 	}
-	
-	private void copyFiles(String src, String dest){
+
+	/**
+	 * @param src
+	 *            Location of source file to copy
+	 * @param dest
+	 *            Location of destination file to copy to, overwriting if needed
+	 */
+	private static void copyFiles(String src, String dest) {
 		Path source = Paths.get(src);
 		Path destination = Paths.get(dest);
 		try {
 			Files.copy(source, destination, StandardCopyOption.REPLACE_EXISTING);
 		} catch (IOException e) {
-			System.err.println("unable to copy file from "  + source.toAbsolutePath() + " to " + destination.toAbsolutePath());
+			System.err.println("unable to copy file from "
+					+ source.toAbsolutePath() + " to "
+					+ destination.toAbsolutePath());
 			e.printStackTrace();
 		}
 	}
-	
-	private String biteArrayToCString(byte[] bytes){
+
+	/**
+	 * @param bytes
+	 * @return C string initializer for unsigned byte array to create an
+	 *         equivalent array to the input
+	 */
+	private static String biteArrayToCString(byte[] bytes) {
 		StringBuilder sb = new StringBuilder("{ ");
-		for(byte byt : bytes){
-			sb.append(byt  & 0xFF); //convert to unsigned
+		for (byte byt : bytes) {
+			sb.append(byt & 0xFF); // convert to unsigned
 			sb.append(" ,");
 		}
-		sb.deleteCharAt(sb.length()-1); //there'll be an extra comma
+		sb.deleteCharAt(sb.length() - 1); // there'll be an extra comma
 		sb.append("}");
 		return sb.toString();
 	}
-	
-	
-	private String getKiString(KATInput ki){
-		if(ki.inputAs.equals("string") && ki.bytes.length < 500){
-			return ("\"" + new String( ki.bytes) + "\"");
-		}
-		else{
+
+	/**
+	 * @param ki
+	 * @return string representing the input. Tries to match the way the input
+	 *         was given in the KAT file
+	 */
+	// TODO output C hex string if hex was given as input
+	private String getKiString(KATInput ki) {
+		if (ki.inputAs.equals("string") && ki.bytes.length < 500) {
+			return ("\"" + new String(ki.bytes) + "\"");
+		} else {
 			return biteArrayToCString(ki.bytes);
 		}
 	}
-	
-	private String processInput(KATInput ki){
-		
+
+	/**
+	 * @param ki
+	 *            input
+	 * @return A string representing "processed" input. This string is ready to
+	 *         be assigned to a C variable If there is a repeat, this fills in
+	 *         the template appropriately
+	 */
+	private String processInput(KATInput ki) {
+
 		if (ki.repeat <= 1) {
 			return getKiString(ki);
 		}
-		
+
 		ST repeat = stGroup.getInstanceOf("repeat");
 		repeat.add("repeats", ki.repeat);
 		repeat.add("string", getKiString(ki));
 		repeat.add("stringlength", ki.bytes.length);
 		return repeat.render();
 	}
-	
-	private void addKATs(String primitive, String implementation, KAT kat, ST testST){
-		int ct=0;
-		for (Entry<KATInput,String> kv : kat.getEntries()){
+
+	/**
+	 * Populates a test file with KATs for a simple implementation and primitive
+	 * 
+	 * @param primitive
+	 * @param implementation
+	 * @param kat
+	 * @param testST
+	 *            Template that needs it's "tests" attribute added
+	 */
+	private void addKATs(String primitive, String implementation, KAT kat,
+			ST testST) {
+		int ct = 0;
+		for (Entry<KATInput, String> kv : kat.getEntries()) {
 			ST oneKAT = stGroup.getInstanceOf("CKAT");
-			if(kv.getKey().comment != null){
+			if (kv.getKey().comment != null) {
 				oneKAT.add("comment", kv.getKey().comment);
 			}
-			if(kv.getKey().repeat > 1){
+			if (kv.getKey().repeat > 1) {
 				oneKAT.add("malloc", "yup!");
 			}
-			oneKAT.add("inputsize", kv.getKey().bytes.length * kv.getKey().repeat);
-			oneKAT.add("outputsize", kv.getValue().length()/2);
-			
-			if(kv.getKey().repeat <= 1){
+			oneKAT.add("inputsize", kv.getKey().bytes.length
+					* kv.getKey().repeat);
+			oneKAT.add("outputsize", kv.getValue().length() / 2);
+
+			if (kv.getKey().repeat <= 1) {
 				oneKAT.add("input", processInput(kv.getKey()));
-			}
-			else{
-				oneKAT.add("input", "malloc(sizeof(char) * " + kv.getKey().bytes.length * kv.getKey().repeat + ")");
+			} else {
+				oneKAT.add("input", "malloc(sizeof(char) * "
+						+ kv.getKey().bytes.length * kv.getKey().repeat + ")");
 				oneKAT.add("repeat", processInput(kv.getKey()));
 			}
-			
-			oneKAT.add("answer", Test.hexToCUChar(new String(kv.getValue())));
-			
+
+			oneKAT.add("answer", CTests.hexToCUChar(new String(kv.getValue())));
+
 			String funcname = primitive + "_" + implementation;
-			String testname = funcname + "_KAT_" + ct ++;
-			
+			String testname = funcname + "_KAT_" + ct++;
+
 			oneKAT.add("testname", testname);
 			oneKAT.add("func", funcname);
-			
+
 			testST.add("tests", oneKAT.render());
-			
+
 			main.add("testNames", testname);
 			header.add("testNames", testname);
 
-
 		}
 	}
-	
+
+	/**
+	 * @param st
+	 *            Hex string with no spaces
+	 * @return String containing a C array initializer to create an unsigned
+	 *         char equal to the value given by st
+	 */
+	public static String hexToCUChar(String st) {
+		StringBuilder sb = new StringBuilder();
+		if (st.length() % 2 != 0) {
+			throw new RuntimeErrorException(null, "String " + st
+					+ " is not a valid length for a digest");
+		}
+		for (int i = 0; i < st.length(); i = i + 2) {
+			sb.append("0x");
+			sb.append(st.charAt(i));
+			sb.append(st.charAt(i + 1));
+			if (i + 2 < st.length()) {
+				sb.append(", ");
+			}
+			if (i != 0 && (i + 2) % 16 == 0) {
+				sb.append("\n");
+			}
+		}
+		return sb.toString();
+	}
+
 }
