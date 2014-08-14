@@ -144,8 +144,8 @@ public class KAT {
 	// better to generate them
 	// as they are written
 	// TODO: make this work for things other than digests
-	public KAT(int minSize, int maxSize, int testCt, String algorithm)
-			throws NoSuchAlgorithmException {
+	public void createRandom(int minSize, int maxSize, int testCt,
+			String algorithm) throws NoSuchAlgorithmException {
 		Random rand = new Random();
 		for (int i = 0; i < testCt; i++) {
 			int size = rand.nextInt(maxSize - minSize) + minSize;
@@ -161,6 +161,28 @@ public class KAT {
 			KATs.put(new KATInput(1, bytes, "array", "Random test" + i),
 					sb.toString());
 		}
+	}
+
+	public void createStep(int minSize, int maxSize, int stepsize,
+			String algorithm) throws NoSuchAlgorithmException {
+		Random rand = new Random();
+		for (int i = minSize; i <= maxSize; i = i + stepsize) {
+			byte[] bytes = new byte[i];
+			rand.nextBytes(bytes);
+			MessageDigest digest;
+			digest = MessageDigest.getInstance(algorithm);
+			byte[] hash = digest.digest(bytes);
+			StringBuilder sb = new StringBuilder();
+			for (byte b : hash) {
+				sb.append(String.format("%02X", b));
+			}
+			KATs.put(new KATInput(1, bytes, "array", "Random test" + i),
+					sb.toString());
+		}
+	}
+
+	public KAT() {
+
 	}
 
 	/**
@@ -196,7 +218,11 @@ public class KAT {
 			req.add("values", e.getKey().bytes.length * 8); // this length is in
 															// bits
 			req.add("fields", "Msg");
-			req.add("values", e.getKey().toHexString());
+			if (e.getKey().bytes.length == 0) {
+				req.add("values", "00");
+			} else {
+				req.add("values", e.getKey().toHexString());
+			}
 			reqfile.add("reqs", req.render());
 
 		}

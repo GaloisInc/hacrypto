@@ -131,7 +131,9 @@ public class Test {
 					+ "_KAT");
 			kats.put(algorithm, kat);
 		} else if (testType.toUpperCase().equals("COMPARE")) {
-			createCompare(testReader, algorithm);
+			createCompare(testReader, algorithm, false);
+		} else if (testType.toUpperCase().equals("STEP")) {
+			createCompare(testReader, algorithm, true);
 		}
 
 		else {
@@ -139,30 +141,41 @@ public class Test {
 					"Unimplemented test type: " + testType));
 		}
 	}
-	
+
 	/**
 	 * creates input and output files for a compare read in from the tests file
-	 * @param testReader next string should be the test name after the compare
-	 * @param algorithm 
+	 * 
+	 * @param testReader
+	 *            next string should be the test name after the compare
+	 * @param algorithm
 	 */
-	private void createCompare(Scanner testReader, String algorithm){
-		KAT kat = null;
+	private void createCompare(Scanner testReader, String algorithm,
+			boolean isStep) {
+		KAT kat = new KAT();
 		String testName = testReader.next();
 		String fileName = algorithm + testName + ".req";
 		try {
-			kat = new KAT(testReader.nextInt(), testReader.nextInt(),
-					testReader.nextInt(), translateAlgorithm(algorithm));
+			if (isStep) {
+				kat.createStep(testReader.nextInt(), testReader.nextInt(), testReader.nextInt(),
+						translateAlgorithm(algorithm));
+			} else {
+				kat.createRandom(testReader.nextInt(), testReader.nextInt(),
+						testReader.nextInt(), translateAlgorithm(algorithm));
+			}
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
 
-		Entry<String, String> inout = kat.simpleStrings(); //TODO only need output if changing to NIST file format
+		Entry<String, String> inout = kat.simpleStrings(); // TODO only need
+															// output if
+															// changing to NIST
+															// file format
 		/*
-		 * for old test writing
-		 * writeStringToOutDir(algorithm + "_compare_in", outDir.getPath(),
-		 * 		inout.getKey());
+		 * for old test writing writeStringToOutDir(algorithm + "_compare_in",
+		 * outDir.getPath(), inout.getKey());
 		 */
-		writeSTToOutDir(fileName, outDir.getPath(), kat.getReqFile(stGroup, algorithm));
+		writeSTToOutDir(fileName, outDir.getPath(),
+				kat.getReqFile(stGroup, algorithm));
 		writeStringToOutDir(algorithm + testName + "_out", outDir.getPath(),
 				inout.getValue());
 		addTestFile(algorithm, testName);
@@ -170,12 +183,14 @@ public class Test {
 
 	/**
 	 * this adds a filename to the one to many map testFiles
-	 * @param algorithm algorithm to add the testfile for
-	 * @param fileName 
+	 * 
+	 * @param algorithm
+	 *            algorithm to add the testfile for
+	 * @param fileName
 	 */
-	private void addTestFile(String algorithm, String fileName){
+	private void addTestFile(String algorithm, String fileName) {
 		List<String> value = testFiles.get(algorithm);
-		if(value == null){
+		if (value == null) {
 			value = new LinkedList<String>();
 			testFiles.put(algorithm, value);
 		}

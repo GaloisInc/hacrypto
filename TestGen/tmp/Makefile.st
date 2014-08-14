@@ -1,6 +1,35 @@
 Makefile (cFiles, ccargs) ::= <<
-all : tests
+CC = gcc
 
-tests : <cFiles; separator = " ">
-	gcc Ccommon_test.c run_tests.c <cFiles; separator = " ">  test_sha.a -o tests <ccargs>
+CFLAGS =
+
+INCLUDES = 
+
+LFLAGS = test_sha.a -L/usr/local/lib -lsodium
+
+LIBS = <ccargs>
+
+SRCS = <cFiles; separator = " "> Ccommon_test.c run_tests.c
+
+OBJS = $(SRCS:.c=.o)
+
+MAIN = tests
+	
+.PHONY: depend clean
+
+all:    $(MAIN)
+
+$(MAIN): $(OBJS) 
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
+
+.c.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c $\<  -o $@
+
+clean:
+	$(RM) *.o *~ $(MAIN)
+
+depend: $(SRCS)
+	makedepend $(INCLUDES) $^
+
+# DO NOT DELETE THIS LINE -- make depend needs it
 >>

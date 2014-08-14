@@ -35,7 +35,7 @@ int check_KAT(unsigned char *result,
 //not sure if it is worth making it fully generic with
 //respect to number of inputs
 //TODO This function expects a very correct file for SHA256. Maybe it can/should be generalized?
-int do_comparison1(char *infile, char *outfile, int (*funcs[])(char *, char *, unsigned long long), int funcslength){
+int do_comparison1(char *infile, char *outfile, int (*funcs[])(unsigned char *,unsigned char *, unsigned long long), int funcslength){
 	setbuf(stdout,NULL);
 	FILE *fpin = fopen(infile, "r");
 	FILE *fpout = fopen(outfile, "r");
@@ -63,13 +63,21 @@ int do_comparison1(char *infile, char *outfile, int (*funcs[])(char *, char *, u
 		fscanf(fpin, "%s", nextstring); //read the "="
 		fscanf(fpin, "%lu", &inlength);
 		inlength = inlength/8; //convert from size in bits to size in bytes
+
+		unsigned char input0[0];
 		unsigned char* input = malloc(inlength * sizeof(char));
 
 		fscanf(fpin, "%s", nextstring); //read msg
 		fscanf(fpin, "%s", nextstring); //read "="
 
-		for(i=0; i<inlength; i++){
-			fscanf(fpin, "%2hhx", &input[i]);
+		if(inlength == 0){
+			fscanf(fpin, "%*2hhx");
+			input = input0;
+		}
+		else{
+			for(i=0; i<inlength; i++){
+				fscanf(fpin, "%2hhx", &input[i]);
+			}
 		}
 
 		fscanf(fpout, "%d", &outlength);
@@ -87,11 +95,14 @@ int do_comparison1(char *infile, char *outfile, int (*funcs[])(char *, char *, u
 			}
 		}
 
-		free(input);
+		if(inlength != 0){
+			free(input);
+		}
 		free(output1);
 		free(output2);
 		testno++;
 	}
-
+	fclose(fpin);
+	fclose(fpout);
 	return 0;
 }
