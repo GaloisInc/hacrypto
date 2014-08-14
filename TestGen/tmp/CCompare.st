@@ -1,9 +1,7 @@
-CCompare(funcs, funcct, algorithm) ::= <<
-void <algorithm>_compare(){
+CCompare(funcs, funcct, algorithm, testname) ::= <<
+void <algorithm>_<testname>(){
 	int (*funcs[<funcct>])(unsigned char *, unsigned char *, unsigned long long);
 		
 		<funcs: {func | funcs[<i0>] = <func>;}; separator = "\n">
-		do_comparison1("../<algorithm>_compare_in", "../<algorithm>_compare_out", funcs, <funcct>);
-	
-		
+		do_comparison1("../<algorithm><testname>.req", "../<algorithm><testname>_out", funcs, <funcct>);
 } >>

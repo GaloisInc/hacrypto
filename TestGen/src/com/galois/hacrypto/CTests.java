@@ -145,20 +145,24 @@ public class CTests {
 			compareST.add("imports", imp);
 		}
 
-		ST oneCompare = Test.stGroup.getInstanceOf("CCompare");
+		for (String testName : test.getTestFile(algorithm)) {
+			ST oneCompare = Test.stGroup.getInstanceOf("CCompare");
 
-		oneCompare.add("algorithm", algorithm);
-		oneCompare.add("funcct", libs.size());
-		for (String lib : libs) {
-			oneCompare.add("funcs", algorithm + "_" + lib);
+			oneCompare.add("algorithm", algorithm);
+			oneCompare.add("testname", testName);
+			oneCompare.add("funcct", libs.size());
+			for (String lib : libs) {
+				oneCompare.add("funcs", algorithm + "_" + lib);
+			}
+
+			compareST.add("tests", oneCompare.render());
+
+			main.add("testNames", algorithm + "_" + testName);
+			header.add("testNames", algorithm + "_" + testName);
 		}
-
-		compareST.add("tests", oneCompare.render());
-
+		
 		String filename = algorithm + "_compare.c";
 		makefile.add("cFiles", filename);
-		main.add("testNames", algorithm + "_compare");
-		header.add("testNames", algorithm + "_compare");
 		Test.writeSTToOutDir(filename, outDir.getPath(), compareST);
 
 	}
