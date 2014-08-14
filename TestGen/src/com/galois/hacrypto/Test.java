@@ -15,6 +15,8 @@ import java.util.Scanner;
 import javax.management.RuntimeErrorException;
 
 import org.stringtemplate.v4.ST;
+import org.stringtemplate.v4.STGroup;
+import org.stringtemplate.v4.STGroupDir;
 
 /**
  * Responsible for language-independent parts of tests. Reads configuration
@@ -42,6 +44,7 @@ public class Test {
 
 	private File outDir;
 	private File testDir;
+	public static final STGroup stGroup = new STGroupDir("tmp");
 
 	/**
 	 * @param testDir
@@ -110,7 +113,7 @@ public class Test {
 	}
 
 	/**
-	 * Reads a single line of the test file in. This can specify KAT and/or
+	 * Reads a single line of the test file. This can specify KAT and/or
 	 * Comparison tests for a single algorithm
 	 * 
 	 * @param testReader
@@ -135,9 +138,13 @@ public class Test {
 				e.printStackTrace();
 			}
 
-			Entry<String, String> inout = kat.simpleStrings();
-			writeStringToOutDir(algorithm + "_compare_in", outDir.getPath(),
-					inout.getKey());
+			Entry<String, String> inout = kat.simpleStrings(); //TODO only need output if changing to NIST file format
+			/*
+			 * for old test writing
+			 * writeStringToOutDir(algorithm + "_compare_in", outDir.getPath(),
+			 * 		inout.getKey());
+			 */
+			writeSTToOutDir(algorithm + "_compare_in", outDir.getPath(), kat.getReqFile(stGroup, algorithm));
 			writeStringToOutDir(algorithm + "_compare_out", outDir.getPath(),
 					inout.getValue());
 			testFiles.put(algorithm, algorithm + "_compare");

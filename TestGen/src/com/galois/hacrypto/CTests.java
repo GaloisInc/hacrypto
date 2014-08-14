@@ -22,10 +22,6 @@ import javax.management.RuntimeErrorException;
 
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STErrorListener;
-import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STGroupDir;
-//TODO Could this be one generic class that picks the same template?
-//     can templates be written so they all work on the same thing?
 
 /**
  * Generates C tests for known answer tests and comparison tests
@@ -40,11 +36,9 @@ public class CTests {
 	 */
 	private String[] imports;
 
-	private STGroup stGroup = new STGroupDir("tmp");
-
-	private ST header = stGroup.getInstanceOf("header");
-	private ST main = stGroup.getInstanceOf("run_tests");
-	private ST makefile = stGroup.getInstanceOf("Makefile");
+	private ST header = Test.stGroup.getInstanceOf("header");
+	private ST main = Test.stGroup.getInstanceOf("run_tests");
+	private ST makefile = Test.stGroup.getInstanceOf("Makefile");
 
 	private Test test;
 	private File outDir;
@@ -96,7 +90,7 @@ public class CTests {
 	private void makeCKAT(String algorithm, List<String> libs) {
 		KAT kat = test.getKAT(algorithm);
 		for (String lib : libs) {
-			ST impSt = stGroup.getInstanceOf("Ctests");
+			ST impSt = Test.stGroup.getInstanceOf("Ctests");
 			for (String imp : imports) {
 				impSt.add("imports", imp);
 			}
@@ -145,13 +139,13 @@ public class CTests {
 	 *            list of libraries being tested
 	 */
 	private void makeCompare(String algorithm, LinkedList<String> libs) {
-		ST compareST = stGroup.getInstanceOf("Ctests");
+		ST compareST = Test.stGroup.getInstanceOf("Ctests");
 
 		for (String imp : imports) {
 			compareST.add("imports", imp);
 		}
 
-		ST oneCompare = stGroup.getInstanceOf("CCompare");
+		ST oneCompare = Test.stGroup.getInstanceOf("CCompare");
 
 		oneCompare.add("algorithm", algorithm);
 		oneCompare.add("funcct", libs.size());
@@ -256,7 +250,7 @@ public class CTests {
 			return getKiString(ki);
 		}
 
-		ST repeat = stGroup.getInstanceOf("repeat");
+		ST repeat = Test.stGroup.getInstanceOf("repeat");
 		repeat.add("repeats", ki.repeat);
 		repeat.add("string", getKiString(ki));
 		repeat.add("stringlength", ki.bytes.length);
@@ -276,7 +270,7 @@ public class CTests {
 			ST testST) {
 		int ct = 0;
 		for (Entry<KATInput, String> kv : kat.getEntries()) {
-			ST oneKAT = stGroup.getInstanceOf("CKAT");
+			ST oneKAT = Test.stGroup.getInstanceOf("CKAT");
 			if (kv.getKey().comment != null) {
 				oneKAT.add("comment", kv.getKey().comment);
 			}

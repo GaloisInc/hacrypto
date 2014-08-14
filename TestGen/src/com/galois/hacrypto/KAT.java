@@ -2,7 +2,6 @@ package com.galois.hacrypto;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.AbstractMap.SimpleEntry;
@@ -14,6 +13,9 @@ import java.util.Scanner;
 import java.util.Set;
 
 import javax.management.RuntimeErrorException;
+
+import org.stringtemplate.v4.ST;
+import org.stringtemplate.v4.STGroup;
 
 /**
  * Class representing a known answer test.
@@ -184,6 +186,23 @@ public class KAT {
 		return KATs.entrySet();
 	}
 
+	public ST getReqFile(STGroup group, String algorithm){
+		ST reqfile = group.getInstanceOf("reqfile");
+		reqfile.add("comments", algorithm);
+		
+		for (Entry<KATInput, String> e : KATs.entrySet()) {
+			ST req = group.getInstanceOf("reqs");
+			req.add("fields", "Len"); 
+			req.add("values", e.getKey().bytes.length * 8); //this length is in bits
+			req.add("fields", "Msg");
+			req.add("values", e.getKey().toHexString());
+			reqfile.add("reqs", req.render());
+
+		}
+		
+		return reqfile;
+	}
+	
 	/**
 	 * @return Entry of two strings. Each line has a size followed by a hex
 	 *         string representing either an input or an output. The key is the
