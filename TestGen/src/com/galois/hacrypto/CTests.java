@@ -3,25 +3,18 @@ package com.galois.hacrypto;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URI;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.Iterator;
-import java.util.List;
 import java.util.LinkedList;
-import java.util.Map;
+import java.util.List;
 import java.util.Map.Entry;
-import java.util.Random;
 import java.util.Scanner;
-import java.util.Set;
 
 import javax.management.RuntimeErrorException;
 
 import org.stringtemplate.v4.ST;
-import org.stringtemplate.v4.STErrorListener;
 
 /**
  * Generates C tests for known answer tests and comparison tests
@@ -59,6 +52,7 @@ public class CTests {
 	public void writeTestFiles(File outDir, File inDir, Test test) {
 		this.outDir = new File(outDir.getPath() + File.separator + "C_tests");
 		this.outDir.mkdirs();
+		new File(this.outDir.getPath() + File.separator + "output").mkdirs();
 		this.test = test;
 		File testFile = new File(inDir.getPath() + File.separator + "C_tests");
 
@@ -152,7 +146,7 @@ public class CTests {
 			oneCompare.add("testname", testName);
 			oneCompare.add("funcct", libs.size());
 			for (String lib : libs) {
-				oneCompare.add("funcs", algorithm + "_" + lib);
+				oneCompare.add("libs", lib);
 			}
 
 			compareST.add("tests", oneCompare.render());

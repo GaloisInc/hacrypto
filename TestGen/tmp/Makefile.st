@@ -1,7 +1,7 @@
 Makefile (cFiles, ccargs) ::= <<
 CC = gcc
 
-CFLAGS =
+CFLAGS = -Wall -g
 
 INCLUDES = 
 
