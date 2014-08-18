@@ -69,7 +69,7 @@ int do_comparison1(char *infile, char *outfile, int (*funcs[])(char *, char *, u
 		fscanf(fpin, "%s", nextstring); //read msg
 		fscanf(fpin, "%s", nextstring); //read "="
 		
-		for(i=0; i<inlength/4; i++){ //inlength is in bits, string we want is hex
+		for(i=0; i<inlength; i++){
 			fscanf(fpin, "%2hhx", &input[i]);
 		}
 		

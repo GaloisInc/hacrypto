@@ -1,14 +1,14 @@
 CC = gcc
 
-CFLAGS =
+CFLAGS = -Wall -g
 
 INCLUDES = 
 
-LFLAGS = test_sha.a -L/usr/local/lib -lsodium
+LFLAGS = ../../test_sha.a -L/usr/local/lib -lsodium
 
 LIBS = -L/usr/local/lib -lsodium
 
-SRCS = SHA256_compare.c Ccommon_test.c run_tests.c
+SRCS = SHA256_VST_KAT.c SHA256_NSS_KAT.c SHA256_sodium_KAT.c SHA256_compare.c Ccommon_test.c run_tests.c
 
 OBJS = $(SRCS:.c=.o)
 

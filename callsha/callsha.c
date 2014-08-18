@@ -1,7 +1,6 @@
 #include <string.h>
 #include <stdio.h>
-#include "hashes.h"
-
+#include "hashes.h"	
 
 
 int SHA256_sodium(unsigned char *in, unsigned char *out,
@@ -16,7 +15,7 @@ int SHA256_VST(unsigned char *in, unsigned char *out, unsigned long long inlen)
 	return 1;
 }
 
-int SHA256_NSS(unsigned char *in, unsigned char *out, unsigned long long inlen)
+SHA256_NSS(unsigned char *in, unsigned char *out, unsigned long long inlen)
 {
 	return SHA256_HashBuf(out, in, inlen);			   
 }

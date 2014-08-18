@@ -31,27 +31,56 @@ int check_KAT(unsigned char *result,
 	return 0;
 }
 
+void write_hex(long long length, unsigned char *bytes, FILE *f){
+	long long i;
+	for(i=0; i<length; i++){
+		printf("%02h", bytes[i]);
+		fprintf(f, "%02h", bytes[i]);
+	}
+}
+
+void write_rsp(long long inlength,unsigned char *input,unsigned char *output, long long outlength, FILE *frsp){
+	fprintf(frsp, "Len = %lu\nMsg = ", inlength);
+	write_hex(inlength, input, frsp);
+	fprintf(frsp, "\nMD = ");
+	write_hex(outlength, output, frsp);
+	fprintf(frsp, "\n\n");
+}
+
 //specialized to one input... may need versions for more
 //not sure if it is worth making it fully generic with
 //respect to number of inputs
 //TODO This function expects a very correct file for SHA256. Maybe it can/should be generalized?
-int do_comparison1(char *infile, char *outfile, int (*funcs[])(unsigned char *,unsigned char *, unsigned long long), int funcslength){
+int do_comparison1(char *infile, char *outfile,
+		int (*funcs[])(unsigned char *,unsigned char *, unsigned long long), int funcslength, char *rsps[]){
 	setbuf(stdout,NULL);
 	FILE *fpin = fopen(infile, "r");
 	FILE *fpout = fopen(outfile, "r");
 
+	int i;
+	FILE** frsps = malloc(funcslength * sizeof(FILE*));
+	for(i=0; i<funcslength; i++){
+		frsps[i] = fopen(rsps[i], "w+");
+		if (frsps[i] == NULL) {
+				fprintf(stderr, "Can't open rsp file %s\n", rsps[i]);
+				exit(1);
+		}
+	}
+
 	if (fpin == NULL) {
-		fprintf(stderr, "Can't open input file in.list!\n");
+		fprintf(stderr, "Can't open input file %s!\n", infile);
 		exit(1);
 	}
 
 	if (fpout == NULL) {
-		fprintf(stderr, "Can't open input file in.list!\n");
+		fprintf(stderr, "Can't open output file %s\n", outfile);
 		exit(1);
 	}
 
+
+
 	unsigned long inlength, outlength;
-	int i, testno;
+	int testno;
 	unsigned char nextstring[50]; //should be safe unless comments are malicious...
 	testno=1;
 	while(fscanf(fpin, "%s", nextstring) != EOF){
@@ -62,6 +91,7 @@ int do_comparison1(char *infile, char *outfile, int (*funcs[])(unsigned char *,u
 
 		fscanf(fpin, "%s", nextstring); //read the "="
 		fscanf(fpin, "%lu", &inlength);
+
 		inlength = inlength/8; //convert from size in bits to size in bytes
 
 		unsigned char input0[0];
@@ -74,13 +104,14 @@ int do_comparison1(char *infile, char *outfile, int (*funcs[])(unsigned char *,u
 			fscanf(fpin, "%*2hhx");
 			input = input0;
 		}
+
 		else{
 			for(i=0; i<inlength; i++){
 				fscanf(fpin, "%2hhx", &input[i]);
 			}
 		}
 
-		fscanf(fpout, "%d", &outlength);
+		fscanf(fpout, "%lu", &outlength);
 		unsigned char* output1 = malloc(outlength * sizeof(char));
 		unsigned char* output2 = malloc(outlength * sizeof(char));
 
@@ -93,7 +124,9 @@ int do_comparison1(char *infile, char *outfile, int (*funcs[])(unsigned char *,u
 			if (!compare_results(output1, output2, outlength)){
 				printf("Test %d of file %s failed for function %d\n", testno, infile, i);
 			}
+			write_rsp(inlength, input, output2, outlength, frsps[i]);
 		}
+
 
 		if(inlength != 0){
 			free(input);
