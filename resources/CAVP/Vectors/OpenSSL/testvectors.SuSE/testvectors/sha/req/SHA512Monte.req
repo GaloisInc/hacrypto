@@ -1,0 +1,9 @@
+#  CAVS 4.6
+#  "SHA-512 Monte" information for "OpenSSL-SUSE-SALT-0"
+#  SHA-512 tests are configured for BYTE oriented implementations
+#  Generated on Mon Jun 06 16:16:23 2005
+
+[L = 64]
+
+Seed = 219c071d092cbe0376c68c04721dea084e0ad85b3ad4160f13ae979c7c8133ca30ec9cd1978a93be97735c18ac056fc43be47026233f6189965517c12738ea0e
+

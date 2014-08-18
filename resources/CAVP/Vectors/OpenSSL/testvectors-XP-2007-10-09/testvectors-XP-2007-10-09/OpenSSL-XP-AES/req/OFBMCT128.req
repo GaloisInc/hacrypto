@@ -1,0 +1,20 @@
+# CAVS 5.3
+# Config info for openSSL-winXP
+# AESVS MCT test data for OFB
+# State : Encrypt and Decrypt
+# Key Length : 128
+# Generated on Wed Sep 05 15:34:41 2007
+
+[ENCRYPT]
+
+COUNT = 0
+KEY = aa1521085fa1bac1e4466ffb722a5ab2
+IV = 79f1a65f19e489bc31593bba3c68bd64
+PLAINTEXT = 79999fce295258338cb4d6132485d210
+
+[DECRYPT]
+
+COUNT = 0
+KEY = b570b5f7affedd48a4a880c0587a8873
+IV = 82eaebabd2145ec473ac6290c1f04fdd
+CIPHERTEXT = e7e650cf486c07177230345a869f29fa

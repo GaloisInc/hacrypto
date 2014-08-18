@@ -1,0 +1,9 @@
+#  CAVS 4.6
+#  "SHA-384 Monte" information for "OpenSSL-SUSE-SALT-0"
+#  SHA-384 tests are configured for BYTE oriented implementations
+#  Generated on Mon Jun 06 16:16:14 2005
+
+[L = 48]
+
+Seed = 263cdd4364739b140789a555673d486c64c479cbb5c9c6167db18c881f23699354c8f4c67b4facf430b52f931fc3ad62
+

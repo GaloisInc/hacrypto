@@ -1,0 +1,18 @@
+# CAVS 5.3
+# Config info for OpenSSL-linux
+# AESVS MCT test data for ECB
+# State : Encrypt and Decrypt
+# Key Length : 192
+# Generated on Wed Sep 05 15:23:27 2007
+
+[ENCRYPT]
+
+COUNT = 0
+KEY = 8372026861a929cee24b12eb4923a90985ef04f6fa14485b
+PLAINTEXT = f814f855128d794cfd9f098cac84c747
+
+[DECRYPT]
+
+COUNT = 0
+KEY = 9d535029a0eaef66e37590f516730d5f74c9ffe8fdff2464
+CIPHERTEXT = 0c586904b83d3f3b34b170418f92330a

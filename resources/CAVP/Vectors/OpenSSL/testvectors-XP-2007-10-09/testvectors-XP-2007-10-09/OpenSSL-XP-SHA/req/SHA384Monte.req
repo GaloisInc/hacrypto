@@ -1,0 +1,9 @@
+#  CAVS 5.3
+#  "SHA-384 Monte" information for "openSSL-winXP"
+#  SHA-384 tests are configured for BYTE oriented implementations
+#  Generated on Wed Jun 13 17:05:24 2007
+
+[L = 48]
+
+Seed = 5059f7e201706a96f9903dce80a62f997cdb5af8fad069400b2805bfd14890a2d95a1616ab9880aea0c70b05f401f9a4
+

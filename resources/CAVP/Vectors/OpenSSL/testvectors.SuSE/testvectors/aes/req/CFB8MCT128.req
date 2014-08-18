@@ -1,0 +1,20 @@
+# CAVS 4.6
+# Config info for OpenSSL-SUSE-SALT-0
+# AESVS MCT test data for CFB8
+# State : Encrypt and Decrypt
+# Key Length : 128
+# Generated on Mon Jun 06 16:14:49 2005
+
+[ENCRYPT]
+
+COUNT = 0
+KEY = d28334874bf775297686e0e29d5ac456
+IV = 8a359405f493e417fb0827a491cb8ab4
+PLAINTEXT = 9b
+
+[DECRYPT]
+
+COUNT = 0
+KEY = a9e9ef7d25a95984817f5457f793fcf8
+IV = c526eb50b3c5101aec9375bdceca7fd9
+CIPHERTEXT = 9b

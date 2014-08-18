@@ -1,0 +1,20 @@
+# CAVS 4.6
+# Config info for OpenSSL-SUSE-SALT-0
+# AESVS MCT test data for OFB
+# State : Encrypt and Decrypt
+# Key Length : 256
+# Generated on Mon Jun 06 16:15:12 2005
+
+[ENCRYPT]
+
+COUNT = 0
+KEY = 9ce9544e26f763b56ee1a051e5e59e7559254b6cbe58cfc82dbfb7f72d5a5317
+IV = b717dbd54359a7f884d2c546e51704a2
+PLAINTEXT = ce8f4523b3f703457d493b5a4bfa1730
+
+[DECRYPT]
+
+COUNT = 0
+KEY = 52c17ce6c6fa4f2fe4f4ac7fffc223b7c56f664d1e4c51445789275c7f031f86
+IV = 0c1ad1ffab706f7b73a764148037d1b3
+CIPHERTEXT = 612d348e23a6c717f814f36fa43c3d91

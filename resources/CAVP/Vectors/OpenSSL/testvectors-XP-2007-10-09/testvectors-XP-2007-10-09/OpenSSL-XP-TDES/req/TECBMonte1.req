@@ -1,0 +1,21 @@
+# CAVS 5.3
+# Config Info for : "openSSL-winXP"
+# TDES Monte Carlo (Modes) Test for ECB
+# State : Encrypt and Decrypt
+# Thu Jun 14 11:16:16 AM
+
+[ENCRYPT]
+NumKeys = 1
+
+KEY1 = 6db0b3ef6d8fc7f2
+KEY2 = 6db0b3ef6d8fc7f2
+KEY3 = 6db0b3ef6d8fc7f2
+PLAINTEXT = f104cb63016a164b
+
+[DECRYPT]
+NumKeys = 1
+
+KEY1 = 106407b6922a15ad
+KEY2 = 106407b6922a15ad
+KEY3 = 106407b6922a15ad
+CIPHERTEXT = 424da46a2773fa54

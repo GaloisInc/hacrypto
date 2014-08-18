@@ -1,0 +1,9 @@
+#  CAVS 5.3
+#  "SHA-384 Monte" information for "OpenSSL-linux"
+#  SHA-384 tests are configured for BYTE oriented implementations
+#  Generated on Thu Jun 14 12:00:21 2007
+
+[L = 48]
+
+Seed = 8a91b9fbb7e75a6ea0adc91cd8755fd38f03de18c0b249b0ab14f86586d9eb0670f25fb0a6f69f4cf9c41d59806ac1ec
+

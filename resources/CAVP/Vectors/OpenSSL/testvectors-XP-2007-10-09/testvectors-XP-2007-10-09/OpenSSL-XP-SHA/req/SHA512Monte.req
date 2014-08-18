@@ -1,0 +1,9 @@
+#  CAVS 5.3
+#  "SHA-512 Monte" information for "openSSL-winXP"
+#  SHA-512 tests are configured for BYTE oriented implementations
+#  Generated on Wed Jun 13 17:05:34 2007
+
+[L = 64]
+
+Seed = 74c08819d8b38bbd294c6196c7349d40f1828f1a963ab8ef671380d6317e2c566ae30ace0a2eee149c8ae25d946c1a5de3d426afc9d06b76ea41d445a5e1c53c
+

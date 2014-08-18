@@ -1,0 +1,23 @@
+# CAVS 5.3
+# Config Info for : "openSSL-winXP"
+# TDES Monte Carlo (Modes) Test for CBC
+# State : Encrypt and Decrypt
+# Thu Jun 14 11:16:45 AM
+
+[ENCRYPT]
+NumKeys = 2
+
+KEY1 = 3de01f578075706d
+KEY2 = 196d0d0775401a80
+KEY3 = 3de01f578075706d
+IV = c614b8ce79e0e2ec
+PLAINTEXT = f90004e3f56127e3
+
+[DECRYPT]
+NumKeys = 2
+
+KEY1 = d0346ec13e1c76b6
+KEY2 = aba479ae2007583e
+KEY3 = d0346ec13e1c76b6
+IV = 405970353ae3ac31
+CIPHERTEXT = 5a4a2c6162f04442

@@ -1,0 +1,23 @@
+# CAVS 4.6
+# Config Info for : "OpenSSL-SUSE-SALT-0"
+# TDES Monte Carlo (Modes) Test for CFB8
+# State : Encrypt and Decrypt
+# Mon Jun 06 04:09:09 PM
+
+[ENCRYPT]
+NumKeys = 3
+
+KEY1 = fef7df9b403b377c
+KEY2 = 20b67c3db64fe6a7
+KEY3 = 6b0bb975a8c475bc
+IV = 9b172a071e005902
+PLAINTEXT = 2f
+
+[DECRYPT]
+NumKeys = 3
+
+KEY1 = 4a45f77ccb2c516e
+KEY2 = 703885df8043f71c
+KEY3 = 52b91c20b67c37d6
+IV = c8cd14e8633c422b
+CIPHERTEXT = 80

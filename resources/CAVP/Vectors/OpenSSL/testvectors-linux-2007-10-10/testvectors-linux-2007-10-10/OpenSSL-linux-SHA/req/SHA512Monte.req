@@ -1,0 +1,9 @@
+#  CAVS 5.3
+#  "SHA-512 Monte" information for "OpenSSL-linux"
+#  SHA-512 tests are configured for BYTE oriented implementations
+#  Generated on Thu Jun 14 12:00:31 2007
+
+[L = 64]
+
+Seed = bab4797c2ce1a812454a8f397dd881c6e99b64dbb16abfafc4ca158dca1272205bcc43ed6e5d6a2114e9928d6671c0efbb3e2b731f834e79013e3b992c5f32e4
+

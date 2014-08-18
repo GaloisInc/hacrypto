@@ -1,0 +1,9 @@
+#  CAVS 5.3
+#  "SHA-224 Monte" information for "openSSL-winXP"
+#  SHA-224 tests are configured for BYTE oriented implementations
+#  Generated on Wed Jun 13 17:05:17 2007
+
+[L = 28]
+
+Seed = 97ad7cc6f5b63466ff17db5aacb44f56ef8c2ae043f7f1b3872b8f66
+

@@ -1,0 +1,21 @@
+# CAVS 4.6
+# Config Info for : "OpenSSL-SUSE-SALT-0"
+# TDES Monte Carlo (Modes) Test for ECB
+# State : Encrypt and Decrypt
+# Mon Jun 06 04:08:06 PM
+
+[ENCRYPT]
+NumKeys = 3
+
+KEY1 = a8b00b945d3da82f
+KEY2 = d64ce658b63ead7c
+KEY3 = 45b6d38fd394e0b9
+PLAINTEXT = a9b625012117e460
+
+[DECRYPT]
+NumKeys = 3
+
+KEY1 = e37f138a37d932da
+KEY2 = 6bae0486aba82545
+KEY3 = 6bd9752301586246
+CIPHERTEXT = 1c203ce1b8d0e403

@@ -1,0 +1,9 @@
+#  CAVS 5.3
+#  "SHA-224 Monte" information for "OpenSSL-linux"
+#  SHA-224 tests are configured for BYTE oriented implementations
+#  Generated on Thu Jun 14 12:00:14 2007
+
+[L = 28]
+
+Seed = 65ffc3ee747e7d56bd66c1dd70b4e2991d498d94769ead2057b38b6a
+

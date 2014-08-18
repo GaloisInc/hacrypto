@@ -1,0 +1,20 @@
+# CAVS 4.6
+# Config info for OpenSSL
+# AESVS MCT test data for OFB
+# State : Encrypt and Decrypt
+# Key Length : 192
+# Generated on Tue May 17 14:47:46 2005
+
+[ENCRYPT]
+
+COUNT = 0
+KEY = 999a3ece59f695c1cfdf331b6a5c12bb15fa9c32ae6fc085
+IV = ee89d25d77278f9aa531f42519d640ce
+PLAINTEXT = d3c1cb9ff95c11cac25e2d4cfdae7dd8
+
+[DECRYPT]
+
+COUNT = 0
+KEY = 236c44d640521ee3828da9cc6b2718066968e338584b6d4d
+IV = 6b8b9334526498ae86209b4041e2c1ca
+CIPHERTEXT = 0ab560cbf526b51679ad23fe682825e2

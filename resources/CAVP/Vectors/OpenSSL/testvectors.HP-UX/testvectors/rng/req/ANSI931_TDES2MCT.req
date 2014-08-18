@@ -1,0 +1,12 @@
+#  CAVS 4.6
+#  "ANSI X9.31" information for "OpenSSL"
+#  Generated on Tue May 17 15:59:39 2005
+
+[X9.31]
+[2-Key TDES]
+
+COUNT = 0
+Key1 = 4c15f74c516d0d02
+Key2 = 9285bf517f387cc1
+DT = 07d6816969f1b38a
+V = fe7d9be2da7a32b2

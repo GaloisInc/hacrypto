@@ -1,0 +1,12 @@
+#  CAVS 5.3
+#  "ANSI X9.31" information for "OpenSSL-linux"
+#  Generated on Mon Jul 09 13:01:57 2007
+
+[X9.31]
+[AES 192-Key]
+
+COUNT = 0
+Key = 4c4f26ade31088d5c3a763a47190129fa9a8cbb1ff4169d9
+DT = 939fbf43fe2bf64f05cf1edd88fdb011
+V = 617d3dae7c25a2b2198ceb995e197994
+R = a87ce1f7a32e7a3b99f3c10e0d034231

@@ -1,0 +1,18 @@
+# CAVS 4.6
+# Config info for OpenSSL-SUSE-SALT-0
+# AESVS MCT test data for ECB
+# State : Encrypt and Decrypt
+# Key Length : 256
+# Generated on Mon Jun 06 16:14:35 2005
+
+[ENCRYPT]
+
+COUNT = 0
+KEY = df7a350c64f3f0b0348a563aa6472303fc7547ca46f7eaac83dbae5008323463
+PLAINTEXT = 8cc72ee56e7667a33077ce78da4737f3
+
+[DECRYPT]
+
+COUNT = 0
+KEY = ec06d546ca650ddf79279ded54c95cfc855d69bccc3712567ceaf500c67365d0
+CIPHERTEXT = ff87571ddf4c19e0b3b66c7e5d6e5e94

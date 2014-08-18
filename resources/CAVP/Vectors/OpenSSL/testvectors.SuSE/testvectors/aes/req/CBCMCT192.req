@@ -1,0 +1,20 @@
+# CAVS 4.6
+# Config info for OpenSSL-SUSE-SALT-0
+# AESVS MCT test data for CBC
+# State : Encrypt and Decrypt
+# Key Length : 192
+# Generated on Mon Jun 06 16:14:42 2005
+
+[ENCRYPT]
+
+COUNT = 0
+KEY = a0c24d4d174a2c823ec23d2ceafc1164617740370f3eb8a6
+IV = a0b0e5c78f1b3c40ede960650a34d737
+PLAINTEXT = a8df61992a7e604f31303453e50fe1a8
+
+[DECRYPT]
+
+COUNT = 0
+KEY = 11ac250cd1c516c731306f2b00131495f5da0d00f171e7d6
+IV = 40211177cf9e5d88001ee80c4713e6b7
+CIPHERTEXT = 3c38aa12cf2d02a199a45aa3b817d6fb

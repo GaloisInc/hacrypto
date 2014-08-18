@@ -1,0 +1,9 @@
+#  CAVS 5.3
+#  "KeyPair" information for "OpenSSL-linux"
+#  Mod sizes selected: 1024
+#  Generated on Thu Jun 14 11:39:58 2007
+
+[mod = 1024]
+
+N = 10
+

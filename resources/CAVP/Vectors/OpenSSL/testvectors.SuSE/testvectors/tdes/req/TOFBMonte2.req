@@ -1,0 +1,23 @@
+# CAVS 4.6
+# Config Info for : "OpenSSL-SUSE-SALT-0"
+# TDES Monte Carlo (Modes) Test for OFB
+# State : Encrypt and Decrypt
+# Mon Jun 06 04:10:26 PM
+
+[ENCRYPT]
+NumKeys = 2
+
+KEY1 = e96240f45d4ff7b3
+KEY2 = b308252613ad2c7a
+KEY3 = e96240f45d4ff7b3
+IV = 80da2e3a6a91e3cb
+PLAINTEXT = f3d81de192731fa2
+
+[DECRYPT]
+NumKeys = 2
+
+KEY1 = fd8fb6541f08f1f2
+KEY2 = 131f62cba1d9348c
+KEY3 = fd8fb6541f08f1f2
+IV = 2a4d2e1a5e6fd251
+CIPHERTEXT = 28f56d5bc26c7d08

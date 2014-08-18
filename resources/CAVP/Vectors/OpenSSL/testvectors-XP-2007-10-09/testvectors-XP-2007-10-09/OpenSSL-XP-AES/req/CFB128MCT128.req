@@ -1,0 +1,20 @@
+# CAVS 5.3
+# Config info for openSSL-winXP
+# AESVS MCT test data for CFB128
+# State : Encrypt and Decrypt
+# Key Length : 128
+# Generated on Wed Sep 05 15:34:23 2007
+
+[ENCRYPT]
+
+COUNT = 0
+KEY = 55e5c8153fbfb90d367cd7f401dcb59f
+IV = 6032e8b242b428e127f0f8286924ab63
+PLAINTEXT = 87cd6ca95bf63e8dd550178b8a6b5d36
+
+[DECRYPT]
+
+COUNT = 0
+KEY = cda568aee124f52a43bc31a19ac823cf
+IV = 0caa8f0eba2f967e194110408a107f9a
+CIPHERTEXT = 0eb12bc3544094836171392cdfd5b401

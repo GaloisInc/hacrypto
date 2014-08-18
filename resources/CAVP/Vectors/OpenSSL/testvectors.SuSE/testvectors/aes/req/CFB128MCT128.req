@@ -1,0 +1,20 @@
+# CAVS 4.6
+# Config info for OpenSSL-SUSE-SALT-0
+# AESVS MCT test data for CFB128
+# State : Encrypt and Decrypt
+# Key Length : 128
+# Generated on Mon Jun 06 16:14:58 2005
+
+[ENCRYPT]
+
+COUNT = 0
+KEY = d557860ab8aebfdefaec3627576f1f58
+IV = 399f70a20df8229651116a3e18bbacfe
+PLAINTEXT = c8fdea302b077ac00134265e7cfe5667
+
+[DECRYPT]
+
+COUNT = 0
+KEY = 2987d81775f4df5ae92bc449799e4484
+IV = 592822727d5800d2ac1818bd93b1a552
+CIPHERTEXT = 3ead5b548bee6028aa011775ab862c89

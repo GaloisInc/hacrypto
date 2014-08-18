@@ -1,0 +1,9 @@
+#  CAVS 4.6
+#  "SHA-256 Monte" information for "OpenSSL"
+#  SHA-256 tests are configured for BYTE oriented implementations
+#  Generated on Tue May 17 15:58:19 2005
+
+[L = 32]
+
+Seed = 3f6b755a8f73ab06dcd4f3328c688ab764f3f497a8b5403683408dc7a888cd04
+

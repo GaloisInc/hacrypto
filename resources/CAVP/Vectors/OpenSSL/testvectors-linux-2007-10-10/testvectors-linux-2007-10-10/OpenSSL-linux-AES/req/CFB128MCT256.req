@@ -1,0 +1,20 @@
+# CAVS 5.3
+# Config info for OpenSSL-linux
+# AESVS MCT test data for CFB128
+# State : Encrypt and Decrypt
+# Key Length : 256
+# Generated on Wed Sep 05 15:24:39 2007
+
+[ENCRYPT]
+
+COUNT = 0
+KEY = c034c4bd86fb624be507fc7e87aea3f32a0232eb98f6dd94d9c20d8aa7886c9d
+IV = c5f762098e043fa65bf0c57aef3ff6cb
+PLAINTEXT = 0b425a09871f10411028420309cafc37
+
+[DECRYPT]
+
+COUNT = 0
+KEY = 55485c8550cea26bb2a5688084409ffbebc33136aa739cc0e76be0ae32929c31
+IV = a0d28f4f57d6452244216eca1c657f3e
+CIPHERTEXT = 9835f1308be680dfae2dde6c52a58b69

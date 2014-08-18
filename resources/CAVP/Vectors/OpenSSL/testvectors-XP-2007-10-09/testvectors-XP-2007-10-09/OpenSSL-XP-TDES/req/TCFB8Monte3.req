@@ -1,0 +1,23 @@
+# CAVS 5.3
+# Config Info for : "openSSL-winXP"
+# TDES Monte Carlo (Modes) Test for CFB8
+# State : Encrypt and Decrypt
+# Thu Jun 14 11:17:20 AM
+
+[ENCRYPT]
+NumKeys = 3
+
+KEY1 = 0b6d70d39be0e352
+KEY2 = fb20e0bac8f8cdd6
+KEY3 = 4f5dadfe3443803d
+IV = 07dcca2c3772ddb5
+PLAINTEXT = c4
+
+[DECRYPT]
+NumKeys = 3
+
+KEY1 = 9b6d3d64d3cb4cfb
+KEY2 = 1c1f3de6927c2562
+KEY3 = 61c72ca7dc4523b6
+IV = dc1180bd5caba8a0
+CIPHERTEXT = 14

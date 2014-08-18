@@ -1,0 +1,12 @@
+#  CAVS 4.6
+#  "ANSI X9.31" information for "OpenSSL-SUSE-SALT-0"
+#  Generated on Mon Jun 06 16:17:53 2005
+
+[X9.31]
+[2-Key TDES]
+
+COUNT = 0
+Key1 = 4c52f1fe4f68a72c
+Key2 = 685129622579d529
+DT = 28dfe489ee75b0bb
+V = f2943c05178e59d6

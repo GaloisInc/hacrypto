@@ -1,0 +1,6 @@
+These test vectors were received from the test lab on 2005-06-01 in the form of two zip files:
+
+OpenSSL Test Vectors - June 1 - RSA PSS Salt Length 62.zip
+OpenSSL Test Vectors May 30th - RSA PSS Salt Length 0.zip
+
+These test vectors were intended for use on the formal PA-RISC/HP-UX platform test.

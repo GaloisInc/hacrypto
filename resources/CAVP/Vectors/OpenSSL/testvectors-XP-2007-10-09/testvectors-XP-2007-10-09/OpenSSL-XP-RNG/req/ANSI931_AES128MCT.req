@@ -1,0 +1,11 @@
+#  CAVS 5.3
+#  "ANSI X9.31" information for "openSSL-winXP"
+#  Generated on Mon Jul 09 13:02:41 2007
+
+[X9.31]
+[AES 128-Key]
+
+COUNT = 0
+Key = 50914ecba5d7f6a6dd15c5d8a9cd890a
+DT = d96c2d6a63dbf4169db70d0f2cd877a2
+V = eb117f47ac74a13a002c9f0f510bd24e

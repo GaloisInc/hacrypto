@@ -1,0 +1,23 @@
+# CAVS 4.6
+# Config Info for : "OpenSSL-SUSE-SALT-0"
+# TDES Monte Carlo (Modes) Test for CBC
+# State : Encrypt and Decrypt
+# Mon Jun 06 04:08:38 PM
+
+[ENCRYPT]
+NumKeys = 3
+
+KEY1 = 3e9492021a94162f
+KEY2 = 1c735d0b31d39b6d
+KEY3 = c4e3b368c467c87c
+IV = 7b960d010c675633
+PLAINTEXT = b2ae71333ce29ba2
+
+[DECRYPT]
+NumKeys = 3
+
+KEY1 = b9949bb3250e3de0
+KEY2 = 5d32df793edf1a43
+KEY3 = 9145a1154c5bc1d3
+IV = ba8acddc5d420846
+CIPHERTEXT = f846a8cfe6b20803

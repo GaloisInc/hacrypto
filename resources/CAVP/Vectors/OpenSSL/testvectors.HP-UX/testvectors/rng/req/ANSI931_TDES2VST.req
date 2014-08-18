@@ -1,0 +1,391 @@
+#  CAVS 4.6
+#  "ANSI X9.31" information for "OpenSSL"
+#  Generated on Tue May 17 15:59:39 2005
+
+[X9.31]
+[2-Key TDES]
+
+COUNT = 0
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7211
+V = 8000000000000000
+
+COUNT = 1
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7212
+V = c000000000000000
+
+COUNT = 2
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7213
+V = e000000000000000
+
+COUNT = 3
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7214
+V = f000000000000000
+
+COUNT = 4
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7215
+V = f800000000000000
+
+COUNT = 5
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7216
+V = fc00000000000000
+
+COUNT = 6
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7217
+V = fe00000000000000
+
+COUNT = 7
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7218
+V = ff00000000000000
+
+COUNT = 8
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7219
+V = ff80000000000000
+
+COUNT = 9
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da721a
+V = ffc0000000000000
+
+COUNT = 10
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da721b
+V = ffe0000000000000
+
+COUNT = 11
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da721c
+V = fff0000000000000
+
+COUNT = 12
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da721d
+V = fff8000000000000
+
+COUNT = 13
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da721e
+V = fffc000000000000
+
+COUNT = 14
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da721f
+V = fffe000000000000
+
+COUNT = 15
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7220
+V = ffff000000000000
+
+COUNT = 16
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7221
+V = ffff800000000000
+
+COUNT = 17
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7222
+V = ffffc00000000000
+
+COUNT = 18
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7223
+V = ffffe00000000000
+
+COUNT = 19
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7224
+V = fffff00000000000
+
+COUNT = 20
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7225
+V = fffff80000000000
+
+COUNT = 21
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7226
+V = fffffc0000000000
+
+COUNT = 22
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7227
+V = fffffe0000000000
+
+COUNT = 23
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7228
+V = ffffff0000000000
+
+COUNT = 24
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7229
+V = ffffff8000000000
+
+COUNT = 25
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da722a
+V = ffffffc000000000
+
+COUNT = 26
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da722b
+V = ffffffe000000000
+
+COUNT = 27
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da722c
+V = fffffff000000000
+
+COUNT = 28
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da722d
+V = fffffff800000000
+
+COUNT = 29
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da722e
+V = fffffffc00000000
+
+COUNT = 30
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da722f
+V = fffffffe00000000
+
+COUNT = 31
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7230
+V = ffffffff00000000
+
+COUNT = 32
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7231
+V = ffffffff80000000
+
+COUNT = 33
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7232
+V = ffffffffc0000000
+
+COUNT = 34
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7233
+V = ffffffffe0000000
+
+COUNT = 35
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7234
+V = fffffffff0000000
+
+COUNT = 36
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7235
+V = fffffffff8000000
+
+COUNT = 37
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7236
+V = fffffffffc000000
+
+COUNT = 38
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7237
+V = fffffffffe000000
+
+COUNT = 39
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7238
+V = ffffffffff000000
+
+COUNT = 40
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7239
+V = ffffffffff800000
+
+COUNT = 41
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da723a
+V = ffffffffffc00000
+
+COUNT = 42
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da723b
+V = ffffffffffe00000
+
+COUNT = 43
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da723c
+V = fffffffffff00000
+
+COUNT = 44
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da723d
+V = fffffffffff80000
+
+COUNT = 45
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da723e
+V = fffffffffffc0000
+
+COUNT = 46
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da723f
+V = fffffffffffe0000
+
+COUNT = 47
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7240
+V = ffffffffffff0000
+
+COUNT = 48
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7241
+V = ffffffffffff8000
+
+COUNT = 49
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7242
+V = ffffffffffffc000
+
+COUNT = 50
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7243
+V = ffffffffffffe000
+
+COUNT = 51
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7244
+V = fffffffffffff000
+
+COUNT = 52
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7245
+V = fffffffffffff800
+
+COUNT = 53
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7246
+V = fffffffffffffc00
+
+COUNT = 54
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7247
+V = fffffffffffffe00
+
+COUNT = 55
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7248
+V = ffffffffffffff00
+
+COUNT = 56
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7249
+V = ffffffffffffff80
+
+COUNT = 57
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da724a
+V = ffffffffffffffc0
+
+COUNT = 58
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da724b
+V = ffffffffffffffe0
+
+COUNT = 59
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da724c
+V = fffffffffffffff0
+
+COUNT = 60
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da724d
+V = fffffffffffffff8
+
+COUNT = 61
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da724e
+V = fffffffffffffffc
+
+COUNT = 62
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da724f
+V = fffffffffffffffe
+
+COUNT = 63
+Key1 = 4a864abf8a61262c
+Key2 = 8a2a92f89b3120ab
+DT = 1d01ab1c28da7250
+V = ffffffffffffffff
+

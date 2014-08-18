@@ -1,0 +1,9 @@
+#  CAVS 5.3
+#  "SHA-1 Monte" information for "OpenSSL-linux"
+#  SHA tests are configured for BYTE oriented implementations
+#  Generated on Thu Jun 14 12:00:12 2007
+
+[L = 20]
+
+Seed = f3fbe9ff4d1f2788258474697114a864fa44ef46
+

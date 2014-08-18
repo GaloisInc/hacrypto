@@ -1,0 +1,20 @@
+# CAVS 4.6
+# Config info for OpenSSL
+# AESVS MCT test data for CBC
+# State : Encrypt and Decrypt
+# Key Length : 128
+# Generated on Tue May 17 14:46:36 2005
+
+[ENCRYPT]
+
+COUNT = 0
+KEY = f590d7ae583d946e7317bc0d8d22d93e
+IV = 657414bd5254c20d9822ba40f376c350
+PLAINTEXT = 8000494154dbf3d230d1ac146486d9e5
+
+[DECRYPT]
+
+COUNT = 0
+KEY = 8cb6980302f2480ae59e87c0a5f8ee6d
+IV = 05308ccf2c17022d15923003b68de33a
+CIPHERTEXT = b533e8ae5c41fdf72b1300bea57898dd

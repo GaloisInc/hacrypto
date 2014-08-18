@@ -1,0 +1,20 @@
+# CAVS 5.3
+# Config info for OpenSSL-linux
+# AESVS MCT test data for CFB8
+# State : Encrypt and Decrypt
+# Key Length : 256
+# Generated on Wed Sep 05 15:24:24 2007
+
+[ENCRYPT]
+
+COUNT = 0
+KEY = 095e953f835b9498b16ae66b1eb29fcaa47982bc3ca274e31473305ce29c3be7
+IV = 2b1f251c0ee6c3b04e7571d787015e95
+PLAINTEXT = 6f
+
+[DECRYPT]
+
+COUNT = 0
+KEY = 36f0b5fa1cd57e77610dfbcf2b7b96974bf4d802b8eb7fa63b4ed1836bab3141
+IV = 67cbd876021acd342da92d2c3fc522ac
+CIPHERTEXT = 3a
