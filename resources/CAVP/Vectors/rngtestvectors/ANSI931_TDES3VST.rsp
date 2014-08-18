@@ -1,0 +1,519 @@
+#  CAVS 11.1
+#  "ANSI X9.31" information for "rng_values"
+#  Generated on Thu May 19 11:22:38 2011
+
+[X9.31]
+[3-Key TDES]
+
+COUNT = 0
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd63
+V = 8000000000000000
+R = 6e194f8d1a2a468b
+
+COUNT = 1
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd64
+V = c000000000000000
+R = 0ae6626631ddf238
+
+COUNT = 2
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd65
+V = e000000000000000
+R = 2a4cea4e6ccaf7b2
+
+COUNT = 3
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd66
+V = f000000000000000
+R = 11dea30cfd88564e
+
+COUNT = 4
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd67
+V = f800000000000000
+R = 8d10d9017ab89026
+
+COUNT = 5
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd68
+V = fc00000000000000
+R = f79ccd9c9aea58f3
+
+COUNT = 6
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd69
+V = fe00000000000000
+R = baddc06d5a9667ac
+
+COUNT = 7
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd6a
+V = ff00000000000000
+R = a202031db7badc47
+
+COUNT = 8
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd6b
+V = ff80000000000000
+R = 9de2ffb54e876039
+
+COUNT = 9
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd6c
+V = ffc0000000000000
+R = 48f61baa6147958a
+
+COUNT = 10
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd6d
+V = ffe0000000000000
+R = ed5d0ca75447befa
+
+COUNT = 11
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd6e
+V = fff0000000000000
+R = 32231518c07666f6
+
+COUNT = 12
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd6f
+V = fff8000000000000
+R = 87bc5d84a2f349fa
+
+COUNT = 13
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd70
+V = fffc000000000000
+R = 49d4482ce167b3c3
+
+COUNT = 14
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd71
+V = fffe000000000000
+R = e9d97d37ee0e0fb0
+
+COUNT = 15
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd72
+V = ffff000000000000
+R = dccbe0cb33af4642
+
+COUNT = 16
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd73
+V = ffff800000000000
+R = bae20c8422ce6c3f
+
+COUNT = 17
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd74
+V = ffffc00000000000
+R = 33f73da099316418
+
+COUNT = 18
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd75
+V = ffffe00000000000
+R = 50cc1008e2b7ea7d
+
+COUNT = 19
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd76
+V = fffff00000000000
+R = 7ef98e2eb35c86c9
+
+COUNT = 20
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd77
+V = fffff80000000000
+R = 06d884cf136d09f1
+
+COUNT = 21
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd78
+V = fffffc0000000000
+R = 86d033196f8772ea
+
+COUNT = 22
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd79
+V = fffffe0000000000
+R = 22a4c2d35e984962
+
+COUNT = 23
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd7a
+V = ffffff0000000000
+R = 5b1582b35aafeb29
+
+COUNT = 24
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd7b
+V = ffffff8000000000
+R = 538683bcde659f76
+
+COUNT = 25
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd7c
+V = ffffffc000000000
+R = 202d31c0edac045f
+
+COUNT = 26
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd7d
+V = ffffffe000000000
+R = 8a304f70e86a1f0e
+
+COUNT = 27
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd7e
+V = fffffff000000000
+R = 858eac5f954c08c4
+
+COUNT = 28
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd7f
+V = fffffff800000000
+R = 0a30cda2c09d338c
+
+COUNT = 29
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd80
+V = fffffffc00000000
+R = a883af12721a3601
+
+COUNT = 30
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd81
+V = fffffffe00000000
+R = 31edb6d412f768fe
+
+COUNT = 31
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd82
+V = ffffffff00000000
+R = d6467680fbf9cee3
+
+COUNT = 32
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd83
+V = ffffffff80000000
+R = 173795354b5dc1a2
+
+COUNT = 33
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd84
+V = ffffffffc0000000
+R = f91e95aae71c63fc
+
+COUNT = 34
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd85
+V = ffffffffe0000000
+R = 53739531aab43f79
+
+COUNT = 35
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd86
+V = fffffffff0000000
+R = 1cd4917e35b1a711
+
+COUNT = 36
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd87
+V = fffffffff8000000
+R = e648c540a0283f12
+
+COUNT = 37
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd88
+V = fffffffffc000000
+R = 62b735f2ba64b329
+
+COUNT = 38
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd89
+V = fffffffffe000000
+R = 1a4464d3e7e9d2ca
+
+COUNT = 39
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd8a
+V = ffffffffff000000
+R = 45fe1fc50a35e3b5
+
+COUNT = 40
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd8b
+V = ffffffffff800000
+R = 86888386b993df9b
+
+COUNT = 41
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd8c
+V = ffffffffffc00000
+R = 48a6246ebaf53ab2
+
+COUNT = 42
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd8d
+V = ffffffffffe00000
+R = 11ea08447396c278
+
+COUNT = 43
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd8e
+V = fffffffffff00000
+R = 55b342b01b1ec010
+
+COUNT = 44
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd8f
+V = fffffffffff80000
+R = 3a87059bcd4822bb
+
+COUNT = 45
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd90
+V = fffffffffffc0000
+R = f1326f166d5c9325
+
+COUNT = 46
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd91
+V = fffffffffffe0000
+R = be93c25c3a818f15
+
+COUNT = 47
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd92
+V = ffffffffffff0000
+R = 92506a5ca712202e
+
+COUNT = 48
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd93
+V = ffffffffffff8000
+R = 43e54721bed5c7b2
+
+COUNT = 49
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd94
+V = ffffffffffffc000
+R = 076510bb0b4b70a6
+
+COUNT = 50
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd95
+V = ffffffffffffe000
+R = 357da8811960ab94
+
+COUNT = 51
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd96
+V = fffffffffffff000
+R = 72524e1decedfa0a
+
+COUNT = 52
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd97
+V = fffffffffffff800
+R = add10270feb40346
+
+COUNT = 53
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd98
+V = fffffffffffffc00
+R = 6318d1cd9fdab7a7
+
+COUNT = 54
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd99
+V = fffffffffffffe00
+R = 11965f10160e5069
+
+COUNT = 55
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd9a
+V = ffffffffffffff00
+R = 37bf99c14fecb3bd
+
+COUNT = 56
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd9b
+V = ffffffffffffff80
+R = c9d5800ef2856f48
+
+COUNT = 57
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd9c
+V = ffffffffffffffc0
+R = f4680dc3b1f21a56
+
+COUNT = 58
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd9d
+V = ffffffffffffffe0
+R = df92edfc6a600e78
+
+COUNT = 59
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd9e
+V = fffffffffffffff0
+R = 2d4f08e81cc35a6d
+
+COUNT = 60
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bd9f
+V = fffffffffffffff8
+R = e96b51a2934a02c2
+
+COUNT = 61
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bda0
+V = fffffffffffffffc
+R = 63ccdc46e7e5ba19
+
+COUNT = 62
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bda1
+V = fffffffffffffffe
+R = fab8281951c7f8bc
+
+COUNT = 63
+Key1 = 2f4c67e95db96e25
+Key2 = 38160e5ef419aecd
+Key3 = 671645ad89f1388c
+DT = 3703f397fec2bda2
+V = ffffffffffffffff
+R = 994548c445e3a5e2
+

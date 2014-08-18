@@ -1,0 +1,36 @@
+#  CAVS 11.1
+#  "ANSI X9.31" information for "rng_values"
+#  Generated on Thu May 19 11:22:49 2011
+
+[X9.31]
+[AES 256-Key]
+
+COUNT = 0
+Key = 8afe54f12f656918c4c42c6b376690a1b3ddaefbc2970d7ab5b2214f45111193
+DT = a995c6cba258b88026296f1c4722ab35
+V = 7a72054a2d5f69dc818caaffa3be8942
+	j = 0
+	DT = a995c6cba258b88026296f1c4722ab36
+	V = 7d508ceba4cebc9ef850617a3bd0cf17
+	R = 31b55dab2e2c28011d91e206ff730f5a
+
+	j = 1
+	DT = a995c6cba258b88026296f1c4722ab37
+	V = 919a18e6c8e7be0d9860792010cfcaa3
+	R = bd46de8f2eac4c7f8ab42a239da92a87
+
+	j = 2
+	DT = a995c6cba258b88026296f1c4722ab38
+	V = e18c048afae0de70a21647dfb4ba5615
+	R = 88dfb41ce50d0536f2523247165674b0
+
+	j = 3
+	DT = a995c6cba258b88026296f1c4722ab39
+	V = d43407e52c7d0fddb98172a6d184ca2a
+	R = 94c1ea754c2ef7d9ac0b4cfe3b1a7396
+
+	j = 4
+	DT = a995c6cba258b88026296f1c4722ab3a
+	V = 57ee1f397337b0c61abdc50433ddafff
+	R = 7f01393af5d75a3b0c462cdd94a884b4
+R = c674122142e0325b4d7c421d36a3a5e1

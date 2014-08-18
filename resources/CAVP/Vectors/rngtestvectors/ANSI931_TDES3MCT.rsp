@@ -1,0 +1,14 @@
+#  CAVS 11.1
+#  "ANSI X9.31" information for "rng_values"
+#  Generated on Thu May 19 11:22:39 2011
+
+[X9.31]
+[3-Key TDES]
+
+COUNT = 0
+Key1 = ef16ec643e5db589
+Key2 = 2cbc6eabba310b34
+Key3 = 10e6f8759e3e382c
+DT = 55df103deaf68dc4
+V = 96d872b9122c5e74
+R = f657df270ad12265

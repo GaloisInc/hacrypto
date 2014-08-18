@@ -1,0 +1,12 @@
+#  CAVS 11.1
+#  "ANSI X9.31" information for "rng_values"
+#  Generated on Thu May 19 11:22:49 2011
+
+[X9.31]
+[AES 256-Key]
+
+COUNT = 0
+Key = 8afe54f12f656918c4c42c6b376690a1b3ddaefbc2970d7ab5b2214f45111193
+DT = a995c6cba258b88026296f1c4722ab35
+V = 7a72054a2d5f69dc818caaffa3be8942
+R = c674122142e0325b4d7c421d36a3a5e1
