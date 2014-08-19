@@ -1,0 +1,21 @@
+
+
+
+
+@deftypefun {int} {gnutls_x509_trust_list_add_cas} (gnutls_x509_trust_list_t @var{list}, const gnutls_x509_crt_t * @var{clist}, int @var{clist_size}, unsigned int @var{flags})
+@var{list}: The structure of the list
+
+@var{clist}: A list of CAs
+
+@var{clist_size}: The length of the CA list
+
+@var{flags}: should be 0.
+
+This function will add the given certificate authorities
+to the trusted list. The list of CAs must not be deinitialized
+during this structure's lifetime.
+
+@strong{Returns:} The number of added elements is returned.
+
+@strong{Since:} 3.0
+@end deftypefun

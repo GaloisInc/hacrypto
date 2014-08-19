@@ -1,0 +1,23 @@
+
+
+
+
+@deftypefun {ssize_t} {xssl_write} (xssl_t @var{sb}, const void * @var{data}, size_t @var{data_size})
+@var{sb}: is a @code{xssl_t}  structure.
+
+@var{data}: contains the data to send
+
+@var{data_size}: is the length of the data
+
+This function is the buffered equivalent of @code{gnutls_record_send()} .
+Instead of sending the data immediately the data are buffered
+until @code{xssl_queue()}  is called, or if the flag @code{GNUTLS_SBUF_WRITE_FLUSHES} 
+is set, until the number of bytes for a full record is reached.
+
+This function must only be used with blocking sockets.
+
+@strong{Returns:} On success, the number of bytes written is returned, otherwise
+an error code is returned.
+
+@strong{Since:} 3.1.7
+@end deftypefun

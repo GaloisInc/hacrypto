@@ -1,0 +1,19 @@
+
+
+@c gnutls_pkcs11_obj_attr_t
+@table @code
+@item GNUTLS_@-PKCS11_@-OBJ_@-ATTR_@-CRT_@-ALL
+Specify all certificates.
+@item GNUTLS_@-PKCS11_@-OBJ_@-ATTR_@-CRT_@-TRUSTED
+Specify all certificates marked as trusted.
+@item GNUTLS_@-PKCS11_@-OBJ_@-ATTR_@-CRT_@-WITH_@-PRIVKEY
+Specify all certificates with a corresponding private key.
+@item GNUTLS_@-PKCS11_@-OBJ_@-ATTR_@-PUBKEY
+Specify all public keys.
+@item GNUTLS_@-PKCS11_@-OBJ_@-ATTR_@-PRIVKEY
+Specify all private keys.
+@item GNUTLS_@-PKCS11_@-OBJ_@-ATTR_@-ALL
+Specify all objects.
+@item GNUTLS_@-PKCS11_@-OBJ_@-ATTR_@-CRT_@-TRUSTED_@-CA
+Specify all certificates marked as trusted and are CAs.
+@end table

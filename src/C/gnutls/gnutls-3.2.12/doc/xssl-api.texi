@@ -1,0 +1,231 @@
+
+@subheading xssl_client_init
+@anchor{xssl_client_init}
+@deftypefun {int} {xssl_client_init} (xssl_t * @var{isb}, const char * @var{hostname}, const char * @var{service}, gnutls_transport_ptr @var{fd}, const char * @var{priority}, xssl_cred_t @var{cred}, unsigned int * @var{status}, unsigned int @var{flags})
+@var{isb}: is a pointer to a @code{xssl_t}  structure.
+
+@var{hostname}: The name of the host to connect to
+
+@var{service}: The name of the host to connect to
+
+@var{fd}: a socket descriptor
+
+@var{priority}: A priority string to use (use @code{NULL}  for default)
+
+@var{cred}: A credentials structure
+
+@var{status}: An authentication failure status
+
+@var{flags}: should be zero or @code{GNUTLS_SBUF_WRITE_FLUSHES} 
+
+This function initializes a @code{xssl_t}  structure.
+If the flag @code{GNUTLS_SBUF_WRITE_FLUSHES} 
+is set then @code{xssl_queue()}  will flush when the maximum
+data size for a record is reached.
+
+If peer verification fails then @code{GNUTLS_E_AUTH_ERROR}  is returned.
+
+@strong{Returns:} @code{GNUTLS_E_SUCCESS}  on success, or an error code.
+
+@strong{Since:} 3.1.7
+@end deftypefun
+
+@subheading xssl_cred_deinit
+@anchor{xssl_cred_deinit}
+@deftypefun {void} {xssl_cred_deinit} (xssl_cred_t @var{cred})
+@var{cred}: is a @code{xssl_cred_t}  structure.
+
+This function deinitializes a @code{xssl_cred_t}  structure.
+
+@strong{Returns:} @code{GNUTLS_E_SUCCESS}  on success, or an error code.
+
+@strong{Since:} 3.1.7
+@end deftypefun
+
+@subheading xssl_cred_init
+@anchor{xssl_cred_init}
+@deftypefun {int} {xssl_cred_init} (xssl_cred_t * @var{c}, unsigned @var{vflags}, gnutls_cinput_st * @var{aux}, unsigned @var{aux_size})
+@var{c}: is a pointer to @code{xssl_cred_t}  structure.
+
+@var{vflags}: the requested peer verification methods
+
+@var{aux}: Auxilary data to input any required CA certificate etc.
+
+@var{aux_size}: the number of the auxillary data provided
+
+This function initializes X.509 certificates in 
+a @code{xssl_cred_t}  structure.
+
+The  @code{ca_file} and  @code{crl_file} are required only if  @code{vflags} includes
+@code{GNUTLS_VMETHOD_GIVEN_CAS} . The  @code{tofu_file} may be set if 
+@code{GNUTLS_VMETHOD_TOFU}  is specified.
+
+@strong{Returns:} @code{GNUTLS_E_SUCCESS}  on success, or an error code.
+
+@strong{Since:} 3.1.7
+@end deftypefun
+
+@subheading xssl_deinit
+@anchor{xssl_deinit}
+@deftypefun {void} {xssl_deinit} (xssl_t @var{sb})
+@var{sb}: is a @code{xssl_t}  structure.
+
+This function clears all buffers associated with the  @code{sb} structure. The GnuTLS session associated with the structure
+is left intact.
+
+@strong{Since:} 3.1.7
+@end deftypefun
+
+@subheading xssl_flush
+@anchor{xssl_flush}
+@deftypefun {ssize_t} {xssl_flush} (xssl_t @var{sb})
+@var{sb}: is a @code{xssl_t}  structure.
+
+This function flushes the buffer  @code{sb} . All the data stored are transmitted.
+
+This function must only be used with blocking sockets.
+
+@strong{Returns:} On success, the number of bytes sent, otherwise a negative error code.
+
+@strong{Since:} 3.1.7
+@end deftypefun
+
+@subheading xssl_getdelim
+@anchor{xssl_getdelim}
+@deftypefun {ssize_t} {xssl_getdelim} (xssl_t @var{sbuf}, char ** @var{lineptr}, size_t * @var{n}, int @var{delimiter})
+@var{sbuf}: -- undescribed --
+
+@var{lineptr}: a pointer.
+
+@var{n}: The size of  @code{lineptr} .
+
+@var{delimiter}: The delimiter to stop reading at.
+
+Read up to (and including) a  @code{delimiter} from &sb into *LINEPTR (and
+NUL-terminate it).   @code{lineptr} is a pointer returned from @code{gnutls_malloc()}  
+(or @code{NULL} ), pointing to  @code{n} characters of space.  It is realloc'ed as
+necessary.  
+
+Only fatal errors are returned by this function.
+
+Returns the number of characters read (not including
+the null terminator), or a negative error code on error. 
+
+@strong{Since:} 3.1.7
+@end deftypefun
+
+@subheading xssl_get_session
+@anchor{xssl_get_session}
+@deftypefun {gnutls_session_t} {xssl_get_session} (xssl_t @var{sb})
+@var{sb}: is a @code{xssl_t}  structure.
+
+
+@strong{Returns:} The associated session or @code{NULL} .
+
+@strong{Since:} 3.1.7
+@end deftypefun
+
+@subheading xssl_printf
+@anchor{xssl_printf}
+@deftypefun {ssize_t} {xssl_printf} (xssl_t @var{sb}, const char * @var{fmt},  @var{...})
+@var{sb}: is a @code{xssl_t}  structure.
+
+@var{fmt}: printf-style format 
+
+@var{...}: -- undescribed --
+
+This function allows writing to a @code{xssl_t}  using printf
+style arguments.
+
+This function must only be used with blocking sockets.
+
+@strong{Returns:} On success, the number of bytes written is returned, otherwise
+an error code is returned.
+
+@strong{Since:} 3.1.7
+@end deftypefun
+
+@subheading xssl_read
+@anchor{xssl_read}
+@deftypefun {ssize_t} {xssl_read} (xssl_t @var{sb}, void * @var{data}, size_t @var{data_size})
+@var{sb}: is a @code{xssl_t}  structure.
+
+@var{data}: the buffer that the data will be read into
+
+@var{data_size}: the number of requested bytes
+
+This function receives data from the underlying session.
+Only fatal errors are returned by this function.
+
+@strong{Returns:} The number of bytes received and zero on EOF (for stream
+connections) or a negative error code.
+
+@strong{Since:} 3.1.7
+@end deftypefun
+
+@subheading xssl_server_init
+@anchor{xssl_server_init}
+@deftypefun {int} {xssl_server_init} (xssl_t * @var{isb}, gnutls_transport_ptr @var{fd}, const char * @var{priority}, xssl_cred_t @var{cred}, unsigned int * @var{status}, unsigned int @var{flags})
+@var{isb}: is a pointer to a @code{xssl_t}  structure.
+
+@var{fd}: a socket descriptor
+
+@var{priority}: A priority string to use (use @code{NULL}  for default)
+
+@var{cred}: A credentials structure
+
+@var{status}: An authentication failure status
+
+@var{flags}: should be zero or @code{GNUTLS_SBUF_WRITE_FLUSHES} 
+
+This function initializes a @code{xssl_t}  structure.
+If the flag @code{GNUTLS_SBUF_WRITE_FLUSHES} 
+is set then @code{xssl_queue()}  will flush when the maximum
+data size for a record is reached.
+
+@strong{Returns:} @code{GNUTLS_E_SUCCESS}  on success, or an error code.
+
+@strong{Since:} 3.1.7
+@end deftypefun
+
+@subheading xssl_sinit
+@anchor{xssl_sinit}
+@deftypefun {int} {xssl_sinit} (xssl_t * @var{isb}, gnutls_session_t @var{session}, unsigned int @var{flags})
+@var{isb}: is a pointer to a @code{xssl_t}  structure.
+
+@var{session}: a GnuTLS session
+
+@var{flags}: should be zero or @code{GNUTLS_SBUF_WRITE_FLUSHES} 
+
+This function initializes a @code{xssl_t}  structure associated
+with the provided session. If the flag @code{GNUTLS_SBUF_WRITE_FLUSHES} 
+is set then @code{xssl_queue()}  will flush when the maximum
+data size for a record is reached.
+
+@strong{Returns:} @code{GNUTLS_E_SUCCESS}  on success, or an error code.
+
+@strong{Since:} 3.1.7
+@end deftypefun
+
+@subheading xssl_write
+@anchor{xssl_write}
+@deftypefun {ssize_t} {xssl_write} (xssl_t @var{sb}, const void * @var{data}, size_t @var{data_size})
+@var{sb}: is a @code{xssl_t}  structure.
+
+@var{data}: contains the data to send
+
+@var{data_size}: is the length of the data
+
+This function is the buffered equivalent of @code{gnutls_record_send()} .
+Instead of sending the data immediately the data are buffered
+until @code{xssl_queue()}  is called, or if the flag @code{GNUTLS_SBUF_WRITE_FLUSHES} 
+is set, until the number of bytes for a full record is reached.
+
+This function must only be used with blocking sockets.
+
+@strong{Returns:} On success, the number of bytes written is returned, otherwise
+an error code is returned.
+
+@strong{Since:} 3.1.7
+@end deftypefun
+

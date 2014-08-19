@@ -1,0 +1,1 @@
+@item @var{int} @ref{xssl_cred_init} (xssl_cred_t * @var{c}, unsigned @var{vflags}, gnutls_cinput_st * @var{aux}, unsigned @var{aux_size})

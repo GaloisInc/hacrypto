@@ -1,0 +1,17 @@
+
+
+
+
+@deftypefun {void} {gnutls_handshake_set_timeout} (gnutls_session_t @var{session}, unsigned int @var{ms})
+@var{session}: is a @code{gnutls_session_t}  structure.
+
+@var{ms}: is a timeout value in milliseconds
+
+This function sets the timeout for the handshake process
+to the provided value. Use an  @code{ms} value of zero to disable
+timeout.
+
+Note that in order for the timeout to be enforced
+@code{gnutls_transport_set_pull_timeout_function()}  must be set
+(it is set by default in most systems).
+@end deftypefun

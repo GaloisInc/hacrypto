@@ -1,0 +1,19 @@
+
+
+
+
+@deftypefun {ssize_t} {xssl_read} (xssl_t @var{sb}, void * @var{data}, size_t @var{data_size})
+@var{sb}: is a @code{xssl_t}  structure.
+
+@var{data}: the buffer that the data will be read into
+
+@var{data_size}: the number of requested bytes
+
+This function receives data from the underlying session.
+Only fatal errors are returned by this function.
+
+@strong{Returns:} The number of bytes received and zero on EOF (for stream
+connections) or a negative error code.
+
+@strong{Since:} 3.1.7
+@end deftypefun

@@ -1,0 +1,26 @@
+
+
+
+
+@deftypefun {int} {xssl_server_init} (xssl_t * @var{isb}, gnutls_transport_ptr @var{fd}, const char * @var{priority}, xssl_cred_t @var{cred}, unsigned int * @var{status}, unsigned int @var{flags})
+@var{isb}: is a pointer to a @code{xssl_t}  structure.
+
+@var{fd}: a socket descriptor
+
+@var{priority}: A priority string to use (use @code{NULL}  for default)
+
+@var{cred}: A credentials structure
+
+@var{status}: An authentication failure status
+
+@var{flags}: should be zero or @code{GNUTLS_SBUF_WRITE_FLUSHES} 
+
+This function initializes a @code{xssl_t}  structure.
+If the flag @code{GNUTLS_SBUF_WRITE_FLUSHES} 
+is set then @code{xssl_queue()}  will flush when the maximum
+data size for a record is reached.
+
+@strong{Returns:} @code{GNUTLS_E_SUCCESS}  on success, or an error code.
+
+@strong{Since:} 3.1.7
+@end deftypefun
