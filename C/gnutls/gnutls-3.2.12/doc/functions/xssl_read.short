@@ -1,1 +1,0 @@
-@item @var{ssize_t} @ref{xssl_read} (xssl_t @var{sb}, void * @var{data}, size_t @var{data_size})

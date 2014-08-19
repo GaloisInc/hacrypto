@@ -1,1 +1,0 @@
-@item @var{ssize_t} @ref{xssl_write} (xssl_t @var{sb}, const void * @var{data}, size_t @var{data_size})

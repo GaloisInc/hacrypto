@@ -1,1 +1,0 @@
-@item @var{void} @ref{xssl_cred_deinit} (xssl_cred_t @var{cred})

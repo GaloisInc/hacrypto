@@ -1,1 +1,0 @@
-@item @var{int} @ref{xssl_server_init} (xssl_t * @var{isb}, gnutls_transport_ptr @var{fd}, const char * @var{priority}, xssl_cred_t @var{cred}, unsigned int * @var{status}, unsigned int @var{flags})

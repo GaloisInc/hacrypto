@@ -1,1 +1,0 @@
-@item @var{gnutls_session_t} @ref{xssl_get_session} (xssl_t @var{sb})

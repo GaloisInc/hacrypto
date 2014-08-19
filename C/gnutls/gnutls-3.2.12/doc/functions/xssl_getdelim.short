@@ -1,1 +1,0 @@
-@item @var{ssize_t} @ref{xssl_getdelim} (xssl_t @var{sbuf}, char ** @var{lineptr}, size_t * @var{n}, int @var{delimiter})

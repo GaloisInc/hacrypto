@@ -1,1 +1,0 @@
-@item @var{ssize_t} @ref{xssl_flush} (xssl_t @var{sb})
