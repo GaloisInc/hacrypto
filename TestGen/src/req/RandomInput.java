@@ -25,7 +25,7 @@ public class RandomInput implements Input {
 	}
 
 	@Override
-	public Entry<String, Object> toReqString() {
+	public Entry<String, byte[]> toReqString() {
 		StringBuilder sb = new StringBuilder(name);
 		sb.append(" = ");
 		
@@ -36,7 +36,7 @@ public class RandomInput implements Input {
 		} else {
 			sb.append(Util.byteArraytoHexString(val));
 		}
-		return new SimpleEntry<String, Object>(sb.toString(), val);
+		return new SimpleEntry<String, byte[]>(sb.toString(), val);
 	}
 
 }

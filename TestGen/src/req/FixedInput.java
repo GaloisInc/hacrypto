@@ -10,7 +10,7 @@ public class FixedInput implements Input {
 	private byte[] value;
 	private String name;
 	
-	public FixedInput(byte[] value, String name){
+	public FixedInput(byte[] value, String name, int number){
 		this.value = value;
 	}
 	
@@ -25,11 +25,11 @@ public class FixedInput implements Input {
 	}
 
 	@Override
-	public Entry<String, Object> toReqString() {
+	public Entry<String, byte[]> toReqString() {
 		StringBuilder sb = new StringBuilder(name);
 		sb.append(" = ");
 		sb.append(Util.byteArraytoHexString(value));
-		return new SimpleEntry<String, Object>(sb.toString(), value);
+		return new SimpleEntry<String, byte[]>(sb.toString(), value);
 	}
 
 }

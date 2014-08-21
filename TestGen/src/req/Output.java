@@ -15,8 +15,9 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Output {
 
-	public static byte[] getOutput(String algorithm, List<Object> inputs, int[] inputOrder){
-		switch (algorithm.toUpperCase()){
+	public static byte[] getOutput(String algorithm, List<byte[]> inputs,
+			int[] inputOrder) {
+		switch (algorithm.toUpperCase()) {
 		case "SHA256":
 			MessageDigest digest = null;
 			try {
@@ -25,31 +26,48 @@ public class Output {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			return digest.digest((byte[])inputs.get(inputOrder[0]));//TODO make this safe!
-		case "AESCBCENC" :
-			Cipher cipher = null;
-			try {
-				cipher = Cipher.getInstance("AES/CBC/NoPadding");
-			} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			SecretKeySpec key = new SecretKeySpec((byte[])inputs.get(inputOrder[0]), "AES");
-		    try {
-				cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec((byte[])inputs.get(inputOrder[1])));
-			} catch (InvalidKeyException | InvalidAlgorithmParameterException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		    try {
-				return cipher.doFinal((byte[])inputs.get(inputOrder[2]));
-			} catch (IllegalBlockSizeException | BadPaddingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		default: throw new RuntimeException("Unknown algorithm: " + algorithm);
+			return digest.digest(inputs.get(inputOrder[0]));
+			
+		case "AES/CBC/ENC":
+			return AESCBC(Cipher.ENCRYPT_MODE,
+					inputs.get(inputOrder[0]),
+					inputs.get(inputOrder[1]),
+					inputs.get(inputOrder[2]));
+			
+		case "AES/CBC/DEC":
+			return AESCBC(Cipher.DECRYPT_MODE,
+					inputs.get(inputOrder[0]),
+					inputs.get(inputOrder[1]),
+					inputs.get(inputOrder[2]));
+			
+		default:
+			throw new RuntimeException("Unknown algorithm: " + algorithm);
 		}
-		
+
+	}
+
+	private static byte[] AESCBC(int mode, byte[] seckey, byte[] iv, byte[] msg) {
+		Cipher cipher = null;
+		try {
+			cipher = Cipher.getInstance("AES/CBC/NoPadding");
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		SecretKeySpec key = new SecretKeySpec(seckey, "AES");
+		try {
+			cipher.init(mode, key, new IvParameterSpec(iv));
+		} catch (InvalidKeyException | InvalidAlgorithmParameterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			return cipher.doFinal(msg);
+		} catch (IllegalBlockSizeException | BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

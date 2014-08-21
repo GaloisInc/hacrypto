@@ -14,6 +14,7 @@ import com.galois.hacrypto.Util;
 
 public class Req {
 	private List<Queue<Input>> inputs;
+	private int currentOutput=0;
 	private Properties p;
 
 	public Input getInput(int n) {
@@ -21,9 +22,16 @@ public class Req {
 	}
 
 	private boolean hasNextTest() {
-		for (Queue<Input> inputq : inputs) {
+		for(int i=0; i<inputs.size(); i++){
+			Queue<Input>inputq = inputs.get(i);
 			while (inputq.peek() != null && !inputq.peek().hasNextInput()) {
 				inputq.poll();
+				String outputEndName = "output" + currentOutput + "_end";
+				if(p.containsKey(outputEndName)){
+					if(Integer.parseInt(p.getProperty(outputEndName).trim()) == i){
+						currentOutput++;
+					}
+				}
 			}
 			if (inputq.peek() == null) {
 				return false;
@@ -32,27 +40,28 @@ public class Req {
 		return true;
 	}
 
+	//this is destructive because hasNextTest is
 	public Entry<String, String> creatReqRsp(){
 		StringBuilder reqSb = new StringBuilder();
 		StringBuilder rspSb = new StringBuilder();
 		while (this.hasNextTest()) {
-			List<Object> args = new ArrayList<Object>();
+			List<byte[]> args = new ArrayList<byte[]>();
 			for (Queue<Input> input : inputs) {
-				Entry<String, Object> e = input.peek().toReqString();
+				Entry<String, byte[]> e = input.peek().toReqString();
 				args.add(e.getValue());
 				reqSb.append(e.getKey());
 				rspSb.append(e.getKey());
 				reqSb.append("\n");
 				rspSb.append("\n");
 			}
-			if(p.containsKey("output_name")){
-				int outputArgs = Integer.parseInt(p.getProperty("output_args","0").trim());
+			if(p.containsKey("output" + currentOutput + "_name")){
+				int outputArgs = Integer.parseInt(p.getProperty("output" + currentOutput + "_args","0").trim());
 				int[] argOrder = new int[outputArgs];
 				for(int i=0; i< outputArgs; i++){
-					argOrder[i] = Integer.parseInt(p.getProperty("output_arg" + i, "0").trim());
+					argOrder[i] = Integer.parseInt(p.getProperty("output" + currentOutput + "_arg" + i, "0").trim());
 				}
-				String func = p.getProperty("output_function", "output_function not given");
-				rspSb.append(p.getProperty("output_name").trim());
+				String func = p.getProperty("output" + currentOutput + "_function", "output" + currentOutput + "_function not given");
+				rspSb.append(p.getProperty("output" + currentOutput + "_name").trim());
 				rspSb.append(" = ");
 				rspSb.append(Util.byteArraytoHexString(Output.getOutput(func, args, argOrder)));
 				rspSb.append("\n");
@@ -167,7 +176,7 @@ public class Req {
 	}
 
 	public static void main(String args[]) throws IOException {
-		Req r = new Req("test_defs/shortMsg");
+		Req r = new Req("test_defs/CBCMMT128");
 		System.out.println(r.creatReqRsp().getValue());
 	}
 }

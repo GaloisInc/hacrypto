@@ -26,11 +26,11 @@ public class LengthInput implements Input {
 	}
 
 	@Override
-	public Entry<String, Object> toReqString() {
+	public Entry<String, byte[]> toReqString() {
 		StringBuilder sb = new StringBuilder(name);
 		sb.append(" = ");
 		int l = req.getInput(lengthOf).getInputLength().peekLength();
 		sb.append(l);
-		return new SimpleEntry<String, Object>(sb.toString(), l);
+		return new SimpleEntry<String, byte[]>(sb.toString(), new byte[0]);
 	}
 }

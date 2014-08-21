@@ -15,8 +15,9 @@ public class CountInput implements Input {
 		this.max = max;
 		this.min = this.ct = min;
 		this.name = name;
-		
 	}
+	
+	
 	
 	@Override
 	public boolean hasNextInput() {
@@ -29,14 +30,20 @@ public class CountInput implements Input {
 	}
 
 	@Override
-	public Entry<String, Object> toReqString() {
+	public Entry<String, byte[]> toReqString() {
 		StringBuilder sb = new StringBuilder(name);
 		sb.append(" = ");
 		if(max > 0 && ct > max){
 			ct = this.min;
 		}
 		sb.append(ct++);
-		return new SimpleEntry<String, Object>(sb.toString(), new byte[0]);
+		return new SimpleEntry<String, byte[]>(sb.toString(), new byte[0]);
 	}
+
+
+
+
+
+	
 
 }
