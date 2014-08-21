@@ -24,7 +24,7 @@ import org.stringtemplate.v4.ST;
 public class CTests {
 
 	/**
-	 * Each string will be a single import file in each of the restulting C
+	 * Each string will be a single import file in each of the resulting C
 	 * files
 	 */
 	private String[] imports;
@@ -92,7 +92,7 @@ public class CTests {
 
 			String filename = algorithm + "_" + lib + "_" + "KAT.c";
 			makefile.add("cFiles", filename);
-			Test.writeSTToOutDir(filename, outDir.getPath(), impSt);
+			Util.writeSTToOutDir(filename, outDir.getPath(), impSt);
 		}
 	}
 
@@ -157,7 +157,7 @@ public class CTests {
 		
 		String filename = algorithm + "_compare.c";
 		makefile.add("cFiles", filename);
-		Test.writeSTToOutDir(filename, outDir.getPath(), compareST);
+		Util.writeSTToOutDir(filename, outDir.getPath(), compareST);
 
 	}
 
@@ -168,9 +168,9 @@ public class CTests {
 	 */
 	private void writeFiles() {
 		copyStaticFiles();
-		Test.writeSTToOutDir("tests.h", outDir.getPath(), header);
-		Test.writeSTToOutDir("run_tests.c", outDir.getPath(), main);
-		Test.writeSTToOutDir("Makefile", outDir.getPath(), makefile);
+		Util.writeSTToOutDir("tests.h", outDir.getPath(), header);
+		Util.writeSTToOutDir("run_tests.c", outDir.getPath(), main);
+		Util.writeSTToOutDir("Makefile", outDir.getPath(), makefile);
 	}
 
 	/**

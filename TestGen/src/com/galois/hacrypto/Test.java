@@ -2,10 +2,7 @@ package com.galois.hacrypto;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,7 +12,6 @@ import java.util.Scanner;
 
 import javax.management.RuntimeErrorException;
 
-import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupDir;
 
@@ -46,7 +42,6 @@ public class Test {
 	private File outDir;
 	private File testDir;
 	public static final STGroup stGroup = new STGroupDir("tmp");
-
 	/**
 	 * @param testDir
 	 *            The directory that holds the test definitions such as tests,
@@ -174,9 +169,9 @@ public class Test {
 		 * for old test writing writeStringToOutDir(algorithm + "_compare_in",
 		 * outDir.getPath(), inout.getKey());
 		 */
-		writeSTToOutDir(fileName, outDir.getPath(),
+		Util.writeSTToOutDir(fileName, outDir.getPath(),
 				kat.getReqFile(stGroup, algorithm));
-		writeStringToOutDir(algorithm + testName + "_out", outDir.getPath(),
+		Util.writeStringToOutDir(algorithm + testName + "_out", outDir.getPath(),
 				inout.getValue());
 		addTestFile(algorithm, testName);
 	}
@@ -217,69 +212,6 @@ public class Test {
 			readTest(lineReader, algorithm);
 		}
 
-	}
-
-	/**
-	 * @param filename
-	 *            name of the file to be created/overwritten
-	 * @param outputDirectory
-	 *            directory to write the file in
-	 * @param toWrite
-	 *            String to be written to the file
-	 */
-	public static void writeStringToOutDir(String filename,
-			String outputDirectory, String toWrite) {
-		File outfile = new File(outputDirectory + File.separator + filename);
-		try {
-			outfile.createNewFile();
-		} catch (IOException e) {
-			System.err.println("could not create file "
-					+ outfile.getAbsolutePath());
-			e.printStackTrace();
-		}
-
-		try {
-			PrintWriter out = new PrintWriter(outfile);
-			out.print(toWrite);
-			out.close();
-		} catch (IOException e) {
-			System.err.println("Problem writing to file "
-					+ outfile.getAbsolutePath());
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Same as {@link #writeStringToOutDir(String, String, String)} but uses the
-	 * built in file writing of a stringtemplate
-	 * 
-	 * @param filename
-	 *            name of the file to be created/overwritten
-	 * @param outputDirectory
-	 *            directory to write the file in
-	 * @param toWrite
-	 *            StringTemplate to render to a file
-	 */
-	public static void writeSTToOutDir(String filename, String outputDirectory,
-			ST toWrite) {
-		File outfile = new File(outputDirectory + File.separator + filename);
-
-		try {
-			outfile.createNewFile();
-		} catch (IOException e) {
-			System.err.println("could not create file "
-					+ outfile.getAbsolutePath());
-			e.printStackTrace();
-		}
-
-		try {
-			toWrite.write(outfile, null);// TODO: figure out what to do for
-											// second argument
-		} catch (IOException e) {
-			System.err.println("Problem writing to file "
-					+ outfile.getAbsolutePath());
-			e.printStackTrace();
-		}
 	}
 
 	public static void main(String args[]) {

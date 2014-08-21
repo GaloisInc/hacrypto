@@ -38,23 +38,11 @@ public class KATInput {
 	
 	/**
 	 * @param bytes
-	 * @return String containing a hex representation of the byte array
-	 */
-	public static String byteArraytoHexString(byte[] bytes){
-		StringBuilder sb = new StringBuilder();
-		for (byte b : bytes) {
-			sb.append(String.format("%02X", b));
-		}
-		return sb.toString();
-	}
-
-	/**
-	 * @param bytes
 	 * @return String containing the length of the byte string followed by a
 	 *         hex representation of the bytes
 	 */
 	public static String simpleByteString(byte[] bytes) {
-		return (bytes.length + " " + byteArraytoHexString(bytes));
+		return (bytes.length + " " + Util.byteArraytoHexString(bytes));
 	}
 
 	/**
@@ -65,7 +53,7 @@ public class KATInput {
 	}
 	
 	public String toHexString(){
-		return byteArraytoHexString(bytes);
+		return Util.byteArraytoHexString(bytes);
 	}
 
 }

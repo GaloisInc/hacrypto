@@ -1,2 +1,6 @@
-SHA256 KAT step shortMsg 0 64 1 step longMsg 163 6400 99
+SHA256 
+	KAT 
+	step shortMsg 0 64 1 
+	step longMsg 163 6400 99
+	req somefile.req
 Languages C

@@ -30,51 +30,6 @@ public class KAT {
 	private Map<KATInput, String> KATs = new LinkedHashMap<KATInput, String>();
 
 	/**
-	 * @param arrayRep
-	 *            comma separated string of base 10 bytes. Arrays.toString() of
-	 *            a byte array will create valid input to this method
-	 * @return byte array represented by arrayRep
-	 */
-	private byte[] parseByteArray(String arrayRep) {
-		String[] strings = arrayRep.replace("[", "").replace("]", "")
-				.split(",");
-		byte[] bytes = new byte[strings.length];
-		if (strings[0].equals(" ")) {
-			bytes = new byte[0];
-		} else {
-			for (int i = 0; i < strings.length; i++) {
-				bytes[i] = Byte.parseByte(strings[i].trim());
-			}
-		}
-		return bytes;
-	}
-
-	/**
-	 * from <a href =
-	 * http://stackoverflow.com/questions/140131/convert-a-string-
-	 * representation-of-a-hex-dump-to-a-byte-array-using-java/140861#140861>
-	 * this stackoverflow post </a>
-	 * 
-	 * @param s
-	 *            String representation of a hedicamal number. Method will throw
-	 *            an exception if the string has odd length
-	 * @return Byte array represented by s
-	 */
-	public static byte[] hexStringToByteArray(String s) {
-		int len = s.length();
-		if (len % 2 != 0) {
-			throw new RuntimeErrorException(new Error(
-					"Invalid hex string length. Must be even, is " + len));
-		}
-		byte[] data = new byte[len / 2];
-		for (int i = 0; i < len; i += 2) {
-			data[i / 2] = (byte) ((Character.digit(s.charAt(i), 16) << 4) + Character
-					.digit(s.charAt(i + 1), 16));
-		}
-		return data;
-	}
-
-	/**
 	 * Creates a {@link KATInput} and adds it to {@link KATs} See the README for
 	 * test format
 	 * 
@@ -112,9 +67,9 @@ public class KAT {
 			}
 			bytes = sb.toString().getBytes();
 		} else if (katType.equals("hex")) {
-			bytes = hexStringToByteArray(scan.nextLine().replaceAll("\\s", ""));
+			bytes = Util.hexStringToByteArray(scan.nextLine().replaceAll("\\s", ""));
 		} else if (katType.equals("array")) {
-			bytes = parseByteArray(scan.nextLine());
+			bytes = Util.parseByteArray(scan.nextLine());
 		} else if (katType.equals("empty")) {
 			bytes = new byte[0];
 			scan.nextLine();
