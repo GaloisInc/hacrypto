@@ -2,6 +2,7 @@ package com.galois.hacrypto;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -14,6 +15,8 @@ import javax.management.RuntimeErrorException;
 
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupDir;
+
+import req.*;
 
 /**
  * Responsible for language-independent parts of tests. Reads configuration
@@ -42,6 +45,8 @@ public class Test {
 	private File outDir;
 	private File testDir;
 	public static final STGroup stGroup = new STGroupDir("tmp");
+	
+	
 	/**
 	 * @param testDir
 	 *            The directory that holds the test definitions such as tests,
@@ -55,7 +60,6 @@ public class Test {
 		this.outDir = new File(outDir);
 		this.testDir = new File(testDir);
 		this.outDir.mkdirs();
-		this.testDir.mkdirs();
 		File testFile = new File(testDir + File.separator + "tests");
 		Scanner testReader = null;
 		try {
@@ -129,6 +133,8 @@ public class Test {
 			createCompare(testReader, algorithm, false);
 		} else if (testType.toUpperCase().equals("STEP")) {
 			createCompare(testReader, algorithm, true);
+		} else if (testType.toUpperCase().equals("FILE")){
+			createFile(testReader.next(), algorithm);
 		}
 
 		else {
@@ -137,6 +143,24 @@ public class Test {
 		}
 	}
 
+	
+	private void createFile(String fileName, String algorithm){
+		Req r;
+		
+		try {
+			r = new Req(testDir + File.separator + fileName);
+		} catch (IOException e) {
+			throw new RuntimeException("could not find file: " + testDir + File.separator + fileName);
+		}
+		
+		Entry<String, String> reqrsp = r.creatReqRsp();
+		
+		Util.writeStringToOutDir(fileName + ".req", outDir.getPath(), reqrsp.getKey());
+		File rspdir = new File(outDir.getPath() + File.separator + "rsp");
+		rspdir.mkdirs();
+		Util.writeStringToOutDir(fileName + ".rsp", rspdir.getPath(), reqrsp.getValue());
+	}
+	
 	/**
 	 * creates input and output files for a compare read in from the tests file
 	 * 
@@ -215,7 +239,7 @@ public class Test {
 	}
 
 	public static void main(String args[]) {
-		new Test("test_defs", "../callsha/tests2").generateLanguageTests();
+		new Test("test_defs", "../callsha/tests3").generateLanguageTests();
 	}
 
 }
