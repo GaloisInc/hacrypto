@@ -18,4 +18,7 @@ CKAT(testname, inputsize, input, outputsize, answer, func, repeat, malloc, comme
 	<func>(input, result, <inputsize>);
 	check_KAT(result, expected_result, <outputsize>, "<testname>");
 	
+	<if(malloc)>
+	free(input);
+	<endif>
 } >>

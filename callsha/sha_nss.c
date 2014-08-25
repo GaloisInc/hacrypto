@@ -515,7 +515,7 @@ SHA256_EndRaw(SHA256Context *ctx, unsigned char *digest,
 
 int 
 SHA256_HashBuf(unsigned char *dest, const unsigned char *src, 
-               PRUint32 src_length)
+               unsigned short src_length)
 {
     SHA256Context ctx;
     unsigned int outLen;

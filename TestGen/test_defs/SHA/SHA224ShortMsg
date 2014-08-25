@@ -1,0 +1,20 @@
+inputs = 2
+
+input0_name = Len
+input0_type = length 
+#lengthof is the number of the input we are printing the length of
+input0_lengthof = 1
+
+input1_name = Msg
+input1_type = increase
+input1_minlength = 0 
+input1_maxlength = 512 
+input1_stepsize = 8
+
+outputs = 1
+
+output0_name = MD
+output0_args = 1
+#number here refers to the input number
+output0_arg0 = 1
+output0_function = SHA224
