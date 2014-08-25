@@ -146,19 +146,21 @@ public class Test {
 	
 	private void createFile(String fileName, String algorithm){
 		Req r;
-		
+		fileName = fileName.replace('/', File.separatorChar);
+		String dir = fileName.substring(0, fileName.lastIndexOf(File.separatorChar));
+		new File(outDir.getPath() + File.separator + "req" + File.separator + dir).mkdirs();
 		try {
 			r = new Req(testDir + File.separator + fileName);
 		} catch (IOException e) {
-			throw new RuntimeException("could not find file: " + testDir + File.separator + fileName);
+			throw new RuntimeException("could not read file: " + testDir + File.separator + fileName);
 		}
 		
 		Entry<String, String> reqrsp = r.creatReqRsp();
 		
-		Util.writeStringToOutDir(fileName + ".req", outDir.getPath(), reqrsp.getKey());
-		File rspdir = new File(outDir.getPath() + File.separator + "rsp");
+		Util.writeStringToOutDir(fileName + ".req", outDir.getPath() + File.separator + "req", reqrsp.getKey());
+		File rspdir = new File(outDir.getPath() + File.separator + "rsp" + File.separator + dir);
 		rspdir.mkdirs();
-		Util.writeStringToOutDir(fileName + ".rsp", rspdir.getPath(), reqrsp.getValue());
+		Util.writeStringToOutDir(fileName + ".rsp", outDir.getPath() + File.separator + "rsp", reqrsp.getValue());
 	}
 	
 	/**
@@ -239,7 +241,7 @@ public class Test {
 	}
 
 	public static void main(String args[]) {
-		new Test("test_defs", "../callsha/tests3").generateLanguageTests();
+		new Test("test_defs", "../callsha/tests3")/*.generateLanguageTests()*/;
 	}
 
 }

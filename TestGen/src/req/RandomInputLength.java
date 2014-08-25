@@ -11,7 +11,12 @@ public class RandomInputLength implements InputLength{
 	private int currentCt = 0;
 
 	public RandomInputLength(int minLength, int maxLength, int ct){
-		this.maxLength = maxLength;
+		if(maxLength < minLength){
+			this.maxLength = minLength;
+		}
+		else{
+			this.maxLength = maxLength;
+		}
 		this.minLength = minLength;
 		this.ct = ct;
 	}
