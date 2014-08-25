@@ -17,8 +17,31 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
+/**
+ * 
+ * @author jdodds
+ *
+ */
+/**
+ * @author jdodds
+ *
+ */
+/**
+ * @author jdodds
+ *
+ */
 public class Output {
 
+	/**
+	 * Valid inputs are: SHA1 SHA256 SHA224 SHA384 SHA512
+	 * AES/CBC/ENC AES/CBC/DEC AES/CFB128/ENC AES/CFB128/DEC
+	 * AES/CFB8/ENC AES/CFB8/DEC AES/ECB/ENC AES/ECB/DEC
+	 * AES/OFB/ENC AES/OFB/DEC
+	 * @param algorithm  String name of the algorithm.
+	 * @param inputs possibly out of order superset of the inputs to the algorithm
+	 * @param inputOrder integers pointing to the inputs to the algorithm in order
+	 * @return
+	 */
 	public static byte[] getOutput(String algorithm, List<byte[]> inputs,
 			int[] inputOrder) {
 		switch (algorithm.toUpperCase()) {
@@ -102,9 +125,17 @@ public class Output {
 		}
 
 	}
-
-	private static byte[] digestBouncyCastle(String algorithm, byte[] message) {
+	
+	static{
 		Security.addProvider(new BouncyCastleProvider());
+	}
+
+	/**
+	 * @param algorithm BouncyCastle algorithm name
+	 * @param message message to be digested
+	 * @return message digest
+	 */
+	private static byte[] digestBouncyCastle(String algorithm, byte[] message) {
 		MessageDigest digest = null;
 		try {
 			try {
@@ -120,7 +151,15 @@ public class Output {
 		return digest.digest(message);
 	}
 
-	private static void debugPrintCyphter(String algorithm, int mode,
+	/**
+	 * A print to std error of useful information for a cipher state
+	 * @param algorithm
+	 * @param mode
+	 * @param seckey
+	 * @param iv
+	 * @param msg
+	 */
+	private static void debugPrintCipher(String algorithm, int mode,
 			byte[] seckey, byte[] iv, byte[] msg){
 		System.err.println("Algorithm: " + algorithm);
 		System.err.print("Mode: ");
@@ -141,6 +180,14 @@ public class Output {
 		
 	}
 	
+	/**
+	 * @param algorithm Bouncy Castle algorithm name
+	 * @param mode Cipher encrypt or decrypt mode
+	 * @param seckey Secret key
+	 * @param iv Initialization Vector
+	 * @param msg The message to be encrypted or decrypted
+	 * @return
+	 */
 	private static byte[] cypherBouncyCastle(String algorithm, int mode,
 			byte[] seckey, byte[] iv, byte[] msg) {
 		Security.addProvider(new BouncyCastleProvider());
@@ -156,7 +203,7 @@ public class Output {
 		try {
 			cipher.init(mode, key, new IvParameterSpec(iv));
 		} catch (InvalidKeyException | InvalidAlgorithmParameterException e) {
-			debugPrintCyphter(algorithm, mode, seckey, iv, msg);
+			debugPrintCipher(algorithm, mode, seckey, iv, msg);
 			System.err.println("If you are having unexpected key size errors, be sure you have installed");
 			System.err.println("JCE Unlimited Strength Jurisdiction Policy Files");
 			e.printStackTrace();

@@ -4,11 +4,21 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 
 
+/**
+ * Input that gives the length of another input
+ * @author jdodds
+ *
+ */
 public class LengthInput implements Input {
 	private String name;
 	private int lengthOf;
 	private Req req;
 	
+	/**
+	 * @param name Name of this input. Will appear before the value of the input in the req string
+	 * @param lengthof number of the input that this input gives the length of
+	 * @param req the parent req. This is the req that the lengthof argument points into
+	 */
 	public LengthInput(String name, int lengthof, Req req) {
 		this.name = name;
 		this.lengthOf = lengthof;

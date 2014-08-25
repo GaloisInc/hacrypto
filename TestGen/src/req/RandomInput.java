@@ -5,10 +5,19 @@ import java.util.Map.Entry;
 
 import com.galois.hacrypto.Util;
 
+/**
+ * An input that is a random string of bytes
+ * @author jdodds
+ *
+ */
 public class RandomInput implements Input {
 
 	private String name;
 	private InputLength inputLength;
+	/**
+	 * @param name 
+	 * @param il Determines the length of each advancing input
+	 */
 	public RandomInput(String name, InputLength il) {
 		this.inputLength = il;
 		this.name = name;

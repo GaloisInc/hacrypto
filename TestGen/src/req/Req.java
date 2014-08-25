@@ -12,23 +12,36 @@ import java.util.Queue;
 
 import com.galois.hacrypto.Util;
 
+/**
+ * Creates a .req and .rsp file given a test definition file
+ * 
+ * @author jdodds
+ * 
+ */
 public class Req {
 	private List<Queue<Input>> inputs;
-	private int currentOutput=0;
+	private int currentOutput = 0;
 	private Properties p;
 
 	public Input getInput(int n) {
 		return inputs.get(n).peek();
 	}
 
+	/**
+	 * We say there is no next test if any of the inputs has no more tests. This
+	 * function will advance to the next input if there is a multiple input and
+	 * the one at the front of the queue has run out
+	 * 
+	 * @return 
+	 */
 	private boolean hasNextTest() {
-		for(int i=0; i<inputs.size(); i++){
-			Queue<Input>inputq = inputs.get(i);
+		for (int i = 0; i < inputs.size(); i++) {
+			Queue<Input> inputq = inputs.get(i);
 			while (inputq.peek() != null && !inputq.peek().hasNextInput()) {
 				inputq.poll();
 				String outputEndName = "output" + currentOutput + "_end";
-				if(p.containsKey(outputEndName)){
-					if(Integer.parseInt(p.getProperty(outputEndName).trim()) == i){
+				if (p.containsKey(outputEndName)) {
+					if (Integer.parseInt(p.getProperty(outputEndName).trim()) == i) {
 						currentOutput++;
 					}
 				}
@@ -40,8 +53,12 @@ public class Req {
 		return true;
 	}
 
-	//this is destructive because hasNextTest is
-	public Entry<String, String> creatReqRsp(){
+	// this is destructive because hasNextTest is
+	/**
+	 * Create a NIST .req and .rsp string representing this test
+	 * @return a pair of .req and .rsp files. If no output is given the files will be the same
+	 */
+	public Entry<String, String> creatReqRsp() {
 		StringBuilder reqSb = new StringBuilder();
 		StringBuilder rspSb = new StringBuilder();
 		while (this.hasNextTest()) {
@@ -54,24 +71,30 @@ public class Req {
 				reqSb.append("\n");
 				rspSb.append("\n");
 			}
-			if(p.containsKey("output" + currentOutput + "_name")){
-				int outputArgs = Integer.parseInt(p.getProperty("output" + currentOutput + "_args","0").trim());
+			if (p.containsKey("output" + currentOutput + "_name")) {
+				int outputArgs = Integer.parseInt(p.getProperty(
+						"output" + currentOutput + "_args", "0").trim());
 				int[] argOrder = new int[outputArgs];
-				for(int i=0; i< outputArgs; i++){
-					argOrder[i] = Integer.parseInt(p.getProperty("output" + currentOutput + "_arg" + i, "0").trim());
+				for (int i = 0; i < outputArgs; i++) {
+					argOrder[i] = Integer.parseInt(p.getProperty(
+							"output" + currentOutput + "_arg" + i, "0").trim());
 				}
-				String func = p.getProperty("output" + currentOutput + "_function", "output" + currentOutput + "_function not given");
-				rspSb.append(p.getProperty("output" + currentOutput + "_name").trim());
+				String func = p.getProperty("output" + currentOutput
+						+ "_function", "output" + currentOutput
+						+ "_function not given");
+				rspSb.append(p.getProperty("output" + currentOutput + "_name")
+						.trim());
 				rspSb.append(" = ");
-				rspSb.append(Util.byteArraytoHexString(Output.getOutput(func, args, argOrder)));
+				rspSb.append(Util.byteArraytoHexString(Output.getOutput(func,
+						args, argOrder)));
 				rspSb.append("\n");
 			}
 			reqSb.append("\n");
 			rspSb.append("\n");
 		}
-		return new SimpleEntry<String, String>(reqSb.toString(), rspSb.toString());
+		return new SimpleEntry<String, String>(reqSb.toString(),
+				rspSb.toString());
 	}
-
 
 	private int getIntProperty(String suffix, int inputno) {
 		String s = getStringProperty(suffix, inputno);
@@ -85,7 +108,7 @@ public class Req {
 		return getStringProperty(suffix, inputno, null);
 
 	}
-	
+
 	private String getStringProperty(String suffix, int inputno, String def) {
 		String s = p.getProperty("input" + inputno + "_" + suffix, def);
 		if (s == null) {
@@ -106,6 +129,12 @@ public class Req {
 		inputs.get(index).add(input);
 	}
 
+	/**
+	 * Create a Req object from a req file. The form of the req is given in the readme file for this project
+	 *  
+	 * @param fileName
+	 * @throws IOException
+	 */
 	public Req(String fileName) throws IOException {
 		p = new Properties();
 		FileInputStream in = new FileInputStream(fileName);
@@ -122,15 +151,15 @@ public class Req {
 
 			for (int m = 0; m < mult; m++) {
 				String suff2;
-				if(mult == 1){
+				if (mult == 1) {
 					suff2 = "";
-				}
-				else{
+				} else {
 					suff2 = "" + m;
 				}
-				
+
 				String inputName = getStringProperty("name" + suff2, i);
-				String inputType = getStringProperty("type" + suff2, i, "no type available: input" + i + "_type" + suff2);
+				String inputType = getStringProperty("type" + suff2, i,
+						"no type available: input" + i + "_type" + suff2);
 
 				switch (inputType.toUpperCase()) {
 
