@@ -135,7 +135,7 @@ public class Output {
 	 * @param message message to be digested
 	 * @return message digest
 	 */
-	private static byte[] digestBouncyCastle(String algorithm, byte[] message) {
+	public static byte[] digestBouncyCastle(String algorithm, byte[] message) {
 		MessageDigest digest = null;
 		try {
 			try {
@@ -188,7 +188,7 @@ public class Output {
 	 * @param msg The message to be encrypted or decrypted
 	 * @return
 	 */
-	private static byte[] cypherBouncyCastle(String algorithm, int mode,
+	public static byte[] cypherBouncyCastle(String algorithm, int mode,
 			byte[] seckey, byte[] iv, byte[] msg) {
 		Security.addProvider(new BouncyCastleProvider());
 		Cipher cipher = null;

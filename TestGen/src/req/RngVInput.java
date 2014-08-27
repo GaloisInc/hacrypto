@@ -3,6 +3,8 @@ package req;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 import com.galois.hacrypto.Util;
 
 public class RngVInput implements Input {
@@ -10,6 +12,7 @@ public class RngVInput implements Input {
 	private InputLength il;
 	private byte[] value;
 	int byteno;
+	String name = "V";
 	
 	/**
 	 * @param length in bits
@@ -18,6 +21,12 @@ public class RngVInput implements Input {
 	public RngVInput(int length) {
 		this.il = new FixedInputLength(length);
 		this.value = new byte[length/8];
+	}
+	
+	public RngVInput(String name, int length) {
+		this.il = new FixedInputLength(length);
+		this.value = new byte[length/8];
+		this.name = name;
 	}
 
 	@Override
@@ -32,9 +41,9 @@ public class RngVInput implements Input {
 
 	@Override
 	public Entry<String, byte[]> toReqString() {
-		StringBuilder sb = new StringBuilder("V");
+		StringBuilder sb = new StringBuilder(name);
 		sb.append(" = ");
-		
+
 		
 		if(value[byteno]==-1){
 			byteno++;
