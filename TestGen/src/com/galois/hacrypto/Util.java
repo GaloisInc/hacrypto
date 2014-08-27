@@ -132,5 +132,14 @@ public class Util {
 		}
 		return sb.toString();
 	}
+	
+	public static void main(String args[]){
+		byte[] b = new byte[1];
+		b[0] = -128;
+		for(int i=0; i<8; i++){
+			System.out.println(byteArraytoHexString(b));
+			b[0] = (byte) ( b[0] / 2);
+		}
+	}
 
 }

@@ -194,6 +194,11 @@ public class Req {
 					addInput(i, new CountInput(inputName, min, max));
 				}
 					break;
+					
+				case "RNGV" : {
+					addInput(i, new RngVInput(getIntProperty("length" + suff2, i)));
+					break;
+				}
 
 				default:
 					throw new RuntimeException("Unknown test type: "
