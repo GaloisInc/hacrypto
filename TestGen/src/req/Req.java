@@ -199,6 +199,21 @@ public class Req {
 					addInput(i, new RngVInput(getIntProperty("length" + suff2, i)));
 					break;
 				}
+				
+				case "FIXED" : {
+					int number = getIntProperty("number" + suff2, i);
+					int increment = getIntProperty("increment", i);
+					if(containsProperty("value" + suff2, i)){
+						String value = getStringProperty("value" + suff2, i);
+						addInput(i, new FixedInput(Util.hexStringToByteArray(value), inputName, number, increment));
+					}
+					else{
+						int length = getIntProperty("length" + suff2, i);
+						addInput(i, new FixedInput(length, inputName, number, increment));
+					}
+					break;
+				}
+
 
 				default:
 					throw new RuntimeException("Unknown test type: "

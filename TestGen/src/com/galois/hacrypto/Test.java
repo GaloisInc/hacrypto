@@ -241,7 +241,7 @@ public class Test {
 	}
 
 	public static void main(String args[]) {
-		new Test("test_defs", "../callsha/tests3")/*.generateLanguageTests()*/;
+		new Test("test_defs", "output")/*.generateLanguageTests()*/;
 	}
 
 }

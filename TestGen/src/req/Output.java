@@ -17,6 +17,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
+import crypto.Rng;
+
 /**
  * 
  * @author jdodds
@@ -120,6 +122,10 @@ public class Output {
 					inputs.get(inputOrder[0]), inputs.get(inputOrder[1]),
 					inputs.get(inputOrder[2]));
 			
+		case "RNG/AES" :
+			return rng(inputs.get(inputOrder[0]), inputs.get(inputOrder[1]),
+					inputs.get(inputOrder[2]));
+			
 		default:
 			throw new RuntimeException("Unknown algorithm: " + algorithm);
 		}
@@ -128,6 +134,11 @@ public class Output {
 	
 	static{
 		Security.addProvider(new BouncyCastleProvider());
+	}
+	
+	public static byte[] rng(byte[] key, byte[] dt, byte[] v){
+		Rng r = new Rng(v,key);
+		return r.nextRandom(dt);
 	}
 
 	/**

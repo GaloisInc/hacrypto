@@ -133,13 +133,20 @@ public class Util {
 		return sb.toString();
 	}
 	
+	public static void increment(byte[] bytes){
+		int c= bytes.length-1;
+		do{
+			bytes[c] = (byte) (bytes[c] + 1);
+			c--;
+		} while (c > 0 && bytes[c+1] == 0x00);
+	}
+	
 	public static void main(String args[]){
-		byte[] b = new byte[1];
-		b[0] = -128;
-		for(int i=0; i<8; i++){
+		byte[] b = new byte[5];
+		b[4] = (byte)0xFF;
+		for(int i=0; i<20000; i++){
 			System.out.println(byteArraytoHexString(b));
-			b[0] = (byte) ( b[0] / 2);
+			increment(b);
 		}
 	}
-
 }

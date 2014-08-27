@@ -13,6 +13,9 @@ public class Rng {
 	public Rng(byte[] seed, byte[] key) {
 		this.seed = seed;
 		this.key = key;
+		if(this.seed.length != this.key.length){
+			throw new RuntimeException("Seed length and key length must match");
+		}
 		this.iv = new byte[key.length];
 	}
 
