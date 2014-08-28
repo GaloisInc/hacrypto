@@ -68,7 +68,7 @@ There must always be a definition
 
 where inputCt gives the number of inputs that are declared. The definitions take the form
 
-input<n>_<property><m> = <value>
+	input<n>_<property><m> = <value>
 
 - **n** gives the number of the test. These range from 0 .. inputCt-1
 - **property** can have a variety of values. These are mentioned in the Test Types section
@@ -102,7 +102,7 @@ in the output files. Unless specified all lengths are given in bits
 	* **stepsize** how many bits to increase the size of each output by
 
 - **randomsequence** prints a random byte string of length defined by an integer sequence
-	* **sequence** takes the form [<i1>, <i2>, ..., <in>] and specifies a sequence of lengths in bits
+	* **sequence** takes the form ```[<i1>, <i2>, ..., <in>]``` and specifies a sequence of lengths in bits
 	* **repeat** number of times to repeat the sequence. A value of 0 will repeat forever
 	* **changeEvery** how many outputs to print before changing to the next length in the sequence 
 
@@ -119,7 +119,7 @@ in the output files. Unless specified all lengths are given in bits
 	* **increment** a base 10 integer specifying how much to increment the hex string by each time. Increment treats the byte string as big-endian
 
 - **sequence** a sequence of integers
-	* **values** the sequence of integer values to print. takes the form [<i1>, <i2>, ..., <in>]
+	* **values** the sequence of integer values to print. takes the form ```[<i1>, <i2>, ..., <in>]```
 	* **repeat** number of times to repeat the sequence. A value of 0 will repeat forever
 	* **changeEvery** how many inputs to print before changing to the next value in the sequence
 
@@ -131,28 +131,28 @@ outputs have the followint properties
 
 - **name** like name for inputs. Printed before the output in the .rsp file
 - **args** the number of arguments given to the output function
-- **arg<n>** for n=0..args-1 the input number to be given as the nth input the the Java function specified by the output
+- **arg**_n_ for n=0..args-1 the input number to be given as the nth input the the Java function specified by the output
 - **function** the function to use for the output. The current list of functions follows.
 
 The functions that can currently be used are as follows
 
--SHA1 
--SHA256 
--SHA224 
--SHA384 
--SHA512 
--AES/CBC/ENC
--AES/CBC/DEC 
--AES/CFB128/ENC 
--AES/CFB128/DEC 
--AES/CFB8/ENC 
--AES/CFB8/DEC
--AES/ECB/ENC 
--AES/ECB/DEC 
--AES/OFB/ENC 
--AES/OFB/DEC
--RNG/AES
--HMAC
+* SHA1 
+* SHA256 
+* SHA224 
+* SHA384 
+* SHA512 
+* AES/CBC/ENC
+* AES/CBC/DEC 
+* AES/CFB128/ENC 
+* AES/CFB128/DEC 
+* AES/CFB8/ENC 
+* AES/CFB8/DEC
+* AES/ECB/ENC 
+* AES/ECB/DEC 
+* AES/OFB/ENC 
+* AES/OFB/DEC
+* RNG/AES
+* HMAC
 
 ##Example file
 
