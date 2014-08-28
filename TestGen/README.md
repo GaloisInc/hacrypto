@@ -123,6 +123,37 @@ in the output files. Unless specified all lengths are given in bits
 	* **repeat** number of times to repeat the sequence. A value of 0 will repeat forever
 	* **changeEvery** how many inputs to print before changing to the next value in the sequence
 
+##Outputs
+Multiple outputs can be specified per file, but only one is generated at a time. An output can be linked to an input and when that input is finished, the output
+will change to the next one as well. An output also specifies the order that arguments should be given to the java implementation of the function.
+
+outputs have the followint properties
+
+- **name** like name for inputs. Printed before the output in the .rsp file
+- **args** the number of arguments given to the output function
+- **arg<n>** for n=0..args-1 the input number to be given as the nth input the the Java function specified by the output
+- **function** the function to use for the output. The current list of functions follows.
+
+The functions that can currently be used are as follows
+
+-SHA1 
+-SHA256 
+-SHA224 
+-SHA384 
+-SHA512 
+-AES/CBC/ENC
+-AES/CBC/DEC 
+-AES/CFB128/ENC 
+-AES/CFB128/DEC 
+-AES/CFB8/ENC 
+-AES/CFB8/DEC
+-AES/ECB/ENC 
+-AES/ECB/DEC 
+-AES/OFB/ENC 
+-AES/OFB/DEC
+-RNG/AES
+-HMAC
+
 ##Example file
 
 The test definition files allow specification of the NIST tests for FIPS. An annotated
