@@ -13,10 +13,10 @@ public class Rng {
 	public Rng(byte[] seed, byte[] key) {
 		this.seed = seed;
 		this.key = key;
-		if(this.seed.length != this.key.length){
+		/*if(this.seed.length != this.key.length){
 			throw new RuntimeException("Seed length and key length must match");
-		}
-		this.iv = new byte[key.length];
+		}*/
+		this.iv = new byte[seed.length];
 	}
 
 	// TODO: The FIPS tests force you to expose an extra API
