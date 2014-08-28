@@ -8,7 +8,10 @@ a .req and a .rsp file containing the input and output file for the test.
 ## How to generate tests
 
 Load the project up in eclipse. It is a standalone project, so you will
-need to create a workspace and then import it as an existing project.
+need to create a workspace and then import it as an existing project. In order
+to enable many of the algorithms we need you must also install 
+[Unlimited strength policies](http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html)
+to your JRE.
 
 Example test definition files are  in the [test_defs](test_defs) folder. 
 Running the "Test" configuration an output folder in the callsha directory.
