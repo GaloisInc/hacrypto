@@ -57,7 +57,72 @@ The Language_tests file has the following form
 
 ### Test definition files
 
-The test definition files allow specification of the NIST tests for FIPS. An annoted
+##How Test Definitions work
+Test definitions appear as a series of key value equalities. 
+There must always be a definition
+
+	inputs = <inputCt> 
+
+where inputCt gives the number of inputs that are declared. The definitions take the form
+
+input<n>_<property><m> = <value>
+
+- **n** gives the number of the test. These range from 0 .. inputCt-1
+- **property** can have a variety of values. These are mentioned in the Test Types section
+- **m** some inputs are made up of multiple inputs. If this is the case m is given to specify which of them this input refers to
+- **value** possible values are discussed along with their properties in the next section.
+
+An input can be either finite or infinite. Inputs will continue to be generated until some finite input finishes. For inputs
+made of multiple other inputs, once the current input runs out, the next one will be used.
+
+##Test types
+
+This is a list of the available test types and their properties. Any integer values default to 0.
+input types appear with a definition input<n>_type. All
+inputs have the **name** property which gives the name that will be printed before the input
+in the output files. Unless specified all lengths are given in bits
+
+- **length** prints the length of another argument. That argument must be a byte string
+	* **lengthof** gives the number of the input that this length input prints the length of
+	  so if we want the length of an input ```input0_type =...``` we would write ```lengthof = 0```
+	* **unit** can be used to specify that the length should be printed in bytes with ```unit = bytes```	
+
+- **random** prints a random byte string in hex.
+	* **minlength** minimum length of the generated string
+	* **maxlength** maximum length of the generated string. If this is less than minlength all generates strings
+	  will be of length minLength
+	* **ct** number of tests to create. If 0 is given an unlimited number of tests will be generated
+
+- **increase** prints random byte strings of increasing length
+	* **minlength** length to start generating at
+	* **maxlength** maximum length of the generated string. If a string would be longer, it will start back at minlength
+	* **stepsize** how many bits to increase the size of each output by
+
+- **randomsequence** prints a random byte string of length defined by an integer sequence
+	* **sequence** takes the form [<i1>, <i2>, ..., <in>] and specifies a sequence of lengths in bits
+	* **repeat** number of times to repeat the sequence. A value of 0 will repeat forever
+	* **changeEvery** how many outputs to print before changing to the next length in the sequence 
+
+- **count** increasing integers
+	* **min** where to start the count
+	* **max** the count will be modulo the max
+	
+- **rngv** a special input used to generate the V value for the RNG test
+
+- **fixed** generates a byte value that changes by incrementing (possibly by 0)
+	* **number** number of inputs to generate. 0 means unlimited
+	* **value** specifies the starting value as a hex string. If no value is given you must specify length
+	* **length** optional if value is specified. The length of the input. If no value has been specified a random value of this length will be generated
+	* **increment** a base 10 integer specifying how much to increment the hex string by each time. Increment treats the byte string as big-endian
+
+- **sequence** a sequence of integers
+	* **values** the sequence of integer values to print. takes the form [<i1>, <i2>, ..., <in>]
+	* **repeat** number of times to repeat the sequence. A value of 0 will repeat forever
+	* **changeEvery** how many inputs to print before changing to the next value in the sequence
+
+##Example file
+
+The test definition files allow specification of the NIST tests for FIPS. An annotated
 test definition for AES follows. Line order does not matter:
 
 	#the number of inputs
@@ -135,7 +200,8 @@ More example files can be found in the test_defs folder
 
 ##Generated tests
 
-The output is a directory (currently only inside of callsha) containing
+The output is a directory containing
+   * A directory called req and a directory called rsp. These contain the generated test files with names matching the input files that specify them
    * One file `<primitive>`_`<implementation>`_KAT.c for each primitive/implementation
      being tested with KAT
    * One file `<primitive>`_compare.c for each primitive with a comparison test
