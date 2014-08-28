@@ -1,4 +1,4 @@
-package com.galois.hacrypto;
+package com.galois.hacrypto.test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -16,7 +16,7 @@ import javax.management.RuntimeErrorException;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupDir;
 
-import req.*;
+import com.galois.hacrypto.req.*;
 
 /**
  * Responsible for language-independent parts of tests. Reads configuration

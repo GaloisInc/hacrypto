@@ -1,6 +1,8 @@
-package req;
+package com.galois.hacrypto.req.input;
 
 import java.util.Map.Entry;
+
+import com.galois.hacrypto.req.length.InputLength;
 
 /**
  * One input in a .req file. This corresponds to an input per-test

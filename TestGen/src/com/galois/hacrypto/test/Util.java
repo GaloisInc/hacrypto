@@ -1,4 +1,4 @@
-package com.galois.hacrypto;
+package com.galois.hacrypto.test;
 
 import java.io.File;
 import java.io.IOException;
@@ -107,7 +107,7 @@ public class Util {
 	 *            a byte array will create valid input to this method
 	 * @return byte array represented by arrayRep
 	 */
-	static byte[] parseByteArray(String arrayRep) {
+	public static byte[] parseByteArray(String arrayRep) {
 		String[] strings = arrayRep.replace("[", "").replace("]", "")
 				.split(",");
 		byte[] bytes = new byte[strings.length];
@@ -119,6 +119,27 @@ public class Util {
 			}
 		}
 		return bytes;
+	}
+	
+	
+	/**
+	 * @param arrayRep
+	 *            comma separated string of ints. Arrays.toString() of
+	 *            a byte array will create valid input to this method
+	 * @return byte array represented by arrayRep
+	 */
+	public static int[] parseIntArray(String arrayRep) {
+		String[] strings = arrayRep.replace("[", "").replace("]", "")
+				.split(",");
+		int[] ints = new int[strings.length];
+		if (strings[0].equals(" ")) {
+			ints = new int[0];
+		} else {
+			for (int i = 0; i < strings.length; i++) {
+				ints[i] = Integer.parseInt(strings[i].trim());
+			}
+		}
+		return ints;
 	}
 
 	/**

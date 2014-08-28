@@ -1,0 +1,32 @@
+inputs = 5
+
+input0_name = Count
+input0_type = count
+input0_max = 74
+
+input1_name = Klen
+input1_type = length
+input1_lengthof = 3
+input1_unit = byte
+
+input2_name = Tlen
+input2_type = sequence
+input2_values = [20, 28, 32, 48, 64]
+input2_repeat = 1
+input2_changeEvery = 75
+
+input3_name Key
+input3_type = randomsequence
+input3_sequence = [160, 240, 512, 560, 640]
+input3_changeEvery = 15
+
+input4_name Msg
+input4_type = random
+input4_minlength = 1024
+
+output0_name Mac
+output0_args = 3
+output0_arg0 = 2
+output0_arg1 = 3
+output0_arg2 = 4
+output0_function = HMAC

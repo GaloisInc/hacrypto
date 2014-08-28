@@ -1,4 +1,4 @@
-package com.galois.hacrypto;
+package com.galois.hacrypto.test;
 
 import java.io.File;
 import java.io.FileNotFoundException;

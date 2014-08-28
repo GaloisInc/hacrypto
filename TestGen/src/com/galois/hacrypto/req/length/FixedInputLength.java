@@ -1,4 +1,4 @@
-package req;
+package com.galois.hacrypto.req.length;
 
 public class FixedInputLength implements InputLength {
 

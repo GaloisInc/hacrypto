@@ -1,4 +1,4 @@
-package req;
+package com.galois.hacrypto.req;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,7 +10,19 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Queue;
 
-import com.galois.hacrypto.Util;
+import com.galois.hacrypto.req.input.CountInput;
+import com.galois.hacrypto.req.input.FixedInput;
+import com.galois.hacrypto.req.input.Input;
+import com.galois.hacrypto.req.input.LengthInput;
+import com.galois.hacrypto.req.input.RandomInput;
+import com.galois.hacrypto.req.input.RngVInput;
+import com.galois.hacrypto.req.input.SequenceInput;
+import com.galois.hacrypto.req.length.InputLength;
+import com.galois.hacrypto.req.length.RandomInputLength;
+import com.galois.hacrypto.req.length.SequenceLength;
+import com.galois.hacrypto.req.length.StepInputLength;
+import com.galois.hacrypto.req.output.Output;
+import com.galois.hacrypto.test.Util;
 
 /**
  * Creates a .req and .rsp file given a test definition file
@@ -165,7 +177,8 @@ public class Req {
 
 				case "LENGTH":
 					int lengthOf = getIntProperty("lengthof" + suff2, i);
-					addInput(i, new LengthInput(inputName, lengthOf, this));
+					String unit = getStringProperty("unit" + suff2, i);
+					addInput(i, new LengthInput(inputName, lengthOf, this, unit));
 					break;
 
 				case "RANDOM": {
@@ -187,6 +200,15 @@ public class Req {
 					addInput(i, new RandomInput(inputName, il));
 				}
 					break;
+					
+				case "RANDOMSEQUENCE" : {
+					int[] seq = Util.parseIntArray(getStringProperty("sequence" + suff2, i));
+					int repeat = getIntProperty("repeat" + suff2, i);
+					int changeEvery = getIntProperty("changeEvery" + suff2, i);
+					InputLength il = new SequenceLength(seq, repeat, changeEvery);
+					addInput(i, new RandomInput(inputName, il));
+				}
+				break;
 
 				case "COUNT": {
 					int min = getIntProperty("min" + suff2, i);
@@ -213,6 +235,14 @@ public class Req {
 					}
 					break;
 				}
+				
+				case "SEQUENCE" : {
+					int[] seq = Util.parseIntArray(getStringProperty("values" + suff2, i));
+					int repeat = getIntProperty("repeat" + suff2, i);
+					int changeEvery = getIntProperty("changeEvery" + suff2, i);
+					addInput(i, new SequenceInput(inputName, seq, changeEvery, repeat));
+					break;
+				}
 
 
 				default:
@@ -222,10 +252,5 @@ public class Req {
 			}
 		}
 
-	}
-
-	public static void main(String args[]) throws IOException {
-		Req r = new Req("test_defs/CBCMMT128");
-		System.out.println(r.creatReqRsp().getValue());
 	}
 }

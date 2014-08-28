@@ -1,4 +1,4 @@
-package com.galois.hacrypto;
+package com.galois.hacrypto.test;
 
 import java.util.Arrays;
 

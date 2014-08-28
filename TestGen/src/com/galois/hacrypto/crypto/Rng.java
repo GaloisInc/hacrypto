@@ -1,8 +1,8 @@
-package crypto;
+package com.galois.hacrypto.crypto;
 
 import javax.crypto.Cipher;
 
-import com.galois.hacrypto.Util;
+import com.galois.hacrypto.test.Util;
 
 public class Rng {
 
@@ -24,13 +24,13 @@ public class Rng {
 	// it from the sytem date time string
 	public byte[] nextRandom(byte[] dt) {
 
-		byte[] i = req.Output.cypherBouncyCastle("AES/CBC/NoPadding",
+		byte[] i = com.galois.hacrypto.req.output.Output.cypherBouncyCastle("AES/CBC/NoPadding",
 				Cipher.ENCRYPT_MODE, key, iv, dt);
 
-		byte[] rand = req.Output.cypherBouncyCastle("AES/CBC/NoPadding",
+		byte[] rand = com.galois.hacrypto.req.output.Output.cypherBouncyCastle("AES/CBC/NoPadding",
 				Cipher.ENCRYPT_MODE, key, iv, xor(i, seed));
 
-		this.seed = req.Output.cypherBouncyCastle("AES/CBC/NoPadding",
+		this.seed = com.galois.hacrypto.req.output.Output.cypherBouncyCastle("AES/CBC/NoPadding",
 				Cipher.ENCRYPT_MODE, key, iv, xor(i, rand));
 
 		return rand;

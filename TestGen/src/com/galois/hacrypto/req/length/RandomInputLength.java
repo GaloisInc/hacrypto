@@ -1,6 +1,6 @@
-package req;
+package com.galois.hacrypto.req.length;
 
-import com.galois.hacrypto.Util;
+import com.galois.hacrypto.test.Util;
 
 /**
  * A random length, possibly infinite input length

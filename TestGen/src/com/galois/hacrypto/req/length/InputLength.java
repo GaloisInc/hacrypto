@@ -1,4 +1,4 @@
-package req;
+package com.galois.hacrypto.req.length;
 
 /**
  * Object containing the length of an input. This specifies two types of

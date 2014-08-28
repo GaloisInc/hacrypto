@@ -1,7 +1,10 @@
-package req;
+package com.galois.hacrypto.req.input;
 
+import java.nio.ByteBuffer;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
+
+import com.galois.hacrypto.req.length.InputLength;
 
 
 /**
@@ -45,7 +48,7 @@ public class CountInput implements Input {
 			ct = this.min;
 		}
 		sb.append(ct++);
-		return new SimpleEntry<String, byte[]>(sb.toString(), new byte[0]);
+		return new SimpleEntry<String, byte[]>(sb.toString(), ByteBuffer.allocate(4).putInt(ct-1).array());
 	}
 
 

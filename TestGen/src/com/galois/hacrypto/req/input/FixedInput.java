@@ -1,9 +1,10 @@
-package req;
+package com.galois.hacrypto.req.input;
 
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 
-import com.galois.hacrypto.Util;
+import com.galois.hacrypto.req.length.InputLength;
+import com.galois.hacrypto.test.Util;
 
 public class FixedInput implements Input {
 
