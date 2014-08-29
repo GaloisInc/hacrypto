@@ -157,6 +157,15 @@ The functions that can currently be used are as follows
 * RNG/AES
 * HMAC
 
+##Comments
+
+It is possible to insert square bracket comments before the nth test. You do this with a definition of the form
+
+	comment0 = L=20
+
+Meaning that before test 0, a comment ```L=20``` will be generated. You can see an example of this in the HMAC test
+definitions.
+
 ##Example file
 
 The test definition files allow specification of the NIST tests for FIPS. An annotated

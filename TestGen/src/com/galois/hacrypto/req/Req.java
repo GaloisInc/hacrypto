@@ -82,10 +82,24 @@ public class Req {
 	public Entry<String, String> creatReqRsp() {
 		StringBuilder reqSb = new StringBuilder();
 		StringBuilder rspSb = new StringBuilder();
+		int inputNo=0;
 		while (this.hasNextTest()) {
+			
+			//TODO: the comments could be more efficient...
+			String comment = p.getProperty("comment" + inputNo);
+			if(comment!=null){
+				comment = comment.trim();
+				reqSb.append("[");
+				reqSb.append(comment);
+				reqSb.append("]\n\n");
+				rspSb.append("[");
+				rspSb.append(comment);
+				rspSb.append("]\n\n");
+			}
+			
 			List<byte[]> args = new ArrayList<byte[]>();
 			int c = 0;
-			for (Queue<Input> input : inputs) {
+			for (Queue<Input> input : inputs) {				
 				Entry<String, byte[]> e = input.peek().toReqString();
 				prevValues.add(c, e.getValue());
 				args.add(e.getValue());
@@ -115,6 +129,7 @@ public class Req {
 			}
 			reqSb.append("\n");
 			rspSb.append("\n");
+			inputNo++;
 		}
 		return new SimpleEntry<String, String>(reqSb.toString(),
 				rspSb.toString());
