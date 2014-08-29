@@ -12,7 +12,7 @@ input2_type = fixed
 input2_length = 64
 
 input3_name = Key3
-input2_type = fixed
+input3_type = fixed
 input3_length = 64
 
 input4_name = DT
@@ -30,4 +30,4 @@ output0_arg1 = 2
 output0_arg2 = 3
 output0_arg3 = 4
 output0_arg4 = 5
-output0_function = RNG/TDES
+output0_function = RNG/TDES3

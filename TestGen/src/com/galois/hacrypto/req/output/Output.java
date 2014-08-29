@@ -120,7 +120,19 @@ public class Output {
 
 		case "RNG/AES":
 			return rng(inputs.get(inputOrder[0]), inputs.get(inputOrder[1]),
-					inputs.get(inputOrder[2]));
+					inputs.get(inputOrder[2]), "AES");
+			
+		case "RNG/TDES2":
+			return rng(combinedKey(inputs.get(inputOrder[0]), 
+								   inputs.get(inputOrder[1]),
+								   inputs.get(inputOrder[0])), 
+					   inputs.get(inputOrder[2]), inputs.get(inputOrder[3]), "DESede");
+								   
+		case "RNG/TDES3":
+			return rng(combinedKey(inputs.get(inputOrder[0]), 
+					   inputs.get(inputOrder[1]),
+					   inputs.get(inputOrder[0])), 
+					   inputs.get(inputOrder[2]), inputs.get(inputOrder[3]), "DESede");
 
 		case "HMAC":
 			int outlen = ByteBuffer.wrap(inputs.get(inputOrder[0])).getInt();
@@ -132,10 +144,16 @@ public class Output {
 
 	}
 	
-	
+	private static byte[] combinedKey(final byte[] key_1, final byte[] key_2, final byte[] key_3) {
+		final byte[] result = new byte[key_1.length + key_2.length + key_3.length];
+		System.arraycopy(key_1, 0, result, 0, key_1.length);
+		System.arraycopy(key_2, 0, result, key_1.length, key_2.length);
+		System.arraycopy(key_3, 0, result, key_1.length + key_2.length - 1, key_3.length);
+		return result;
+	}
 
-	public static byte[] rng(byte[] key, byte[] dt, byte[] v) {
-		Rng r = new Rng(v, key);
+	public static byte[] rng(byte[] key, byte[] dt, byte[] v, String alg) {
+		Rng r = new Rng(v, key, alg);
 		return r.nextRandom(dt);
 	}
 

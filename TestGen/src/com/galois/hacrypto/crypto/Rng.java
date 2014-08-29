@@ -9,10 +9,12 @@ public class Rng {
 	private byte[] seed;
 	private byte[] key;
 	private byte[] iv;
-
-	public Rng(byte[] seed, byte[] key) {
+	private final String algorithm;
+	
+	public Rng(byte[] seed, byte[] key, String algorithm) {
 		this.seed = seed;
 		this.key = key;
+		this.algorithm = algorithm;
 		/*if(this.seed.length != this.key.length){
 			throw new RuntimeException("Seed length and key length must match");
 		}*/
@@ -24,13 +26,13 @@ public class Rng {
 	// it from the sytem date time string
 	public byte[] nextRandom(byte[] dt) {
 
-		byte[] i = com.galois.hacrypto.req.output.Output.cypherBouncyCastle("AES/CBC/NoPadding",
+		byte[] i = com.galois.hacrypto.req.output.Output.cypherBouncyCastle(algorithm + "/CBC/NoPadding",
 				Cipher.ENCRYPT_MODE, key, iv, dt);
 
-		byte[] rand = com.galois.hacrypto.req.output.Output.cypherBouncyCastle("AES/CBC/NoPadding",
+		byte[] rand = com.galois.hacrypto.req.output.Output.cypherBouncyCastle(algorithm + "/CBC/NoPadding",
 				Cipher.ENCRYPT_MODE, key, iv, xor(i, seed));
 
-		this.seed = com.galois.hacrypto.req.output.Output.cypherBouncyCastle("AES/CBC/NoPadding",
+		this.seed = com.galois.hacrypto.req.output.Output.cypherBouncyCastle(algorithm + "/CBC/NoPadding",
 				Cipher.ENCRYPT_MODE, key, iv, xor(i, rand));
 
 		return rand;
@@ -63,7 +65,7 @@ public class Rng {
 				.hexStringToByteArray("947529f603edb0cf6927f65edbbbc593");
 		byte[] seed = Util
 				.hexStringToByteArray("80000000000000000000000000000000");
-		Rng rng = new Rng(seed, key);
+		Rng rng = new Rng(seed, key, "AES");
 		System.out.println(Util.byteArraytoHexString(rng.nextRandom(dt)));
 	}
 

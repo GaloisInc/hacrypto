@@ -25,4 +25,4 @@ output0_arg0 = 1
 output0_arg1 = 2
 output0_arg2 = 3
 output0_arg3 = 4
-output0_function = RNG/TDES
+output0_function = RNG/TDES2
