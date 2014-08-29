@@ -69,7 +69,29 @@ public class Rng {
 		byte[] seed = Util
 				.hexStringToByteArray("80000000000000000000000000000000");
 		Rng rng = new Rng(seed, key, "AES");
-		System.out.println(Util.byteArraytoHexString(rng.nextRandom(dt)));
+		String result = Util.byteArraytoHexString(rng.nextRandom(dt));
+		if (result.toLowerCase().equals("339cef70da546707b2944591890394a3")) {
+			System.out.println("AES128 passed");
+		} else {
+			System.out.println("AES128 failed, got " + result + ", expected " + 
+		                       "339cef70da546707b2944591890394a3");
+		}
+
+		// first test from TDES3 test vector
+		key = Util
+				.hexStringToByteArray("2f4c67e95db96e2538160e5ef419aecd671645ad89f1388c");
+		dt = Util
+				.hexStringToByteArray("3703f397fec2bd63");
+		seed = Util
+				.hexStringToByteArray("8000000000000000");
+		rng = new Rng(seed, key, "DESede");
+	 	result = Util.byteArraytoHexString(rng.nextRandom(dt));
+		if (result.toLowerCase().equals("6e194f8d1a2a468b")) {
+			System.out.println("DESede passed");
+		} else {
+			System.out.println("DESede failed, got " + result + ", expected " + 
+		                       "6e194f8d1a2a468b");
+		}
 	}
 
 }
