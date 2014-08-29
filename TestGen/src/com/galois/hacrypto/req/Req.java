@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Queue;
 
+import com.galois.hacrypto.req.input.CopyInput;
 import com.galois.hacrypto.req.input.CountInput;
 import com.galois.hacrypto.req.input.FixedInput;
 import com.galois.hacrypto.req.input.Input;
@@ -35,6 +36,12 @@ public class Req {
 	private int currentOutput = 0;
 	private Properties p;
 
+	private ArrayList<byte[]> prevValues = new ArrayList<byte[]>();
+
+	public byte[] getPrevValue(int n) {
+		return prevValues.get(n);
+	}
+
 	public Input getInput(int n) {
 		return inputs.get(n).peek();
 	}
@@ -44,7 +51,7 @@ public class Req {
 	 * function will advance to the next input if there is a multiple input and
 	 * the one at the front of the queue has run out
 	 * 
-	 * @return 
+	 * @return
 	 */
 	private boolean hasNextTest() {
 		for (int i = 0; i < inputs.size(); i++) {
@@ -68,20 +75,25 @@ public class Req {
 	// this is destructive because hasNextTest is
 	/**
 	 * Create a NIST .req and .rsp string representing this test
-	 * @return a pair of .req and .rsp files. If no output is given the files will be the same
+	 * 
+	 * @return a pair of .req and .rsp files. If no output is given the files
+	 *         will be the same
 	 */
 	public Entry<String, String> creatReqRsp() {
 		StringBuilder reqSb = new StringBuilder();
 		StringBuilder rspSb = new StringBuilder();
 		while (this.hasNextTest()) {
 			List<byte[]> args = new ArrayList<byte[]>();
+			int c = 0;
 			for (Queue<Input> input : inputs) {
 				Entry<String, byte[]> e = input.peek().toReqString();
+				prevValues.add(c, e.getValue());
 				args.add(e.getValue());
 				reqSb.append(e.getKey());
 				rspSb.append(e.getKey());
 				reqSb.append("\n");
 				rspSb.append("\n");
+				c++;
 			}
 			if (p.containsKey("output" + currentOutput + "_name")) {
 				int outputArgs = Integer.parseInt(p.getProperty(
@@ -142,8 +154,9 @@ public class Req {
 	}
 
 	/**
-	 * Create a Req object from a req file. The form of the req is given in the readme file for this project
-	 *  
+	 * Create a Req object from a req file. The form of the req is given in the
+	 * readme file for this project
+	 * 
 	 * @param fileName
 	 * @throws IOException
 	 */
@@ -178,7 +191,8 @@ public class Req {
 				case "LENGTH":
 					int lengthOf = getIntProperty("lengthof" + suff2, i);
 					String unit = getStringProperty("unit" + suff2, i);
-					addInput(i, new LengthInput(inputName, lengthOf, this, unit));
+					addInput(i,
+							new LengthInput(inputName, lengthOf, this, unit));
 					break;
 
 				case "RANDOM": {
@@ -200,15 +214,17 @@ public class Req {
 					addInput(i, new RandomInput(inputName, il));
 				}
 					break;
-					
-				case "RANDOMSEQUENCE" : {
-					int[] seq = Util.parseIntArray(getStringProperty("sequence" + suff2, i));
+
+				case "RANDOMSEQUENCE": {
+					int[] seq = Util.parseIntArray(getStringProperty("sequence"
+							+ suff2, i));
 					int repeat = getIntProperty("repeat" + suff2, i);
 					int changeEvery = getIntProperty("changeEvery" + suff2, i);
-					InputLength il = new SequenceLength(seq, repeat, changeEvery);
+					InputLength il = new SequenceLength(seq, repeat,
+							changeEvery);
 					addInput(i, new RandomInput(inputName, il));
 				}
-				break;
+					break;
 
 				case "COUNT": {
 					int min = getIntProperty("min" + suff2, i);
@@ -216,34 +232,45 @@ public class Req {
 					addInput(i, new CountInput(inputName, min, max));
 				}
 					break;
-					
-				case "RNGV" : {
-					addInput(i, new RngVInput(getIntProperty("length" + suff2, i)));
-					break;
-				}
-				
-				case "FIXED" : {
-					int number = getIntProperty("number" + suff2, i);
-					int increment = getIntProperty("increment", i);
-					if(containsProperty("value" + suff2, i)){
-						String value = getStringProperty("value" + suff2, i);
-						addInput(i, new FixedInput(Util.hexStringToByteArray(value), inputName, number, increment));
-					}
-					else{
-						int length = getIntProperty("length" + suff2, i);
-						addInput(i, new FixedInput(length, inputName, number, increment));
-					}
-					break;
-				}
-				
-				case "SEQUENCE" : {
-					int[] seq = Util.parseIntArray(getStringProperty("values" + suff2, i));
-					int repeat = getIntProperty("repeat" + suff2, i);
-					int changeEvery = getIntProperty("changeEvery" + suff2, i);
-					addInput(i, new SequenceInput(inputName, seq, changeEvery, repeat));
+
+				case "RNGV": {
+					addInput(i,
+							new RngVInput(getIntProperty("length" + suff2, i)));
 					break;
 				}
 
+				case "FIXED": {
+					int number = getIntProperty("number" + suff2, i);
+					int increment = getIntProperty("increment", i);
+					if (containsProperty("value" + suff2, i)) {
+						String value = getStringProperty("value" + suff2, i);
+						addInput(i,
+								new FixedInput(
+										Util.hexStringToByteArray(value),
+										inputName, number, increment));
+					} else {
+						int length = getIntProperty("length" + suff2, i);
+						addInput(i, new FixedInput(length, inputName, number,
+								increment));
+					}
+					break;
+				}
+
+				case "SEQUENCE": {
+					int[] seq = Util.parseIntArray(getStringProperty("values"
+							+ suff2, i));
+					int repeat = getIntProperty("repeat" + suff2, i);
+					int changeEvery = getIntProperty("changeEvery" + suff2, i);
+					addInput(i, new SequenceInput(inputName, seq, changeEvery,
+							repeat));
+					break;
+				}
+
+				case "COPY": {
+					int copyOf = getIntProperty("copyOf" + suff2, i);
+					addInput(i, new CopyInput(inputName, copyOf, this));
+				}
+					break;
 
 				default:
 					throw new RuntimeException("Unknown test type: "

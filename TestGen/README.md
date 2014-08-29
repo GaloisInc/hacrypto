@@ -122,6 +122,9 @@ in the output files. Unless specified all lengths are given in bits
 	* **values** the sequence of integer values to print. takes the form ```[<i1>, <i2>, ..., <in>]```
 	* **repeat** number of times to repeat the sequence. A value of 0 will repeat forever
 	* **changeEvery** how many inputs to print before changing to the next value in the sequence
+	
+- **copy** a copy of another byte input
+	* **copyof** the int identifier of the input to copy
 
 ##Outputs
 Multiple outputs can be specified per file, but only one is generated at a time. An output can be linked to an input and when that input is finished, the output
