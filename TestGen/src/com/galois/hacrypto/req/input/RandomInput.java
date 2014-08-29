@@ -8,16 +8,19 @@ import com.galois.hacrypto.test.Util;
 
 /**
  * An input that is a random string of bytes
+ * 
  * @author jdodds
- *
+ * 
  */
 public class RandomInput implements Input {
 
 	private String name;
 	private InputLength inputLength;
+
 	/**
-	 * @param name 
-	 * @param il Determines the length of each advancing input
+	 * @param name
+	 * @param il
+	 *            Determines the length of each advancing input
 	 */
 	public RandomInput(String name, InputLength il) {
 		this.inputLength = il;
@@ -38,7 +41,7 @@ public class RandomInput implements Input {
 	public Entry<String, byte[]> toReqString() {
 		StringBuilder sb = new StringBuilder(name);
 		sb.append(" = ");
-		
+
 		byte[] val = new byte[inputLength.getLength() / 8];
 		Util.rand.nextBytes(val);
 		if (val.length == 0) {

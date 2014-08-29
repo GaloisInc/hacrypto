@@ -10,7 +10,8 @@ package com.galois.hacrypto.req.length;
  */
 public interface InputLength {
 	/**
-	 * @return If there are more test cases that can be generated using this test
+	 * @return If there are more test cases that can be generated using this
+	 *         test
 	 */
 	public boolean hasNextLength();
 

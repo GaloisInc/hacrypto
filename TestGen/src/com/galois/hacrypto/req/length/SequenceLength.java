@@ -7,16 +7,14 @@ public class SequenceLength implements InputLength {
 	private int repeat;
 	private boolean infinite;
 	private int currentCt;
-	
-	
+
 	public SequenceLength(int[] sequence, int repeat, int changeevery) {
 		this.sequence = sequence;
 		this.changeEvery = changeevery;
 		this.repeat = repeat;
-		if(repeat == 0){
+		if (repeat == 0) {
 			infinite = true;
-		}
-		else{
+		} else {
 			infinite = false;
 		}
 	}
@@ -28,11 +26,11 @@ public class SequenceLength implements InputLength {
 
 	@Override
 	public int peekLength() {
-		if(currentCt/changeEvery >= sequence.length){
+		if (currentCt / changeEvery >= sequence.length) {
 			currentCt = 0;
 			repeat--;
 		}
-		return (sequence[currentCt/changeEvery]);
+		return (sequence[currentCt / changeEvery]);
 	}
 
 	@Override

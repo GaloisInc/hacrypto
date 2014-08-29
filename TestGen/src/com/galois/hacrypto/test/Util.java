@@ -14,8 +14,8 @@ public class Util {
 	public static final Random rand = new Random();
 
 	/**
-	 * Same as {@link Util#writeStringToOutDir(String, String, String)} but uses the
-	 * built in file writing of a stringtemplate
+	 * Same as {@link Util#writeStringToOutDir(String, String, String)} but uses
+	 * the built in file writing of a stringtemplate
 	 * 
 	 * @param filename
 	 *            name of the file to be created/overwritten
@@ -27,7 +27,7 @@ public class Util {
 	public static void writeSTToOutDir(String filename, String outputDirectory,
 			ST toWrite) {
 		File outfile = new File(outputDirectory + File.separator + filename);
-	
+
 		try {
 			outfile.createNewFile();
 		} catch (IOException e) {
@@ -35,7 +35,7 @@ public class Util {
 					+ outfile.getAbsolutePath());
 			e.printStackTrace();
 		}
-	
+
 		try {
 			toWrite.write(outfile, null);// TODO: figure out what to do for
 											// second argument
@@ -64,7 +64,7 @@ public class Util {
 					+ outfile.getAbsolutePath());
 			e.printStackTrace();
 		}
-	
+
 		try {
 			PrintWriter out = new PrintWriter(outfile);
 			out.print(toWrite);
@@ -120,12 +120,11 @@ public class Util {
 		}
 		return bytes;
 	}
-	
-	
+
 	/**
 	 * @param arrayRep
-	 *            comma separated string of ints. Arrays.toString() of
-	 *            a byte array will create valid input to this method
+	 *            comma separated string of ints. Arrays.toString() of a byte
+	 *            array will create valid input to this method
 	 * @return byte array represented by arrayRep
 	 */
 	public static int[] parseIntArray(String arrayRep) {
@@ -146,26 +145,26 @@ public class Util {
 	 * @param bytes
 	 * @return String containing a hex representation of the byte array
 	 */
-	public static String byteArraytoHexString(byte[] bytes){
+	public static String byteArraytoHexString(byte[] bytes) {
 		StringBuilder sb = new StringBuilder();
 		for (byte b : bytes) {
 			sb.append(String.format("%02X", b));
 		}
 		return sb.toString();
 	}
-	
-	public static void increment(byte[] bytes){
-		int c= bytes.length-1;
-		do{
+
+	public static void increment(byte[] bytes) {
+		int c = bytes.length - 1;
+		do {
 			bytes[c] = (byte) (bytes[c] + 1);
 			c--;
-		} while (c > 0 && bytes[c+1] == 0x00);
+		} while (c > 0 && bytes[c + 1] == 0x00);
 	}
-	
-	public static void main(String args[]){
+
+	public static void main(String args[]) {
 		byte[] b = new byte[5];
-		b[4] = (byte)0xFF;
-		for(int i=0; i<20000; i++){
+		b[4] = (byte) 0xFF;
+		for (int i = 0; i < 20000; i++) {
 			System.out.println(byteArraytoHexString(b));
 			increment(b);
 		}

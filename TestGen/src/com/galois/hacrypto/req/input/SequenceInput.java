@@ -5,7 +5,6 @@ import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
 
 import com.galois.hacrypto.req.length.InputLength;
-import com.galois.hacrypto.test.Util;
 
 public class SequenceInput implements Input {
 
@@ -15,16 +14,15 @@ public class SequenceInput implements Input {
 	private boolean infinite;
 	private int currentCt;
 	private String name;
-	
-	
-	public SequenceInput(String name, int[] sequence, int changeevery, int repeat) {
+
+	public SequenceInput(String name, int[] sequence, int changeevery,
+			int repeat) {
 		this.sequence = sequence;
 		this.changeEvery = changeevery;
 		this.repeat = repeat;
-		if(repeat == 0){
+		if (repeat == 0) {
 			infinite = true;
-		}
-		else{
+		} else {
 			infinite = false;
 		}
 		this.name = name;
@@ -44,14 +42,15 @@ public class SequenceInput implements Input {
 	public Entry<String, byte[]> toReqString() {
 		StringBuilder sb = new StringBuilder(name);
 		sb.append(" = ");
-		if(currentCt/changeEvery == sequence.length){
+		if (currentCt / changeEvery == sequence.length) {
 			currentCt = 0;
 			repeat--;
 		}
-		int s = sequence[currentCt/changeEvery];
+		int s = sequence[currentCt / changeEvery];
 		sb.append(s);
 		currentCt++;
-		return new SimpleEntry<String, byte[]>(sb.toString(), ByteBuffer.allocate(4).putInt(s).array());
+		return new SimpleEntry<String, byte[]>(sb.toString(), ByteBuffer
+				.allocate(4).putInt(s).array());
 	}
 
 }

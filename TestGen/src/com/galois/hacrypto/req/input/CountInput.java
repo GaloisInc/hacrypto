@@ -6,10 +6,10 @@ import java.util.Map.Entry;
 
 import com.galois.hacrypto.req.length.InputLength;
 
-
 /**
- * @author jdodds
  * Input that gives an increasing count
+ * 
+ * @author jdodds
  */
 public class CountInput implements Input {
 
@@ -17,19 +17,23 @@ public class CountInput implements Input {
 	private int max;
 	private String name;
 	private int ct;
-	
+
 	/**
-	 * @param name Name of the input: will be printed before the input in the .req file
-	 * @param min where to start counting
-	 * @param max counting is modulo the max. If max is 0 counting will continue indefinitely 
+	 * @param name
+	 *            Name of the input: will be printed before the input in the
+	 *            .req file
+	 * @param min
+	 *            where to start counting
+	 * @param max
+	 *            counting is modulo the max. If max is 0 counting will continue
+	 *            indefinitely
 	 */
 	public CountInput(String name, int min, int max) {
 		this.max = max;
 		this.min = this.ct = min;
 		this.name = name;
 	}
-	
-	
+
 	@Override
 	public boolean hasNextInput() {
 		return true;
@@ -44,17 +48,12 @@ public class CountInput implements Input {
 	public Entry<String, byte[]> toReqString() {
 		StringBuilder sb = new StringBuilder(name);
 		sb.append(" = ");
-		if(max > 0 && ct > max){
+		if (max > 0 && ct > max) {
 			ct = this.min;
 		}
 		sb.append(ct++);
-		return new SimpleEntry<String, byte[]>(sb.toString(), ByteBuffer.allocate(4).putInt(ct-1).array());
+		return new SimpleEntry<String, byte[]>(sb.toString(), ByteBuffer
+				.allocate(4).putInt(ct - 1).array());
 	}
-
-
-
-
-
-	
 
 }

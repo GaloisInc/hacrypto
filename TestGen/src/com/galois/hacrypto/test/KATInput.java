@@ -1,9 +1,8 @@
 package com.galois.hacrypto.test;
 
-import java.util.Arrays;
-
 /**
- * @author Joey Dodds Definition of a single Known Answer Test input
+ * Definition of a single Known Answer Test input
+ * @author Joey Dodds 
  */
 public class KATInput {
 	/**
@@ -34,25 +33,24 @@ public class KATInput {
 		this.inputAs = inputAs;
 		this.comment = comment;
 	}
-	
-	
+
 	/**
 	 * @param bytes
-	 * @return String containing the length of the byte string followed by a
-	 *         hex representation of the bytes
+	 * @return String containing the length of the byte string followed by a hex
+	 *         representation of the bytes
 	 */
 	public static String simpleByteString(byte[] bytes) {
 		return (bytes.length + " " + Util.byteArraytoHexString(bytes));
 	}
 
 	/**
-	 * @return {@link #simpleByteString(byte[]) called on {@link #bytes}
+	 * @return {@link #simpleByteString(byte[])} called on {@link #bytes}
 	 */
 	public String simpleInputString() {
 		return simpleByteString(bytes);
 	}
-	
-	public String toHexString(){
+
+	public String toHexString() {
 		return Util.byteArraytoHexString(bytes);
 	}
 

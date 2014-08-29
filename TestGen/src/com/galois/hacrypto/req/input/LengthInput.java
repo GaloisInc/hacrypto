@@ -28,6 +28,7 @@ public class LengthInput implements Input {
 	 * @param req
 	 *            the parent req. This is the req that the lengthof argument
 	 *            points into
+	 * @param units can be byte or bytes. Any other value will result in the length being printed in bits
 	 */
 	public LengthInput(String name, int lengthof, Req req, String units) {
 		this.name = name;
@@ -55,13 +56,13 @@ public class LengthInput implements Input {
 		StringBuilder sb = new StringBuilder(name);
 		sb.append(" = ");
 		int l = req.getInput(lengthOf).getInputLength().peekLength();
-		if(isBytes){
-			l = l/8;
+		if (isBytes) {
+			l = l / 8;
 		}
-		
+
 		sb.append(l);
 
-			
-		return new SimpleEntry<String, byte[]>(sb.toString(), ByteBuffer.allocate(4).putInt(l).array());
+		return new SimpleEntry<String, byte[]>(sb.toString(), ByteBuffer
+				.allocate(4).putInt(l).array());
 	}
 }

@@ -5,7 +5,7 @@ public class StepInputLength implements InputLength {
 	private int stepSize;
 	private int minLength;
 	private int maxLength;
-	int currentCt=0;
+	int currentCt = 0;
 
 	public StepInputLength(int minLength, int maxLength, int stepSize) {
 		this.maxLength = maxLength;
@@ -26,7 +26,7 @@ public class StepInputLength implements InputLength {
 	@Override
 	public int getLength() {
 		int ret = peekLength();
-		currentCt ++;
+		currentCt++;
 		return ret;
 	}
 

@@ -10,14 +10,15 @@ public class Rng {
 	private byte[] key;
 	private byte[] iv;
 	private final String algorithm;
-	
+
 	public Rng(byte[] seed, byte[] key, String algorithm) {
 		this.seed = seed;
 		this.key = key;
 		this.algorithm = algorithm;
-		/*if(this.seed.length != this.key.length){
-			throw new RuntimeException("Seed length and key length must match");
-		}*/
+		/*
+		 * if(this.seed.length != this.key.length){ throw new
+		 * RuntimeException("Seed length and key length must match"); }
+		 */
 		this.iv = new byte[seed.length];
 	}
 
@@ -26,14 +27,16 @@ public class Rng {
 	// it from the sytem date time string
 	public byte[] nextRandom(byte[] dt) {
 
-		byte[] i = com.galois.hacrypto.req.output.Output.cypherBouncyCastle(algorithm + "/CBC/NoPadding",
-				Cipher.ENCRYPT_MODE, key, iv, dt);
+		byte[] i = com.galois.hacrypto.req.output.Output.cypherBouncyCastle(
+				algorithm + "/CBC/NoPadding", Cipher.ENCRYPT_MODE, key, iv, dt);
 
-		byte[] rand = com.galois.hacrypto.req.output.Output.cypherBouncyCastle(algorithm + "/CBC/NoPadding",
-				Cipher.ENCRYPT_MODE, key, iv, xor(i, seed));
+		byte[] rand = com.galois.hacrypto.req.output.Output.cypherBouncyCastle(
+				algorithm + "/CBC/NoPadding", Cipher.ENCRYPT_MODE, key, iv,
+				xor(i, seed));
 
-		this.seed = com.galois.hacrypto.req.output.Output.cypherBouncyCastle(algorithm + "/CBC/NoPadding",
-				Cipher.ENCRYPT_MODE, key, iv, xor(i, rand));
+		this.seed = com.galois.hacrypto.req.output.Output.cypherBouncyCastle(
+				algorithm + "/CBC/NoPadding", Cipher.ENCRYPT_MODE, key, iv,
+				xor(i, rand));
 
 		return rand;
 	}

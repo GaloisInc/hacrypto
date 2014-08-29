@@ -67,7 +67,8 @@ public class KAT {
 			}
 			bytes = sb.toString().getBytes();
 		} else if (katType.equals("hex")) {
-			bytes = Util.hexStringToByteArray(scan.nextLine().replaceAll("\\s", ""));
+			bytes = Util.hexStringToByteArray(scan.nextLine().replaceAll("\\s",
+					""));
 		} else if (katType.equals("array")) {
 			bytes = Util.parseByteArray(scan.nextLine());
 		} else if (katType.equals("empty")) {

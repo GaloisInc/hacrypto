@@ -51,7 +51,7 @@ public class Req {
 	 * function will advance to the next input if there is a multiple input and
 	 * the one at the front of the queue has run out
 	 * 
-	 * @return
+	 * @return whether all inputs currently in this req can generate another value
 	 */
 	private boolean hasNextTest() {
 		for (int i = 0; i < inputs.size(); i++) {

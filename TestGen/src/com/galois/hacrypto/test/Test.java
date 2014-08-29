@@ -45,8 +45,7 @@ public class Test {
 	private File outDir;
 	private File testDir;
 	public static final STGroup stGroup = new STGroupDir("tmp");
-	
-	
+
 	/**
 	 * @param testDir
 	 *            The directory that holds the test definitions such as tests,
@@ -133,7 +132,7 @@ public class Test {
 			createCompare(testReader, algorithm, false);
 		} else if (testType.toUpperCase().equals("STEP")) {
 			createCompare(testReader, algorithm, true);
-		} else if (testType.toUpperCase().equals("FILE")){
+		} else if (testType.toUpperCase().equals("FILE")) {
 			createFile(testReader.next(), algorithm);
 		}
 
@@ -143,26 +142,31 @@ public class Test {
 		}
 	}
 
-	
-	private void createFile(String fileName, String algorithm){
+	private void createFile(String fileName, String algorithm) {
 		Req r;
 		fileName = fileName.replace('/', File.separatorChar);
-		String dir = fileName.substring(0, fileName.lastIndexOf(File.separatorChar));
-		new File(outDir.getPath() + File.separator + "req" + File.separator + dir).mkdirs();
+		String dir = fileName.substring(0,
+				fileName.lastIndexOf(File.separatorChar));
+		new File(outDir.getPath() + File.separator + "req" + File.separator
+				+ dir).mkdirs();
 		try {
 			r = new Req(testDir + File.separator + fileName);
 		} catch (IOException e) {
-			throw new RuntimeException("could not read file: " + testDir + File.separator + fileName);
+			throw new RuntimeException("could not read file: " + testDir
+					+ File.separator + fileName);
 		}
-		
+
 		Entry<String, String> reqrsp = r.creatReqRsp();
-		
-		Util.writeStringToOutDir(fileName + ".req", outDir.getPath() + File.separator + "req", reqrsp.getKey());
-		File rspdir = new File(outDir.getPath() + File.separator + "rsp" + File.separator + dir);
+
+		Util.writeStringToOutDir(fileName + ".req", outDir.getPath()
+				+ File.separator + "req", reqrsp.getKey());
+		File rspdir = new File(outDir.getPath() + File.separator + "rsp"
+				+ File.separator + dir);
 		rspdir.mkdirs();
-		Util.writeStringToOutDir(fileName + ".rsp", outDir.getPath() + File.separator + "rsp", reqrsp.getValue());
+		Util.writeStringToOutDir(fileName + ".rsp", outDir.getPath()
+				+ File.separator + "rsp", reqrsp.getValue());
 	}
-	
+
 	/**
 	 * creates input and output files for a compare read in from the tests file
 	 * 
@@ -177,8 +181,8 @@ public class Test {
 		String fileName = algorithm + testName + ".req";
 		try {
 			if (isStep) {
-				kat.createStep(testReader.nextInt(), testReader.nextInt(), testReader.nextInt(),
-						translateAlgorithm(algorithm));
+				kat.createStep(testReader.nextInt(), testReader.nextInt(),
+						testReader.nextInt(), translateAlgorithm(algorithm));
 			} else {
 				kat.createRandom(testReader.nextInt(), testReader.nextInt(),
 						testReader.nextInt(), translateAlgorithm(algorithm));
@@ -197,8 +201,8 @@ public class Test {
 		 */
 		Util.writeSTToOutDir(fileName, outDir.getPath(),
 				kat.getReqFile(stGroup, algorithm));
-		Util.writeStringToOutDir(algorithm + testName + "_out", outDir.getPath(),
-				inout.getValue());
+		Util.writeStringToOutDir(algorithm + testName + "_out",
+				outDir.getPath(), inout.getValue());
 		addTestFile(algorithm, testName);
 	}
 
@@ -241,7 +245,7 @@ public class Test {
 	}
 
 	public static void main(String args[]) {
-		new Test("test_defs", "output")/*.generateLanguageTests()*/;
+		new Test("test_defs", "output")/* .generateLanguageTests() */;
 	}
 
 }

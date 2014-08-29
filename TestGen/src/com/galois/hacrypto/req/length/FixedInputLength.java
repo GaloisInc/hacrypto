@@ -5,11 +5,11 @@ public class FixedInputLength implements InputLength {
 	private int length;
 	int ct;
 	int currentCt;
-	
+
 	public FixedInputLength(int length) {
 		this.length = length;
 	}
-	
+
 	public FixedInputLength(int length, int ct) {
 		this.length = length;
 		this.ct = 0;
@@ -17,7 +17,7 @@ public class FixedInputLength implements InputLength {
 
 	@Override
 	public boolean hasNextLength() {
-		return currentCt < ct || ct ==0;
+		return currentCt < ct || ct == 0;
 	}
 
 	@Override

@@ -24,8 +24,7 @@ import org.stringtemplate.v4.ST;
 public class CTests {
 
 	/**
-	 * Each string will be a single import file in each of the resulting C
-	 * files
+	 * Each string will be a single import file in each of the resulting C files
 	 */
 	private String[] imports;
 
@@ -154,7 +153,7 @@ public class CTests {
 			main.add("testNames", algorithm + "_" + testName);
 			header.add("testNames", algorithm + "_" + testName);
 		}
-		
+
 		String filename = algorithm + "_compare.c";
 		makefile.add("cFiles", filename);
 		Util.writeSTToOutDir(filename, outDir.getPath(), compareST);
