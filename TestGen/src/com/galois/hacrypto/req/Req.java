@@ -282,7 +282,7 @@ public class Req {
 				}
 
 				case "COPY": {
-					int copyOf = getIntProperty("copyOf" + suff2, i);
+					int copyOf = getIntProperty("copyof" + suff2, i);
 					addInput(i, new CopyInput(inputName, copyOf, this));
 				}
 					break;

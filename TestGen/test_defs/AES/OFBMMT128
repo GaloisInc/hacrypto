@@ -22,13 +22,13 @@ input3_minlength0 = 128
 input3_maxlength0 = 1280
 input3_stepsize0 = 128 
 
-input3_name1 = CYPHERTEXT
+input3_name1 = CIPHERTEXT
 input3_type1 = increase
 input3_minlength1 = 128
 input3_maxlength1 = 1280
 input3_stepsize1 = 128 
 
-output0_name = CYPHERTEXT
+output0_name = CIPHERTEXT
 #this specifies the input that this output ends on... output 1 begins after it
 output0_end = 3
 output0_args = 3
