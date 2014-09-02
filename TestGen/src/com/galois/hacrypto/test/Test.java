@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
+import javax.crypto.spec.DESedeKeySpec;
 import javax.management.RuntimeErrorException;
 
 import org.stringtemplate.v4.STGroup;

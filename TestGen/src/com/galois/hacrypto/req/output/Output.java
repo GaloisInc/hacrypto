@@ -13,6 +13,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.Mac;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.DESedeKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -276,7 +277,7 @@ public class Output {
 				+ key_3.length];
 		System.arraycopy(key_1, 0, result, 0, key_1.length);
 		System.arraycopy(key_2, 0, result, key_1.length, key_2.length);
-		System.arraycopy(key_3, 0, result, key_1.length + key_2.length - 1,
+		System.arraycopy(key_3, 0, result, key_1.length + key_2.length,
 				key_3.length);
 		return result;
 	}
