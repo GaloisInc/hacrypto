@@ -24,7 +24,7 @@ input3_minlength0 = 128
 input3_maxlength0 = 1280
 input3_stepsize0 = 128 
 
-comment1 = DECRYPT
+comment10 = DECRYPT
 input3_name1 = CIPHERTEXT
 input3_type1 = increase
 input3_minlength1 = 128
