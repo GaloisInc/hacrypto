@@ -1,3 +1,5 @@
+header = # Galois CAVP\n# "SHA-512 ShortMsg" information\n# SHA-512 tests are configured for BYTE oriented implementations\n# (DATE)
+
 inputs = 2
 
 input0_name = Len
@@ -18,3 +20,5 @@ output0_args = 1
 #number here refers to the input number
 output0_arg0 = 1
 output0_function = SHA512
+
+comment0 = L = 64

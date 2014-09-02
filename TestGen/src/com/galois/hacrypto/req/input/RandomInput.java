@@ -51,10 +51,6 @@ public class RandomInput implements Input {
 
 		byte[] val = new byte[inputLength.getLength() / 8];
 		Util.rand.nextBytes(val);
-		if (val.length == 0) {
-			val = new byte[1];
-			val[0] = 0;
-		}
 
 		// adjust the parity of each byte, if necessary; used mainly for Triple-DES
 		if (parity) {
@@ -65,7 +61,11 @@ public class RandomInput implements Input {
 			}
 		}
 
-		sb.append(Util.byteArraytoHexString(val));
+		String valString = Util.byteArraytoHexString(val);
+		if (val.length == 0) {
+			valString = "00"; // length-zero strings are represented as "00" for some reason
+		}
+		sb.append(valString);
 		return new SimpleEntry<String, byte[]>(sb.toString(), val);
 	}
 

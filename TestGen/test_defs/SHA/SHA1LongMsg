@@ -1,3 +1,5 @@
+header = # Galois CAVP\n# "SHA-1 LongMsg" information\n# SHA-1 tests are configured for BYTE oriented implementations\n# (DATE)
+
 inputs = 2
 
 input0_name = Len
@@ -18,3 +20,5 @@ output0_args = 1
 #number here refers to the input number
 output0_arg0 = 1
 output0_function = SHA1
+
+comment0 = L = 20
