@@ -1,3 +1,4 @@
+header = # Galois CAVP\n# Config info for aes_values\n# AESVS MMT test data for ECB\n# State : Encrypt and Decrypt\n# Key Length : 128\n# (DATE)
 inputs = 3
 
 input0_name = COUNT
@@ -11,12 +12,14 @@ input1_maxlength = 128
 
 #mult means there are multiple inputs. Each of the inputs needs to be finite
 input2_mult = 2
+comment0 = ENCRYPT
 input2_name0 = PLAINTEXT
 input2_type0 = increase
 input2_minlength0 = 128
 input2_maxlength0 = 1280
 input2_stepsize0 = 128 
 
+comment10 = DECRYPT
 input2_name1 = CIPHERTEXT
 input2_type1 = increase
 input2_minlength1 = 128
