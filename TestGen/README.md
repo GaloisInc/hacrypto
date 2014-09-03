@@ -213,14 +213,14 @@ test definition for AES follows. Line order does not matter:
 	input3_stepsize0 = 128 
 	
 	#input3_1 will be used when input3_0 is finished
-	input3_name1 = CYPHERTEXT
+	input3_name1 = CIPHERTEXT
 	input3_type1 = increase
 	input3_minlength1 = 128
 	input3_maxlength1 = 1280
 	input3_stepsize1 = 128 
 	
 	# there can be one output at a time for any test
-	output0_name = CYPHERTEXT
+	output0_name = CIPHERTEXT
 	# this specifies the input that this output ends with... output 1 begins after it
 	# so we will switch outputs when input3_0 switches to input3_1
 	output0_end = 3

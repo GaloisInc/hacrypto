@@ -19,11 +19,16 @@ import javax.crypto.spec.SecretKeySpec;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 import com.galois.hacrypto.crypto.Rng;
+import com.galois.hacrypto.test.Util;
 
 public class Output {
 
 	private static final BouncyCastleProvider BCP = new BouncyCastleProvider();
 
+	static {
+		Security.addProvider(BCP);
+	}
+	
 	/**
 	 * Valid inputs are:
 	 * <ul>
@@ -46,6 +51,15 @@ public class Output {
 	 * <li>RNG/TDES2
 	 * <li>RNG/TDES3
 	 * <li>HMAC
+	 * <li>TDES/CBC/ENC
+	 * <li>TDES/CBC/DEC
+	 * <li>TDES/CFB/ENC
+	 * <li>TDES/CFB/DEC
+	 * <li>TDES/ECB/ENC
+	 * <li>TDES/ECB/DEC
+	 * <li>TDES/OFB/INC
+	 * <li>TDES/OFB/DEC
+	 * <li>
 	 * </ul>
 	 * 
 	 * @param algorithm
@@ -93,19 +107,17 @@ public class Output {
 			return cypherBouncyCastle("AES/CFB128/NoPadding",
 					Cipher.DECRYPT_MODE, inputs.get(inputOrder[0]),
 					inputs.get(inputOrder[1]), inputs.get(inputOrder[2]));
-
-			/*
-			 * case "AES/CFB1/ENC": //TODO this doesn't work! return
-			 * cypherBouncyCastle("AES/CFB128/NoPadding", Cipher.ENCRYPT_MODE,
-			 * inputs.get(inputOrder[0]), inputs.get(inputOrder[1]),
-			 * inputs.get(inputOrder[2]));
-			 * 
-			 * case "AES/CFB1/DEC": return
-			 * cypherBouncyCastle("AES/CFB128/NoPadding", Cipher.DECRYPT_MODE,
-			 * inputs.get(inputOrder[0]), inputs.get(inputOrder[1]),
-			 * inputs.get(inputOrder[2]));
-			 */
-
+/*
+		case "AES/CFB1/ENC": //TODO this doesn't work! 
+			return cypherBouncyCastle("AES/CFB1/NoPadding", Cipher.ENCRYPT_MODE,
+			inputs.get(inputOrder[0]), inputs.get(inputOrder[1]),
+			inputs.get(inputOrder[2]));
+			 
+		case "AES/CFB1/DEC": 
+			return cypherBouncyCastle("AES/CFB1/NoPadding", Cipher.DECRYPT_MODE,
+			inputs.get(inputOrder[0]), inputs.get(inputOrder[1]),
+			inputs.get(inputOrder[2])); 
+*/
 		case "AES/CFB8/ENC":
 			return cypherBouncyCastle("AES/CFB8/NoPadding",
 					Cipher.ENCRYPT_MODE, inputs.get(inputOrder[0]),
@@ -117,25 +129,121 @@ public class Output {
 					inputs.get(inputOrder[1]), inputs.get(inputOrder[2]));
 
 		case "AES/ECB/ENC":
-			return cypherBouncyCastle("AES/CFB8/NoPadding",
+			return cypherBouncyCastle("AES/ECB/NoPadding",
 					Cipher.ENCRYPT_MODE, inputs.get(inputOrder[0]),
-					inputs.get(inputOrder[1]), inputs.get(inputOrder[2]));
+					null, inputs.get(inputOrder[1]));
 
 		case "AES/ECB/DEC":
-			return cypherBouncyCastle("AES/CFB8/NoPadding",
+			return cypherBouncyCastle("AES/ECB/NoPadding",
 					Cipher.DECRYPT_MODE, inputs.get(inputOrder[0]),
-					inputs.get(inputOrder[1]), inputs.get(inputOrder[2]));
+					null, inputs.get(inputOrder[1]));
 
 		case "AES/OFB/ENC":
-			return cypherBouncyCastle("AES/CFB8/NoPadding",
+			return cypherBouncyCastle("AES/OFB/NoPadding",
 					Cipher.ENCRYPT_MODE, inputs.get(inputOrder[0]),
 					inputs.get(inputOrder[1]), inputs.get(inputOrder[2]));
 
 		case "AES/OFB/DEC":
-			return cypherBouncyCastle("AES/CFB8/NoPadding",
+			return cypherBouncyCastle("AES/OFB/NoPadding",
 					Cipher.DECRYPT_MODE, inputs.get(inputOrder[0]),
 					inputs.get(inputOrder[1]), inputs.get(inputOrder[2]));
 
+		case "TDES/CBC/ENC":
+			return cypherBouncyCastle("DESede/CBC/NoPadding",
+					Cipher.ENCRYPT_MODE, 
+					combinedKey(inputs.get(inputOrder[0]),
+							    inputs.get(inputOrder[1]),
+							    inputs.get(inputOrder[2])), 
+					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+
+		case "TDES/CBC/DEC":
+			return cypherBouncyCastle("DESede/CBC/NoPadding",
+					Cipher.DECRYPT_MODE, 
+					combinedKey(inputs.get(inputOrder[0]),
+							    inputs.get(inputOrder[1]),
+							    inputs.get(inputOrder[2])), 
+					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+/*
+		case "TDES/CFB1/ENC":
+			return cypherBouncyCastle("DESede/CFB1/NoPadding",
+					Cipher.ENCRYPT_MODE, 
+					combinedKey(inputs.get(inputOrder[0]),
+							    inputs.get(inputOrder[1]),
+							    inputs.get(inputOrder[2])), 
+					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+
+		case "TDES/CFB1/DEC":
+			return cypherBouncyCastle("DESede/CFB1/NoPadding",
+					Cipher.DECRYPT_MODE, 
+					combinedKey(inputs.get(inputOrder[0]),
+							    inputs.get(inputOrder[1]),
+							    inputs.get(inputOrder[2])), 
+					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+*/
+		case "TDES/CFB8/ENC":
+			return cypherBouncyCastle("DESede/CFB8/NoPadding",
+					Cipher.ENCRYPT_MODE, 
+					combinedKey(inputs.get(inputOrder[0]),
+							    inputs.get(inputOrder[1]),
+							    inputs.get(inputOrder[2])), 
+					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+
+		case "TDES/CFB8/DEC":
+			return cypherBouncyCastle("DESede/CFB8/NoPadding",
+					Cipher.DECRYPT_MODE, 
+					combinedKey(inputs.get(inputOrder[0]),
+							    inputs.get(inputOrder[1]),
+							    inputs.get(inputOrder[2])), 
+					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+			
+		case "TDES/CFB64/ENC":
+			return cypherBouncyCastle("DESede/CFB64/NoPadding",
+					Cipher.ENCRYPT_MODE, 
+					combinedKey(inputs.get(inputOrder[0]),
+							    inputs.get(inputOrder[1]),
+							    inputs.get(inputOrder[2])), 
+					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+
+		case "TDES/CFB64/DEC":
+			return cypherBouncyCastle("DESede/CFB64/NoPadding",
+					Cipher.DECRYPT_MODE, 
+					combinedKey(inputs.get(inputOrder[0]),
+							    inputs.get(inputOrder[1]),
+							    inputs.get(inputOrder[2])), 
+					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+			
+		case "TDES/ECB/ENC":
+			return cypherBouncyCastle("DESede/ECB/NoPadding",
+					Cipher.ENCRYPT_MODE, 
+					combinedKey(inputs.get(inputOrder[0]),
+							    inputs.get(inputOrder[1]),
+							    inputs.get(inputOrder[2])), 
+					null, inputs.get(inputOrder[3]));
+
+		case "TDES/ECB/DEC":
+			return cypherBouncyCastle("DESede/ECB/NoPadding",
+					Cipher.DECRYPT_MODE, 
+					combinedKey(inputs.get(inputOrder[0]),
+							    inputs.get(inputOrder[1]),
+							    inputs.get(inputOrder[2])), 
+					null, inputs.get(inputOrder[3]));
+			
+		case "TDES/OFB/ENC":
+			return cypherBouncyCastle("DESede/OFB/NoPadding",
+					Cipher.ENCRYPT_MODE, 
+					combinedKey(inputs.get(inputOrder[0]),
+							    inputs.get(inputOrder[1]),
+							    inputs.get(inputOrder[2])), 
+					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+
+		case "TDES/OFB/DEC":
+			return cypherBouncyCastle("DESede/OFB/NoPadding",
+					Cipher.DECRYPT_MODE, 
+					combinedKey(inputs.get(inputOrder[0]),
+							    inputs.get(inputOrder[1]),
+							    inputs.get(inputOrder[2])), 
+					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+			
 		case "RNG/AES":
 			return rng(inputs.get(inputOrder[0]), inputs.get(inputOrder[1]),
 					inputs.get(inputOrder[2]), "AES");
@@ -173,27 +281,26 @@ public class Output {
 				+ key_3.length];
 		System.arraycopy(key_1, 0, result, 0, key_1.length);
 		System.arraycopy(key_2, 0, result, key_1.length, key_2.length);
-		System.arraycopy(key_3, 0, result, key_1.length + key_2.length - 1,
+		System.arraycopy(key_3, 0, result, key_1.length + key_2.length,
 				key_3.length);
 		return result;
 	}
 
 	/**
 	 * Wrapper function for the {@link Rng} class
-	 * 
 	 * @param key
 	 *            the secret key
 	 * @param dt
 	 *            the date time vector
-	 * @param v
+	 * @param seed
 	 *            the seed
 	 * @param alg
 	 *            the java/bouncycastle algorithm to use
 	 * @return next random bytes generated by the inputs
 	 */
-	public static byte[] rng(byte[] key, byte[] dt, byte[] v, String alg) {
-		Rng r = new Rng(v, key, alg);
-		return r.nextRandom(dt);
+	public static byte[] rng(byte[] key, byte[] dt, byte[] seed, String alg) {
+		Rng r = new Rng(seed, key, alg);
+		return r.nextRandom(dt).clone();
 	}
 
 	/**
@@ -262,7 +369,6 @@ public class Output {
 	 */
 	public static byte[] cypherBouncyCastle(String algorithm, int mode,
 			byte[] seckey, byte[] iv, byte[] msg) {
-		Security.addProvider(new BouncyCastleProvider());
 		Cipher cipher = null;
 		try {
 			cipher = Cipher.getInstance(algorithm, BCP);
@@ -272,8 +378,12 @@ public class Output {
 		}
 
 		SecretKeySpec key = new SecretKeySpec(seckey, "");
+		IvParameterSpec ivp = null;
+		if (iv != null) {
+			ivp = new IvParameterSpec(iv);
+		}
 		try {
-			cipher.init(mode, key, new IvParameterSpec(iv));
+			cipher.init(mode, key, ivp);
 		} catch (InvalidKeyException | InvalidAlgorithmParameterException e) {
 			debugPrintCipher(algorithm, mode, seckey, iv, msg);
 			System.err

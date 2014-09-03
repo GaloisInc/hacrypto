@@ -1,8 +1,9 @@
+header = # Galois CAVP (VERSION)\n# HMAC information\n# Hash sizes tested: 20 28 32 48 64\n# (DATE)
 inputs = 5
 
 input0_name = Count
 input0_type = count
-input0_max = 74
+input0_max = 374
 
 input1_name = Klen
 input1_type = length

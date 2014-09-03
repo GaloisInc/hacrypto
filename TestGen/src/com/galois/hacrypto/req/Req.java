@@ -4,6 +4,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
@@ -83,18 +84,35 @@ public class Req {
 		StringBuilder reqSb = new StringBuilder();
 		StringBuilder rspSb = new StringBuilder();
 		int inputNo=0;
+		// header comment
+		if (p.getProperty("header") != null) {
+			String header = p.getProperty("header");
+			header = header.replace("(DATE)", (new Date()).toString());
+			header = header.replace("(VERSION)", Util.VERSION_STRING);
+			reqSb.append(header);
+			reqSb.append("\n\n");
+			rspSb.append(header);
+			rspSb.append("\n\n");
+		}
+		
 		while (this.hasNextTest()) {
 			
 			//TODO: the comments could be more efficient...
 			String comment = p.getProperty("comment" + inputNo);
 			if(comment!=null){
-				comment = comment.trim();
-				reqSb.append("[");
-				reqSb.append(comment);
-				reqSb.append("]\n\n");
-				rspSb.append("[");
-				rspSb.append(comment);
-				rspSb.append("]\n\n");
+				// split comment along newlines to bracket each one
+				String[] parts = comment.split("\n");
+				for (String s : parts) {
+					s = s.trim();
+					reqSb.append("[");
+					reqSb.append(s);
+					reqSb.append("]\n");
+					rspSb.append("[");
+					rspSb.append(s);
+					rspSb.append("]\n");
+				}
+				reqSb.append("\n");
+				rspSb.append("\n");
 			}
 			
 			List<byte[]> args = new ArrayList<byte[]>();
@@ -214,9 +232,13 @@ public class Req {
 					int minLength = getIntProperty("minlength" + suff2, i);
 					int maxLength = getIntProperty("maxlength" + suff2, i);
 					int ct = getIntProperty("ct" + suff2, i);
+					boolean parity = false;
+					if (containsProperty("parity" + suff2, i)) {
+						parity = true;
+					}
 					InputLength il = new RandomInputLength(minLength,
 							maxLength, ct);
-					addInput(i, new RandomInput(inputName, il));
+					addInput(i, new RandomInput(inputName, il, parity));
 				}
 					break;
 
@@ -224,9 +246,13 @@ public class Req {
 					int minLength = getIntProperty("minlength" + suff2, i);
 					int maxLength = getIntProperty("maxlength" + suff2, i);
 					int stepSize = getIntProperty("stepsize" + suff2, i);
+					boolean parity = false;
+					if (containsProperty("parity" + suff2, i)) {
+						parity = true;
+					}
 					InputLength il = new StepInputLength(minLength, maxLength,
 							stepSize);
-					addInput(i, new RandomInput(inputName, il));
+					addInput(i, new RandomInput(inputName, il, parity));
 				}
 					break;
 
@@ -235,9 +261,13 @@ public class Req {
 							+ suff2, i));
 					int repeat = getIntProperty("repeat" + suff2, i);
 					int changeEvery = getIntProperty("changeEvery" + suff2, i);
+					boolean parity = false;
+					if (containsProperty("parity" + suff2, i)) {
+						parity = true;
+					}
 					InputLength il = new SequenceLength(seq, repeat,
 							changeEvery);
-					addInput(i, new RandomInput(inputName, il));
+					addInput(i, new RandomInput(inputName, il, parity));
 				}
 					break;
 
@@ -282,7 +312,7 @@ public class Req {
 				}
 
 				case "COPY": {
-					int copyOf = getIntProperty("copyOf" + suff2, i);
+					int copyOf = getIntProperty("copyof" + suff2, i);
 					addInput(i, new CopyInput(inputName, copyOf, this));
 				}
 					break;
