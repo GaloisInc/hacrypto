@@ -1,21 +1,26 @@
 package com.galois.hacrypto.req;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Queue;
+import java.util.Scanner;
 
 import com.galois.hacrypto.req.input.CopyInput;
 import com.galois.hacrypto.req.input.CountInput;
 import com.galois.hacrypto.req.input.FixedInput;
 import com.galois.hacrypto.req.input.Input;
 import com.galois.hacrypto.req.input.LengthInput;
+import com.galois.hacrypto.req.input.ListInput;
 import com.galois.hacrypto.req.input.RandomInput;
 import com.galois.hacrypto.req.input.RngVInput;
 import com.galois.hacrypto.req.input.SequenceInput;
@@ -52,7 +57,8 @@ public class Req {
 	 * function will advance to the next input if there is a multiple input and
 	 * the one at the front of the queue has run out
 	 * 
-	 * @return whether all inputs currently in this req can generate another value
+	 * @return whether all inputs currently in this req can generate another
+	 *         value
 	 */
 	private boolean hasNextTest() {
 		for (int i = 0; i < inputs.size(); i++) {
@@ -83,7 +89,7 @@ public class Req {
 	public Entry<String, String> creatReqRsp() {
 		StringBuilder reqSb = new StringBuilder();
 		StringBuilder rspSb = new StringBuilder();
-		int inputNo=0;
+		int inputNo = 0;
 		// header comment
 		if (p.getProperty("header") != null) {
 			String header = p.getProperty("header");
@@ -94,12 +100,12 @@ public class Req {
 			rspSb.append(header);
 			rspSb.append("\n\n");
 		}
-		
+
 		while (this.hasNextTest()) {
-			
-			//TODO: the comments could be more efficient...
+
+			// TODO: the comments could be more efficient...
 			String comment = p.getProperty("comment" + inputNo);
-			if(comment!=null){
+			if (comment != null) {
 				// split comment along newlines to bracket each one
 				String[] parts = comment.split("\n");
 				for (String s : parts) {
@@ -114,10 +120,10 @@ public class Req {
 				reqSb.append("\n");
 				rspSb.append("\n");
 			}
-			
+
 			List<byte[]> args = new ArrayList<byte[]>();
 			int c = 0;
-			for (Queue<Input> input : inputs) {				
+			for (Queue<Input> input : inputs) {
 				Entry<String, byte[]> e = input.peek().toReqString();
 				prevValues.add(c, e.getValue());
 				args.add(e.getValue());
@@ -184,6 +190,84 @@ public class Req {
 			inputs.add(index, q);
 		}
 		inputs.get(index).add(input);
+	}
+
+	public Req(String reqFileName, String defFileName) throws IOException {
+		p = new Properties();
+		FileInputStream in = new FileInputStream(defFileName);
+		p.load(in);
+
+		Scanner scan = new Scanner(new File(reqFileName));
+
+		Map<String, ListInput> inputs = initReqInputs();
+
+		while (scan.hasNextLine()) {
+			parseReqLine(scan.nextLine(), inputs);
+		}
+		scan.close();
+	}
+
+	private Map<String, ListInput> initReqInputs() {
+		inputs = new ArrayList<Queue<Input>>();
+		Map<String, ListInput> ret = new HashMap<String, ListInput>();
+		int inputCt = Integer.parseInt(p.getProperty("inputs").trim());
+		for (int i = 0; i < inputCt; i++) {
+			int mult = 1;
+			if (containsProperty("mult", i)) {
+				mult = getIntProperty("mult", i);
+			}
+			for (int m = 0; m < mult; m++) {
+				String suff2;
+				if (mult == 1) {
+					suff2 = "";
+				} else {
+					suff2 = "" + m;
+				}
+
+				String inputName = getStringProperty("name" + suff2, i);
+				String inputType = getStringProperty("type" + suff2, i,
+						"no type available: input" + i + "_type" + suff2);
+
+				ListInput li = new ListInput(inputName, isIntType(inputType));
+				addInput(i, li);
+				ret.put(inputName, li); // TODO: this only supports unique input
+										// nams
+			}
+		}
+		return ret;
+	}
+
+	private void parseReqLine(String line, Map<String, ListInput> inputMap) {
+		if (line.length() == 0 || line.charAt(0) == '#' || line.charAt(0) == '[') {
+			return; // don't need to do anything with these because they are are
+					// in the test_def
+		}
+		String[] kv = line.split(" = ");
+		String name = kv[0];
+		String value = kv[1];
+
+		if (!inputMap.containsKey(name)) {
+			throw new RuntimeException("Could not find input " + name
+					+ " in input map");
+		}
+
+		ListInput li = inputMap.get(name);
+		if (li.isInt()) {
+			li.addInput(Integer.parseInt(value.trim()));
+		} else {
+			li.addInput(Util.hexStringToByteArray(value.trim()));
+		}
+	}
+
+	private boolean isIntType(String type) {
+		switch (type.toUpperCase()) {
+		case "LENGTH":
+		case "COUNT":
+		case "SEQUENCE":
+			return true;
+		default:
+			return false;
+		}
 	}
 
 	/**
@@ -323,6 +407,31 @@ public class Req {
 				}
 			}
 		}
+
+	}
+
+	public static void main(String args[]) {
+		Req r;
+		String fileName = "SHA/SHA1LongMsg";
+		File outDir = new File("output2");
+		String testDir = "test_defs";
+		fileName = fileName.replace('/', File.separatorChar);
+		String dir = fileName.substring(0,
+				fileName.lastIndexOf(File.separatorChar));
+		try {
+			r = new Req("output/req/SHA/SHA1LongMsg.req", testDir + File.separator + fileName);
+		} catch (IOException e) {
+			throw new RuntimeException("could not read file: " + testDir
+					+ File.separator + fileName);
+		}
+
+		Entry<String, String> reqrsp = r.creatReqRsp();
+
+		File rspdir = new File(outDir.getPath() + File.separator + "rsp"
+				+ File.separator + dir);
+		rspdir.mkdirs();
+		Util.writeStringToOutDir(fileName + ".rsp", outDir.getPath()
+				+ File.separator + "rsp", reqrsp.getValue());
 
 	}
 }

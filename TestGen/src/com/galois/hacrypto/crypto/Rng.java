@@ -64,9 +64,9 @@ public class Rng {
 	public static void main(String args[]) {
 		// first test from AES128 test vector
 		byte[] key = Util
-				.hexStringToByteArray("67cdf51d97e9759ad09c2720baf7ac87");
+				.hexStringToByteArray("36e287ef813afb5591ac09ad1d71e54d");
 		byte[] dt = Util
-				.hexStringToByteArray("0c453f416c0eaf1087835e06e6a23141");
+				.hexStringToByteArray("562833b01d8db8f0b78f90afe193473e");
 		byte[] seed = Util
 				.hexStringToByteArray("80000000000000000000000000000000");
 		Rng rng = new Rng(seed, key, "AES");

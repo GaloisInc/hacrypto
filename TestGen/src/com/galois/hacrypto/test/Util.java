@@ -3,6 +3,7 @@ package com.galois.hacrypto.test;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.ByteBuffer;
 import java.util.Random;
 
 import javax.management.RuntimeErrorException;
@@ -102,6 +103,28 @@ public class Util {
 		return data;
 	}
 
+	/**
+	 * The opposite of this function is {@link #intToByteArray(int)}
+	 * @param b byte array
+	 * @return integer represented by the bytes (big endian)
+	 * @throws NumberFormatException if the length of b is greater than 4
+	 */
+	public static int byteArrayToInt(byte[] b) throws NumberFormatException{
+		if(b.length > 4){
+			throw new NumberFormatException("byte array to long for conversion to int");
+		}
+		return ByteBuffer.wrap(b).getInt();
+	}
+	
+	/**
+	 * The opposite of this function is {@link #byteArrayToInt(byte[])}
+	 * @param i integer to turn to a byte array
+	 * @return byte array represented of the integer
+	 */
+	public static byte[] intToByteArray(int i){
+		return ByteBuffer.allocate(4).putInt(i).array();
+	}
+	
 	/**
 	 * @param arrayRep
 	 *            comma separated string of base 10 bytes. Arrays.toString() of
