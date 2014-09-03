@@ -2,6 +2,7 @@ package com.galois.hacrypto.crypto;
 
 import javax.crypto.Cipher;
 
+import com.galois.hacrypto.req.output.Output;
 import com.galois.hacrypto.test.Util;
 
 public class Rng {
@@ -63,9 +64,9 @@ public class Rng {
 	public static void main(String args[]) {
 		// first test from AES128 test vector
 		byte[] key = Util
-				.hexStringToByteArray("2ab8505fdeecc2fdec83262f57725f68");
+				.hexStringToByteArray("67cdf51d97e9759ad09c2720baf7ac87");
 		byte[] dt = Util
-				.hexStringToByteArray("0f8cf4c9206a6376b728092effe8c413");
+				.hexStringToByteArray("0c453f416c0eaf1087835e06e6a23141");
 		byte[] seed = Util
 				.hexStringToByteArray("80000000000000000000000000000000");
 		Rng rng = new Rng(seed, key, "AES");

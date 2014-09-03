@@ -51,10 +51,10 @@ public class FixedInput implements Input {
 	public Entry<String, byte[]> toReqString() {
 		StringBuilder sb = new StringBuilder(name);
 		sb.append(" = ");
-		sb.append(Util.byteArraytoHexString(value));
 		for (int i = 0; i < increment; i++) {
 			Util.increment(value);
 		}
+		sb.append(Util.byteArraytoHexString(value));
 		ct++;
 		return new SimpleEntry<String, byte[]>(sb.toString(), value);
 	}
