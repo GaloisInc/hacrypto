@@ -1,4 +1,4 @@
-header = # Galois CAVP \n# Config Info for "tdes_values"\n# TDES Multi-block Message Test for CFB1\n# State: Encrypt and Decrypt\n# (DATE)
+header = # Galois CAVP (VERSION) \n# TDES Multi-block Message Test for CFB1\n# State: Encrypt and Decrypt\n# (DATE)
 inputs = 6
 
 input0_name = COUNT

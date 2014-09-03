@@ -88,6 +88,7 @@ public class Req {
 		if (p.getProperty("header") != null) {
 			String header = p.getProperty("header");
 			header = header.replace("(DATE)", (new Date()).toString());
+			header = header.replace("(VERSION)", Util.VERSION_STRING);
 			reqSb.append(header);
 			reqSb.append("\n\n");
 			rspSb.append(header);
@@ -99,13 +100,19 @@ public class Req {
 			//TODO: the comments could be more efficient...
 			String comment = p.getProperty("comment" + inputNo);
 			if(comment!=null){
-				comment = comment.trim();
-				reqSb.append("[");
-				reqSb.append(comment);
-				reqSb.append("]\n\n");
-				rspSb.append("[");
-				rspSb.append(comment);
-				rspSb.append("]\n\n");
+				// split comment along newlines to bracket each one
+				String[] parts = comment.split("\n");
+				for (String s : parts) {
+					s = s.trim();
+					reqSb.append("[");
+					reqSb.append(s);
+					reqSb.append("]\n");
+					rspSb.append("[");
+					rspSb.append(s);
+					rspSb.append("]\n");
+				}
+				reqSb.append("\n");
+				rspSb.append("\n");
 			}
 			
 			List<byte[]> args = new ArrayList<byte[]>();

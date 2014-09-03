@@ -1,3 +1,5 @@
+header = # Galois CAVP (VERSION)\n# ANSI X9.31 Tests for 2-Key TDES\n# (DATE)
+
 inputs = 5
 
 input0_name = COUNT
@@ -26,3 +28,5 @@ output0_arg1 = 2
 output0_arg2 = 3
 output0_arg3 = 4
 output0_function = RNG/TDES2
+
+comment0=X9.31\n2-Key TDES

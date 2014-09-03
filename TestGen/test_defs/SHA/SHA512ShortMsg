@@ -1,4 +1,4 @@
-header = # Galois CAVP\n# "SHA-512 ShortMsg" information\n# SHA-512 tests are configured for BYTE oriented implementations\n# (DATE)
+header = # Galois CAVP (VERSION)\n# "SHA-512 ShortMsg" test data\n# SHA-512 tests are configured for BYTE oriented implementations\n# (DATE)
 
 inputs = 2
 

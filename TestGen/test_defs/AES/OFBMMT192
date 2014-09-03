@@ -1,4 +1,4 @@
-header = # Galois CAVP\n# Config info for aes_values\n# AESVS MMT test data for OFB\n# State : Encrypt and Decrypt\n# Key Length : 192\n# (DATE)
+header = # Galois CAVP (VERSION)\n# AESVS MMT test data for OFB\n# State : Encrypt and Decrypt\n# Key Length : 192\n# (DATE)
 inputs = 4
 
 input0_name = COUNT

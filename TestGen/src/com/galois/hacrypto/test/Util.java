@@ -11,6 +11,7 @@ import org.stringtemplate.v4.ST;
 
 public class Util {
 
+	public static final String VERSION_STRING = "1.0";
 	public static final Random rand = new Random();
 
 	/**

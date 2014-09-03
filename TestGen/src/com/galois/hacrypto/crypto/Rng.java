@@ -12,19 +12,19 @@ public class Rng {
 	private final String algorithm;
 
 	public Rng(byte[] seed, byte[] key, String algorithm) {
-		this.seed = seed;
-		this.key = key;
+		this.seed = seed.clone();
+		this.key = key.clone();
 		this.algorithm = algorithm;
 		/*
 		 * if(this.seed.length != this.key.length){ throw new
 		 * RuntimeException("Seed length and key length must match"); }
 		 */
-		this.iv = new byte[seed.length];
+		iv = new byte[seed.length];
 	}
 
 	// TODO: The FIPS tests force you to expose an extra API
 	// the user api would not take dt and instead somehow generate
-	// it from the sytem date time string
+	// it from the system date time string
 	public byte[] nextRandom(byte[] dt) {
 
 		byte[] i = com.galois.hacrypto.req.output.Output.cypherBouncyCastle(
@@ -63,18 +63,18 @@ public class Rng {
 	public static void main(String args[]) {
 		// first test from AES128 test vector
 		byte[] key = Util
-				.hexStringToByteArray("7213395b28586fe64026056638110b3c");
+				.hexStringToByteArray("2ab8505fdeecc2fdec83262f57725f68");
 		byte[] dt = Util
-				.hexStringToByteArray("947529f603edb0cf6927f65edbbbc593");
+				.hexStringToByteArray("0f8cf4c9206a6376b728092effe8c413");
 		byte[] seed = Util
 				.hexStringToByteArray("80000000000000000000000000000000");
 		Rng rng = new Rng(seed, key, "AES");
 		String result = Util.byteArraytoHexString(rng.nextRandom(dt));
-		if (result.toLowerCase().equals("339cef70da546707b2944591890394a3")) {
+		if (result.toLowerCase().equals("7c4d77736f0b37068ae4861de69b88ff")) {
 			System.out.println("AES128 passed");
 		} else {
 			System.out.println("AES128 failed, got " + result + ", expected " + 
-		                       "339cef70da546707b2944591890394a3");
+		                       "7c4d77736f0b37068ae4861de69b88ff");	
 		}
 
 		// first test from TDES3 test vector

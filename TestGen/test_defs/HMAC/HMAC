@@ -1,4 +1,4 @@
-header = # Galois CAVP\n# HMAC information\n# Hash sizes tested: 20 28 32 48 64\n# (DATE)
+header = # Galois CAVP (VERSION)\n# HMAC information\n# Hash sizes tested: 20 28 32 48 64\n# (DATE)
 inputs = 5
 
 input0_name = Count

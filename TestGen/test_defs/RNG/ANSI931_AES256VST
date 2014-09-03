@@ -1,3 +1,5 @@
+header = # Galois CAVP (VERSION)\n# ANSI X9.31 Tests for AES-256\n# (DATE)
+
 inputs = 4
 
 input0_name = COUNT
@@ -21,3 +23,5 @@ output0_arg0 = 1
 output0_arg1 = 2
 output0_arg2 = 3
 output0_function = RNG/AES
+
+comment0=X9.31\nAES 256-Key
