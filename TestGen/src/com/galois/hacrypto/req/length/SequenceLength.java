@@ -26,10 +26,6 @@ public class SequenceLength implements InputLength {
 
 	@Override
 	public int peekLength() {
-		if (currentCt / changeEvery >= sequence.length) {
-			currentCt = 0;
-			repeat--;
-		}
 		return (sequence[currentCt / changeEvery]);
 	}
 
@@ -37,6 +33,10 @@ public class SequenceLength implements InputLength {
 	public int getLength() {
 		int ret = peekLength();
 		currentCt++;
+		if (currentCt / changeEvery >= sequence.length) {
+			currentCt = 0;
+			repeat--;
+		}
 		return ret;
 	}
 

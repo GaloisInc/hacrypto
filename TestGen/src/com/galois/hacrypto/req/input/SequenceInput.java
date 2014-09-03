@@ -42,13 +42,13 @@ public class SequenceInput implements Input {
 	public Entry<String, byte[]> toReqString() {
 		StringBuilder sb = new StringBuilder(name);
 		sb.append(" = ");
+		int s = sequence[currentCt / changeEvery];
+		sb.append(s);
+		currentCt++;
 		if (currentCt / changeEvery == sequence.length) {
 			currentCt = 0;
 			repeat--;
 		}
-		int s = sequence[currentCt / changeEvery];
-		sb.append(s);
-		currentCt++;
 		return new SimpleEntry<String, byte[]>(sb.toString(), ByteBuffer
 				.allocate(4).putInt(s).array());
 	}
