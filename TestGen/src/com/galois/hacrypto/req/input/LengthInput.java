@@ -28,9 +28,12 @@ public class LengthInput extends AbstractInput {
 	 *            the parent req. This is the req that the lengthof argument
 	 *            points into
 	 * @param units can be byte or bytes. Any other value will result in the length being printed in bits
+	 * @param show 
+	 * 			  YES, NO or ONCE as this input should appear in the output file for
+	 *            every test, no tests, or once at the top
 	 */
-	public LengthInput(String name, int lengthof, Req req, String units) {
-		super(name);
+	public LengthInput(String name, int lengthof, Req req, String units, int show) {
+		super(name, show);
 		this.lengthOf = lengthof;
 		this.req = req;
 		if (units != null

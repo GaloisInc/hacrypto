@@ -7,12 +7,21 @@ package com.galois.hacrypto.req.input;
  */
 public abstract class AbstractInput implements Input {
 	protected final String name;
+	private final int showInOutput;
 	
 	public AbstractInput(final String name) {
-		this.name = name;
+		this(name, YES);
 	}
 	
+	public AbstractInput(final String name, final int showInOutput) {
+		this.name = name;
+		this.showInOutput = showInOutput;
+	}
 	public String getName() { 
 		return name;
+	}
+	
+	public int showInOutput() {
+		return showInOutput;
 	}
 }

@@ -21,13 +21,16 @@ public class ListInput extends AbstractInput {
 	 * this defaults to a byte array output. Use constructor {@link #ListInput(String, boolean)}
 	 * to specify a list of integers
 	 * @param name name of the input
+	 * @param show 
+	 * 			  YES, NO or ONCE as this input should appear in the output file for
+	 *            every test, no tests, or once at the top
 	 */
-	public ListInput(String name) {
-		super(name);
+	public ListInput(String name, int show) {
+		super(name, show);
 	}
 	
-	public ListInput(String name, boolean isInt){
-		this(name);
+	public ListInput(String name, boolean isInt, int show){
+		this(name, show);
 		this.isInt = isInt;
 	}
 	

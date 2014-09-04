@@ -46,161 +46,7 @@ public class Output {
 	 */
 	public static byte[] getMonteCarloOutput(final String algorithm, 
 			final List<byte[]> inputs, final int[] inputOrder) {
-		/*
-		switch (algorithm) {
-			case "AES/CBC/ENC":
-				return monteCarloAES("CBC", Cipher.ENCRYPT_MODE, inputs, inputOrder);
-
-			case "AES/CBC/DEC":
-				return monteCarloAES("CBC", Cipher.DECRYPT_MODE, inputs, inputOrder);
-
-			case "AES/CFB128/ENC":
-				return cipherBouncyCastle("AES/CFB128/NoPadding",
-						Cipher.ENCRYPT_MODE, inputs.get(inputOrder[0]),
-						inputs.get(inputOrder[1]), inputs.get(inputOrder[2]));
-
-			case "AES/CFB128/DEC":
-				return cipherBouncyCastle("AES/CFB128/NoPadding",
-						Cipher.DECRYPT_MODE, inputs.get(inputOrder[0]),
-						inputs.get(inputOrder[1]), inputs.get(inputOrder[2]));
-	
-			case "AES/CFB1/ENC": //TODO this doesn't work! 
-				return cypherBouncyCastle("AES/CFB1/NoPadding", Cipher.ENCRYPT_MODE,
-				inputs.get(inputOrder[0]), inputs.get(inputOrder[1]),
-				inputs.get(inputOrder[2]));
-				 
-			case "AES/CFB1/DEC": 
-				return cypherBouncyCastle("AES/CFB1/NoPadding", Cipher.DECRYPT_MODE,
-				inputs.get(inputOrder[0]), inputs.get(inputOrder[1]),
-				inputs.get(inputOrder[2])); 
-	
-			case "AES/CFB8/ENC":
-				return cipherBouncyCastle("AES/CFB8/NoPadding",
-						Cipher.ENCRYPT_MODE, inputs.get(inputOrder[0]),
-						inputs.get(inputOrder[1]), inputs.get(inputOrder[2]));
-
-			case "AES/CFB8/DEC":
-				return cipherBouncyCastle("AES/CFB8/NoPadding",
-						Cipher.DECRYPT_MODE, inputs.get(inputOrder[0]),
-						inputs.get(inputOrder[1]), inputs.get(inputOrder[2]));
-
-			case "AES/ECB/ENC":
-				return cipherBouncyCastle("AES/ECB/NoPadding",
-						Cipher.ENCRYPT_MODE, inputs.get(inputOrder[0]),
-						null, inputs.get(inputOrder[1]));
-
-			case "AES/ECB/DEC":
-				return cipherBouncyCastle("AES/ECB/NoPadding",
-						Cipher.DECRYPT_MODE, inputs.get(inputOrder[0]),
-						null, inputs.get(inputOrder[1]));
-
-			case "AES/OFB/ENC":
-				return cipherBouncyCastle("AES/OFB/NoPadding",
-						Cipher.ENCRYPT_MODE, inputs.get(inputOrder[0]),
-						inputs.get(inputOrder[1]), inputs.get(inputOrder[2]));
-
-			case "AES/OFB/DEC":
-				return cipherBouncyCastle("AES/OFB/NoPadding",
-						Cipher.DECRYPT_MODE, inputs.get(inputOrder[0]),
-						inputs.get(inputOrder[1]), inputs.get(inputOrder[2]));
-
-			case "TDES/CBC/ENC":
-				return cipherBouncyCastle("DESede/CBC/NoPadding",
-						Cipher.ENCRYPT_MODE, 
-						combinedKey(inputs.get(inputOrder[0]),
-								    inputs.get(inputOrder[1]),
-								    inputs.get(inputOrder[2])), 
-						inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
-
-			case "TDES/CBC/DEC":
-				return cipherBouncyCastle("DESede/CBC/NoPadding",
-						Cipher.DECRYPT_MODE, 
-						combinedKey(inputs.get(inputOrder[0]),
-								    inputs.get(inputOrder[1]),
-								    inputs.get(inputOrder[2])), 
-						inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
-	
-			case "TDES/CFB1/ENC":
-				return cypherBouncyCastle("DESede/CFB1/NoPadding",
-						Cipher.ENCRYPT_MODE, 
-						combinedKey(inputs.get(inputOrder[0]),
-								    inputs.get(inputOrder[1]),
-								    inputs.get(inputOrder[2])), 
-						inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
-
-			case "TDES/CFB1/DEC":
-				return cypherBouncyCastle("DESede/CFB1/NoPadding",
-						Cipher.DECRYPT_MODE, 
-						combinedKey(inputs.get(inputOrder[0]),
-								    inputs.get(inputOrder[1]),
-								    inputs.get(inputOrder[2])), 
-						inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
-	
-			case "TDES/CFB8/ENC":
-				return cipherBouncyCastle("DESede/CFB8/NoPadding",
-						Cipher.ENCRYPT_MODE, 
-						combinedKey(inputs.get(inputOrder[0]),
-								    inputs.get(inputOrder[1]),
-								    inputs.get(inputOrder[2])), 
-						inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
-
-			case "TDES/CFB8/DEC":
-				return cipherBouncyCastle("DESede/CFB8/NoPadding",
-						Cipher.DECRYPT_MODE, 
-						combinedKey(inputs.get(inputOrder[0]),
-								    inputs.get(inputOrder[1]),
-								    inputs.get(inputOrder[2])), 
-						inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
-				
-			case "TDES/CFB64/ENC":
-				return cipherBouncyCastle("DESede/CFB64/NoPadding",
-						Cipher.ENCRYPT_MODE, 
-						combinedKey(inputs.get(inputOrder[0]),
-								    inputs.get(inputOrder[1]),
-								    inputs.get(inputOrder[2])), 
-						inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
-
-			case "TDES/CFB64/DEC":
-				return cipherBouncyCastle("DESede/CFB64/NoPadding",
-						Cipher.DECRYPT_MODE, 
-						combinedKey(inputs.get(inputOrder[0]),
-								    inputs.get(inputOrder[1]),
-								    inputs.get(inputOrder[2])), 
-						inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
-				
-			case "TDES/ECB/ENC":
-				return cipherBouncyCastle("DESede/ECB/NoPadding",
-						Cipher.ENCRYPT_MODE, 
-						combinedKey(inputs.get(inputOrder[0]),
-								    inputs.get(inputOrder[1]),
-								    inputs.get(inputOrder[2])), 
-						null, inputs.get(inputOrder[3]));
-
-			case "TDES/ECB/DEC":
-				return cipherBouncyCastle("DESede/ECB/NoPadding",
-						Cipher.DECRYPT_MODE, 
-						combinedKey(inputs.get(inputOrder[0]),
-								    inputs.get(inputOrder[1]),
-								    inputs.get(inputOrder[2])), 
-						null, inputs.get(inputOrder[3]));
-				
-			case "TDES/OFB/ENC":
-				return cipherBouncyCastle("DESede/OFB/NoPadding",
-						Cipher.ENCRYPT_MODE, 
-						combinedKey(inputs.get(inputOrder[0]),
-								    inputs.get(inputOrder[1]),
-								    inputs.get(inputOrder[2])), 
-						inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
-
-			case "TDES/OFB/DEC":
-				return cipherBouncyCastle("DESede/OFB/NoPadding",
-						Cipher.DECRYPT_MODE, 
-						combinedKey(inputs.get(inputOrder[0]),
-								    inputs.get(inputOrder[1]),
-								    inputs.get(inputOrder[2])), 
-						inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
-				
-			case "RNG/AES":
+/*			case "RNG/AES":
 				return rng(inputs.get(inputOrder[0]), inputs.get(inputOrder[1]),
 						inputs.get(inputOrder[2]), "AES");
 
@@ -229,6 +75,10 @@ public class Output {
 			return monteCarloAES(algorithm, inputs, inputOrder);
 		} else if (algorithm.startsWith("TDES/")) {
 			return monteCarloDESede(algorithm, inputs, inputOrder);
+		} else if (algorithm.startsWith("SHA")) {
+			return monteCarloSHA(algorithm, inputs, inputOrder);
+		} else if (algorithm.startsWith("RNG")) {
+			return monteCarloRNG(algorithm, inputs, inputOrder);
 		} else {
 			return new byte[8];
 		}
@@ -465,8 +315,8 @@ public class Output {
 			return rng(
 					combinedKey(inputs.get(inputOrder[0]),
 							inputs.get(inputOrder[1]),
-							inputs.get(inputOrder[0])),
-					inputs.get(inputOrder[2]), inputs.get(inputOrder[3]),
+							inputs.get(inputOrder[2])),
+					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]),
 					"DESede");
 
 		case "HMAC":
@@ -899,7 +749,7 @@ public class Output {
 		}
 		String mode = algorithm.substring(5);
 		int direction = Integer.MIN_VALUE;		 
-		for (String s : new String[]{ "CBC", "CFB1", "CFB8", "CFB128", "ECB", "OFB" }) {
+		for (String s : new String[]{ "CBC", "CFB1", "CFB8", "CFB64", "ECB", "OFB" }) {
 			if (mode.startsWith(s + "/")) {
 				if (mode.endsWith("ENC")) {
 					direction = Cipher.ENCRYPT_MODE;
@@ -1011,56 +861,214 @@ public class Output {
 				break;
 				
 						
-			case "OFB":
-				byte[][] texts = new byte[10001][];
-				byte[][] is = new byte[10001][];
-				byte[][] os = new byte[10001][];
-				byte[][] results = new byte[10001][];
+			case "OFB": // THIS DOES NOT WORK YET!
+				byte[] text0 = text;
+				byte[] oldIV = iv;
+				byte[] keyMaterial = new byte[32];
 				
 				combinedKey = combinedKey(key1, key2, key3);
 			    cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, iv);
-				is[0] = iv;
-				texts[0] = text;
 				
 				for (int j = 0; j < 10000; j++) {
-					os[j] = cipher.update(is[j]);
-					results[j] = Util.xor(os[j], texts[j]);
-					texts[j + 1] = is[j];
-					is[j + 1] = os[j];
+					byte[] out = cipher.update(iv);
+					oldIV = iv;
+					iv = out;
+					shiftin(keyMaterial, Util.xor(oldIV, out), 64);
 				}
 				
-				// modified key depends on keying type
-				
-				newKey1 = Util.xor(key1, results[9999]); 
-				
-				if (Arrays.equals(key1, key2)) {
-					newKey2 = Util.xor(key2, results[9999]);
-				} else {
-					newKey2 = Util.xor(key2, results[9998]);
+				newKey1 = new byte[8];
+				newKey2 = new byte[8];
+				newKey3 = new byte[8];
+				for (int i = 0; i < 8; i++) {
+					newKey1[i] = (byte) (key1[i] ^ keyMaterial[16 + i]);
+					newKey2[i] = (byte) (key2[i] ^ keyMaterial[8 + i]);
+					newKey3[i] = (byte) (key3[i] ^ keyMaterial[i]);
 				}
-				
 				if (Arrays.equals(key1, key3)) {
-					newKey3 = Util.xor(key3, results[9999]);
-				} else {
-					newKey3 = Util.xor(key3, results[9997]);
+					newKey3 = newKey1;
 				}
-				
+				if (Arrays.equals(key1, key2)) {
+					newKey2 = newKey1;
+				}
 				Util.adjustParity(newKey1);
 				Util.adjustParity(newKey2);
 				Util.adjustParity(newKey3);
 				
+				System.err.println("iv = " + Util.byteArrayToHexString(iv));
+				System.err.println("oldIV = " + Util.byteArrayToHexString(oldIV));
+				System.err.println("text = " + Util.byteArrayToHexString(text));
+				System.err.println("iv = " + Util.byteArrayToHexString(iv));
+				System.err.println("keyMaterial = " + Util.byteArrayToHexString(keyMaterial));
+				
 				inputs.set(inputOrder[0], newKey1);
 				inputs.set(inputOrder[1], newKey2);
 				inputs.set(inputOrder[2], newKey3);
-				inputs.set(inputOrder[3], os[9999]);
-				inputs.set(inputOrder[4], Util.xor(text, is[9999]));
-				result = results[9999];
+				inputs.set(inputOrder[3], oldIV);
+				inputs.set(inputOrder[4], Util.xor(text0, oldIV));
+				result = iv;
 				break;
 
-			case "CFB128":
+			case "CFB64": // THIS DOES NOT WORK YET!
+				oldIV = iv;
+				keyMaterial = new byte[32];
+				
+				combinedKey = combinedKey(key1, key2, key3);
+			    cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, iv);
+				
+				for (int j = 0; j < 10000; j++) {
+					byte[] out = cipher.update(iv);
+					oldIV = iv;
+					iv = out;
+					shiftin(keyMaterial, Util.xor(oldIV, out), 64);
+				}
+				
+				newKey1 = new byte[8];
+				newKey2 = new byte[8];
+				newKey3 = new byte[8];
+				for (int i = 0; i < 8; i++) {
+					newKey1[i] = (byte) (key1[i] ^ keyMaterial[16 + i]);
+					newKey2[i] = (byte) (key2[i] ^ keyMaterial[8 + i]);
+					newKey3[i] = (byte) (key3[i] ^ keyMaterial[i]);
+				}
+				if (Arrays.equals(key1, key3)) {
+					newKey3 = newKey1;
+				}
+				if (Arrays.equals(key1, key2)) {
+					newKey2 = newKey1;
+				}
+				Util.adjustParity(newKey1);
+				Util.adjustParity(newKey2);
+				Util.adjustParity(newKey3);
+				
+				System.err.println("iv = " + Util.byteArrayToHexString(iv));
+				System.err.println("oldIV = " + Util.byteArrayToHexString(oldIV));
+				System.err.println("text = " + Util.byteArrayToHexString(text));
+				System.err.println("iv = " + Util.byteArrayToHexString(iv));
+				System.err.println("keyMaterial = " + Util.byteArrayToHexString(keyMaterial));
+				
+				inputs.set(inputOrder[0], newKey1);
+				inputs.set(inputOrder[1], newKey2);
+				inputs.set(inputOrder[2], newKey3);
+				inputs.set(inputOrder[3], iv);
+				inputs.set(inputOrder[4], oldIV);
+				result = iv;
+				break;
+				
 			default:
 				throw new IllegalArgumentException("invalid algorithm for DES Monte Carlo: " + algorithm);
 		}
+		return result;
+	}
+	
+	private static void shiftin(final byte[] dest, final byte[] src, int bits) {
+		System.arraycopy(dest, bits / 8, dest, 0, 24 - bits / 8);
+		System.arraycopy(src, 0, dest, 24 - bits / 8, (bits + 7) / 8);
+		if (bits % 8 > 0) {
+			for (int n = 0; n < 24; n++) {
+				dest[n] = (byte) ((dest[n] << (bits % 8)) | (dest[n + 1] >> (8 - (bits % 8))));
+			}
+		}
+	}
+	
+	/**
+	 * Runs a "Monte Carlo" test for SHA and modifies the inputs in
+	 * the input list for the next iteration.
+	 * 
+	 * @param algorithm The algorithm to use; must start with "TDES/".
+	 * @param inputs The inputs passed in to the test; the elements of this
+	 * list are modified by this method.
+	 * @param inputOrder The order of the inputs. 
+	 * @return The test output.
+	 */
+	public static final byte[] monteCarloSHA(final String algorithm,
+			final List<byte[]> inputs, final int[] inputOrder) {
+		if (!algorithm.startsWith("SHA")) {
+			throw new RuntimeException("monteCarloSHA can only be called for SHA tests!");
+		} 
+
+		int length = Integer.parseInt(algorithm.substring(3));
+		String bcAlgorithm = "SHA-" + length;
+		if (length == 1) {
+			bcAlgorithm = "SHA1";
+		}
+		
+		byte[] seed = inputs.get(inputOrder[0]);
+				
+		byte[] md0 = seed;
+		byte[] md1 = seed;
+		byte[] md2 = seed;
+			
+		for (int i = 0; i < 1000; i++) {
+			byte[] md = new byte[3 * seed.length];
+			System.arraycopy(md0, 0, md, 0, seed.length);
+			System.arraycopy(md1, 0, md, seed.length, seed.length);
+			System.arraycopy(md2, 0, md, 2 * seed.length, seed.length);
+			md0 = md1;
+			md1 = md2;
+			md2 = digestBouncyCastle(bcAlgorithm, md);
+		}
+		
+		inputs.set(inputOrder[0], md2);
+		return md2;
+	}
+	
+	/**
+	 * Runs a "Monte Carlo" test for SHA and modifies the inputs in
+	 * the input list for the next iteration.
+	 * 
+	 * @param algorithm The algorithm to use; must start with "TDES/".
+	 * @param inputs The inputs passed in to the test; the elements of this
+	 * list are modified by this method.
+	 * @param inputOrder The order of the inputs. 
+	 * @return The test output.
+	 */
+	public static final byte[] monteCarloRNG(final String algorithm,
+			final List<byte[]> inputs, final int[] inputOrder) {
+		if (!algorithm.startsWith("RNG/")) {
+			throw new RuntimeException("monteCarloRNG can only be called for SHA tests!");
+		} 
+		
+		String suffix = algorithm.substring(4);
+		String alg = "AES";
+		int keys = 1;
+		
+		switch (suffix) {
+			case "TDES2":
+				keys = 2;
+				alg = "DESede";
+				break;
+				
+			case "TDES3":
+				keys = 3;
+				alg = "DESede";
+				break;
+				
+			case "AES":
+				// already set up
+				break;
+				
+			default:
+				throw new IllegalArgumentException("invalid RNG algorithm specified: " + suffix);
+		}
+		
+		byte[] key = inputs.get(inputOrder[0]);
+		if (keys == 2) {
+			key = combinedKey(key, inputs.get(inputOrder[1]), key);
+		} else if (keys == 3) {
+			key = combinedKey(key, inputs.get(inputOrder[1]), inputs.get(inputOrder[2]));
+		}
+		byte[] dt = inputs.get(inputOrder[keys]);
+		byte[] seed = inputs.get(inputOrder[keys + 1]);
+		byte[] result = null;
+		
+		Rng r = new Rng(seed, key, alg);
+		
+		for (int i = 0; i < 10000; i++) {
+			result = r.nextRandom(dt);
+			Util.increment(dt);
+			System.err.println("intermediate value " + i + ": " + Util.byteArrayToHexString(result));
+		}
+
 		return result;
 	}
 }

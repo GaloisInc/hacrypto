@@ -13,23 +13,23 @@ public class FixedInput extends AbstractInput {
 	private int ct;
 	private int increment;
 
-	public FixedInput(byte[] value, String name, int number) {
-		this(value, name, number, 0);
+	public FixedInput(byte[] value, String name, int number, int show) {
+		this(value, name, number, 0, show);
 	}
 
-	public FixedInput(int length, String name, int number) {
-		this(length, name, number, 0);
+	public FixedInput(int length, String name, int number, int show) {
+		this(length, name, number, 0, show);
 	}
 
-	public FixedInput(byte[] value, String name, int number, int increment) {
-		super(name);
+	public FixedInput(byte[] value, String name, int number, int increment, int show) {
+		super(name, show);
 		this.value = value;
 		this.number = number;
 		this.increment = increment;
 	}
 
-	public FixedInput(int length, String name, int number, int increment) {
-		super(name);
+	public FixedInput(int length, String name, int number, int increment, int show) {
+		super(name, show);
 		this.value = new byte[length / 8];
 		Util.rand.nextBytes(value);
 		this.number = number;
