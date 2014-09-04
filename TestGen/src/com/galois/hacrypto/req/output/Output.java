@@ -45,32 +45,7 @@ public class Output {
 	 * @return the output of the algorithm on its inputs
 	 */
 	public static byte[] getMonteCarloOutput(final String algorithm, 
-			final List<byte[]> inputs, final int[] inputOrder) {
-/*			case "RNG/AES":
-				return rng(inputs.get(inputOrder[0]), inputs.get(inputOrder[1]),
-						inputs.get(inputOrder[2]), "AES");
-
-			case "RNG/TDES2":
-				return rng(
-						combinedKey(inputs.get(inputOrder[0]),
-								inputs.get(inputOrder[1]),
-								inputs.get(inputOrder[0])),
-						inputs.get(inputOrder[2]), inputs.get(inputOrder[3]),
-						"DESede");
-
-			case "RNG/TDES3":
-				return rng(
-						combinedKey(inputs.get(inputOrder[0]),
-								inputs.get(inputOrder[1]),
-								inputs.get(inputOrder[0])),
-						inputs.get(inputOrder[2]), inputs.get(inputOrder[3]),
-						"DESede");
-				
-			default:
-				throw new RuntimeException("Unknown algorithm for Monte Carlo: " + algorithm);
-		}
-		*/
-		
+			final List<byte[]> inputs, final int[] inputOrder) {		
 		if (algorithm.startsWith("AES/")) {
 			return monteCarloAES(algorithm, inputs, inputOrder);
 		} else if (algorithm.startsWith("TDES/")) {
@@ -1066,7 +1041,6 @@ public class Output {
 		for (int i = 0; i < 10000; i++) {
 			result = r.nextRandom(dt);
 			Util.increment(dt);
-			System.err.println("intermediate value " + i + ": " + Util.byteArrayToHexString(result));
 		}
 
 		return result;
