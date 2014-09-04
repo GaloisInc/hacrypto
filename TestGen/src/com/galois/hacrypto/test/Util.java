@@ -169,7 +169,7 @@ public class Util {
 	 * @param bytes
 	 * @return String containing a hex representation of the byte array
 	 */
-	public static String byteArraytoHexString(byte[] bytes) {
+	public static String byteArrayToHexString(byte[] bytes) {
 		StringBuilder sb = new StringBuilder();
 		for (byte b : bytes) {
 			sb.append(String.format("%02x", b));
@@ -177,6 +177,37 @@ public class Util {
 		return sb.toString();
 	}
 
+	/**
+	 * Compute the bitwise XOR of two arrays of bytes. The arrays have to be of
+	 * same length. No length checking is performed.
+	 * 
+	 * @param x1
+	 *            the first array
+	 * @param x2
+	 *            the second array
+	 * @return x1 XOR x2
+	 */
+	public static byte[] xor(byte[] x1, byte[] x2) {
+		byte[] out = new byte[x1.length];
+
+		for (int i = x1.length - 1; i >= 0; i--) {
+			out[i] = (byte) (x1[i] ^ x2[i]);
+		}
+		return out;
+	}
+
+	/**
+	 * Adjusts the parity of the specified byte array.
+	 * @param bytes
+	 */
+	public static void adjustParity(byte[] bytes) {
+		for (int i = 0; i < bytes.length; i++) {
+			int b = bytes[i];
+			bytes[i] = (byte)((b & 0xfe) | ((((b >> 1) ^ (b >> 2) ^ (b >> 3) ^ (b >> 4) ^ 
+					(b >> 5) ^ (b >> 6) ^ (b >> 7)) ^ 0x01) & 0x01));
+		}
+	}
+	
 	public static void increment(byte[] bytes) {
 		int c = bytes.length - 1;
 		do {
@@ -189,7 +220,7 @@ public class Util {
 		byte[] b = new byte[5];
 		b[4] = (byte) 0xFF;
 		for (int i = 0; i < 20000; i++) {
-			System.out.println(byteArraytoHexString(b));
+			System.out.println(byteArrayToHexString(b));
 			increment(b);
 		}
 	}

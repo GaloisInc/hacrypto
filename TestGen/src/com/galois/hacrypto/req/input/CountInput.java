@@ -11,11 +11,10 @@ import com.galois.hacrypto.req.length.InputLength;
  * 
  * @author jdodds
  */
-public class CountInput implements Input {
+public class CountInput extends AbstractInput {
 
 	private int min;
 	private int max;
-	private String name;
 	private int ct;
 
 	/**
@@ -29,9 +28,9 @@ public class CountInput implements Input {
 	 *            indefinitely
 	 */
 	public CountInput(String name, int min, int max) {
+		super(name);
 		this.max = max;
 		this.min = this.ct = min;
-		this.name = name;
 	}
 
 	@Override
@@ -48,7 +47,7 @@ public class CountInput implements Input {
 	public Entry<String, byte[]> toReqString() {
 		StringBuilder sb = new StringBuilder(name);
 		sb.append(" = ");
-		if (max > 0 && ct > max) {
+		if (max >= 0 && ct > max) {
 			ct = this.min;
 		}
 		sb.append(ct++);

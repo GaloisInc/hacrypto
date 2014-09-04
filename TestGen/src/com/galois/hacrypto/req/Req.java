@@ -86,7 +86,7 @@ public class Req {
 	 * @return a pair of .req and .rsp files. If no output is given the files
 	 *         will be the same
 	 */
-	public Entry<String, String> creatReqRsp() {
+	public Entry<String, String> createReqRsp() {
 		StringBuilder reqSb = new StringBuilder();
 		StringBuilder rspSb = new StringBuilder();
 		int inputNo = 0;
@@ -122,18 +122,30 @@ public class Req {
 			}
 
 			List<byte[]> args = new ArrayList<byte[]>();
-			int c = 0;
-			for (Queue<Input> input : inputs) {
-				Entry<String, byte[]> e = input.peek().toReqString();
-				prevValues.add(c, e.getValue());
-				args.add(e.getValue());
-				reqSb.append(e.getKey());
-				rspSb.append(e.getKey());
-				reqSb.append("\n");
-				rspSb.append("\n");
-				c++;
-			}
-			if (p.containsKey("output" + currentOutput + "_name")) {
+			// if we're a Monte Carlo test, we need to do something special here
+			if (p.containsKey("output" + currentOutput + "_name") && 
+				"montecarlo".equalsIgnoreCase(
+					p.getProperty("output" + currentOutput + "_type"))) {
+				// 100 repetitions by default
+				int repetitions = Integer.valueOf(p.getProperty(
+							"output" + currentOutput + "_repetitions", "100"));	
+				// counter goes in argument 0 by default
+				int countOutput = Integer.valueOf(p.getProperty(
+						"output" + currentOutput + "_count", "0"));
+				// we get the arguments similarly to a regular test, but
+				// they get updated by the monte carlo routine and we 
+				// print them every time
+				List<String> argNames = new ArrayList<String>();
+				int c = 0;
+				for (Queue<Input> input : inputs) {
+					argNames.add(input.peek().getName());
+					Entry<String, byte[]> e = input.peek().toReqString();
+					prevValues.add(c++, e.getValue());
+					args.add(e.getValue());
+					// the request buffer gets the original arguments
+					reqSb.append(e.getKey());
+					reqSb.append("\n");
+				}
 				int outputArgs = Integer.parseInt(p.getProperty(
 						"output" + currentOutput + "_args", "0").trim());
 				int[] argOrder = new int[outputArgs];
@@ -144,12 +156,70 @@ public class Req {
 				String func = p.getProperty("output" + currentOutput
 						+ "_function", "output" + currentOutput
 						+ "_function not given");
-				rspSb.append(p.getProperty("output" + currentOutput + "_name")
-						.trim());
-				rspSb.append(" = ");
-				rspSb.append(Util.byteArraytoHexString(Output.getOutput(func,
-						args, argOrder)));
-				rspSb.append("\n");
+				String outputName = 
+						p.getProperty("output" + currentOutput + "_name").trim();
+				int countArg = Integer.parseInt(p.getProperty(
+						"output" + currentOutput + "_count", "-1"));
+				// if we end up with -1, we fabricate a count argument; if
+				// we end up with any other negative number, we omit the count argument (unlikely)
+				for (int count = 0; count < repetitions; count++) {
+					// generate output for this iteration
+					if (countArg == -1) {
+						// we need to fabricate a count argument
+						rspSb.append("COUNT = " + count + "\n");
+					}
+					for (int i = 0; i < args.size(); i++) {
+						StringBuilder sb = new StringBuilder(argNames.get(i));
+						sb.append(" = ");
+						if (i == countArg) {
+							sb.append(count);
+						} else {
+							sb.append(Util.byteArrayToHexString(args.get(i)));
+						}
+						sb.append("\n");
+						// the response buffer gets one set of arguments per 
+						// Monte Carlo execution
+						rspSb.append(sb);
+					}
+					rspSb.append(outputName);
+					rspSb.append(" = ");
+					// Output.monteCarlo _changes_ the contents of args for
+					// the next run!
+					rspSb.append(Util.byteArrayToHexString(Output.getMonteCarloOutput(func, args, argOrder)));
+					rspSb.append("\n");
+					if (count < repetitions - 1) {
+						rspSb.append("\n");
+					}
+				}
+			} else {
+				int c = 0;
+				for (Queue<Input> input : inputs) {
+					Entry<String, byte[]> e = input.peek().toReqString();
+					prevValues.add(c++, e.getValue());
+					args.add(e.getValue());
+					reqSb.append(e.getKey());
+					rspSb.append(e.getKey());
+					reqSb.append("\n");
+					rspSb.append("\n");
+				}
+				if (p.containsKey("output" + currentOutput + "_name")) {
+					int outputArgs = Integer.parseInt(p.getProperty(
+							"output" + currentOutput + "_args", "0").trim());
+					int[] argOrder = new int[outputArgs];
+					for (int i = 0; i < outputArgs; i++) {
+						argOrder[i] = Integer.parseInt(p.getProperty(
+								"output" + currentOutput + "_arg" + i, "0").trim());
+					}
+					String func = p.getProperty("output" + currentOutput
+							+ "_function", "output" + currentOutput
+							+ "_function not given");
+					rspSb.append(p.getProperty("output" + currentOutput + "_name")
+							.trim());
+					rspSb.append(" = ");
+					rspSb.append(Util.byteArrayToHexString(Output.getOutput(func,
+							args, argOrder)));
+					rspSb.append("\n");
+				}
 			}
 			reqSb.append("\n");
 			rspSb.append("\n");
@@ -425,7 +495,7 @@ public class Req {
 					+ File.separator + fileName);
 		}
 
-		Entry<String, String> reqrsp = r.creatReqRsp();
+		Entry<String, String> reqrsp = r.createReqRsp();
 
 		File rspdir = new File(outDir.getPath() + File.separator + "rsp"
 				+ File.separator + dir);

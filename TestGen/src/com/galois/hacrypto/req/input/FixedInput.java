@@ -6,10 +6,9 @@ import java.util.Map.Entry;
 import com.galois.hacrypto.req.length.InputLength;
 import com.galois.hacrypto.test.Util;
 
-public class FixedInput implements Input {
+public class FixedInput extends AbstractInput {
 
 	private byte[] value;
-	private String name;
 	private int number;
 	private int ct;
 	private int increment;
@@ -23,16 +22,16 @@ public class FixedInput implements Input {
 	}
 
 	public FixedInput(byte[] value, String name, int number, int increment) {
+		super(name);
 		this.value = value;
-		this.name = name;
 		this.number = number;
 		this.increment = increment;
 	}
 
 	public FixedInput(int length, String name, int number, int increment) {
+		super(name);
 		this.value = new byte[length / 8];
 		Util.rand.nextBytes(value);
-		this.name = name;
 		this.number = number;
 		this.increment = increment;
 	}
@@ -54,7 +53,7 @@ public class FixedInput implements Input {
 		for (int i = 0; i < increment; i++) {
 			Util.increment(value);
 		}
-		sb.append(Util.byteArraytoHexString(value));
+		sb.append(Util.byteArrayToHexString(value));
 		ct++;
 		return new SimpleEntry<String, byte[]>(sb.toString(), value);
 	}

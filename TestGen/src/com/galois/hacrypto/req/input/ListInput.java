@@ -10,11 +10,10 @@ import com.galois.hacrypto.req.length.FixedInputLength;
 import com.galois.hacrypto.req.length.InputLength;
 import com.galois.hacrypto.test.Util;
 
-public class ListInput implements Input {
+public class ListInput extends AbstractInput {
 
 	private List<byte[]> l = new ArrayList<>();
 	private Iterator<byte[]> i = null;
-	private String name;
 	private boolean isInt = false;
 	
 	/**
@@ -24,7 +23,7 @@ public class ListInput implements Input {
 	 * @param name name of the input
 	 */
 	public ListInput(String name) {
-		this.name = name;
+		super(name);
 	}
 	
 	public ListInput(String name, boolean isInt){
@@ -82,7 +81,7 @@ public class ListInput implements Input {
 			resStr = name + " = " + Util.byteArrayToInt(res);
 		}
 		else{
-			resStr = name + " = " + Util.byteArraytoHexString(res);
+			resStr = name + " = " + Util.byteArrayToHexString(res);
 		}
 		return new SimpleEntry<String, byte[]>(resStr, res);
 	}

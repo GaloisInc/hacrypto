@@ -13,8 +13,7 @@ import com.galois.hacrypto.req.length.InputLength;
  * @author jdodds
  * 
  */
-public class LengthInput implements Input {
-	private String name;
+public class LengthInput extends AbstractInput {
 	private int lengthOf;
 	private Req req;
 	private boolean isBytes = false;
@@ -31,7 +30,7 @@ public class LengthInput implements Input {
 	 * @param units can be byte or bytes. Any other value will result in the length being printed in bits
 	 */
 	public LengthInput(String name, int lengthof, Req req, String units) {
-		this.name = name;
+		super(name);
 		this.lengthOf = lengthof;
 		this.req = req;
 		if (units != null

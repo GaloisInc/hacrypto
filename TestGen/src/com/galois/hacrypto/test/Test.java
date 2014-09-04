@@ -157,7 +157,7 @@ public class Test {
 					+ File.separator + fileName);
 		}
 
-		Entry<String, String> reqrsp = r.creatReqRsp();
+		Entry<String, String> reqrsp = r.createReqRsp();
 
 		Util.writeStringToOutDir(fileName + ".req", outDir.getPath()
 				+ File.separator + "req", reqrsp.getKey());

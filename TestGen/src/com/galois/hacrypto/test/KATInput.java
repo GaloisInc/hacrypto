@@ -40,7 +40,7 @@ public class KATInput {
 	 *         representation of the bytes
 	 */
 	public static String simpleByteString(byte[] bytes) {
-		return (bytes.length + " " + Util.byteArraytoHexString(bytes));
+		return (bytes.length + " " + Util.byteArrayToHexString(bytes));
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class KATInput {
 	}
 
 	public String toHexString() {
-		return Util.byteArraytoHexString(bytes);
+		return Util.byteArrayToHexString(bytes);
 	}
 
 }

@@ -12,12 +12,11 @@ import com.galois.hacrypto.test.Util;
  * @author jdodds
  * 
  */
-public class RngVInput implements Input {
+public class RngVInput extends AbstractInput {
 
 	private InputLength il;
 	private byte[] value;
 	int byteno;
-	String name = "V";
 
 	/**
 	 * Creates this object with the default name "V"
@@ -25,8 +24,7 @@ public class RngVInput implements Input {
 	 *            in bits
 	 */
 	public RngVInput(int length) {
-		this.il = new FixedInputLength(length);
-		this.value = new byte[length / 8];
+		this("V", length);
 	}
 
 	/**
@@ -34,9 +32,9 @@ public class RngVInput implements Input {
 	 * @param length length of the input in bits
 	 */
 	public RngVInput(String name, int length) {
+		super(name);
 		this.il = new FixedInputLength(length);
 		this.value = new byte[length / 8];
-		this.name = name;
 	}
 
 	@Override
@@ -63,7 +61,7 @@ public class RngVInput implements Input {
 
 			value[byteno] = (byte) (value[byteno] / 2);
 		}
-		sb.append(Util.byteArraytoHexString(value));
+		sb.append(Util.byteArrayToHexString(value));
 
 		return new SimpleEntry<String, byte[]>(sb.toString(), value);
 	}

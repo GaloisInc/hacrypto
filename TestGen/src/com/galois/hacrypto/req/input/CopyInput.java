@@ -13,11 +13,10 @@ import com.galois.hacrypto.test.Util;
  * @author jdodds
  * 
  */
-public class CopyInput implements Input {
+public class CopyInput extends AbstractInput {
 
 	private int copyOf;
 	private Req req;
-	private String name;
 
 	/**
 	 * @param name
@@ -28,9 +27,9 @@ public class CopyInput implements Input {
 	 *            the req containing this and the input to be copied
 	 */
 	public CopyInput(String name, int copyOf, Req req) {
+		super(name);
 		this.req = req;
 		this.copyOf = copyOf;
-		this.name = name;
 	}
 
 	@Override
@@ -47,9 +46,8 @@ public class CopyInput implements Input {
 	public Entry<String, byte[]> toReqString() {
 		StringBuilder sb = new StringBuilder(name);
 		sb.append(" = ");
-		sb.append(Util.byteArraytoHexString(req.getPrevValue(copyOf)));
+		sb.append(Util.byteArrayToHexString(req.getPrevValue(copyOf)));
 		return new SimpleEntry<String, byte[]>(sb.toString(),
 				req.getPrevValue(copyOf));
 	}
-
 }

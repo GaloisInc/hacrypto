@@ -6,17 +6,17 @@ import java.util.Map.Entry;
 
 import com.galois.hacrypto.req.length.InputLength;
 
-public class SequenceInput implements Input {
+public class SequenceInput extends AbstractInput {
 
 	private int[] sequence;
 	private int changeEvery;
 	private int repeat;
 	private boolean infinite;
 	private int currentCt;
-	private String name;
 
 	public SequenceInput(String name, int[] sequence, int changeevery,
 			int repeat) {
+		super(name);
 		this.sequence = sequence;
 		this.changeEvery = changeevery;
 		this.repeat = repeat;
@@ -25,7 +25,6 @@ public class SequenceInput implements Input {
 		} else {
 			infinite = false;
 		}
-		this.name = name;
 	}
 
 	@Override

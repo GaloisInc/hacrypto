@@ -15,9 +15,8 @@ import com.galois.hacrypto.test.Util;
  * @author jdodds
  * @author dmz
  */
-public class RandomInput implements Input {
+public class RandomInput extends AbstractInput {
 
-	private String name;
 	private InputLength inputLength;
 	private boolean parity;
 	
@@ -29,8 +28,8 @@ public class RandomInput implements Input {
 	 *  should be odd parity bits, false otherwise
 	 */
 	public RandomInput(String name, InputLength il, boolean parity) {
+		super(name);
 		this.inputLength = il;
-		this.name = name;
 		this.parity = parity;
 	}
 
@@ -61,7 +60,7 @@ public class RandomInput implements Input {
 			}
 		}
 
-		String valString = Util.byteArraytoHexString(val);
+		String valString = Util.byteArrayToHexString(val);
 		if (val.length == 0) {
 			valString = "00"; // length-zero strings are represented as "00" for some reason
 		}

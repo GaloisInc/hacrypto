@@ -28,37 +28,18 @@ public class Rng {
 	// it from the system date time string
 	public byte[] nextRandom(byte[] dt) {
 
-		byte[] i = com.galois.hacrypto.req.output.Output.cypherBouncyCastle(
+		byte[] i = com.galois.hacrypto.req.output.Output.cipherBouncyCastle(
 				algorithm + "/CBC/NoPadding", Cipher.ENCRYPT_MODE, key, iv, dt);
 
-		byte[] rand = com.galois.hacrypto.req.output.Output.cypherBouncyCastle(
+		byte[] rand = com.galois.hacrypto.req.output.Output.cipherBouncyCastle(
 				algorithm + "/CBC/NoPadding", Cipher.ENCRYPT_MODE, key, iv,
-				xor(i, seed));
+				Util.xor(i, seed));
 
-		this.seed = com.galois.hacrypto.req.output.Output.cypherBouncyCastle(
+		this.seed = com.galois.hacrypto.req.output.Output.cipherBouncyCastle(
 				algorithm + "/CBC/NoPadding", Cipher.ENCRYPT_MODE, key, iv,
-				xor(i, rand));
+				Util.xor(i, rand));
 
 		return rand;
-	}
-
-	/**
-	 * Compute the bitwise XOR of two arrays of bytes. The arrays have to be of
-	 * same length. No length checking is performed.
-	 * 
-	 * @param x1
-	 *            the first array
-	 * @param x2
-	 *            the second array
-	 * @return x1 XOR x2
-	 */
-	public static byte[] xor(byte[] x1, byte[] x2) {
-		byte[] out = new byte[x1.length];
-
-		for (int i = x1.length - 1; i >= 0; i--) {
-			out[i] = (byte) (x1[i] ^ x2[i]);
-		}
-		return out;
 	}
 
 	public static void main(String args[]) {
@@ -70,7 +51,7 @@ public class Rng {
 		byte[] seed = Util
 				.hexStringToByteArray("80000000000000000000000000000000");
 		Rng rng = new Rng(seed, key, "AES");
-		String result = Util.byteArraytoHexString(rng.nextRandom(dt));
+		String result = Util.byteArrayToHexString(rng.nextRandom(dt));
 		if (result.toLowerCase().equals("7c4d77736f0b37068ae4861de69b88ff")) {
 			System.out.println("AES128 passed");
 		} else {
@@ -86,7 +67,7 @@ public class Rng {
 		seed = Util
 				.hexStringToByteArray("8000000000000000");
 		rng = new Rng(seed, key, "DESede");
-	 	result = Util.byteArraytoHexString(rng.nextRandom(dt));
+	 	result = Util.byteArrayToHexString(rng.nextRandom(dt));
 		if (result.toLowerCase().equals("6e194f8d1a2a468b")) {
 			System.out.println("DESede passed");
 		} else {

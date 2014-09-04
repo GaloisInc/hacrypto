@@ -32,4 +32,9 @@ public interface Input {
 	 *         representation, or a byte array representation of an integer
 	 */
 	public Entry<String, byte[]> toReqString();
+	
+	/**
+	 * @return the name of this input.
+	 */
+	public String getName();
 }
