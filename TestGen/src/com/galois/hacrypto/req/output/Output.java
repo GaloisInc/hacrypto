@@ -7,6 +7,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Security;
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.List;
 
 import javax.crypto.BadPaddingException;
@@ -836,19 +837,19 @@ public class Output {
 				break;
 				
 						
-			case "OFB": // THIS DOES NOT WORK YET!
+			case "OFB":
 				byte[] text0 = text;
-				byte[] oldIV = iv;
-				byte[] keyMaterial = new byte[32];
+				byte[] keyMaterial = new byte[25];
+				byte[] empty = new byte[iv.length];
 				
 				combinedKey = combinedKey(key1, key2, key3);
-			    cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, iv);
-				
+				cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, iv);
 				for (int j = 0; j < 10000; j++) {
-					byte[] out = cipher.update(iv);
-					oldIV = iv;
+					byte[] out = cipher.update(empty);
+					result = Util.xor(out, text);
+					text = iv;
 					iv = out;
-					shiftin(keyMaterial, Util.xor(oldIV, out), 64);
+					shiftin(keyMaterial, result, 64);
 				}
 				
 				newKey1 = new byte[8];
@@ -868,80 +869,116 @@ public class Output {
 				Util.adjustParity(newKey1);
 				Util.adjustParity(newKey2);
 				Util.adjustParity(newKey3);
-				
-				System.err.println("iv = " + Util.byteArrayToHexString(iv));
-				System.err.println("oldIV = " + Util.byteArrayToHexString(oldIV));
-				System.err.println("text = " + Util.byteArrayToHexString(text));
-				System.err.println("iv = " + Util.byteArrayToHexString(iv));
-				System.err.println("keyMaterial = " + Util.byteArrayToHexString(keyMaterial));
-				
-				inputs.set(inputOrder[0], newKey1);
-				inputs.set(inputOrder[1], newKey2);
-				inputs.set(inputOrder[2], newKey3);
-				inputs.set(inputOrder[3], oldIV);
-				inputs.set(inputOrder[4], Util.xor(text0, oldIV));
-				result = iv;
-				break;
-
-			case "CFB64": // THIS DOES NOT WORK YET!
-				oldIV = iv;
-				keyMaterial = new byte[32];
-				
-				combinedKey = combinedKey(key1, key2, key3);
-			    cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, iv);
-				
-				for (int j = 0; j < 10000; j++) {
-					byte[] out = cipher.update(iv);
-					oldIV = iv;
-					iv = out;
-					shiftin(keyMaterial, Util.xor(oldIV, out), 64);
-				}
-				
-				newKey1 = new byte[8];
-				newKey2 = new byte[8];
-				newKey3 = new byte[8];
-				for (int i = 0; i < 8; i++) {
-					newKey1[i] = (byte) (key1[i] ^ keyMaterial[16 + i]);
-					newKey2[i] = (byte) (key2[i] ^ keyMaterial[8 + i]);
-					newKey3[i] = (byte) (key3[i] ^ keyMaterial[i]);
-				}
-				if (Arrays.equals(key1, key3)) {
-					newKey3 = newKey1;
-				}
-				if (Arrays.equals(key1, key2)) {
-					newKey2 = newKey1;
-				}
-				Util.adjustParity(newKey1);
-				Util.adjustParity(newKey2);
-				Util.adjustParity(newKey3);
-				
-				System.err.println("iv = " + Util.byteArrayToHexString(iv));
-				System.err.println("oldIV = " + Util.byteArrayToHexString(oldIV));
-				System.err.println("text = " + Util.byteArrayToHexString(text));
-				System.err.println("iv = " + Util.byteArrayToHexString(iv));
-				System.err.println("keyMaterial = " + Util.byteArrayToHexString(keyMaterial));
 				
 				inputs.set(inputOrder[0], newKey1);
 				inputs.set(inputOrder[1], newKey2);
 				inputs.set(inputOrder[2], newKey3);
 				inputs.set(inputOrder[3], iv);
-				inputs.set(inputOrder[4], oldIV);
-				result = iv;
+				inputs.set(inputOrder[4], Util.xor(text0, text));
 				break;
 				
+			case "CFB64":
+			case "CFB8":
+				int blocklen = Integer.parseInt(mode.substring(3));
+				byte[] out = null;
+				keyMaterial = new byte[25];
+				
+				combinedKey = combinedKey(key1, key2, key3);
+				cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, iv);
+				for (int j = 0; j < 10000; j++) {
+					out = cipher.update(text);
+					if (direction == Cipher.ENCRYPT_MODE) {
+						result = out;
+						text = firstKBits(iv, blocklen);
+						iv = appendAndShiftLeft(iv, out, blocklen);
+						shiftin(keyMaterial, result, blocklen);
+					} else {
+						result = out;
+						iv = appendAndShiftLeft(iv, text, blocklen);
+						text = firstKBits(Util.xor(out, text), blocklen);
+						shiftin(keyMaterial, result, blocklen);
+					}
+				}
+				
+				newKey1 = new byte[8];
+				newKey2 = new byte[8];
+				newKey3 = new byte[8];
+				for (int i = 0; i < 8; i++) {
+					newKey1[i] = (byte) (key1[i] ^ keyMaterial[16 + i]);
+					newKey2[i] = (byte) (key2[i] ^ keyMaterial[8 + i]);
+					newKey3[i] = (byte) (key3[i] ^ keyMaterial[i]);
+				}
+				if (Arrays.equals(key1, key3)) {
+					newKey3 = newKey1;
+				}
+				if (Arrays.equals(key1, key2)) {
+					newKey2 = newKey1;
+				}
+				Util.adjustParity(newKey1);
+				Util.adjustParity(newKey2);
+				Util.adjustParity(newKey3);
+				
+				inputs.set(inputOrder[0], newKey1);
+				inputs.set(inputOrder[1], newKey2);
+				inputs.set(inputOrder[2], newKey3);
+				inputs.set(inputOrder[3], iv);
+				inputs.set(inputOrder[4], text);
+				break;
+
 			default:
 				throw new IllegalArgumentException("invalid algorithm for DES Monte Carlo: " + algorithm);
 		}
 		return result;
 	}
 	
+	private static byte[] firstKBits(final byte[] bytes, final int k) {
+		BitSet bits = BitSet.valueOf(bytes);
+		BitSet firstK = new BitSet();
+		for (int i = 0; i < k; i++)
+		{
+			firstK.set(i, bits.get(i));
+		}
+		byte[] result = new byte[(int) Math.ceil(((double) k / 8))];
+		byte[] firstKBytes = firstK.toByteArray();
+		System.arraycopy(firstKBytes, 0, result, 0, firstKBytes.length);
+		return result;
+	}
+	
+	private static byte[] appendAndShiftLeft(final byte[] left, final byte[] right, final int k) {
+		BitSet leftBits = BitSet.valueOf(left);
+		BitSet rightBits = BitSet.valueOf(right);
+		int leftSize = left.length * 8;
+		for (int i = 0; i < rightBits.length(); i++) {
+			leftBits.set(leftSize + i, rightBits.get(i));
+		}
+		BitSet newBits = new BitSet();
+		for (int i = k; i < leftBits.length(); i++) {
+			newBits.set(i - k, leftBits.get(i));
+		}
+		byte[] result = new byte[left.length];
+		byte[] newBytes = newBits.toByteArray();
+		System.arraycopy(newBytes, 0, result, 0, newBytes.length);
+		return result;
+	}
+	
 	private static void shiftin(final byte[] dest, final byte[] src, int bits) {
-		System.arraycopy(dest, bits / 8, dest, 0, 24 - bits / 8);
-		System.arraycopy(src, 0, dest, 24 - bits / 8, (bits + 7) / 8);
-		if (bits % 8 > 0) {
-			for (int n = 0; n < 24; n++) {
-				dest[n] = (byte) ((dest[n] << (bits % 8)) | (dest[n + 1] >> (8 - (bits % 8))));
-			}
+		BitSet destbits = BitSet.valueOf(dest);
+		BitSet srcbits = BitSet.valueOf(src);
+		BitSet newbits = new BitSet();
+		
+		// shift the destination bits left "bits" bits
+		
+		for (int i = 0; i < destbits.size() - bits; i++) {
+			newbits.set(i, destbits.get(i + bits));
+		}
+		for (int i = 0; i < bits; i++) {
+			newbits.set(192 - bits + i, srcbits.get(i));
+		}
+
+		byte[] newbytes = newbits.toByteArray();
+		System.arraycopy(newbytes, 0, dest, 0, newbytes.length);
+		for (int i = newbytes.length; i < dest.length; i++) {
+			dest[i] = 0;
 		}
 	}
 	

@@ -31,16 +31,16 @@ input5_mult = 2
 comment0 = ENCRYPT
 input5_name0 = PLAINTEXT
 input5_type0 = increase
-input5_minlength0 = 64
-input5_maxlength0 = 640
-input5_stepsize0 = 64
+input5_minlength0 = 8
+input5_maxlength0 = 80
+input5_stepsize0 = 8
 
 comment10 = DECRYPT
 input5_name1 = CIPHERTEXT
 input5_type1 = increase
-input5_minlength1 = 64
-input5_maxlength1 = 640
-input5_stepsize1 = 64 
+input5_minlength1 = 8
+input5_maxlength1 = 80
+input5_stepsize1 = 8 
 
 output0_name = CIPHERTEXT
 #this specifies the input that this output ends on... output 1 begins after it

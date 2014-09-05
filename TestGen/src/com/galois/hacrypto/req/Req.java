@@ -5,8 +5,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Set;
 
 import com.galois.hacrypto.req.input.CopyInput;
 import com.galois.hacrypto.req.input.CountInput;
@@ -105,6 +108,7 @@ public class Req {
 
 			// TODO: the comments could be more efficient...
 			String comment = p.getProperty("comment" + inputNo);
+			String extraparam = p.getProperty("extraparam" + inputNo);
 			if (comment != null) {
 				// split comment along newlines to bracket each one
 				String[] parts = comment.split("\n");
@@ -117,10 +121,19 @@ public class Req {
 					rspSb.append(s);
 					rspSb.append("]\n");
 				}
-				reqSb.append("\n");
-				rspSb.append("\n");
+				if (extraparam == null) {
+					reqSb.append("\n");
+					rspSb.append("\n");
+				}
 			}
+			// TODO: this is very kludgy; extra params are things that aren't in brackets
 
+			if (extraparam != null) {
+				reqSb.append(extraparam);
+				reqSb.append("\n\n");
+				rspSb.append(extraparam);
+				rspSb.append("\n\n");
+			}
 			List<byte[]> args = new ArrayList<byte[]>();
 			// if we're a Monte Carlo test, we need to do something special here
 			if (p.containsKey("output" + currentOutput + "_name") && 
@@ -290,9 +303,13 @@ public class Req {
 		Scanner scan = new Scanner(new File(reqFileName));
 
 		Map<String, ListInput> inputs = initReqInputs();
+		Set<String> extraparams = initExtraParams();
 
 		while (scan.hasNextLine()) {
-			parseReqLine(scan.nextLine(), inputs);
+			String nextLine = scan.nextLine();
+			if (!extraparams.contains(nextLine)) {
+				parseReqLine(nextLine, inputs);
+			}
 		}
 		scan.close();
 	}
@@ -321,12 +338,25 @@ public class Req {
 				ListInput li = new ListInput(inputName, isIntType(inputType), Input.YES);
 				addInput(i, li);
 				ret.put(inputName, li); // TODO: this only supports unique input
-										// nams
+										// names
 			}
 		}
 		return ret;
 	}
 
+	private Set<String> initExtraParams() {
+		Set<String> result = new HashSet<String>();
+		for (Object o : p.keySet()) {
+			String s = (String) o; // all keys are known to be strings
+			if (s.startsWith("extraparam")) {
+				String ep = p.getProperty(s);
+				String[] lines = ep.split("\n");
+				result.addAll(Arrays.asList(lines));
+			}
+		}
+		return result;
+	}
+	
 	private void parseReqLine(String line, Map<String, ListInput> inputMap) {
 		if (line.length() == 0 || line.charAt(0) == '#' || line.charAt(0) == '[') {
 			return; // don't need to do anything with these because they are are
@@ -509,14 +539,14 @@ public class Req {
 
 	public static void main(String args[]) {
 		Req r;
-		String fileName = "TDES/TCFB64Monte1";
+		String fileName = "TDES/TCFB8Monte3";
 		File outDir = new File("output2");
 		String testDir = "test_defs";
 		fileName = fileName.replace('/', File.separatorChar);
 		String dir = fileName.substring(0,
 				fileName.lastIndexOf(File.separatorChar));
 		try {
-			r = new Req("output/req/TDES/TCFB64Monte1.req", testDir + File.separator + fileName);
+			r = new Req("output/req/TDES/TCFB8Monte3.req", testDir + File.separator + fileName);
 		} catch (IOException e) {
 			throw new RuntimeException("could not read file: " + testDir
 					+ File.separator + fileName);
