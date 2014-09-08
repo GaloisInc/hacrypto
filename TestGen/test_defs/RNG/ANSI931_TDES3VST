@@ -22,6 +22,7 @@ input4_type = fixed
 input4_length = 64
 input4_increment = 1
 
+input5_name = V
 input5_type = RNGV
 input5_length = 64
 

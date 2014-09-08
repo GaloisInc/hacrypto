@@ -1,0 +1,40 @@
+header = # Galois CAVP (VERSION) \n# TDES Variable Key Known Answer Test for ECB\n# State: Encrypt and Decrypt\n# (DATE)
+inputs = 3
+
+input0_name = COUNT
+input0_type = COUNT
+input0_max = 55
+
+input1_name = KEYs
+input1_type = random
+input1_parity = odd
+input1_minlength = 64 
+input1_maxlength = 64
+
+#mult means there are multiple inputs. Each of the inputs needs to be finite
+input2_mult = 2
+comment0 = ENCRYPT
+input2_name0 = PLAINTEXT
+input2_type0 = random
+input2_minlength0 = 64
+input2_maxlength0 = 64
+
+comment56 = DECRYPT
+input2_name1 = CIPHERTEXT
+input2_type1 = random
+input2_minlength1 = 64
+input2_maxlength1 = 64 
+
+output0_name = CIPHERTEXT
+#this specifies the input that this output ends on... output 1 begins after it
+output0_end = 2
+output0_args = 2
+output0_arg0 = 1
+output0_arg1 = 2
+output0_function = TDES/ECB/ENC
+
+output1_name = PLAINTEXT
+output1_args = 2
+output1_arg0 = 1
+output1_arg1 = 2
+output1_function = TDES/ECB/DEC

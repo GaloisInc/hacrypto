@@ -180,20 +180,39 @@ public class Output {
 					inputs.get(inputOrder[1]), inputs.get(inputOrder[2]));
 
 		case "TDES/CBC/ENC":
+			byte[] ck = combinedKey(inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]));
+			byte[] iv = inputs.get(inputOrder[1]);
+			byte[] text = inputs.get(inputOrder[2]);
+			if (inputOrder.length > 3) {
+				// we have three separate keys
+				ck = combinedKey(inputs.get(inputOrder[0]),
+					    inputs.get(inputOrder[1]),
+					    inputs.get(inputOrder[2]));
+				iv = inputs.get(inputOrder[3]);
+				text = inputs.get(inputOrder[4]);
+			}
 			return cipherBouncyCastle("DESede/CBC/NoPadding",
-					Cipher.ENCRYPT_MODE, 
-					combinedKey(inputs.get(inputOrder[0]),
-							    inputs.get(inputOrder[1]),
-							    inputs.get(inputOrder[2])), 
-					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+					Cipher.ENCRYPT_MODE, ck, iv, text);
 
 		case "TDES/CBC/DEC":
+			ck = combinedKey(inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]));
+			iv = inputs.get(inputOrder[1]);
+			text = inputs.get(inputOrder[2]);
+			if (inputOrder.length > 3) {
+				// we have three separate keys
+				ck = combinedKey(inputs.get(inputOrder[0]),
+					    inputs.get(inputOrder[1]),
+					    inputs.get(inputOrder[2]));
+				iv = inputs.get(inputOrder[3]);
+				text = inputs.get(inputOrder[4]);
+			}
+
 			return cipherBouncyCastle("DESede/CBC/NoPadding",
-					Cipher.DECRYPT_MODE, 
-					combinedKey(inputs.get(inputOrder[0]),
-							    inputs.get(inputOrder[1]),
-							    inputs.get(inputOrder[2])), 
-					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+					Cipher.DECRYPT_MODE, ck, iv, text);
 /*
 		case "TDES/CFB1/ENC":
 			return cypherBouncyCastle("DESede/CFB1/NoPadding",
@@ -212,68 +231,143 @@ public class Output {
 					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
 */
 		case "TDES/CFB8/ENC":
+			ck = combinedKey(inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]));
+			iv = inputs.get(inputOrder[1]);
+			text = inputs.get(inputOrder[2]);
+			if (inputOrder.length > 3) {
+				// we have three separate keys
+				ck = combinedKey(inputs.get(inputOrder[0]),
+					    inputs.get(inputOrder[1]),
+					    inputs.get(inputOrder[2]));
+				iv = inputs.get(inputOrder[3]);
+				text = inputs.get(inputOrder[4]);
+			}
+
 			return cipherBouncyCastle("DESede/CFB8/NoPadding",
-					Cipher.ENCRYPT_MODE, 
-					combinedKey(inputs.get(inputOrder[0]),
-							    inputs.get(inputOrder[1]),
-							    inputs.get(inputOrder[2])), 
-					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+					Cipher.ENCRYPT_MODE, ck, iv, text);
 
 		case "TDES/CFB8/DEC":
+			ck = combinedKey(inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]));
+			iv = inputs.get(inputOrder[1]);
+			text = inputs.get(inputOrder[2]);
+			if (inputOrder.length > 3) {
+				// we have three separate keys
+				ck = combinedKey(inputs.get(inputOrder[0]),
+					    inputs.get(inputOrder[1]),
+					    inputs.get(inputOrder[2]));
+				iv = inputs.get(inputOrder[3]);
+				text = inputs.get(inputOrder[4]);
+			}
 			return cipherBouncyCastle("DESede/CFB8/NoPadding",
-					Cipher.DECRYPT_MODE, 
-					combinedKey(inputs.get(inputOrder[0]),
-							    inputs.get(inputOrder[1]),
-							    inputs.get(inputOrder[2])), 
-					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+					Cipher.DECRYPT_MODE, ck, iv, text);
 			
 		case "TDES/CFB64/ENC":
+			ck = combinedKey(inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]));
+			iv = inputs.get(inputOrder[1]);
+			text = inputs.get(inputOrder[2]);
+			if (inputOrder.length > 3) {
+				// we have three separate keys
+				ck = combinedKey(inputs.get(inputOrder[0]),
+					    inputs.get(inputOrder[1]),
+					    inputs.get(inputOrder[2]));
+				iv = inputs.get(inputOrder[3]);
+				text = inputs.get(inputOrder[4]);
+			}
+
 			return cipherBouncyCastle("DESede/CFB64/NoPadding",
-					Cipher.ENCRYPT_MODE, 
-					combinedKey(inputs.get(inputOrder[0]),
-							    inputs.get(inputOrder[1]),
-							    inputs.get(inputOrder[2])), 
-					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+					Cipher.ENCRYPT_MODE, ck, iv, text);
 
 		case "TDES/CFB64/DEC":
+			ck = combinedKey(inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]));
+			iv = inputs.get(inputOrder[1]);
+			text = inputs.get(inputOrder[2]);
+			if (inputOrder.length > 3) {
+				// we have three separate keys
+				ck = combinedKey(inputs.get(inputOrder[0]),
+					    inputs.get(inputOrder[1]),
+					    inputs.get(inputOrder[2]));
+				iv = inputs.get(inputOrder[3]);
+				text = inputs.get(inputOrder[4]);
+			}
+
 			return cipherBouncyCastle("DESede/CFB64/NoPadding",
-					Cipher.DECRYPT_MODE, 
-					combinedKey(inputs.get(inputOrder[0]),
-							    inputs.get(inputOrder[1]),
-							    inputs.get(inputOrder[2])), 
-					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+					Cipher.DECRYPT_MODE, ck, iv, text);
 			
 		case "TDES/ECB/ENC":
+			ck = combinedKey(inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]));
+			text = inputs.get(inputOrder[1]);
+			if (inputOrder.length > 2) {
+				// we have three separate keys
+				ck = combinedKey(inputs.get(inputOrder[0]),
+					    inputs.get(inputOrder[1]),
+					    inputs.get(inputOrder[2]));
+				text = inputs.get(inputOrder[3]);
+			}
+
 			return cipherBouncyCastle("DESede/ECB/NoPadding",
-					Cipher.ENCRYPT_MODE, 
-					combinedKey(inputs.get(inputOrder[0]),
-							    inputs.get(inputOrder[1]),
-							    inputs.get(inputOrder[2])), 
-					null, inputs.get(inputOrder[3]));
+					Cipher.ENCRYPT_MODE, ck, null, text);
 
 		case "TDES/ECB/DEC":
+			ck = combinedKey(inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]));
+			text = inputs.get(inputOrder[1]);
+			if (inputOrder.length > 2) {
+				// we have three separate keys
+				ck = combinedKey(inputs.get(inputOrder[0]),
+					    inputs.get(inputOrder[1]),
+					    inputs.get(inputOrder[2]));
+				text = inputs.get(inputOrder[3]);
+			}
+
 			return cipherBouncyCastle("DESede/ECB/NoPadding",
-					Cipher.DECRYPT_MODE, 
-					combinedKey(inputs.get(inputOrder[0]),
-							    inputs.get(inputOrder[1]),
-							    inputs.get(inputOrder[2])), 
-					null, inputs.get(inputOrder[3]));
+					Cipher.DECRYPT_MODE, ck, null, text);
 			
 		case "TDES/OFB/ENC":
+			ck = combinedKey(inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]));
+			iv = inputs.get(inputOrder[1]);
+			text = inputs.get(inputOrder[2]);
+			if (inputOrder.length > 3) {
+				// we have three separate keys
+				ck = combinedKey(inputs.get(inputOrder[0]),
+					    inputs.get(inputOrder[1]),
+					    inputs.get(inputOrder[2]));
+				iv = inputs.get(inputOrder[3]);
+				text = inputs.get(inputOrder[4]);
+			}
+
 			return cipherBouncyCastle("DESede/OFB/NoPadding",
-					Cipher.ENCRYPT_MODE, 
-					combinedKey(inputs.get(inputOrder[0]),
-							    inputs.get(inputOrder[1]),
-							    inputs.get(inputOrder[2])), 
-					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+					Cipher.ENCRYPT_MODE, ck, iv, text);
 
 		case "TDES/OFB/DEC":
+			ck = combinedKey(inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]), 
+					inputs.get(inputOrder[0]));
+			iv = inputs.get(inputOrder[1]);
+			text = inputs.get(inputOrder[2]);
+			if (inputOrder.length > 3) {
+				// we have three separate keys
+				ck = combinedKey(inputs.get(inputOrder[0]),
+					    inputs.get(inputOrder[1]),
+					    inputs.get(inputOrder[2]));
+				iv = inputs.get(inputOrder[3]);
+				text = inputs.get(inputOrder[4]);
+			}
+
 			return cipherBouncyCastle("DESede/OFB/NoPadding",
-					Cipher.DECRYPT_MODE, 
-					combinedKey(inputs.get(inputOrder[0]),
-							    inputs.get(inputOrder[1]),
-							    inputs.get(inputOrder[2])), 
-					inputs.get(inputOrder[3]), inputs.get(inputOrder[4]));
+					Cipher.DECRYPT_MODE, ck, iv, text);
 			
 		case "RNG/AES":
 			return rng(inputs.get(inputOrder[0]), inputs.get(inputOrder[1]),

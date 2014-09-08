@@ -539,14 +539,14 @@ public class Req {
 
 	public static void main(String args[]) {
 		Req r;
-		String fileName = "TDES/TCFB8Monte3";
+		String fileName = "TDES/TCFB64varkey";
 		File outDir = new File("output2");
 		String testDir = "test_defs";
 		fileName = fileName.replace('/', File.separatorChar);
 		String dir = fileName.substring(0,
 				fileName.lastIndexOf(File.separatorChar));
 		try {
-			r = new Req("output/req/TDES/TCFB8Monte3.req", testDir + File.separator + fileName);
+			r = new Req("output/req/TDES/TCFB64varkey.req", testDir + File.separator + fileName);
 		} catch (IOException e) {
 			throw new RuntimeException("could not read file: " + testDir
 					+ File.separator + fileName);
