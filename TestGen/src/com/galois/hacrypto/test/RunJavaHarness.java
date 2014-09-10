@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 import com.galois.hacrypto.req.Req;
 
 /**
@@ -40,6 +42,11 @@ public class RunJavaHarness {
 	private final File testDir;
 
 	/**
+	 * The suffix to use for input files.
+	 */
+	private final String reqSuffix;
+	
+	/**
 	 * @param testDirName
 	 *            The directory that holds the test definitions such as tests,
 	 *            C_tests, and KAT files
@@ -48,10 +55,12 @@ public class RunJavaHarness {
 	 * @param outputDirName 
 	 *            The directory that contains all the response files.
 	 */
-	public RunJavaHarness(String testDirName, String inputDirName, String outputDirName) {
+	public RunJavaHarness(String testDirName, String inputDirName, String outputDirName,
+			String reqSuffix) {
 		inputDir = new File(inputDirName);
 		outputDir = new File(outputDirName);
 		testDir = new File(testDirName);
+		this.reqSuffix = reqSuffix;
 	}
 	
 	/**
@@ -78,32 +87,33 @@ public class RunJavaHarness {
 
 	private void createFile(String fileName) {
 		Req r;
-		fileName = fileName.replace('/', File.separatorChar);
-		File testSpec = new File(testDir.getAbsolutePath() + File.separator + fileName);
+		String algName = fileName.substring(0, fileName.indexOf('/'));
+		String testName = fileName.substring(fileName.indexOf('/') + 1);
+		System.err.println("algname = " + algName + ", testname = " + testName);
+		File testSpec = new File(testDir.getAbsolutePath() + File.separator 
+				+ algName + File.separator + testName);
 		if (!testSpec.exists()) {
 			// no matching test spec, print an output line and return
 			System.err.println("No test spec found for " + fileName + ", skipping test.");
 			return;
 		}
-		String dir = fileName.substring(0,
-				fileName.lastIndexOf(File.separatorChar));
-		File req = new File(inputDir.getPath() + File.separator + "req" + File.separator
-				+ fileName + ".req");
+		File req = new File(inputDir.getPath() + File.separator + algName 
+				+ File.separator + reqSuffix + File.separator
+				+ testName + "." + reqSuffix);
+		System.err.println("req = " + req);
 		if (!req.exists()) {
 			// no matching tests, print an output line and exit
 			System.err.println("No request file " + fileName + " found, skipping test.");
 			return;
 		}
-		File rspDir = new File(outputDir.getPath() + File.separator + "rsp"
-				+ File.separator + fileName.substring(0, fileName.indexOf("/")));
+		File rspDir = new File(outputDir.getPath() + File.separator + algName 
+				+ File.separator + "rsp");
 		rspDir.mkdirs();
-		File rsp = new File(outputDir.getPath() + File.separator + "rsp" + File.separator 
-				+ fileName + ".rsp");
+		System.err.println("rspDir = " + rspDir);
 		try {
 			r = new Req(req.getAbsolutePath(), testSpec.getAbsolutePath());
 			Entry<String, String> reqrsp = r.createReqRsp();
-			Util.writeStringToOutDir(fileName + ".rsp", outputDir.getPath()
-					+ File.separator + "rsp", reqrsp.getValue());
+			Util.writeStringToOutDir(testName + ".rsp", rspDir.getPath(), reqrsp.getValue());
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Skipping test.");
@@ -129,20 +139,25 @@ public class RunJavaHarness {
 		String testSpecDir = "test_defs";
 		String inputDir = "output";
 		String outputDir = "outputH";
+		String reqSuffix = "req";
 		
 		if (args.length >= 3) {
 			// assume the first argument is the test spec directory
 			// the second is the input directory
 			// the third is the output directory (usually the same as the second)
-
+			// the fourth is the suffix/dir name for test specs (default "req")
 			testSpecDir = args[0];
 			inputDir = args[1];
 			outputDir = args[2];
+			if (args.length > 3) {
+				reqSuffix = args[3];
+			}
 		} 
 		
+		System.err.println("Testing BouncyCastle Version " + (new BouncyCastleProvider()).getVersion());
 		System.err.println("Starting run at " + new Date());
 		long startTime = System.currentTimeMillis();
-		final RunJavaHarness rt = new RunJavaHarness(testSpecDir, inputDir, outputDir);
+		final RunJavaHarness rt = new RunJavaHarness(testSpecDir, inputDir, outputDir, reqSuffix);
 		rt.run();
 		long finishTime = System.currentTimeMillis();
 		System.err.println("Run ended at " + new Date());
