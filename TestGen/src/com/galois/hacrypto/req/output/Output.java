@@ -596,6 +596,8 @@ public class Output {
 		return cipher;
 	}
 	
+	private static int hmacRuns = 0;
+	
 	/**
 	 * Run BouncyCastle HMAC
 	 * @param outlen the output length in bytes. This decides which HMAC to run
@@ -606,20 +608,64 @@ public class Output {
 	public static byte[] hmacBouncyCastle(int outlen, byte[] seckey, byte[] msg) {
 		String algorithm;
 		switch (outlen) {
-		case 20:
+		case 10:
+		case 12:
 			algorithm = "HmacSHA1";
 			break;
+		case 14:
 		case 28:
 			algorithm = "HmacSHA224";
 			break;
 		case 32:
-			algorithm = "HmacSHA256";
+			// this is a terrible, terrible hack
+			if (hmacRuns < 900) {
+				algorithm = "HmacSHA256";
+			} else if (hmacRuns < 1200){
+				algorithm = "HmacSHA384";
+			} else {
+				algorithm = "HmacSHA512";
+			}
 			break;
+		case 40:
 		case 48:
-			algorithm = "HmacSHA384";
+			// this is a terrible, terrible hack
+			if (hmacRuns < 1200) {
+				algorithm = "HmacSHA384";
+			} else {
+				algorithm = "HmacSHA512";
+			}
 			break;
+		case 56:
 		case 64:
 			algorithm = "HmacSHA512";
+			break;
+		case 16:
+			// this is a terrible, terrible hack
+			if (hmacRuns < 300) {
+				algorithm = "HmacSHA1";
+			} else if (hmacRuns < 675) {
+				algorithm = "HmacSHA224";
+			} else {
+				algorithm = "HmacSHA256";
+			}
+			break;
+		case 20:
+			// this is a terrible, terrible hack
+			if (hmacRuns < 300) {
+				algorithm = "HmacSHA1";
+			} else {
+				algorithm = "HmacSHA224";
+			} 
+			break;
+		case 24:
+			// this is a terrible, terrible hack
+			if (hmacRuns < 675) {
+				algorithm = "HmacSHA224";
+			} else if (hmacRuns < 900) {
+				algorithm = "HmacSHA256";
+			} else {
+				algorithm = "HmacSHA384";
+			}
 			break;
 		default:
 			throw new RuntimeException("Unknown HMAC output length: " + outlen);
@@ -638,7 +684,11 @@ public class Output {
 			e.printStackTrace();
 		}
 
-		return mac.doFinal(msg);
+		byte[] fullResult = mac.doFinal(msg);
+		byte[] result = new byte[outlen];
+		System.arraycopy(fullResult, 0, result, 0, result.length);
+		hmacRuns = hmacRuns + 1;
+		return result;
 
 	}
 	

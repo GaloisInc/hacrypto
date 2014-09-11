@@ -299,7 +299,8 @@ public class Req {
 		p = new Properties();
 		FileInputStream in = new FileInputStream(defFileName);
 		p.load(in);
-
+		in.close();
+		
 		Scanner scan = new Scanner(new File(reqFileName));
 
 		Map<String, ListInput> inputs = initReqInputs();

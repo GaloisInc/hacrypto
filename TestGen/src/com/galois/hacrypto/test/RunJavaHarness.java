@@ -42,6 +42,11 @@ public class RunJavaHarness {
 	private final File testDir;
 
 	/**
+	 * The name of the file to use as the test list.
+	 */
+	private final String testList;
+	
+	/**
 	 * The suffix to use for input files.
 	 */
 	private final String reqSuffix;
@@ -56,10 +61,11 @@ public class RunJavaHarness {
 	 *            The directory that contains all the response files.
 	 */
 	public RunJavaHarness(String testDirName, String inputDirName, String outputDirName,
-			String reqSuffix) {
+			String testList, String reqSuffix) {
 		inputDir = new File(inputDirName);
 		outputDir = new File(outputDirName);
 		testDir = new File(testDirName);
+		this.testList = testList;
 		this.reqSuffix = reqSuffix;
 	}
 	
@@ -71,7 +77,7 @@ public class RunJavaHarness {
 	public void run() {
 		File rspdir = new File(outputDir.getPath() + File.separator + "rsp");
 		rspdir.mkdirs();
-		File testFile = new File(testDir.getAbsolutePath() + File.separator + "harness_tests");
+		File testFile = new File(testDir.getAbsolutePath() + File.separator + testList);
 		Scanner testReader = null;
 		try {
 			testReader = new Scanner(testFile);
@@ -139,25 +145,30 @@ public class RunJavaHarness {
 		String testSpecDir = "test_defs";
 		String inputDir = "output";
 		String outputDir = "outputH";
+		String testList = "harness_tests";
 		String reqSuffix = "req";
 		
 		if (args.length >= 3) {
 			// assume the first argument is the test spec directory
 			// the second is the input directory
 			// the third is the output directory (usually the same as the second)
-			// the fourth is the suffix/dir name for test specs (default "req")
+			// the fourth is the list of tests to run (default "harness_tests") 
+			// the fifth is the suffix/dir name for test specs (default "req")
 			testSpecDir = args[0];
 			inputDir = args[1];
 			outputDir = args[2];
 			if (args.length > 3) {
-				reqSuffix = args[3];
+				testList = args[3];
+			}
+			if (args.length > 4) {
+				reqSuffix = args[4];
 			}
 		} 
 		
 		System.err.println("Testing BouncyCastle Version " + (new BouncyCastleProvider()).getVersion());
 		System.err.println("Starting run at " + new Date());
 		long startTime = System.currentTimeMillis();
-		final RunJavaHarness rt = new RunJavaHarness(testSpecDir, inputDir, outputDir, reqSuffix);
+		final RunJavaHarness rt = new RunJavaHarness(testSpecDir, inputDir, outputDir, testList, reqSuffix);
 		rt.run();
 		long finishTime = System.currentTimeMillis();
 		System.err.println("Run ended at " + new Date());
@@ -166,6 +177,6 @@ public class RunJavaHarness {
 		msec = msec % 1000;
 		long minutes = seconds / 60;
 		seconds = seconds % 60;
-		System.err.printf("Elapsed time: %d:%02d.%03d", minutes, seconds, msec);
+		System.err.printf("Elapsed time: %d:%02d.%03d\n\n", minutes, seconds, msec);
 	}
 }
