@@ -25,6 +25,7 @@ input3_maxlength = 64
 #mult means there are multiple inputs. Each of the inputs needs to be finite
 input4_mult = 2
 comment0 = ENCRYPT
+extraparam0 = NumKeys = 2
 input4_name0 = PLAINTEXT
 input4_type0 = RANDOM
 input4_minlength0 = 64
@@ -32,6 +33,7 @@ input4_maxlength0 = 64
 input4_ct0 = 1
 
 comment1 = DECRYPT
+extraparam1 = NumKeys = 2
 input4_name1 = CIPHERTEXT
 input4_type1 = RANDOM
 input4_minlength1 = 64

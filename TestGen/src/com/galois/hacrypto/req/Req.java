@@ -5,8 +5,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,7 @@ import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Set;
 
 import com.galois.hacrypto.req.input.CopyInput;
 import com.galois.hacrypto.req.input.CountInput;
@@ -105,6 +108,7 @@ public class Req {
 
 			// TODO: the comments could be more efficient...
 			String comment = p.getProperty("comment" + inputNo);
+			String extraparam = p.getProperty("extraparam" + inputNo);
 			if (comment != null) {
 				// split comment along newlines to bracket each one
 				String[] parts = comment.split("\n");
@@ -117,10 +121,19 @@ public class Req {
 					rspSb.append(s);
 					rspSb.append("]\n");
 				}
-				reqSb.append("\n");
-				rspSb.append("\n");
+				if (extraparam == null) {
+					reqSb.append("\n");
+					rspSb.append("\n");
+				}
 			}
+			// TODO: this is very kludgy; extra params are things that aren't in brackets
 
+			if (extraparam != null) {
+				reqSb.append(extraparam);
+				reqSb.append("\n\n");
+				rspSb.append(extraparam);
+				rspSb.append("\n\n");
+			}
 			List<byte[]> args = new ArrayList<byte[]>();
 			// if we're a Monte Carlo test, we need to do something special here
 			if (p.containsKey("output" + currentOutput + "_name") && 
@@ -136,15 +149,30 @@ public class Req {
 				// they get updated by the monte carlo routine and we 
 				// print them every time
 				List<String> argNames = new ArrayList<String>();
+				List<Integer> showArg = new ArrayList<Integer>();
 				int c = 0;
 				for (Queue<Input> input : inputs) {
 					argNames.add(input.peek().getName());
+					showArg.add(input.peek().showInOutput());
 					Entry<String, byte[]> e = input.peek().toReqString();
 					prevValues.add(c++, e.getValue());
 					args.add(e.getValue());
 					// the request buffer gets the original arguments
 					reqSb.append(e.getKey());
 					reqSb.append("\n");
+				}
+				// for any inputs that are printed only once at the top of the output,
+				// do that now
+				for (int i = 0; i < args.size(); i++) {
+					boolean added = false;
+					if (showArg.get(i) == Input.ONCE) {
+						rspSb.append(argNames.get(i) + " = " + Util.byteArrayToHexString(args.get(i)));
+						rspSb.append("\n");
+						added = true;
+					}
+					if (added) {
+						rspSb.append("\n");
+					}
 				}
 				int outputArgs = Integer.parseInt(p.getProperty(
 						"output" + currentOutput + "_args", "0").trim());
@@ -169,17 +197,20 @@ public class Req {
 						rspSb.append("COUNT = " + count + "\n");
 					}
 					for (int i = 0; i < args.size(); i++) {
-						StringBuilder sb = new StringBuilder(argNames.get(i));
-						sb.append(" = ");
-						if (i == countArg) {
-							sb.append(count);
-						} else {
-							sb.append(Util.byteArrayToHexString(args.get(i)));
+						if (showArg.get(i) == Input.YES) {
+							StringBuilder sb = new StringBuilder(argNames.get(i));
+
+							sb.append(" = ");
+							if (i == countArg) {
+								sb.append(count);
+							} else {
+								sb.append(Util.byteArrayToHexString(args.get(i)));
+							}
+							sb.append("\n");
+							// the response buffer gets one set of arguments per 
+							// Monte Carlo execution
+							rspSb.append(sb);
 						}
-						sb.append("\n");
-						// the response buffer gets one set of arguments per 
-						// Monte Carlo execution
-						rspSb.append(sb);
 					}
 					rspSb.append(outputName);
 					rspSb.append(" = ");
@@ -198,9 +229,11 @@ public class Req {
 					prevValues.add(c++, e.getValue());
 					args.add(e.getValue());
 					reqSb.append(e.getKey());
-					rspSb.append(e.getKey());
 					reqSb.append("\n");
-					rspSb.append("\n");
+					if (input.peek().showInOutput() == Input.YES) {
+						rspSb.append(e.getKey());
+						rspSb.append("\n");
+					}					
 				}
 				if (p.containsKey("output" + currentOutput + "_name")) {
 					int outputArgs = Integer.parseInt(p.getProperty(
@@ -266,13 +299,18 @@ public class Req {
 		p = new Properties();
 		FileInputStream in = new FileInputStream(defFileName);
 		p.load(in);
-
+		in.close();
+		
 		Scanner scan = new Scanner(new File(reqFileName));
 
 		Map<String, ListInput> inputs = initReqInputs();
+		Set<String> extraparams = initExtraParams();
 
 		while (scan.hasNextLine()) {
-			parseReqLine(scan.nextLine(), inputs);
+			String nextLine = scan.nextLine();
+			if (!extraparams.contains(nextLine)) {
+				parseReqLine(nextLine, inputs);
+			}
 		}
 		scan.close();
 	}
@@ -298,15 +336,28 @@ public class Req {
 				String inputType = getStringProperty("type" + suff2, i,
 						"no type available: input" + i + "_type" + suff2);
 
-				ListInput li = new ListInput(inputName, isIntType(inputType));
+				ListInput li = new ListInput(inputName, isIntType(inputType), Input.YES);
 				addInput(i, li);
 				ret.put(inputName, li); // TODO: this only supports unique input
-										// nams
+										// names
 			}
 		}
 		return ret;
 	}
 
+	private Set<String> initExtraParams() {
+		Set<String> result = new HashSet<String>();
+		for (Object o : p.keySet()) {
+			String s = (String) o; // all keys are known to be strings
+			if (s.startsWith("extraparam")) {
+				String ep = p.getProperty(s);
+				String[] lines = ep.split("\n");
+				result.addAll(Arrays.asList(lines));
+			}
+		}
+		return result;
+	}
+	
 	private void parseReqLine(String line, Map<String, ListInput> inputMap) {
 		if (line.length() == 0 || line.charAt(0) == '#' || line.charAt(0) == '[') {
 			return; // don't need to do anything with these because they are are
@@ -372,14 +423,21 @@ public class Req {
 				String inputName = getStringProperty("name" + suff2, i);
 				String inputType = getStringProperty("type" + suff2, i,
 						"no type available: input" + i + "_type" + suff2);
-
+				String showInOutputString =
+						getStringProperty("showinoutput" + suff2, i, "yes");
+				int showInOutput = Input.YES;
+				switch (showInOutputString.toLowerCase()) {
+					case "no": showInOutput = Input.NO; break;
+					case "once": showInOutput = Input.ONCE; break;
+					default:
+				}
 				switch (inputType.toUpperCase()) {
 
 				case "LENGTH":
 					int lengthOf = getIntProperty("lengthof" + suff2, i);
 					String unit = getStringProperty("unit" + suff2, i);
 					addInput(i,
-							new LengthInput(inputName, lengthOf, this, unit));
+							new LengthInput(inputName, lengthOf, this, unit, showInOutput));
 					break;
 
 				case "RANDOM": {
@@ -392,7 +450,7 @@ public class Req {
 					}
 					InputLength il = new RandomInputLength(minLength,
 							maxLength, ct);
-					addInput(i, new RandomInput(inputName, il, parity));
+					addInput(i, new RandomInput(inputName, il, parity, showInOutput));
 				}
 					break;
 
@@ -406,7 +464,7 @@ public class Req {
 					}
 					InputLength il = new StepInputLength(minLength, maxLength,
 							stepSize);
-					addInput(i, new RandomInput(inputName, il, parity));
+					addInput(i, new RandomInput(inputName, il, parity, showInOutput));
 				}
 					break;
 
@@ -421,20 +479,20 @@ public class Req {
 					}
 					InputLength il = new SequenceLength(seq, repeat,
 							changeEvery);
-					addInput(i, new RandomInput(inputName, il, parity));
+					addInput(i, new RandomInput(inputName, il, parity, showInOutput));
 				}
 					break;
 
 				case "COUNT": {
 					int min = getIntProperty("min" + suff2, i);
 					int max = getIntProperty("max" + suff2, i);
-					addInput(i, new CountInput(inputName, min, max));
+					addInput(i, new CountInput(inputName, min, max, showInOutput));
 				}
 					break;
 
 				case "RNGV": {
 					addInput(i,
-							new RngVInput(getIntProperty("length" + suff2, i)));
+							new RngVInput(getIntProperty("length" + suff2, i), showInOutput));
 					break;
 				}
 
@@ -446,11 +504,11 @@ public class Req {
 						addInput(i,
 								new FixedInput(
 										Util.hexStringToByteArray(value),
-										inputName, number, increment));
+										inputName, number, increment, showInOutput));
 					} else {
 						int length = getIntProperty("length" + suff2, i);
 						addInput(i, new FixedInput(length, inputName, number,
-								increment));
+								increment, showInOutput));
 					}
 					break;
 				}
@@ -461,13 +519,13 @@ public class Req {
 					int repeat = getIntProperty("repeat" + suff2, i);
 					int changeEvery = getIntProperty("changeEvery" + suff2, i);
 					addInput(i, new SequenceInput(inputName, seq, changeEvery,
-							repeat));
+							repeat, showInOutput));
 					break;
 				}
 
 				case "COPY": {
 					int copyOf = getIntProperty("copyof" + suff2, i);
-					addInput(i, new CopyInput(inputName, copyOf, this));
+					addInput(i, new CopyInput(inputName, copyOf, this, showInOutput));
 				}
 					break;
 
@@ -482,14 +540,14 @@ public class Req {
 
 	public static void main(String args[]) {
 		Req r;
-		String fileName = "SHA/SHA1LongMsg";
+		String fileName = "TDES/TCFB64varkey";
 		File outDir = new File("output2");
 		String testDir = "test_defs";
 		fileName = fileName.replace('/', File.separatorChar);
 		String dir = fileName.substring(0,
 				fileName.lastIndexOf(File.separatorChar));
 		try {
-			r = new Req("output/req/SHA/SHA1LongMsg.req", testDir + File.separator + fileName);
+			r = new Req("output/req/TDES/TCFB64varkey.req", testDir + File.separator + fileName);
 		} catch (IOException e) {
 			throw new RuntimeException("could not read file: " + testDir
 					+ File.separator + fileName);

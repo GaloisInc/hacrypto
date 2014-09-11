@@ -1,0 +1,48 @@
+header = # Galois CAVP (VERSION)\n# AESVS Variable Text Known Answer Test for CFB1\n# State : Encrypt and Decrypt\n# Key Length : 256\n# (DATE)
+inputs = 4
+
+input0_name = COUNT
+input0_type = COUNT
+input0_max = 127
+
+input1_name = KEY
+input1_type = random
+input1_minlength = 128 
+input1_maxlength = 128
+
+input2_name = IV
+input2_type = random
+input2_minlength = 128
+input2_maxlength = 128
+
+#mult means there are multiple inputs. Each of the inputs needs to be finite
+input3_mult = 2
+comment0 = ENCRYPT
+input3_name0 = PLAINTEXT
+input3_type0 = RANDOM
+input3_minlength0 = 128
+input3_maxlength0 = 128
+input3_ct0 = 1
+
+comment128 = DECRYPT
+input3_name1 = CIPHERTEXT
+input3_type1 = RANDOM
+input3_minlength1 = 128
+input3_maxlength1 = 128
+input3_ct1 = 1
+
+output0_name = CIPHERTEXT
+#this specifies the input that this output ends on... output 1 begins after it
+output0_end = 3
+output0_args = 3
+output0_arg0 = 1
+output0_arg1 = 2
+output0_arg2 = 3
+output0_function = AES/CFB1/ENC
+
+output1_name = PLAINTEXT
+output1_args = 3
+output1_arg0 = 1
+output1_arg1 = 2
+output1_arg2 = 3
+output1_function = AES/CFB1/DEC

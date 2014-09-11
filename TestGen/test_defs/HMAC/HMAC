@@ -34,7 +34,7 @@ output0_function = HMAC
 
 
 comment0 = L=20
-comment75 = L=28
-comment150 = L=32
-comment225 = L=48
-comment300 = L=64
+comment300 = L=28
+comment675 = L=32
+comment900 = L=48
+comment1200 = L=64

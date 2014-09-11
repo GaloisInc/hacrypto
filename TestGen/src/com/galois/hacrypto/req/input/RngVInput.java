@@ -22,17 +22,23 @@ public class RngVInput extends AbstractInput {
 	 * Creates this object with the default name "V"
 	 * @param length
 	 *            in bits
+	 * @param show 
+	 * 			  YES, NO or ONCE as this input should appear in the output file for
+	 *            every test, no tests, or once at the top
 	 */
-	public RngVInput(int length) {
-		this("V", length);
+	public RngVInput(int length, int show) {
+		this("V", length, show);
 	}
 
 	/**
 	 * @param name Name of the input
 	 * @param length length of the input in bits
+	 * @param show 
+	 * 			  YES, NO or ONCE as this input should appear in the output file for
+	 *            every test, no tests, or once at the top
 	 */
-	public RngVInput(String name, int length) {
-		super(name);
+	public RngVInput(String name, int length, int show) {
+		super(name, show);
 		this.il = new FixedInputLength(length);
 		this.value = new byte[length / 8];
 	}

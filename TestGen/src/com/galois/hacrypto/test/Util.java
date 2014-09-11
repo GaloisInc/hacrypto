@@ -92,8 +92,8 @@ public class Util {
 	public static byte[] hexStringToByteArray(String s) {
 		int len = s.length();
 		if (len % 2 != 0) {
-			throw new RuntimeErrorException(new Error(
-					"Invalid hex string length. Must be even, is " + len));
+			throw new IllegalArgumentException(
+					"Invalid hex string length. Must be even, is " + len);
 		}
 		byte[] data = new byte[len / 2];
 		for (int i = 0; i < len; i += 2) {

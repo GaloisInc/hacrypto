@@ -24,6 +24,7 @@ input3_copyof = 1
 #mult means there are multiple inputs. Each of the inputs needs to be finite
 input4_mult = 2
 comment0 = ENCRYPT
+extraparam0 = NumKeys = 2
 input4_name0 = PLAINTEXT
 input4_type0 = increase
 input4_minlength0 = 64
@@ -32,6 +33,7 @@ input4_stepsize0 = 64
 
 input4_name1 = CIPHERTEXT
 comment10 = DECRYPT
+extraparam0 = NumKeys = 2
 input4_type1 = increase
 input4_minlength1 = 64
 input4_maxlength1 = 640

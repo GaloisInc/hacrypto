@@ -15,8 +15,8 @@ public class SequenceInput extends AbstractInput {
 	private int currentCt;
 
 	public SequenceInput(String name, int[] sequence, int changeevery,
-			int repeat) {
-		super(name);
+			int repeat, int show) {
+		super(name, show);
 		this.sequence = sequence;
 		this.changeEvery = changeevery;
 		this.repeat = repeat;

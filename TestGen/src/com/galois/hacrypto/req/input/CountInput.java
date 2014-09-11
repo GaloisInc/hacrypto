@@ -26,9 +26,12 @@ public class CountInput extends AbstractInput {
 	 * @param max
 	 *            counting is modulo the max. If max is 0 counting will continue
 	 *            indefinitely
+	 * @param show 
+	 * 			  YES, NO or ONCE as this input should appear in the output file for
+	 *            every test, no tests, or once at the top
 	 */
-	public CountInput(String name, int min, int max) {
-		super(name);
+	public CountInput(String name, int min, int max, int show) {
+		super(name, show);
 		this.max = max;
 		this.min = this.ct = min;
 	}

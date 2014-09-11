@@ -11,6 +11,10 @@ import com.galois.hacrypto.req.length.InputLength;
  * 
  */
 public interface Input {
+	public int YES = 1;
+	public int NO = 2;
+	public int ONCE = 3;
+	
 	/**
 	 * @return whether or not this Input has more values. Some inputs always
 	 *         have more values
@@ -37,4 +41,10 @@ public interface Input {
 	 * @return the name of this input.
 	 */
 	public String getName();
+	
+	/**
+	 * @return YES, NO or ONCE as this input should appear in the output file
+	 * for every test, for no tests, or once at the top
+	 */
+	public int showInOutput();
 }

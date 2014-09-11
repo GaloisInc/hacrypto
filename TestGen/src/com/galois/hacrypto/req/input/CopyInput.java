@@ -25,9 +25,12 @@ public class CopyInput extends AbstractInput {
 	 *            int identifier of the input that this input is a copy of
 	 * @param req
 	 *            the req containing this and the input to be copied
+	 * @param show 
+	 * 			  YES, NO or ONCE as this input should appear in the output file for
+	 *            every test, no tests, or once at the top
 	 */
-	public CopyInput(String name, int copyOf, Req req) {
-		super(name);
+	public CopyInput(String name, int copyOf, Req req, int show) {
+		super(name, show);
 		this.req = req;
 		this.copyOf = copyOf;
 	}
