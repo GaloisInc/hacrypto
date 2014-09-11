@@ -101,7 +101,8 @@ static int AESTest(EVP_CIPHER_CTX *ctx,
 	    int dir,  /* 0 = decrypt, 1 = encrypt */
 	    unsigned char *plaintext, unsigned char *ciphertext, int len)
     {
-    int cryptofd = open("/dev/crypto", O_RDWR, 0);
+    int cryptofd, result;
+
     struct session_op session = {
     	.keylen = akeysz / 8,
     	.key = aKey
@@ -113,13 +114,15 @@ static int AESTest(EVP_CIPHER_CTX *ctx,
     	.src = dir ? plaintext   : ciphertext ,
     	.dst = dir ? ciphertext  : plaintext
     };
-    int result;
-    if(cryptofd < 0) goto err;
-    if(fips_strcasecmp(amode, "ECB") == 0) session.cipher = CRYPTO_AES_ECB;
-    else return 0;
-    if(ioctl(cryptofd, CIOCGSESSION, &session)) goto err;
 
+    if     (fips_strcasecmp(amode, "ECB") == 0) session.cipher = CRYPTO_AES_ECB;
+    else if(fips_strcasecmp(amode, "CBC") == 0) session.cipher = CRYPTO_AES_CBC;
+    else return 0;
+
+    if((cryptofd = open("/dev/crypto", O_RDWR, 0)) < 0) return 0;
+    if(ioctl(cryptofd, CIOCGSESSION, &session)) goto err;
     op.ses = session.ses;
+
     result = !ioctl(cryptofd, CIOCCRYPT, &op);
 
     if(ioctl(cryptofd, CIOCFSESSION, &session.ses)) goto err;
