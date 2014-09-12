@@ -249,8 +249,12 @@ public class Req {
 					rspSb.append(p.getProperty("output" + currentOutput + "_name")
 							.trim());
 					rspSb.append(" = ");
-					rspSb.append(Util.byteArrayToHexString(Output.getOutput(func,
-							args, argOrder)));
+					byte[] result = Output.getOutput(func, args, argOrder);
+					if (result.length == 0) {
+						rspSb.append("? (no result due to algorithm issue)");
+					} else {
+						rspSb.append(Util.byteArrayToHexString(result));
+					}
 					rspSb.append("\n");
 				}
 			}
