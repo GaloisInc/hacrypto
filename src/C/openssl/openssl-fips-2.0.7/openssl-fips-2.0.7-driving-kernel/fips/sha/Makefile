@@ -142,6 +142,7 @@ fips_shatest.o: ../../include/openssl/opensslv.h
 fips_shatest.o: ../../include/openssl/ossl_typ.h
 fips_shatest.o: ../../include/openssl/safestack.h ../../include/openssl/stack.h
 fips_shatest.o: ../../include/openssl/symhacks.h ../fips_utl.h fips_shatest.c
+fips_shatest.o: ../fips/utl/fips_cryptodev.h
 fips_standalone_sha1.o: ../../include/openssl/asn1.h
 fips_standalone_sha1.o: ../../include/openssl/bio.h
 fips_standalone_sha1.o: ../../include/openssl/crypto.h

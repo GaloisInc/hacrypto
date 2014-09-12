@@ -65,6 +65,7 @@
 #include <openssl/evp.h>
 #include <openssl/err.h>
 #include <openssl/bn.h>
+#include "utl/fips_cryptodev.h"
 
 #ifndef OPENSSL_FIPS
 
@@ -81,9 +82,9 @@ int main(int argc, char *argv[])
 #include "fips_utl.h"
 
 static int dgst_test(FILE *out, FILE *in);
-static int print_dgst(const EVP_MD *md, FILE *out,
+static int print_dgst(enum cryptodev_crypto_op_t md, FILE *out,
 		unsigned char *Msg, int Msglen);
-static int print_monte(const EVP_MD *md, FILE *out,
+static int print_monte(enum cryptodev_crypto_op_t md, FILE *out,
 		unsigned char *Seed, int SeedLen);
 
 #ifdef FIPS_ALGVS
@@ -143,7 +144,7 @@ int main(int argc, char **argv)
 
 int dgst_test(FILE *out, FILE *in)
 	{
-	const EVP_MD *md = NULL;
+	enum cryptodev_crypto_op_t md = CRYPTO_ALGORITHM_ALL;
 	char *linebuf, *olinebuf, *p, *q;
 	char *keyword, *value;
 	unsigned char *Msg = NULL, *Seed = NULL;
@@ -199,11 +200,11 @@ int dgst_test(FILE *out, FILE *in)
 			{
 			switch (atoi(value))
 				{
-				case 20: md=EVP_sha1();   break;
-				case 28: md=EVP_sha224(); break;
-				case 32: md=EVP_sha256(); break;
-				case 48: md=EVP_sha384(); break;
-				case 64: md=EVP_sha512(); break;
+				case 20: md=CRYPTO_SHA1;     break;
+				case 28: md=CRYPTO_SHA2_224; break;
+				case 32: md=CRYPTO_SHA2_256; break;
+				case 48: md=CRYPTO_SHA2_384; break;
+				case 64: md=CRYPTO_SHA2_512; break;
 				default: goto parse_error;
 				}
 			}
@@ -250,7 +251,7 @@ int dgst_test(FILE *out, FILE *in)
 
 		fputs(olinebuf, out);
 
-		if (md && Msg && (MsgLen >= 0))
+		if (CRYPTO_ALGORITHM_ALL != md && Msg && (MsgLen >= 0))
 			{
 			if (!print_dgst(md, out, Msg, MsgLen))
 				goto error;
@@ -259,7 +260,7 @@ int dgst_test(FILE *out, FILE *in)
 			MsgLen = -1;
 			Len = -1;
 			}
-		else if (md && Seed && (SeedLen > 0))
+		else if (CRYPTO_ALGORITHM_ALL != md && Seed && (SeedLen > 0))
 			{
 			if (!print_monte(md, out, Seed, SeedLen))
 				goto error;
@@ -296,12 +297,28 @@ int dgst_test(FILE *out, FILE *in)
 
 	}
 
-static int print_dgst(const EVP_MD *emd, FILE *out,
+static int print_dgst(enum cryptodev_crypto_op_t emd, FILE *out,
 		unsigned char *Msg, int Msglen)
 	{
 	int i, mdlen;
 	unsigned char md[EVP_MAX_MD_SIZE];
-	if (!FIPS_digest(Msg, Msglen, md, (unsigned int *)&mdlen, emd))
+	struct session_op session = { .mac = emd };
+	struct crypt_op op = {
+		.len = Msglen,
+		.src = Msg,
+		.mac = md
+	};
+
+	switch(emd) {
+		case CRYPTO_SHA1:     mdlen = 20; break;
+		case CRYPTO_SHA2_224: mdlen = 28; break;
+		case CRYPTO_SHA2_256: mdlen = 32; break;
+		case CRYPTO_SHA2_384: mdlen = 48; break;
+		case CRYPTO_SHA2_512: mdlen = 64; break;
+		default: return 0;
+	}
+
+	if(!cryptodev_op(session, op))
 		{
 		fputs("Error calculating HASH\n", stderr);
 		return 0;
@@ -313,9 +330,12 @@ static int print_dgst(const EVP_MD *emd, FILE *out,
 	return 1;
 	}
 
-static int print_monte(const EVP_MD *md, FILE *out,
+static int print_monte(enum cryptodev_crypto_op_t md, FILE *out,
 		unsigned char *Seed, int SeedLen)
 	{
+	// TODO
+	return 0;
+	/*
 	unsigned int i, j, k;
 	int ret = 0;
 	EVP_MD_CTX ctx;
@@ -382,6 +402,7 @@ static int print_monte(const EVP_MD *md, FILE *out,
 	FIPS_md_ctx_cleanup(&ctx);
 
 	return ret;
+	*/
 	}
 
 #endif

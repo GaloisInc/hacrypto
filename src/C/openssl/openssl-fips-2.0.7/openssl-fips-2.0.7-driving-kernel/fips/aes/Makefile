@@ -111,6 +111,7 @@ fips_aesavs.o: ../../include/openssl/opensslv.h
 fips_aesavs.o: ../../include/openssl/ossl_typ.h
 fips_aesavs.o: ../../include/openssl/safestack.h ../../include/openssl/stack.h
 fips_aesavs.o: ../../include/openssl/symhacks.h ../fips_utl.h fips_aesavs.c
+fips_aesavs.o: ../fips/utl/fips_cryptodev.h
 fips_gcmtest.o: ../../include/openssl/aes.h ../../include/openssl/asn1.h
 fips_gcmtest.o: ../../include/openssl/bio.h ../../include/openssl/bn.h
 fips_gcmtest.o: ../../include/openssl/crypto.h ../../include/openssl/dsa.h
