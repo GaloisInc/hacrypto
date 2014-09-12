@@ -471,10 +471,13 @@ public class Output {
 		try {
 			digest = MessageDigest.getInstance(algorithm, BCP);
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println("algorithm " + algorithm + " not found, skipping test");
 		}
-		return digest.digest(message);
+		byte[] result = new byte[0];
+		if (digest != null) {
+			result = digest.digest(message);
+		}
+		return result;
 	}
 
 	/**
@@ -672,21 +675,21 @@ public class Output {
 		}
 		Mac mac = null;
 		SecretKeySpec key = new SecretKeySpec(seckey, algorithm);
+		byte[] fullResult = new byte[0];
+		byte[] result = new byte[0];
+		
 		try {
 			mac = Mac.getInstance(algorithm, BCP);
 			mac.init(key);
-
+			fullResult = mac.doFinal(msg);
+			result = new byte[outlen];
+			System.arraycopy(fullResult, 0, result, 0, result.length);
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println("algorithm " + algorithm + " not found, skipping test");
 		} catch (InvalidKeyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println("invalid key " + key + ", skipping test");
 		}
 
-		byte[] fullResult = mac.doFinal(msg);
-		byte[] result = new byte[outlen];
-		System.arraycopy(fullResult, 0, result, 0, result.length);
 		hmacRuns = hmacRuns + 1;
 		return result;
 
