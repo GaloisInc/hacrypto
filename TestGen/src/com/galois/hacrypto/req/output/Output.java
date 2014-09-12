@@ -471,10 +471,13 @@ public class Output {
 		try {
 			digest = MessageDigest.getInstance(algorithm, BCP);
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.err.println("algorithm " + algorithm + " not found, skipping test");
 		}
-		return digest.digest(message);
+		byte[] result = new byte[0];
+		if (digest != null) {
+			result = digest.digest(message);
+		}
+		return result;
 	}
 
 	/**

@@ -35,8 +35,7 @@ import org.bouncycastle.util.encoders.Hex;
  */
 public class RunDSATests {
 	private static int HEX = 16;
-	private static String ALG = "ZZ";
-	private static String MOD_START = "[mod";
+	private static String MOD_START = "[MOD";
 	
 	private enum DSATestType {
 		KEYPAIR("KeyPair.req"),
@@ -109,12 +108,13 @@ public class RunDSATests {
 		try {
 			Scanner sc = new Scanner(the_file);
 			switch (the_test) {
-				case KEYPAIR: runKeyPair(sc); break;
+				case KEYPAIR: break; // runKeyPair(sc); break;
 				case PQG: runPQG(sc); break;
 				case SIGGEN: runSigGen(sc); break;
 				case SIGVER: runSigVer(sc); break;
 				default: // this can't happen
 			}
+			sc.close();
 		} catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -144,9 +144,9 @@ public class RunDSATests {
 			if (pkv.length == 1) {
 				// this is the algorithm, as it had no equals sign
 				result.alg = pkv[0];
-			} else if (pkv[0].equals("L")) {
+			} else if (pkv[0].toUpperCase().equals("L")) {
 				result.L = Integer.parseInt(pkv[1]);
-			} else if (pkv[0].equals("N")) {
+			} else if (pkv[0].toUpperCase().equals("N")) {
 				result.N = Integer.parseInt(pkv[1]);
 			} else {
 				throw new IllegalArgumentException("Unexpected input: " + the_line);
@@ -196,7 +196,7 @@ public class RunDSATests {
 		
 		// parse "mod" lines and the things following them
 		while (sc.hasNextLine()) {
-			while (!last.startsWith(MOD_START)) {
+			while (!last.toUpperCase().startsWith(MOD_START)) {
 				last = sc.nextLine();
 			}
 			String mod = last;
@@ -211,7 +211,7 @@ public class RunDSATests {
 				// N times, generate appropriate keys for the mod (L)
 				// and SHA size (N). N is unfortunately overloaded here.
 				
-				while (!last.startsWith("N")) {
+				while (!last.toUpperCase().startsWith("N")) {
 					last = sc.nextLine();
 				}
 				
@@ -252,7 +252,7 @@ public class RunDSATests {
 				throw new RuntimeException(e);
 			}
 			
-			while (sc.hasNextLine() && !last.startsWith(MOD_START)) {
+			while (sc.hasNextLine() && !last.toUpperCase().startsWith(MOD_START)) {
 				last = sc.nextLine();
 			}
 		}
@@ -285,12 +285,12 @@ public class RunDSATests {
 		// that are not implemented here); let's branch to the right ones
 		
 		while (sc.hasNextLine()) {
-			while (!last.startsWith("[A.")) {
+			while (!last.toUpperCase().startsWith("[A.")) {
 				out.println(last);
 				last = sc.nextLine();
 			}
 			out.println(last);
-			String[] words = last.split(" ");
+			String[] words = last.toUpperCase().split(" ");
 			switch (words[0]) {
 				case "[A.1.1.2": last = pqgA112(sc, out); break;
 				case "[A.2.1": last = pqgA21(sc, out); break;
@@ -311,8 +311,8 @@ public class RunDSATests {
 		the_output.println();
 		
 		// parse "mod" lines and the things following them
-		while (!last.startsWith("[A.") && the_scanner.hasNextLine()) {
-			while (!last.startsWith(MOD_START)) {
+		while (!last.toUpperCase().startsWith("[A.") && the_scanner.hasNextLine()) {
+			while (!last.toUpperCase().startsWith(MOD_START)) {
 				last = the_scanner.nextLine();
 			}
 			String mod = last;
@@ -324,7 +324,7 @@ public class RunDSATests {
 				
 				// we need to read the "Num" line to tell us how many repetitions to do
 				
-				while (!last.startsWith("Num")) {
+				while (!last.toUpperCase().startsWith("NUM")) {
 					last = the_scanner.nextLine();
 				}
 				
@@ -381,8 +381,8 @@ public class RunDSATests {
 				the_output.close();
 				throw new RuntimeException(e);
 			} 
-			while (the_scanner.hasNextLine() && !last.startsWith(MOD_START)
-					&& !last.startsWith("[A.")) {
+			while (the_scanner.hasNextLine() && !last.toUpperCase().startsWith(MOD_START)
+					&& !last.toUpperCase().startsWith("[A.")) {
 				last = the_scanner.nextLine();
 			}
 		}
@@ -397,8 +397,8 @@ public class RunDSATests {
 		the_output.println("");
 		
 		// parse "mod" lines and the things following them
-		while (!last.startsWith("[A.") && the_scanner.hasNextLine()) {
-			while (!last.startsWith(MOD_START)) {
+		while (!last.toUpperCase().startsWith("[A.") && the_scanner.hasNextLine()) {
+			while (!last.toUpperCase().startsWith(MOD_START)) {
 				last = the_scanner.nextLine();
 			}
 			String mod = last;
@@ -410,7 +410,7 @@ public class RunDSATests {
 				
 				// we need to read the "Num" line to tell us how many repetitions to do
 				
-				while (!last.startsWith("Num")) {
+				while (!last.toUpperCase().startsWith("NUM")) {
 					last = the_scanner.nextLine();
 				}
 				
@@ -424,7 +424,7 @@ public class RunDSATests {
 					// for each repetition, we need to read a P and a Q, then output
 					// the resulting G
 	
-					while (!last.startsWith("P =")) {
+					while (!last.toUpperCase().startsWith("P =")) {
 						last = the_scanner.nextLine();
 					}
 
@@ -433,7 +433,7 @@ public class RunDSATests {
 					line_parts = last.split(" = ");
 					BigInteger p = new BigInteger(line_parts[1], HEX);
 					
-					while (!last.startsWith("Q =")) {
+					while (!last.toUpperCase().startsWith("Q =")) {
 						last = the_scanner.nextLine();
 						the_output.println(last);
 					}
@@ -454,8 +454,8 @@ public class RunDSATests {
 				the_output.close();
 				throw new RuntimeException(e);
 			} 
-			while (the_scanner.hasNextLine() && !last.startsWith(MOD_START)
-					&& !last.startsWith("[A.")) {
+			while (the_scanner.hasNextLine() && !last.toUpperCase().startsWith(MOD_START)
+					&& !last.toUpperCase().startsWith("[A.")) {
 				last = the_scanner.nextLine();
 			}
 		}
@@ -469,8 +469,8 @@ public class RunDSATests {
 		
 		String last = "";
 		// parse "mod" lines and the things following them
-		while (!last.startsWith("[A.") && the_scanner.hasNextLine()) {
-			while (!last.startsWith(MOD_START)) {
+		while (!last.toUpperCase().startsWith("[A.") && the_scanner.hasNextLine()) {
+			while (!last.toUpperCase().startsWith(MOD_START)) {
 				last = the_scanner.nextLine();
 			}
 			String mod = last;
@@ -482,7 +482,7 @@ public class RunDSATests {
 				
 				// we need to read the "Num" line to tell us how many repetitions to do
 				
-				while (!last.startsWith("Num")) {
+				while (!last.toUpperCase().startsWith("NUM")) {
 					last = the_scanner.nextLine();
 				}
 				
@@ -497,7 +497,7 @@ public class RunDSATests {
 					// domain_parameter_seed, and an index
 	
 					// we check for a remaining line here as a workaround for bad vectors
-					while (the_scanner.hasNextLine() && !last.startsWith("P =")) {
+					while (the_scanner.hasNextLine() && !last.toUpperCase().startsWith("P =")) {
 						last = the_scanner.nextLine();
 					}
 					if (!the_scanner.hasNextLine()) {
@@ -507,7 +507,7 @@ public class RunDSATests {
 					line_parts = last.split(" = ");
 					BigInteger p = new BigInteger(line_parts[1], HEX);
 					
-					while (!last.startsWith("Q =")) {
+					while (!last.toUpperCase().startsWith("Q =")) {
 						last = the_scanner.nextLine();
 						the_output.println(last);
 					}
@@ -515,7 +515,7 @@ public class RunDSATests {
 					line_parts = last.split(" = ");
 					BigInteger q = new BigInteger(line_parts[1], HEX);
 
-					while (!last.startsWith("domain_parameter_seed =")) {
+					while (!last.toUpperCase().startsWith("DOMAIN_PARAMETER_SEED =")) {
 						last = the_scanner.nextLine();
 						the_output.println(last);
 					}
@@ -523,7 +523,7 @@ public class RunDSATests {
 					line_parts = last.split(" = ");
 					byte[] dpseed = Util.hexStringToByteArray(line_parts[1]);
 					
-					while (!last.startsWith("index =")) {
+					while (!last.toUpperCase().startsWith("INDEX =")) {
 						last = the_scanner.nextLine();
 						the_output.println(last);
 					}
@@ -565,8 +565,8 @@ public class RunDSATests {
 				the_output.close();
 				throw new RuntimeException(e);
 			} 
-			while (the_scanner.hasNextLine() && !last.startsWith(MOD_START)
-					&& !last.startsWith("[A.")) {
+			while (the_scanner.hasNextLine() && !last.toUpperCase().startsWith(MOD_START)
+					&& !last.toUpperCase().startsWith("[A.")) {
 				last = the_scanner.nextLine();
 			}
 		}	
@@ -597,7 +597,7 @@ public class RunDSATests {
 		
 		// parse "mod" lines and the things following them
 		while (sc.hasNextLine()) {
-			while (!last.startsWith(MOD_START)) {
+			while (!last.toUpperCase().startsWith(MOD_START)) {
 				last = sc.nextLine();
 			}
 			String mod = last;
@@ -631,7 +631,7 @@ public class RunDSATests {
 				// values
 				
 				while (sc.hasNextLine() && !last.startsWith(MOD_START)) {
-					while (!last.startsWith("Msg")) {
+					while (!last.toUpperCase().startsWith("MSG")) {
 						last = sc.nextLine();
 					}
 
@@ -694,7 +694,7 @@ public class RunDSATests {
 				throw new RuntimeException(e);
 			}
 			
-			while (sc.hasNextLine() && !last.startsWith(MOD_START)) {
+			while (sc.hasNextLine() && !last.toUpperCase().startsWith(MOD_START)) {
 				last = sc.nextLine();
 			}
 		}
@@ -725,7 +725,7 @@ public class RunDSATests {
 		
 		// parse "mod" lines and the things following them
 		while (sc.hasNextLine()) {
-			while (!last.startsWith(MOD_START)) {
+			while (!last.toUpperCase().startsWith(MOD_START)) {
 				last = sc.nextLine();
 			}
 			String mod = last;
@@ -738,7 +738,7 @@ public class RunDSATests {
 
 				// first, we read the domain parameters P, Q, G
 								
-				while (!last.startsWith("P =")) {
+				while (!last.toUpperCase().startsWith("P =")) {
 					out.println(last);
 					last = sc.nextLine();
 				}
@@ -746,7 +746,7 @@ public class RunDSATests {
 				String[] line_parts = last.split(" = ");
 				BigInteger p = new BigInteger(line_parts[1], HEX);
 				
-				while (!last.startsWith("Q =")) {
+				while (!last.toUpperCase().startsWith("Q =")) {
 					out.println(last);
 					last = sc.nextLine();
 				}
@@ -754,7 +754,7 @@ public class RunDSATests {
 				line_parts = last.split(" = ");
 				BigInteger q = new BigInteger(line_parts[1], HEX);
 				
-				while (!last.startsWith("G = ")) {
+				while (!last.toUpperCase().startsWith("G = ")) {
 					out.println(last);
 					last = sc.nextLine();
 				}
@@ -773,10 +773,10 @@ public class RunDSATests {
 				// from the input file and try to validate the signature,
 				// reporting success or failure
 				
-				while (sc.hasNextLine() && !last.startsWith(MOD_START)) {
+				while (sc.hasNextLine() && !last.toUpperCase().startsWith(MOD_START)) {
 					// read Msg
 					out.flush();
-					while (!last.startsWith("Msg")) {
+					while (!last.toUpperCase().startsWith("Msg")) {
 						last = sc.nextLine();
 					}
 
@@ -798,7 +798,7 @@ public class RunDSATests {
 						System.err.println("Class not found for algorithm " + testparams.alg + ", skipping tests");
 						out.println("\n\n\n\n\n");
 						out.flush();
-						while (!last.startsWith("S")) {
+						while (!last.toUpperCase().startsWith("S")) {
 							last = sc.nextLine();
 						}
 						last = "";
@@ -814,7 +814,7 @@ public class RunDSATests {
 					msg_d.doFinal(digested_msg, 0);
 					
 					// read Y
-					while (!last.startsWith("Y")) {
+					while (!last.toUpperCase().startsWith("Y")) {
 						out.println(last);
 						last = sc.nextLine();
 					}
@@ -823,7 +823,7 @@ public class RunDSATests {
 					final BigInteger y = new BigInteger(line_parts[1], HEX);
 					
 					// read R
-					while (!last.startsWith("R")) {
+					while (!last.toUpperCase().startsWith("R")) {
 						out.println(last);
 						last = sc.nextLine();
 					}
@@ -832,7 +832,7 @@ public class RunDSATests {
 					final BigInteger r = new BigInteger(line_parts[1], HEX);
 
 					// read S
-					while (!last.startsWith("S")) {
+					while (!last.toUpperCase().startsWith("S")) {
 						out.println(last);
 						last = sc.nextLine();
 					}
@@ -864,7 +864,7 @@ public class RunDSATests {
 				throw new RuntimeException(e);
 			}
 			
-			while (sc.hasNextLine() && !last.startsWith(MOD_START)) {
+			while (sc.hasNextLine() && !last.toUpperCase().startsWith(MOD_START)) {
 				last = sc.nextLine();
 			}
 		}

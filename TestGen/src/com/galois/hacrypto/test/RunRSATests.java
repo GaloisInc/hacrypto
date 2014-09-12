@@ -3,8 +3,14 @@ package com.galois.hacrypto.test;
 import java.io.File;
 import java.io.PrintWriter;
 import java.math.BigInteger;
+import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
+import java.security.NoSuchAlgorithmException;
+import java.security.PublicKey;
+import java.security.SecureRandom;
+import java.security.Signature;
+import java.security.spec.RSAPublicKeySpec;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -19,8 +25,7 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 public class RunRSATests {
 	private static final BouncyCastleProvider BCP = new BouncyCastleProvider();
 	private static int HEX = 16;
-	private static String ALG = "ZZ";
-	private static String MOD_START = "[mod";
+	private static String MOD_START = "[MOD";
 	
 	private enum RSATestType {
 		KEYGEN_RPP("KeyGen_RandomProbablyPrime3_3.req"),
@@ -82,8 +87,11 @@ public class RunRSATests {
 			Scanner sc = new Scanner(the_file);
 			switch (the_test) {
 				case KEYGEN_RPP: runKeyGenRPP(sc); break;
+				case SIGGEN15: runSigGen15(sc); break;
+				case SIGVER15: runSigVer15(sc); break;
 				default: // this can't happen
 			}
+			sc.close();
 		} catch (final Exception e) {
 			throw new RuntimeException(e);
 		}
@@ -129,7 +137,7 @@ public class RunRSATests {
 		
 		// parse "mod" lines and the things following them
 		while (sc.hasNextLine()) {
-			while (!last.startsWith(MOD_START)) {
+			while (!last.toUpperCase().startsWith(MOD_START)) {
 				last = sc.nextLine();
 			}
 			String mod_str = last;
@@ -146,7 +154,7 @@ public class RunRSATests {
 				// N times, generate appropriate RSA keys
 				
 				last = sc.nextLine();
-				while (!last.startsWith("N")) {
+				while (!last.toUpperCase().startsWith("N")) {
 					out.println(last);
 					last = sc.nextLine();
 				}
@@ -157,8 +165,7 @@ public class RunRSATests {
 				final KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA", BCP);
 
 				for (int i = 0; i < reps; i++) {
-					kpg.initialize(mod);
-					
+					kpg.initialize(mod, new SecureRandom());
 					final KeyPair kp = kpg.generateKeyPair();
 					final BCRSAPrivateCrtKey priv = (BCRSAPrivateCrtKey) kp.getPrivate();
 					
@@ -175,7 +182,7 @@ public class RunRSATests {
 				throw new RuntimeException(e);
 			}
 			
-			while (sc.hasNextLine() && !last.startsWith(MOD_START)) {
+			while (sc.hasNextLine() && !last.toUpperCase().startsWith(MOD_START)) {
 				last = sc.nextLine();
 			}
 		}
@@ -183,330 +190,17 @@ public class RunRSATests {
 		out.close();
 	}
 
-	/*
-	private void runPQG(final Scanner sc) {
+	private void runSigGen15(final Scanner sc) {
+		System.err.println("Running SigGen15 tests");
 		StringBuilder header = new StringBuilder();
 		String last = sc.nextLine();
 		while (last.startsWith("#")) {
 			header.append(last + "\n");
 			last = sc.nextLine();
 		}
+		header.append("\n");
 		
-		final File out_file = new File(output_dir + File.separator + "PQGGen.rsp");
-	    PrintWriter out = null;
-		
-		try {
-			out_file.createNewFile();
-			out = new PrintWriter(out_file);
-		} catch (final Exception e) {
-			System.err.println("Unable to create " + out_file);
-			System.exit(1);
-		}
-		
-		out.append(header);
-
-		// there are 3 parts to PQG: A.1.1.2, A.2.1, and A.2.3 (also others
-		// that are not implemented here); let's branch to the right ones
-		
-		while (sc.hasNextLine()) {
-			while (!last.startsWith("[A.")) {
-				out.println(last);
-				last = sc.nextLine();
-			}
-			out.println(last);
-			String[] words = last.split(" ");
-			switch (words[0]) {
-				case "[A.1.1.2": last = pqgA112(sc, out); break;
-				case "[A.2.1": last = pqgA21(sc, out); break;
-				case "[A.2.3": last = pqgA23(sc, out); break;
-				default: 
-					throw new RuntimeException("unexpected FIPS 186-4 section: " + words[0]);
-			}
-			while (sc.hasNextLine() && last.trim().length() == 0) {
-				last = sc.nextLine();
-			}
-		}
-	}
-
-	private String pqgA112(final Scanner the_scanner, final PrintWriter the_output) {
-		System.err.println("PQG Section A.1.1.2");
-		
-		String last = "";
-		the_output.println();
-		
-		// parse "mod" lines and the things following them
-		while (!last.startsWith("[A.") && the_scanner.hasNextLine()) {
-			while (!last.startsWith(MOD_START)) {
-				last = the_scanner.nextLine();
-			}
-			String mod = last;
-			DSATestParams testparams = parseMod(mod);
-			
-			last = the_scanner.nextLine();
-			try {
-				the_output.println(mod + "\n");
-				
-				// we need to read the "Num" line to tell us how many repetitions to do
-				
-				while (!last.startsWith("Num")) {
-					last = the_scanner.nextLine();
-				}
-				
-				String[] line_parts = last.split(" = ");
-				int reps = Integer.valueOf(line_parts[1]);
-
-				System.err.println("L=" + testparams.L + ", N=" + testparams.N 
-						+ ", alg=" + testparams.alg);
-
-				for (int i = 0; i < reps; i++) {
-					// for each repetition, we need to generate a P and a Q, then output
-					// them, the domain parameter seed, and the counter from generating P
-					
-					// generate the Digest object first
-					Digest d = null;
-					
-					try {
-						switch (testparams.alg) {
-							case "SHA-1": d = new SHA1Digest(); break; 
-							case "SHA-224": d = new SHA224Digest(); break;
-							case "SHA-256": d = new SHA256Digest(); break;
-							case "SHA-384": d = new SHA384Digest(); break;
-							case "SHA-512": d = new SHA512Digest(); break;
-							case "SHA-512/224": d = new SHA512tDigest(224); break;
-							case "SHA-512/256": d = new SHA512tDigest(256); break;
-							default:
-								throw new RuntimeException("Unexpected algorithm: " + testparams.alg);
-						}
-					} catch (final Throwable cnfe) {
-						System.err.println("Class not found for algorithm " + testparams.alg + ", skipping tests");
-						the_output.println("P = ? (algorithm " + testparams.alg + " not available)");
-						the_output.println("Q = ? (algorithm " + testparams.alg + " not available)");
-						the_output.println("domain_parameter_seed = ? (algorithm " + testparams.alg + " not available)");
-						the_output.println("counter = ? (algorithm " + testparams.alg + " not available)\n");
-						the_output.flush();
-						continue;
-					}
-					
-					final DSAParametersGenerator dpg = new DSAParametersGenerator(d);
-					dpg.init(new DSAParameterGenerationParameters(
-								testparams.L, testparams.N, 80, new SecureRandom()));
-					final DSAParameters dsaparams = dpg.generateParameters();
-					final DSAValidationParameters valparams = dsaparams.getValidationParameters();
-					
-					the_output.println("P = " + dsaparams.getP().toString(HEX));
-					the_output.println("Q = " + dsaparams.getQ().toString(HEX));
-					the_output.println("domain_parameter_seed = " 
-							+ Util.byteArrayToHexString(valparams.getSeed()));
-					the_output.println("counter = " + valparams.getCounter());
-					the_output.println();
-					the_output.flush();
-				}
-			} catch (final Exception e) {
-				the_output.close();
-				throw new RuntimeException(e);
-			} 
-			while (the_scanner.hasNextLine() && !last.startsWith(MOD_START)
-					&& !last.startsWith("[A.")) {
-				last = the_scanner.nextLine();
-			}
-		}
-		
-		return last;
-	}
-	
-	private String pqgA21(final Scanner the_scanner, final PrintWriter the_output) {
-		System.err.println("PQG Section A.2.1");
-		
-		String last = "";
-		the_output.println("");
-		
-		// parse "mod" lines and the things following them
-		while (!last.startsWith("[A.") && the_scanner.hasNextLine()) {
-			while (!last.startsWith(MOD_START)) {
-				last = the_scanner.nextLine();
-			}
-			String mod = last;
-			DSATestParams testparams = parseMod(mod);
-			
-			last = the_scanner.nextLine();
-			try {
-				the_output.println(mod + "\n");
-				
-				// we need to read the "Num" line to tell us how many repetitions to do
-				
-				while (!last.startsWith("Num")) {
-					last = the_scanner.nextLine();
-				}
-				
-				String[] line_parts = last.split(" = ");
-				int reps = Integer.valueOf(line_parts[1]);
-
-				System.err.println("L=" + testparams.L + ", N=" + testparams.N 
-						+ ", alg=" + testparams.alg);
-
-				for (int i = 0; i < reps; i++) {
-					// for each repetition, we need to read a P and a Q, then output
-					// the resulting G
-	
-					while (!last.startsWith("P =")) {
-						last = the_scanner.nextLine();
-					}
-
-					the_output.println(last);
-
-					line_parts = last.split(" = ");
-					BigInteger p = new BigInteger(line_parts[1], HEX);
-					
-					while (!last.startsWith("Q =")) {
-						last = the_scanner.nextLine();
-						the_output.println(last);
-					}
-					
-					line_parts = last.split(" = ");
-					BigInteger q = new BigInteger(line_parts[1], HEX);
-										
-					// do DSA parameter generation with this P and Q
-					
-					BigInteger g = DSAParametersGenerator.calculateGenerator_FIPS186_3_Unverifiable(
-							p, q, new SecureRandom());
-					
-					the_output.println("G = " + toHexString(g, testparams.L / 4));
-					the_output.println();
-					the_output.flush();
-				}
-			} catch (final Exception e) {
-				the_output.close();
-				throw new RuntimeException(e);
-			} 
-			while (the_scanner.hasNextLine() && !last.startsWith(MOD_START)
-					&& !last.startsWith("[A.")) {
-				last = the_scanner.nextLine();
-			}
-		}
-		
-		return last;
-	}
-	
-	private String pqgA23(final Scanner the_scanner, final PrintWriter the_output) {
-		System.err.println("PQG Section A.2.3");
-		the_output.println();
-		
-		String last = "";
-		// parse "mod" lines and the things following them
-		while (!last.startsWith("[A.") && the_scanner.hasNextLine()) {
-			while (!last.startsWith(MOD_START)) {
-				last = the_scanner.nextLine();
-			}
-			String mod = last;
-			DSATestParams testparams = parseMod(mod);
-			
-			last = the_scanner.nextLine();
-			try {
-				the_output.println(mod + "\n");
-				
-				// we need to read the "Num" line to tell us how many repetitions to do
-				
-				while (!last.startsWith("Num")) {
-					last = the_scanner.nextLine();
-				}
-				
-				String[] line_parts = last.split(" = ");
-				int reps = Integer.valueOf(line_parts[1]);
-
-				System.err.println("L=" + testparams.L + ", N=" + testparams.N 
-						+ ", alg=" + testparams.alg);
-
-				for (int i = 0; i < reps; i++) {
-					// for each repetition, we need to read a P, a Q, a
-					// domain_parameter_seed, and an index
-	
-					// we check for a remaining line here as a workaround for bad vectors
-					while (the_scanner.hasNextLine() && !last.startsWith("P =")) {
-						last = the_scanner.nextLine();
-					}
-					if (!the_scanner.hasNextLine()) {
-						continue;
-					}
-					the_output.println(last);
-					line_parts = last.split(" = ");
-					BigInteger p = new BigInteger(line_parts[1], HEX);
-					
-					while (!last.startsWith("Q =")) {
-						last = the_scanner.nextLine();
-						the_output.println(last);
-					}
-					
-					line_parts = last.split(" = ");
-					BigInteger q = new BigInteger(line_parts[1], HEX);
-
-					while (!last.startsWith("domain_parameter_seed =")) {
-						last = the_scanner.nextLine();
-						the_output.println(last);
-					}
-					
-					line_parts = last.split(" = ");
-					byte[] dpseed = Util.hexStringToByteArray(line_parts[1]);
-					
-					while (!last.startsWith("index =")) {
-						last = the_scanner.nextLine();
-						the_output.println(last);
-					}
-					
-					line_parts = last.split(" = ");
-					int index = Integer.parseInt(line_parts[1], 16);
-										
-					// do DSA parameter generation with this P and Q
-					// generate the Digest object first
-					Digest d = null;
-					
-					try {
-						switch (testparams.alg) {
-							case "SHA-1": d = new SHA1Digest(); break; 
-							case "SHA-224": d = new SHA224Digest(); break;
-							case "SHA-256": d = new SHA256Digest(); break;
-							case "SHA-384": d = new SHA384Digest(); break;
-							case "SHA-512": d = new SHA512Digest(); break;
-							case "SHA-512/224": d = new SHA512tDigest(224); break;
-							case "SHA-512/256": d = new SHA512tDigest(256); break;
-							default:
-								throw new RuntimeException("Unexpected algorithm: " + testparams.alg);
-						}
-					} catch (final Throwable cnfe) {
-						System.err.println("Class not found for algorithm " + testparams.alg + ", skipping tests");
-						the_output.println("G = ? (test skipped, " + testparams.alg + " not available)\n");
-						the_output.flush();
-						continue;
-					}
-					
-					BigInteger g = DSAParametersGenerator.calculateGenerator_FIPS186_3_Verifiable(
-							d, p, q, dpseed, index);
-					
-					the_output.println("G = " + toHexString(g, testparams.L / 4));
-					the_output.println();
-					the_output.flush();
-				}
-			} catch (final Exception e) {
-				the_output.close();
-				throw new RuntimeException(e);
-			} 
-			while (the_scanner.hasNextLine() && !last.startsWith(MOD_START)
-					&& !last.startsWith("[A.")) {
-				last = the_scanner.nextLine();
-			}
-		}	
-		
-		return last;
-	}
-	
-	private void runSigGen(final Scanner sc) {
-		StringBuilder header = new StringBuilder();
-		String last = sc.nextLine();
-		while (last.startsWith("#")) {
-			header.append(last + "\n");
-			last = sc.nextLine();
-		}
-		
-		final File out_file = new File(output_dir + File.separator + "SigGen.rsp");
+		final File out_file = new File(output_dir + File.separator + "SigGen15_186-3.rsp");
 	    PrintWriter out = null;
 		
 		try {
@@ -521,94 +215,62 @@ public class RunRSATests {
 		
 		// parse "mod" lines and the things following them
 		while (sc.hasNextLine()) {
-			while (!last.startsWith(MOD_START)) {
+			while (!last.toUpperCase().startsWith(MOD_START)) {
 				last = sc.nextLine();
 			}
-			String mod = last;
-			DSATestParams testparams = parseMod(mod);
+			String mod_str = last;
+			String[] mod_parts = mod_str.split(" = ");
+			int mod = Integer.parseInt(mod_parts[1].substring(0, mod_parts[1].length() - 1));
 			
+			System.err.println("mod = " + mod);
 			last = "";
 			
 			try {
-				out.println(mod + "\n");
+				out.println(mod_str + "\n");
+				
+				// for this test, we generate a single RSA key pair, output N and E, and
+				// then repeatedly read "SHAAlg" and "Msg" lines and sign the Msg 
+				// with the specified SHA algorithm
+				
+				final KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA", BCP);
+				kpg.initialize(mod, new SecureRandom());
+				final KeyPair kp = kpg.generateKeyPair();
+				final BCRSAPrivateCrtKey priv = (BCRSAPrivateCrtKey) kp.getPrivate();
+					
+				out.println("N = " + toHexString(priv.getModulus(), mod / 4));
+				out.println("E = " + toHexString(priv.getPublicExponent(), mod / 4));
 
-				// first, we generate the domain parameters P, Q, G
-														
-				final DSAParametersGenerator dpg = new DSAParametersGenerator(new SHA256Digest());
-				System.err.println("L=" + testparams.L 
-						+ ", N=" + testparams.N + ", alg=" + testparams.alg);
-				dpg.init(new DSAParameterGenerationParameters(
-							testparams.L, testparams.N, 80, new SecureRandom()));
-				final DSAParameters dsaparams = dpg.generateParameters();
-				
-				out.println("P = " + dsaparams.getP().toString(HEX));
-				out.println("Q = " + dsaparams.getQ().toString(HEX));
-				out.println("G = " + dsaparams.getG().toString(HEX));
-				out.println("");
-				
-				
-				// for this test, we repeatedly read a Msg from the
-				// test file and then sign those messages, outputting
-				// the domain parameters used (above, once for each
-				// set of algorithm parameters) and the public key to
-				// validate the signature as well as the computed signature 
-				// values
-				
-				while (sc.hasNextLine() && !last.startsWith(MOD_START)) {
-					while (!last.startsWith("Msg")) {
+				last = sc.nextLine();
+				while (sc.hasNextLine() && !last.toUpperCase().startsWith(MOD_START)) {
+					while (!last.toUpperCase().startsWith(MOD_START) 
+							&& !last.toUpperCase().startsWith("SHAALG")) {
+						out.println(last);
 						last = sc.nextLine();
 					}
-
+					
 					String[] line_parts = last.split(" = ");
-					Digest msg_d = null;
-					byte[] digested_msg = null;
-
-					try {
-						switch (testparams.alg) {
-							case "SHA-224": msg_d = new SHA224Digest(); break;
-							case "SHA-256": msg_d = new SHA256Digest(); break;
-							case "SHA-384": msg_d = new SHA384Digest(); break;
-							case "SHA-512": msg_d = new SHA512Digest(); break;
-							default:
-								throw new RuntimeException("Unexpected algorithm: " + testparams.alg);
-						}
-					} catch (final Throwable cnfe) {
-						System.err.println("Class not found for algorithm " + testparams.alg + ", skipping tests");
-						out.println("\n\n\n\n\n");
-						out.flush();
-						last = "";
-						while (sc.hasNextLine() && last.trim().length() == 0) {
-							last = sc.nextLine();
-						}
-						continue;
+					String alg = line_parts[1];
+	
+					while (!last.toUpperCase().startsWith("MSG")) {
+						out.println(last);
+						last = sc.nextLine();
 					}
 					
-					byte[] msg = Util.hexStringToByteArray(line_parts[1]);
-					msg_d.update(msg, 0, msg.length);
-					msg_d.doFinal(digested_msg, 0);
-					
-					// now, generate key pairs and sign messages
-
-					final DSAKeyPairGenerator kpg = new DSAKeyPairGenerator();
-					kpg.init(new DSAKeyGenerationParameters(new SecureRandom(), dsaparams));
-
-					final AsymmetricCipherKeyPair pair = kpg.generateKeyPair();
-					final DSAPrivateKeyParameters private_params = 
-							(DSAPrivateKeyParameters) pair.getPrivate();
-					final DSAPublicKeyParameters public_params = 
-							(DSAPublicKeyParameters) pair.getPublic();
+					line_parts = last.split(" = ");
+					final byte[] msg = Util.hexStringToByteArray(line_parts[1]);
 					
 					out.println(last);
-					out.println("Y = " + toHexString(public_params.getY(), testparams.L / 8));
 					
-					final DSASigner signer = new DSASigner();
-					signer.init(true, private_params);
-					final BigInteger[] signature = signer.generateSignature(digested_msg);
-					out.println("R = " + toHexString(signature[0], 20));
-					out.println("S = " + toHexString(signature[1], 20));
-					out.println("");
-					last = "";
-					while (sc.hasNextLine() && last.trim().length() == 0) {
+					try {
+						Signature sig = Signature.getInstance(alg + "withRSA", BCP);
+						sig.initSign(priv);
+						sig.update(msg);
+						out.println("S = " + Util.byteArrayToHexString(sig.sign()) + "\n");
+					} catch (NoSuchAlgorithmException e) {
+						out.println("S = ? (algorithm not available)\n");
+					}	
+					while (sc.hasNextLine() && !last.toUpperCase().startsWith(MOD_START) 
+							&& !last.toUpperCase().startsWith("SHAALG")) {
 						last = sc.nextLine();
 					}
 				}
@@ -616,24 +278,26 @@ public class RunRSATests {
 				out.close();
 				throw new RuntimeException(e);
 			}
-			
-			while (sc.hasNextLine() && !last.startsWith(MOD_START)) {
+			while (sc.hasNextLine() && !last.toUpperCase().startsWith(MOD_START)) {
 				last = sc.nextLine();
 			}
+			
 		}
 		
 		out.close();
 	}
 
-	private void runSigVer(final Scanner sc) {
+	private void runSigVer15(final Scanner sc) {
+		System.err.println("Running SigGen15 tests");
 		StringBuilder header = new StringBuilder();
 		String last = sc.nextLine();
 		while (last.startsWith("#")) {
 			header.append(last + "\n");
 			last = sc.nextLine();
 		}
+		header.append("\n");
 		
-		final File out_file = new File(output_dir + File.separator + "SigVer.rsp");
+		final File out_file = new File(output_dir + File.separator + "SigVer15_186-3.rsp");
 	    PrintWriter out = null;
 		
 		try {
@@ -644,157 +308,117 @@ public class RunRSATests {
 			System.exit(1);
 		}
 		
-		out.append(header + "\n");
+		out.append(header);
 		
 		// parse "mod" lines and the things following them
 		while (sc.hasNextLine()) {
-			while (!last.startsWith(MOD_START)) {
+			while (!last.toUpperCase().startsWith(MOD_START)) {
 				last = sc.nextLine();
 			}
-			String mod = last;
-			DSATestParams testparams = parseMod(mod);
+			String mod_str = last;
+			String[] mod_parts = mod_str.split(" = ");
+			int mod = Integer.parseInt(mod_parts[1].substring(0, mod_parts[1].length() - 1));
 			
-			last = sc.nextLine();
-			
+			System.err.println("mod = " + mod);
+			last = "";
+
 			try {
-				out.println(mod);
+				out.println(mod_str);
 
-				// first, we read the domain parameters P, Q, G
-								
-				while (!last.startsWith("P =")) {
-					out.println(last);
+				// for this test, we repeateedly read an N, then repeatedly 
+				// read SHAAlg, E, Msg, and S for that N and attempt to verify 
+				// the signature
+
+				while (!last.toUpperCase().startsWith("N")) {
 					last = sc.nextLine();
 				}
-				
-				String[] line_parts = last.split(" = ");
-				BigInteger p = new BigInteger(line_parts[1], HEX);
-				
-				while (!last.startsWith("Q =")) {
-					out.println(last);
-					last = sc.nextLine();
-				}
-				
-				line_parts = last.split(" = ");
-				BigInteger q = new BigInteger(line_parts[1], HEX);
-				
-				while (!last.startsWith("G = ")) {
-					out.println(last);
-					last = sc.nextLine();
-				}
-				
-				line_parts = last.split(" = ");
-				BigInteger g = new BigInteger(line_parts[1], HEX);
-				out.println(last + "\n");
-				
-				// make a DSAParameters from these parameters
-				
-				System.err.println("L=" + testparams.L 
-						+ ", N=" + testparams.N + ", alg=" + testparams.alg);
-				final DSAParameters dsaparams = new DSAParameters(p, q, g);
-				
-				// for this test, we repeatedly read a Msg, Y, R and S
-				// from the input file and try to validate the signature,
-				// reporting success or failure
-				
-				while (sc.hasNextLine() && !last.startsWith(MOD_START)) {
-					// read Msg
-					out.flush();
-					while (!last.startsWith("Msg")) {
-						last = sc.nextLine();
-					}
 
-					line_parts = last.split(" = ");
-					Digest msg_d = null;
-					byte[] digested_msg = null;
+				while (last.toUpperCase().startsWith("N")) {
+					out.println(last); 
+					out.println();
+					
+					String[] line_parts = last.split(" = ");
+					final BigInteger modulus = new BigInteger(line_parts[1], 16);
 
-					try {
-						switch (testparams.alg) {
-							case "SHA-1": msg_d = new SHA1Digest(); break; 
-							case "SHA-224": msg_d = new SHA224Digest(); break;
-							case "SHA-256": msg_d = new SHA256Digest(); break;
-							case "SHA-384": msg_d = new SHA384Digest(); break;
-							case "SHA-512": msg_d = new SHA512Digest(); break;
-							default:
-								throw new RuntimeException("Unexpected algorithm: " + testparams.alg);
-						}
-					} catch (final Throwable cnfe) {
-						System.err.println("Class not found for algorithm " + testparams.alg + ", skipping tests");
-						out.println("\n\n\n\n\n");
-						out.flush();
-						while (!last.startsWith("S")) {
-							last = sc.nextLine();
-						}
-						last = "";
-						while (sc.hasNextLine() && last.trim().length() == 0) {
-							last = sc.nextLine();
-						}
-						continue;
-					}
-					
-					byte[] msg = Util.hexStringToByteArray(line_parts[1]);
-					msg_d.update(msg, 0, msg.length);
-					msg_d.doFinal(digested_msg, 0);
-					
-					// read Y
-					while (!last.startsWith("Y")) {
-						out.println(last);
-						last = sc.nextLine();
-					}
-					
-					line_parts = last.split(" = ");
-					final BigInteger y = new BigInteger(line_parts[1], HEX);
-					
-					// read R
-					while (!last.startsWith("R")) {
-						out.println(last);
-						last = sc.nextLine();
-					}
-					
-					line_parts = last.split(" = ");
-					final BigInteger r = new BigInteger(line_parts[1], HEX);
-
-					// read S
-					while (!last.startsWith("S")) {
-						out.println(last);
-						last = sc.nextLine();
-					}
-					
-					line_parts = last.split(" = ");
-					final BigInteger s = new BigInteger(line_parts[1], HEX);
-
-					// now, check the signature
-
-					final DSASigner signer = new DSASigner();
-					signer.init(false, new DSAPublicKeyParameters(y, dsaparams));
-					
-					final boolean ok = signer.verifySignature(digested_msg, r, s);
-					
-					out.println(last);
-					String ok_string = "F";
-					if (ok) { 
-						ok_string = "P";
-					}
-					out.println("Result = " + ok_string);
-					out.println("");
 					last = "";
-					while (sc.hasNextLine() && last.trim().length() == 0) {
-						last = sc.nextLine();
+					
+					while (sc.hasNextLine() && !last.toUpperCase().startsWith(MOD_START) &&
+							!last.toUpperCase().startsWith("N")) {
+						while (!last.toUpperCase().startsWith("SHAALG")) {
+							last = sc.nextLine();
+						}
+
+						out.println(last);
+
+						line_parts = last.split(" = ");
+						final String alg = line_parts[1]; 
+
+						while (!last.toUpperCase().startsWith("E")) {
+							last = sc.nextLine();
+							out.println(last);
+						}
+
+						line_parts = last.split(" = ");
+						final BigInteger exponent = new BigInteger(line_parts[1], 16);
+
+						while (!last.toUpperCase().startsWith("MSG")) {
+							last = sc.nextLine();
+							out.println(last);
+						}
+
+						line_parts = last.split(" = ");
+						final byte[] msg = Util.hexStringToByteArray(line_parts[1]);
+
+						while (!last.toUpperCase().startsWith("S")) {
+							last = sc.nextLine();
+							out.println(last);
+						}
+
+						line_parts = last.split(" = ");
+						final byte[] signature = Util.hexStringToByteArray(line_parts[1]);
+
+						RSAPublicKeySpec spec = new RSAPublicKeySpec(modulus, exponent);
+						KeyFactory factory = KeyFactory.getInstance("RSA", BCP);
+						PublicKey pub = factory.generatePublic(spec);
+
+						try {
+							Signature sig = Signature.getInstance(alg + "withRSA", BCP);
+							sig.initVerify(pub);
+							sig.update(msg);
+							final boolean result = sig.verify(signature);
+
+							String result_string = "F";
+							if (result) {
+								result_string = "P";
+							}
+
+							out.println("Result = " + result_string);
+						} catch (NoSuchAlgorithmException e) {
+							out.println("Result = ? (algorithm not available)");
+						}
+
+						out.println();
+
+						while (sc.hasNextLine() && !last.toUpperCase().startsWith(MOD_START) 
+								&& !last.toUpperCase().startsWith("SHAALG")
+								&& !last.toUpperCase().startsWith("N")) {
+							last = sc.nextLine();
+						}
 					}
 				}
 			} catch (final Exception e) {
 				out.close();
 				throw new RuntimeException(e);
 			}
-			
-			while (sc.hasNextLine() && !last.startsWith(MOD_START)) {
+			while (sc.hasNextLine() && !last.toUpperCase().startsWith(MOD_START)) {
 				last = sc.nextLine();
 			}
+			
 		}
 		
 		out.close();
 	}
 	
-	*/
 	public static void main(final String... the_args) {
 		if (the_args.length < 2) {
 			System.err.println("directories for files must be specified");
