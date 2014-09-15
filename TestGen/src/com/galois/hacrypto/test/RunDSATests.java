@@ -108,7 +108,7 @@ public class RunDSATests {
 		try {
 			Scanner sc = new Scanner(the_file);
 			switch (the_test) {
-				case KEYPAIR: break; // runKeyPair(sc); break;
+				case KEYPAIR: runKeyPair(sc); break;
 				case PQG: runPQG(sc); break;
 				case SIGGEN: runSigGen(sc); break;
 				case SIGVER: runSigVer(sc); break;
@@ -776,7 +776,7 @@ public class RunDSATests {
 				while (sc.hasNextLine() && !last.toUpperCase().startsWith(MOD_START)) {
 					// read Msg
 					out.flush();
-					while (!last.toUpperCase().startsWith("Msg")) {
+					while (!last.toUpperCase().startsWith("MSG")) {
 						last = sc.nextLine();
 					}
 
@@ -787,7 +787,7 @@ public class RunDSATests {
 					try {
 						switch (testparams.alg) {
 							case "SHA-1": msg_d = new SHA1Digest(); break; 
-							case "SHA-224": msg_d = new SHA224Digest(); break;
+							// case "SHA-224": msg_d = new SHA224Digest(); break;
 							case "SHA-256": msg_d = new SHA256Digest(); break;
 							case "SHA-384": msg_d = new SHA384Digest(); break;
 							case "SHA-512": msg_d = new SHA512Digest(); break;

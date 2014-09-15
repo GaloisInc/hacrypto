@@ -1165,6 +1165,10 @@ public class Output {
 			md0 = md1;
 			md1 = md2;
 			md2 = digestBouncyCastle(bcAlgorithm, md);
+			if (md2.length != seed.length) {
+				// something went wrong
+				break;
+			}
 		}
 		
 		inputs.set(inputOrder[0], md2);
@@ -1184,7 +1188,7 @@ public class Output {
 	public static final byte[] monteCarloRNG(final String algorithm,
 			final List<byte[]> inputs, final int[] inputOrder) {
 		if (!algorithm.startsWith("RNG/")) {
-			throw new RuntimeException("monteCarloRNG can only be called for SHA tests!");
+			throw new RuntimeException("monteCarloRNG can only be called for RNG tests!");
 		} 
 		
 		String suffix = algorithm.substring(4);
