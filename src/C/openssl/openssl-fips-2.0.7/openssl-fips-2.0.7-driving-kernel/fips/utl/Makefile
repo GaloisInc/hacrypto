@@ -22,8 +22,8 @@ TEST=
 APPS=
 
 LIB=$(TOP)/libcrypto.a
-LIBSRC= fips_err.c fips_md.c fips_enc.c fips_lck.c fips_mem.c
-LIBOBJ= fips_err.o fips_md.o fips_enc.o fips_lck.o fips_mem.o
+LIBSRC= fips_err.c fips_md.c fips_enc.c fips_lck.c fips_mem.c fips_cryptodev.c
+LIBOBJ= fips_err.o fips_md.o fips_enc.o fips_lck.o fips_mem.o fips_cryptodev.o
 
 SRC= $(LIBSRC)
 
@@ -111,3 +111,4 @@ fips_mem.o: ../../include/openssl/opensslconf.h
 fips_mem.o: ../../include/openssl/opensslv.h ../../include/openssl/ossl_typ.h
 fips_mem.o: ../../include/openssl/safestack.h ../../include/openssl/stack.h
 fips_mem.o: ../../include/openssl/symhacks.h fips_mem.c
+fips_cryptodev.o: fips_cryptodev.c fips_cryptodev.h
