@@ -73,6 +73,7 @@
 
 #include <openssl/err.h>
 #include "e_os.h"
+#include "utl/fips_cryptodev.h"
 
 #ifndef OPENSSL_FIPS
 
@@ -97,7 +98,17 @@ static int DESTest(EVP_CIPHER_CTX *ctx,
 	    int dir,  /* 0 = decrypt, 1 = encrypt */
 	    unsigned char *out, unsigned char *in, int len)
     {
-    const EVP_CIPHER *cipher = NULL;
+    struct session_op session = {
+	.keylen = akeysz / 8,
+	.key = aKey
+    };
+    struct crypt_op op = {
+	.len = len,
+	.iv  = iVec,
+	.op  = dir ? COP_ENCRYPT : COP_DECRYPT,
+	.src = in,
+	.dst = out
+    };
 
     if (akeysz != 192)
 	{
@@ -106,30 +117,24 @@ static int DESTest(EVP_CIPHER_CTX *ctx,
 	}
 
     if (fips_strcasecmp(amode, "CBC") == 0)
-	cipher = EVP_des_ede3_cbc();
+	session.cipher = CRYPTO_3DES_CBC;
     else if (fips_strcasecmp(amode, "ECB") == 0)
-	cipher = EVP_des_ede3_ecb();
-    else if (fips_strcasecmp(amode, "CFB64") == 0)
-	cipher = EVP_des_ede3_cfb64();
-    else if (fips_strncasecmp(amode, "OFB", 3) == 0)
-	cipher = EVP_des_ede3_ofb();
-    else if(!fips_strcasecmp(amode,"CFB8"))
-	cipher = EVP_des_ede3_cfb8();
-    else if(!fips_strcasecmp(amode,"CFB1"))
-	cipher = EVP_des_ede3_cfb1();
+	{
+	printf("ECB not yet supported.\n");
+	return 0;
+	}
+    else if (fips_strcasecmp(amode, "CTR") == 0)
+	{
+	printf("CTR not yet supported.\n");
+	return 0;
+	}
     else
 	{
 	printf("Unknown mode: %s\n", amode);
 	return 0;
 	}
 
-    if (FIPS_cipherinit(ctx, cipher, aKey, iVec, dir) <= 0)
-	return 0;
-    if(!fips_strcasecmp(amode,"CFB1"))
-	M_EVP_CIPHER_CTX_set_flags(ctx, EVP_CIPH_FLAG_LENGTH_BITS);
-    FIPS_cipher(ctx, out, in, len);
-
-    return 1;
+    return cryptodev_op(session, op);
     }
 #if 0
 static void DebugValue(char *tag, unsigned char *val, int len)
