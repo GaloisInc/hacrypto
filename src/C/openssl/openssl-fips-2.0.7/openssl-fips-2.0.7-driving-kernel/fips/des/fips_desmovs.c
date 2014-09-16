@@ -92,23 +92,9 @@ int main(int argc, char *argv[])
 
 #define VERBOSE 0
 
-static int DESTest(EVP_CIPHER_CTX *ctx,
-	    char *amode, int akeysz, unsigned char *aKey, 
-	    unsigned char *iVec, 
-	    int dir,  /* 0 = decrypt, 1 = encrypt */
-	    unsigned char *out, unsigned char *in, int len)
-    {
-    struct session_op session = {
-	.keylen = akeysz / 8,
-	.key = aKey
-    };
-    struct crypt_op op = {
-	.len = len,
-	.iv  = iVec,
-	.op  = dir ? COP_ENCRYPT : COP_DECRYPT,
-	.src = in,
-	.dst = out
-    };
+int DESInit(struct session_op *session, int akeysz, unsigned char *aKey, char *amode) {
+    session->keylen = akeysz / 8;
+    session->key = aKey;
 
     if (akeysz != 192)
 	{
@@ -117,24 +103,45 @@ static int DESTest(EVP_CIPHER_CTX *ctx,
 	}
 
     if (fips_strcasecmp(amode, "CBC") == 0)
-	session.cipher = CRYPTO_3DES_CBC;
+	session->cipher = CRYPTO_3DES_CBC;
     else if (fips_strcasecmp(amode, "ECB") == 0)
-	{
-	printf("ECB not yet supported.\n");
-	return 0;
-	}
-    else if (fips_strcasecmp(amode, "CTR") == 0)
-	{
-	printf("CTR not yet supported.\n");
-	return 0;
-	}
+	session->cipher = CRYPTO_3DES_ECB;
     else
 	{
 	printf("Unknown mode: %s\n", amode);
 	return 0;
 	}
 
-    return cryptodev_op(session, op);
+    return 1;
+}
+
+static int DESTest(struct session_op *session, int *cryptofd,
+	    char *amode, int akeysz, unsigned char *aKey,
+	    unsigned char *iVec,
+	    int dir,  /* 0 = decrypt, 1 = encrypt */
+	    unsigned char *out, unsigned char *in, int len)
+    {
+    int success, local_cryptofd;
+    struct session_op local_session = {};
+    struct crypt_op op = {
+	.flags = COP_FLAG_WRITE_IV,
+	.len = len,
+	.iv  = iVec,
+	.op  = dir ? COP_ENCRYPT : COP_DECRYPT,
+	.src = in,
+	.dst = out
+    };
+
+    if(NULL == session) {
+	session = &local_session;
+	cryptofd = &local_cryptofd;
+    }
+    if(!DESInit(session, akeysz, aKey, amode)) return 0;
+
+    if(&local_session == session) cryptodev_start_session(session, cryptofd);
+    success = cryptodev_session_op(*session, *cryptofd, op);
+    if(&local_session == session) cryptodev_end_session(*session, *cryptofd);
+    return success;
     }
 #if 0
 static void DebugValue(char *tag, unsigned char *val, int len)
@@ -166,13 +173,15 @@ enum tdes_Mode {TCBC, TECB, TOFB, TCFB1, TCFB8, TCFB64};
 int Sizes[6]={64,64,64,1,8,64};
 
 static int do_tmct(char *amode, 
-	    int akeysz, int numkeys, unsigned char *akey,unsigned char *ivec,
+	    int akeysz, int numkeys, unsigned char *akey,unsigned char *ivec_in,
 	    int dir, unsigned char *text, int len,
 	    FILE *rfp)
     {
     int i,imode;
     unsigned char nk[4*8]; /* longest key+8 */
     unsigned char text0[8];
+    unsigned char *ivec = malloc(8); // ivec *must* be on the heap for the cryptodev calls to correctly overwrite it
+    memmove(ivec,ivec_in,8);
 
     for (imode=0 ; imode < 6 ; ++imode)
 	if(!strcmp(amode,tdes_t_mode[imode]))
@@ -188,8 +197,10 @@ static int do_tmct(char *amode,
 	int n;
 	int kp=akeysz/64;
 	unsigned char old_iv[8];
-	EVP_CIPHER_CTX ctx;
-	FIPS_cipher_ctx_init(&ctx);
+	struct session_op session = {};
+	int cryptofd;
+	if(!DESInit(&session, akeysz, akey, amode)) return 0;
+	if(!cryptodev_start_session(&session, &cryptofd)) return 0;
 
 	fprintf(rfp,RESP_EOL "COUNT = %d" RESP_EOL,i);
 	if(kp == 1)
@@ -216,16 +227,8 @@ static int do_tmct(char *amode,
 	    unsigned char old_text[8];
 
 	    memcpy(old_text,text,8);
-	    if(j == 0)
-		{
-		memcpy(old_iv,ivec,8);
-		DESTest(&ctx,amode,akeysz,akey,ivec,dir,text,text,len);
-		}
-	    else
-		{
-		memcpy(old_iv,ctx.iv,8);
-		FIPS_cipher(&ctx,text,text,len);
-		}
+	    memcpy(old_iv,ivec,8);
+	    DESTest(&session,&cryptofd,amode,akeysz,akey,ivec,dir,text,text,len);
 	    if(j == 9999)
 		{
 		OutputValue(tdes_t_tag[dir],text,len,rfp,imode == TCFB1);
@@ -260,7 +263,6 @@ static int do_tmct(char *amode,
 	DES_set_odd_parity((DES_cblock *)akey);
 	DES_set_odd_parity((DES_cblock *)(akey+8));
 	DES_set_odd_parity((DES_cblock *)(akey+16));
-	memcpy(ivec,ctx.iv,8);
 
 	/* pointless exercise - the final text doesn't depend on the
 	   initial text in OFB mode, so who cares what it is? (Who
@@ -268,8 +270,8 @@ static int do_tmct(char *amode,
 	if(imode == TOFB)
 	    for(n=0 ; n < 8 ; ++n)
 		text[n]=text0[n]^old_iv[n];
-	FIPS_cipher_ctx_cleanup(&ctx);
 	}
+    free(ivec);
     return 1;
     }
     
@@ -557,7 +559,7 @@ static int tproc_file(char *rqfile, char *rspfile)
 		else
 		    {
 		    assert(dir == 1);
-		    DESTest(&ctx, amode, akeysz, aKey, iVec, 
+		    DESTest(NULL, NULL, amode, akeysz, aKey, iVec,
 				  dir,  /* 0 = decrypt, 1 = encrypt */
 				  ciphertext, plaintext, len);
 		    OutputValue("CIPHERTEXT",ciphertext,len,rfp,
@@ -597,7 +599,7 @@ static int tproc_file(char *rqfile, char *rspfile)
 		else
 		    {
 		    assert(dir == 0);
-		    DESTest(&ctx, amode, akeysz, aKey, iVec, 
+		    DESTest(NULL, NULL, amode, akeysz, aKey, iVec,
 				  dir,  /* 0 = decrypt, 1 = encrypt */
 				  plaintext, ciphertext, len);
 		    OutputValue("PLAINTEXT",(unsigned char *)plaintext,len,rfp,
