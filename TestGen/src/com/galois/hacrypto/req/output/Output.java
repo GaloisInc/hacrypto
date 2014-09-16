@@ -105,19 +105,44 @@ public class Output {
 			int[] inputOrder) {
 		switch (algorithm.toUpperCase()) {
 		case "SHA256":
-			return digestBouncyCastle("SHA-256", inputs.get(inputOrder[0]));
+			byte[] input = inputs.get(inputOrder[1]);
+			int input_len = Util.byteArrayToInt(inputs.get(inputOrder[0]));
+			if (input_len == 0) {
+				input = new byte[0];
+			}
+			return digestBouncyCastle("SHA-256", input);
 
 		case "SHA1":
-			return digestBouncyCastle("SHA1", inputs.get(inputOrder[0]));
+			input = inputs.get(inputOrder[1]);
+			input_len = Util.byteArrayToInt(inputs.get(inputOrder[0]));
+			if (input_len == 0) {
+				input = new byte[0];
+			}
+			return digestBouncyCastle("SHA1", input);
 
 		case "SHA224":
-			return digestBouncyCastle("SHA-224", inputs.get(inputOrder[0]));
+			input = inputs.get(inputOrder[1]);
+			input_len = Util.byteArrayToInt(inputs.get(inputOrder[0]));
+			if (input_len == 0) {
+				input = new byte[0];
+			}
+			return digestBouncyCastle("SHA-224", input);
 
 		case "SHA384":
-			return digestBouncyCastle("SHA-384", inputs.get(inputOrder[0]));
+			input = inputs.get(inputOrder[1]);
+			input_len = Util.byteArrayToInt(inputs.get(inputOrder[0]));
+			if (input_len == 0) {
+				input = new byte[0];
+			}
+			return digestBouncyCastle("SHA-384", input);
 
 		case "SHA512":
-			return digestBouncyCastle("SHA-512", inputs.get(inputOrder[0]));
+			input = inputs.get(inputOrder[1]);
+			input_len = Util.byteArrayToInt(inputs.get(inputOrder[0]));
+			if (input_len == 0) {
+				input = new byte[0];
+			}
+			return digestBouncyCastle("SHA-512", input);
 
 		case "AES/CBC/ENC":
 			return cipherBouncyCastle("AES/CBC/NoPadding", Cipher.ENCRYPT_MODE,

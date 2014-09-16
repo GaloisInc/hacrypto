@@ -344,8 +344,16 @@ public class Req {
 				String inputName = getStringProperty("name" + suff2, i);
 				String inputType = getStringProperty("type" + suff2, i,
 						"no type available: input" + i + "_type" + suff2);
-
-				ListInput li = new ListInput(inputName, isIntType(inputType), Input.YES);
+				String showInOutputString =
+						getStringProperty("showinoutput" + suff2, i, "yes");
+				int showInOutput = Input.YES;
+				switch (showInOutputString.toLowerCase()) {
+					case "no": showInOutput = Input.NO; break;
+					case "once": showInOutput = Input.ONCE; break;
+					default:
+				}
+ 
+				ListInput li = new ListInput(inputName, isIntType(inputType), showInOutput);
 				addInput(i, li);
 				ret.put(inputName, li); // TODO: this only supports unique input
 										// names

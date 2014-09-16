@@ -108,8 +108,8 @@ public class RunDSATests {
 		try {
 			Scanner sc = new Scanner(the_file);
 			switch (the_test) {
-				// case KEYPAIR: runKeyPair(sc); break;
-				// case PQG: runPQG(sc); break;
+				case KEYPAIR: runKeyPair(sc); break;
+				case PQG: runPQG(sc); break;
 				case SIGGEN: runSigGen(sc); break;
 				case SIGVER: runSigVer(sc); break;
 				default: // this can't happen
