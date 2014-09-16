@@ -66,9 +66,6 @@
 #include <openssl/err.h>
 #include <openssl/bn.h>
 
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/ioctl.h>
 #include "utl/fips_cryptodev.h"
 
 #ifndef OPENSSL_FIPS
@@ -341,7 +338,6 @@ static int print_monte(enum cryptodev_crypto_op_t md, FILE *out,
 	int ret = 0;
 	unsigned int mlen;
 	int cryptofd = -1;
-	int session_started = 0;
 
 	struct session_op session = { .mac = md };
 	struct crypt_op ops[] = {
@@ -356,11 +352,7 @@ static int print_monte(enum cryptodev_crypto_op_t md, FILE *out,
 		*m3       = ops + 2,
 		*finalize = ops + 3;
 
-	if((cryptofd = open("/dev/crypto", O_RDWR, 0)) < 0) goto mc_error;
-	if(ioctl(cryptofd, CIOCGSESSION, &session)) goto mc_error;
-	for(i = 0; i < sizeof(ops)/sizeof(struct crypt_op); i++)
-		ops[i].ses = session.ses;
-	session_started = 1;
+	if(!cryptodev_start_session(&session, &cryptofd)) return 0;
 
 	if (SeedLen > EVP_MAX_MD_SIZE)
 		mlen = SeedLen;
@@ -385,19 +377,19 @@ static int print_monte(enum cryptodev_crypto_op_t md, FILE *out,
 		{
 		for (i = 0; i < 1000; i++)
 			{
-			int result = 0;
+			int success = 1;
 			m1->flags |= COP_FLAG_RESET;
-			result |= ioctl(cryptofd, CIOCCRYPT, m1);
+			success = success && cryptodev_session_op(session, cryptofd, *m1);
 			m1->flags &= ~COP_FLAG_RESET;
-			result |= ioctl(cryptofd, CIOCCRYPT, m2);
-			result |= ioctl(cryptofd, CIOCCRYPT, m3);
+			success = success && cryptodev_session_op(session, cryptofd, *m2);
+			success = success && cryptodev_session_op(session, cryptofd, *m3);
 			tmp = m1;
 			m1 = m2;
 			m2 = m3;
 			m3 = tmp;
 			finalize->mac = m3->src;
-			result |= ioctl(cryptofd, CIOCCRYPT, finalize);
-			if(result) goto mc_error;
+			success = success && cryptodev_session_op(session, cryptofd, *finalize);
+			if(!success) goto mc_error;
 			}
 		fprintf(out, "COUNT = %d" RESP_EOL, j);
 		fputs("MD = ", out);
@@ -419,10 +411,7 @@ static int print_monte(enum cryptodev_crypto_op_t md, FILE *out,
 	if (m3->src)
 		OPENSSL_free(m3->src);
 
-	if (session_started)
-		ret = !ioctl(cryptofd, CIOCFSESSION, &session.ses) && ret;
-	if (cryptofd >= 0)
-		close(cryptofd);
+	cryptodev_end_session(session, cryptofd);
 
 	return ret;
 	}
