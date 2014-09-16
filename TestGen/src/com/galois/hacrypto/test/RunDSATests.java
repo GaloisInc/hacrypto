@@ -787,7 +787,7 @@ public class RunDSATests {
 					try {
 						switch (testparams.alg) {
 							case "SHA-1": msg_d = new SHA1Digest(); break; 
-							// case "SHA-224": msg_d = new SHA224Digest(); break;
+							case "SHA-224": msg_d = new SHA224Digest(); break;
 							case "SHA-256": msg_d = new SHA256Digest(); break;
 							case "SHA-384": msg_d = new SHA384Digest(); break;
 							case "SHA-512": msg_d = new SHA512Digest(); break;

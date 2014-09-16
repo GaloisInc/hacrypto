@@ -216,7 +216,12 @@ public class Req {
 					rspSb.append(" = ");
 					// Output.monteCarlo _changes_ the contents of args for
 					// the next run!
-					rspSb.append(Util.byteArrayToHexString(Output.getMonteCarloOutput(func, args, argOrder)));
+					byte[] result = Output.getMonteCarloOutput(func, args, argOrder);
+					if (result.length == 0) {
+						rspSb.append("? (no result due to algorithm issue)");
+					} else {
+						rspSb.append(Util.byteArrayToHexString(result));
+					}
 					rspSb.append("\n");
 					if (count < repetitions - 1) {
 						rspSb.append("\n");

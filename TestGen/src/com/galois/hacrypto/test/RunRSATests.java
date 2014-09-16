@@ -14,6 +14,10 @@ import java.security.spec.RSAPublicKeySpec;
 import java.util.Date;
 import java.util.Scanner;
 
+import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
+import org.bouncycastle.crypto.generators.RSAKeyPairGenerator;
+import org.bouncycastle.crypto.params.RSAKeyGenerationParameters;
+import org.bouncycastle.crypto.params.RSAPrivateCrtKeyParameters;
 import org.bouncycastle.jcajce.provider.asymmetric.rsa.BCRSAPrivateCrtKey;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
@@ -143,10 +147,16 @@ public class RunRSATests {
 			String mod_str = last;
 			String[] mod_parts = mod_str.split(" = ");
 			int mod = Integer.parseInt(mod_parts[1].substring(0, mod_parts[1].length() - 1));
-			
+			int certainty = 80;
+			if (mod > 512) {
+				certainty = 112;
+			}
+			if (mod > 1024) {
+				certainty = 128;
+			}
 			System.err.println("mod = " + mod);
 			last = "";
-			
+
 			try {
 				out.println(mod_str);
 				
@@ -162,19 +172,25 @@ public class RunRSATests {
 				String[] line_parts = last.split(" = ");
 				int reps = Integer.parseInt(line_parts[1]);
 				
-				final KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA", BCP);
+				RSAKeyPairGenerator kpg = new RSAKeyPairGenerator();
+				kpg.init(new RSAKeyGenerationParameters
+				    (
+				        new BigInteger("10001", 16), // public exponent
+				        new SecureRandom(),
+				        mod, // key length
+				        certainty // certainty
+				    ));
 
 				for (int i = 0; i < reps; i++) {
-					kpg.initialize(mod, new SecureRandom());
-					final KeyPair kp = kpg.generateKeyPair();
-					final BCRSAPrivateCrtKey priv = (BCRSAPrivateCrtKey) kp.getPrivate();
+					final AsymmetricCipherKeyPair kp = kpg.generateKeyPair();
+					final RSAPrivateCrtKeyParameters priv = (RSAPrivateCrtKeyParameters) kp.getPrivate();
 					
 					// E, P, Q, N, D
 					out.println("E = " + toHexString(priv.getPublicExponent(), mod / 4));
-					out.println("P = " + toHexString(priv.getPrimeExponentP(), mod / 8));
-					out.println("Q = " + toHexString(priv.getPrimeExponentQ(), mod / 8));
+					out.println("P = " + toHexString(priv.getP(), mod / 8));
+					out.println("Q = " + toHexString(priv.getQ(), mod / 8));
 					out.println("N = " + toHexString(priv.getModulus(), mod / 4));
-					out.println("D = " + toHexString(priv.getPrivateExponent(), mod / 4));
+					out.println("D = " + toHexString(priv.getExponent(), mod / 4));
 					out.println();
 				}
 			} catch (final Exception e) {
