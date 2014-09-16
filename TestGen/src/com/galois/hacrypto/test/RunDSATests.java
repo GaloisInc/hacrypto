@@ -108,7 +108,7 @@ public class RunDSATests {
 		try {
 			Scanner sc = new Scanner(the_file);
 			switch (the_test) {
-				case KEYPAIR: break; // runKeyPair(sc); break;
+				case KEYPAIR: runKeyPair(sc); break;
 				case PQG: runPQG(sc); break;
 				case SIGGEN: runSigGen(sc); break;
 				case SIGVER: runSigVer(sc); break;
@@ -606,7 +606,7 @@ public class RunDSATests {
 			last = "";
 			
 			try {
-				out.println(mod + "\n");
+				out.println("\n" + mod + "\n");
 
 				// first, we generate the domain parameters P, Q, G
 														
@@ -620,7 +620,6 @@ public class RunDSATests {
 				out.println("P = " + dsaparams.getP().toString(HEX));
 				out.println("Q = " + dsaparams.getQ().toString(HEX));
 				out.println("G = " + dsaparams.getG().toString(HEX));
-				out.println("");
 				
 				
 				// for this test, we repeatedly read a Msg from the
@@ -630,7 +629,8 @@ public class RunDSATests {
 				// validate the signature as well as the computed signature 
 				// values
 				
-				while (sc.hasNextLine() && !last.startsWith(MOD_START)) {
+				while (sc.hasNextLine() && !last.toUpperCase().startsWith(MOD_START)) {
+					out.println();
 					while (!last.toUpperCase().startsWith("MSG")) {
 						last = sc.nextLine();
 					}
@@ -650,7 +650,10 @@ public class RunDSATests {
 						}
 					} catch (final Throwable cnfe) {
 						System.err.println("Class not found for algorithm " + testparams.alg + ", skipping tests");
-						out.println("\n\n\n\n\n");
+						out.println(last);
+						out.println("Y = ? (test skipped, " + testparams.alg + " not available)");
+						out.println("R = ? (test skipped, " + testparams.alg + " not available)");
+						out.println("S = ? (test skipped, " + testparams.alg + " not available)");
 						out.flush();
 						last = "";
 						while (sc.hasNextLine() && last.trim().length() == 0) {
@@ -683,7 +686,6 @@ public class RunDSATests {
 					final BigInteger[] signature = signer.generateSignature(digested_msg);
 					out.println("R = " + toHexString(signature[0], 20));
 					out.println("S = " + toHexString(signature[1], 20));
-					out.println("");
 					last = "";
 					while (sc.hasNextLine() && last.trim().length() == 0) {
 						last = sc.nextLine();
@@ -776,7 +778,7 @@ public class RunDSATests {
 				while (sc.hasNextLine() && !last.toUpperCase().startsWith(MOD_START)) {
 					// read Msg
 					out.flush();
-					while (!last.toUpperCase().startsWith("Msg")) {
+					while (!last.toUpperCase().startsWith("MSG")) {
 						last = sc.nextLine();
 					}
 

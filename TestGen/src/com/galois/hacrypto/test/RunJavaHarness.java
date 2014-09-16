@@ -95,7 +95,6 @@ public class RunJavaHarness {
 		Req r;
 		String algName = fileName.substring(0, fileName.indexOf('/'));
 		String testName = fileName.substring(fileName.indexOf('/') + 1);
-		System.err.println("algname = " + algName + ", testname = " + testName);
 		File testSpec = new File(testDir.getAbsolutePath() + File.separator 
 				+ algName + File.separator + testName);
 		if (!testSpec.exists()) {
@@ -106,7 +105,6 @@ public class RunJavaHarness {
 		File req = new File(inputDir.getPath() + File.separator + algName 
 				+ File.separator + reqSuffix + File.separator
 				+ testName + "." + reqSuffix);
-		System.err.println("req = " + req);
 		if (!req.exists()) {
 			// no matching tests, print an output line and exit
 			System.err.println("No request file " + fileName + " found, skipping test.");
@@ -115,7 +113,6 @@ public class RunJavaHarness {
 		File rspDir = new File(outputDir.getPath() + File.separator + algName 
 				+ File.separator + "rsp");
 		rspDir.mkdirs();
-		System.err.println("rspDir = " + rspDir);
 		try {
 			r = new Req(req.getAbsolutePath(), testSpec.getAbsolutePath());
 			Entry<String, String> reqrsp = r.createReqRsp();

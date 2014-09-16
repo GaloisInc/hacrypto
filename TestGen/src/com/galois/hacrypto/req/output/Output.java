@@ -105,19 +105,44 @@ public class Output {
 			int[] inputOrder) {
 		switch (algorithm.toUpperCase()) {
 		case "SHA256":
-			return digestBouncyCastle("SHA-256", inputs.get(inputOrder[0]));
+			byte[] input = inputs.get(inputOrder[1]);
+			int input_len = Util.byteArrayToInt(inputs.get(inputOrder[0]));
+			if (input_len == 0) {
+				input = new byte[0];
+			}
+			return digestBouncyCastle("SHA-256", input);
 
 		case "SHA1":
-			return digestBouncyCastle("SHA1", inputs.get(inputOrder[0]));
+			input = inputs.get(inputOrder[1]);
+			input_len = Util.byteArrayToInt(inputs.get(inputOrder[0]));
+			if (input_len == 0) {
+				input = new byte[0];
+			}
+			return digestBouncyCastle("SHA1", input);
 
 		case "SHA224":
-			return digestBouncyCastle("SHA-224", inputs.get(inputOrder[0]));
+			input = inputs.get(inputOrder[1]);
+			input_len = Util.byteArrayToInt(inputs.get(inputOrder[0]));
+			if (input_len == 0) {
+				input = new byte[0];
+			}
+			return digestBouncyCastle("SHA-224", input);
 
 		case "SHA384":
-			return digestBouncyCastle("SHA-384", inputs.get(inputOrder[0]));
+			input = inputs.get(inputOrder[1]);
+			input_len = Util.byteArrayToInt(inputs.get(inputOrder[0]));
+			if (input_len == 0) {
+				input = new byte[0];
+			}
+			return digestBouncyCastle("SHA-384", input);
 
 		case "SHA512":
-			return digestBouncyCastle("SHA-512", inputs.get(inputOrder[0]));
+			input = inputs.get(inputOrder[1]);
+			input_len = Util.byteArrayToInt(inputs.get(inputOrder[0]));
+			if (input_len == 0) {
+				input = new byte[0];
+			}
+			return digestBouncyCastle("SHA-512", input);
 
 		case "AES/CBC/ENC":
 			return cipherBouncyCastle("AES/CBC/NoPadding", Cipher.ENCRYPT_MODE,
@@ -1165,6 +1190,10 @@ public class Output {
 			md0 = md1;
 			md1 = md2;
 			md2 = digestBouncyCastle(bcAlgorithm, md);
+			if (md2.length != seed.length) {
+				// something went wrong
+				break;
+			}
 		}
 		
 		inputs.set(inputOrder[0], md2);
@@ -1184,7 +1213,7 @@ public class Output {
 	public static final byte[] monteCarloRNG(final String algorithm,
 			final List<byte[]> inputs, final int[] inputOrder) {
 		if (!algorithm.startsWith("RNG/")) {
-			throw new RuntimeException("monteCarloRNG can only be called for SHA tests!");
+			throw new RuntimeException("monteCarloRNG can only be called for RNG tests!");
 		} 
 		
 		String suffix = algorithm.substring(4);

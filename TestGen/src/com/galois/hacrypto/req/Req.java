@@ -216,7 +216,12 @@ public class Req {
 					rspSb.append(" = ");
 					// Output.monteCarlo _changes_ the contents of args for
 					// the next run!
-					rspSb.append(Util.byteArrayToHexString(Output.getMonteCarloOutput(func, args, argOrder)));
+					byte[] result = Output.getMonteCarloOutput(func, args, argOrder);
+					if (result.length == 0) {
+						rspSb.append("? (no result due to algorithm issue)");
+					} else {
+						rspSb.append(Util.byteArrayToHexString(result));
+					}
 					rspSb.append("\n");
 					if (count < repetitions - 1) {
 						rspSb.append("\n");
@@ -339,8 +344,16 @@ public class Req {
 				String inputName = getStringProperty("name" + suff2, i);
 				String inputType = getStringProperty("type" + suff2, i,
 						"no type available: input" + i + "_type" + suff2);
-
-				ListInput li = new ListInput(inputName, isIntType(inputType), Input.YES);
+				String showInOutputString =
+						getStringProperty("showinoutput" + suff2, i, "yes");
+				int showInOutput = Input.YES;
+				switch (showInOutputString.toLowerCase()) {
+					case "no": showInOutput = Input.NO; break;
+					case "once": showInOutput = Input.ONCE; break;
+					default:
+				}
+ 
+				ListInput li = new ListInput(inputName, isIntType(inputType), showInOutput);
 				addInput(i, li);
 				ret.put(inputName, li); // TODO: this only supports unique input
 										// names
