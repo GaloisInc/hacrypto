@@ -1,0 +1,49 @@
+header = # Galois CAVP (VERSION)\n# AESVS MCT test data for ECB\n# State : Encrypt and Decrypt\n# Key Length : 192\n# (DATE)
+inputs = 3
+
+input0_name = COUNT
+input0_type = COUNT
+input0_max = 0
+
+input1_name = KEY
+input1_type = random
+input1_minlength = 192 
+input1_maxlength = 192
+
+#mult means there are multiple inputs. Each of the inputs needs to be finite
+input2_mult = 2
+comment0 = ENCRYPT
+input2_name0 = PLAINTEXT
+input2_type0 = RANDOM
+input2_minlength0 = 128
+input2_maxlength0 = 128
+input2_ct0 = 1
+
+comment1 = DECRYPT
+input2_name1 = CIPHERTEXT
+input2_type1 = RANDOM
+input2_minlength1 = 128
+input2_maxlength1 = 128
+input2_ct1 = 1
+
+output0_name = CIPHERTEXT
+#this specifies the input that this output ends on... output 1 begins after it
+output0_end = 2
+output0_args = 3
+output0_arg0 = 0
+output0_arg1 = 1
+output0_arg2 = 2
+output0_type = MonteCarlo
+output0_count = 0
+output0_repetitions = 100
+output0_function = AES/ECB/ENC
+
+output1_name = PLAINTEXT
+output1_args = 3
+output1_arg0 = 0
+output1_arg1 = 1
+output1_arg2 = 2
+output1_type = MonteCarlo
+output1_count = 0
+output1_repetitions = 100
+output1_function = AES/ECB/DEC

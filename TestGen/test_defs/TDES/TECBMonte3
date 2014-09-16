@@ -1,0 +1,60 @@
+header = # Galois CAVP (VERSION) \n# TDES Monte Carlo (Modes) Test for ECB\n# State: Encrypt and Decrypt\n# (DATE)
+inputs = 4
+
+input0_name = KEY1
+input0_type = random
+input0_parity = odd
+input0_minlength = 64 
+input0_maxlength = 64
+
+input1_name = KEY2
+input1_type = random
+input1_parity = odd
+input1_minlength = 64
+input1_maxlength = 64
+
+input2_name = KEY3
+input2_type = random
+input2_parity = odd
+input2_minlength = 64
+input2_maxlength = 64
+
+#mult means there are multiple inputs. Each of the inputs needs to be finite
+input3_mult = 2
+comment0 = ENCRYPT
+extraparam0 = NumKeys = 3
+input3_name0 = PLAINTEXT
+input3_type0 = RANDOM
+input3_minlength0 = 64
+input3_maxlength0 = 64
+input3_ct0 = 1
+
+comment1 = DECRYPT
+extraparam1 = NumKeys = 3
+input3_name1 = CIPHERTEXT
+input3_type1 = RANDOM
+input3_minlength1 = 64
+input3_maxlength1 = 64
+input3_ct1 = 1 
+
+output0_name = CIPHERTEXT
+#this specifies the input that this output ends on... output 1 begins after it
+output0_end = 3
+output0_args = 4
+output0_arg0 = 0
+output0_arg1 = 1
+output0_arg2 = 2
+output0_arg3 = 3
+output0_type = MonteCarlo
+output0_repetitions = 400
+output0_function = TDES/ECB/ENC
+
+output1_name = PLAINTEXT
+output1_args = 4
+output1_arg0 = 0
+output1_arg1 = 1
+output1_arg2 = 2
+output1_arg3 = 3
+output1_type = MonteCarlo
+output1_repetitions = 400
+output1_function = TDES/ECB/DEC

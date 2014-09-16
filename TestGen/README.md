@@ -8,7 +8,10 @@ a .req and a .rsp file containing the input and output file for the test.
 ## How to generate tests
 
 Load the project up in eclipse. It is a standalone project, so you will
-need to create a workspace and then import it as an existing project.
+need to create a workspace and then import it as an existing project. In order
+to enable many of the algorithms we need you must also install 
+[Unlimited strength policies](http://www.oracle.com/technetwork/java/javase/downloads/jce-7-download-432124.html)
+to your JRE.
 
 Example test definition files are  in the [test_defs](test_defs) folder. 
 Running the "Test" configuration an output folder in the callsha directory.
@@ -57,7 +60,115 @@ The Language_tests file has the following form
 
 ### Test definition files
 
-The test definition files allow specification of the NIST tests for FIPS. An annoted
+##How Test Definitions work
+Test definitions appear as a series of key value equalities. 
+There must always be a definition
+
+	inputs = <inputCt> 
+
+where inputCt gives the number of inputs that are declared. The definitions take the form
+
+	input<n>_<property><m> = <value>
+
+- **n** gives the number of the test. These range from 0 .. inputCt-1
+- **property** can have a variety of values. These are mentioned in the Test Types section
+- **m** some inputs are made up of multiple inputs. If this is the case m is given to specify which of them this input refers to
+- **value** possible values are discussed along with their properties in the next section.
+
+An input can be either finite or infinite. Inputs will continue to be generated until some finite input finishes. For inputs
+made of multiple other inputs, once the current input runs out, the next one will be used.
+
+##Test types
+
+This is a list of the available test types and their properties. Any integer values default to 0.
+input types appear with a definition input<n>_type. All
+inputs have the **name** property which gives the name that will be printed before the input
+in the output files. Unless specified all lengths are given in bits
+
+- **length** prints the length of another argument. That argument must be a byte string
+	* **lengthof** gives the number of the input that this length input prints the length of
+	  so if we want the length of an input ```input0_type =...``` we would write ```lengthof = 0```
+	* **unit** can be used to specify that the length should be printed in bytes with ```unit = bytes```	
+
+- **random** prints a random byte string in hex.
+	* **minlength** minimum length of the generated string
+	* **maxlength** maximum length of the generated string. If this is less than minlength all generates strings
+	  will be of length minLength
+	* **ct** number of tests to create. If 0 is given an unlimited number of tests will be generated
+
+- **increase** prints random byte strings of increasing length
+	* **minlength** length to start generating at
+	* **maxlength** maximum length of the generated string. If a string would be longer, it will start back at minlength
+	* **stepsize** how many bits to increase the size of each output by
+
+- **randomsequence** prints a random byte string of length defined by an integer sequence
+	* **sequence** takes the form ```[<i1>, <i2>, ..., <in>]``` and specifies a sequence of lengths in bits
+	* **repeat** number of times to repeat the sequence. A value of 0 will repeat forever
+	* **changeEvery** how many outputs to print before changing to the next length in the sequence 
+
+- **count** increasing integers
+	* **min** where to start the count
+	* **max** the count will be modulo the max
+	
+- **rngv** a special input used to generate the V value for the RNG test
+
+- **fixed** generates a byte value that changes by incrementing (possibly by 0)
+	* **number** number of inputs to generate. 0 means unlimited
+	* **value** specifies the starting value as a hex string. If no value is given you must specify length
+	* **length** optional if value is specified. The length of the input. If no value has been specified a random value of this length will be generated
+	* **increment** a base 10 integer specifying how much to increment the hex string by each time. Increment treats the byte string as big-endian
+
+- **sequence** a sequence of integers
+	* **values** the sequence of integer values to print. takes the form ```[<i1>, <i2>, ..., <in>]```
+	* **repeat** number of times to repeat the sequence. A value of 0 will repeat forever
+	* **changeEvery** how many inputs to print before changing to the next value in the sequence
+	
+- **copy** a copy of another byte input
+	* **copyof** the int identifier of the input to copy
+
+##Outputs
+Multiple outputs can be specified per file, but only one is generated at a time. An output can be linked to an input and when that input is finished, the output
+will change to the next one as well. An output also specifies the order that arguments should be given to the java implementation of the function.
+
+outputs have the followint properties
+
+- **name** like name for inputs. Printed before the output in the .rsp file
+- **args** the number of arguments given to the output function
+- **arg**_n_ for n=0..args-1 the input number to be given as the nth input the the Java function specified by the output
+- **function** the function to use for the output. The current list of functions follows.
+
+The functions that can currently be used are as follows
+
+* SHA1 
+* SHA256 
+* SHA224 
+* SHA384 
+* SHA512 
+* AES/CBC/ENC
+* AES/CBC/DEC 
+* AES/CFB128/ENC 
+* AES/CFB128/DEC 
+* AES/CFB8/ENC 
+* AES/CFB8/DEC
+* AES/ECB/ENC 
+* AES/ECB/DEC 
+* AES/OFB/ENC 
+* AES/OFB/DEC
+* RNG/AES
+* HMAC
+
+##Comments
+
+It is possible to insert square bracket comments before the nth test. You do this with a definition of the form
+
+	comment0 = L=20
+
+Meaning that before test 0, a comment ```L=20``` will be generated. You can see an example of this in the HMAC test
+definitions.
+
+##Example file
+
+The test definition files allow specification of the NIST tests for FIPS. An annotated
 test definition for AES follows. Line order does not matter:
 
 	#the number of inputs
@@ -102,14 +213,14 @@ test definition for AES follows. Line order does not matter:
 	input3_stepsize0 = 128 
 	
 	#input3_1 will be used when input3_0 is finished
-	input3_name1 = CYPHERTEXT
+	input3_name1 = CIPHERTEXT
 	input3_type1 = increase
 	input3_minlength1 = 128
 	input3_maxlength1 = 1280
 	input3_stepsize1 = 128 
 	
 	# there can be one output at a time for any test
-	output0_name = CYPHERTEXT
+	output0_name = CIPHERTEXT
 	# this specifies the input that this output ends with... output 1 begins after it
 	# so we will switch outputs when input3_0 switches to input3_1
 	output0_end = 3
@@ -135,7 +246,8 @@ More example files can be found in the test_defs folder
 
 ##Generated tests
 
-The output is a directory (currently only inside of callsha) containing
+The output is a directory containing
+   * A directory called req and a directory called rsp. These contain the generated test files with names matching the input files that specify them
    * One file `<primitive>`_`<implementation>`_KAT.c for each primitive/implementation
      being tested with KAT
    * One file `<primitive>`_compare.c for each primitive with a comparison test

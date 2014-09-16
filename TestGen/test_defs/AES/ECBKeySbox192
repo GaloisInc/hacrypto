@@ -1,0 +1,41 @@
+header = # Galois CAVP (VERSION)\n# AESVS Known Answer Test (Any Type) for ECB\n# State : Encrypt and Decrypt\n# Key Length : 128\n# (DATE)
+inputs = 3
+
+input0_name = COUNT
+input0_type = COUNT
+input0_max = 23
+
+input1_name = KEY
+input1_type = random
+input1_minlength = 128 
+input1_maxlength = 128
+
+#mult means there are multiple inputs. Each of the inputs needs to be finite
+input2_mult = 2
+comment0 = ENCRYPT
+input2_name0 = PLAINTEXT
+input2_type0 = RANDOM
+input2_minlength0 = 128
+input2_maxlength0 = 128
+input2_ct0 = 1
+
+comment24 = DECRYPT
+input2_name1 = CIPHERTEXT
+input2_type1 = RANDOM
+input2_minlength1 = 128
+input2_maxlength1 = 128
+input2_ct1 = 1
+
+output0_name = CIPHERTEXT
+#this specifies the input that this output ends on... output 1 begins after it
+output0_end = 2
+output0_args = 2
+output0_arg0 = 1
+output0_arg1 = 2
+output0_function = AES/ECB/ENC
+
+output1_name = PLAINTEXT
+output1_args = 2
+output1_arg0 = 1
+output1_arg1 = 2
+output1_function = AES/ECB/DEC

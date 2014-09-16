@@ -1,0 +1,21 @@
+header = # Galois CAVP (VERSION)\n# "SHA-512 Monte" test data\n# SHA-512 tests are configured for BYTE oriented implementations\n# (DATE)
+
+inputs = 1
+
+input0_name = Seed
+input0_type = RANDOM
+input0_minlength = 512
+input0_maxlength = 512
+input0_ct = 1
+input0_showinoutput = once
+
+outputs = 1
+
+output0_name = MD
+output0_args = 1
+output0_arg0 = 0
+output0_type = MonteCarlo
+output0_repetitions = 100
+output0_function = SHA512
+
+comment0 = L = 64
