@@ -29,6 +29,6 @@ int cryptodev_session_op(struct session_op session, int cryptofd, struct crypt_o
 
 int cryptodev_end_session(struct session_op session, int cryptofd) {
 	int success = !ioctl(cryptofd, CIOCFSESSION, &session.ses);
-	    success = success && close(cryptofd);
+	    success = success && !close(cryptofd);
 	return success;
 }
