@@ -308,6 +308,8 @@ public class Req {
 		p = new Properties();
 		FileInputStream in = new FileInputStream(defFileName);
 		p.load(in);
+		// clear the Galois header
+		p.remove("header");
 		in.close();
 		
 		Scanner scan = new Scanner(new File(reqFileName));
@@ -376,24 +378,31 @@ public class Req {
 	}
 	
 	private void parseReqLine(String line, Map<String, ListInput> inputMap) {
-		if (line.length() == 0 || line.charAt(0) == '#' || line.charAt(0) == '[') {
-			return; // don't need to do anything with these because they are are
-					// in the test_def
-		}
-		String[] kv = line.split(" = ");
-		String name = kv[0];
-		String value = kv[1];
-
-		if (!inputMap.containsKey(name)) {
-			throw new RuntimeException("Could not find input " + name
-					+ " in input map");
-		}
-
-		ListInput li = inputMap.get(name);
-		if (li.isInt()) {
-			li.addInput(Integer.parseInt(value.trim()));
-		} else {
-			li.addInput(Util.hexStringToByteArray(value.trim()));
+		if (line.length() != 0 && line.charAt(0) == '#') {
+			// we include the header comment verbatim, replacing the one from our
+			// template file
+			if (p.getProperty("header") == null) {
+				p.setProperty("header", line);
+			} else {
+				// append to the header
+				p.setProperty("header", p.getProperty("header") + "\n" + line);
+			}
+		} else if (line.length() != 0 && line.charAt(0) != '[' && line.contains(" = ")) {
+			String[] kv = line.split(" = ");
+			String name = kv[0];
+			String value = kv[1];
+	
+			if (!inputMap.containsKey(name)) {
+				throw new RuntimeException("Could not find input " + name
+						+ " in input map");
+			}
+	
+			ListInput li = inputMap.get(name);
+			if (li.isInt()) {
+				li.addInput(Integer.parseInt(value.trim()));
+			} else {
+				li.addInput(Util.hexStringToByteArray(value.trim()));
+			}
 		}
 	}
 
