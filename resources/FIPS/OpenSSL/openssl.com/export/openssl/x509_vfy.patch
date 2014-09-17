@@ -1,0 +1,28 @@
+--- crypto/x509/@x509_vfy.c	2008-07-13 10:33:15.000000000 -0400
++++ crypto/x509/x509_vfy.c	2010-02-25 09:09:42.000000000 -0500
+@@ -152,6 +152,25 @@
+ 		xn=X509_get_issuer_name(x);
+ 		if (ctx->check_issued(ctx, x,x)) break;
+ 
++		/* If asked see if we can find issuer in trusted store first */
++		/* Homegrown backport of Steve Henson patch
++			http://cvs.openssl.org/filediff?f=openssl/crypto/x509/x509_vfy.c&v1=1.116&v2=1.117
++		*/
++		if (1)
++			{
++			ok = ctx->get_issuer(&xtmp, ctx, x);
++			if (ok < 0)
++				return ok;
++			/* If successful for now free up cert so it
++			 * will be picked up again later.
++			 */
++			if (ok > 0)
++				{
++				X509_free(xtmp);
++				break;
++				}
++			}
++  
+ 		/* If we were passed a cert chain, use it first */
+ 		if (ctx->untrusted != NULL)
+ 			{

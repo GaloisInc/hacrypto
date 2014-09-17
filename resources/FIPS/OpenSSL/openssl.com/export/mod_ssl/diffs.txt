@@ -1,0 +1,169 @@
+Index: modules/ssl/mod_ssl.c
+===================================================================
+--- modules/ssl/mod_ssl.c	(revision 1418139)
++++ modules/ssl/mod_ssl.c	(working copy)
+@@ -272,6 +272,11 @@
+                 "SSL stapling option to Force the OCSP Stapling URL")
+ #endif
+ 
++#ifdef HAVE_SSL_CONF_CMD
++    SSL_CMD_SRV(OpenSSLConfCmd, TAKE2,
++		"OpenSSL configuration parameter")
++#endif
++
+     /* Deprecated directives. */
+     AP_INIT_RAW_ARGS("SSLLog", ap_set_deprecated, NULL, OR_ALL,
+       "SSLLog directive is no longer supported - use ErrorLog."),
+Index: modules/ssl/ssl_private.h
+===================================================================
+--- modules/ssl/ssl_private.h	(revision 1418139)
++++ modules/ssl/ssl_private.h	(working copy)
+@@ -144,6 +144,10 @@
+ #define HAVE_TLS_NPN
+ #endif
+ 
++#ifdef SSL_CONF_FLAG_CMDLINE
++#define HAVE_SSL_CONF_CMD
++#endif
++
+ #if (OPENSSL_VERSION_NUMBER >= 0x10000000)
+ #define MODSSL_SSL_CIPHER_CONST const
+ #define MODSSL_SSL_METHOD_CONST const
+@@ -620,6 +624,13 @@
+ } modssl_ticket_key_t;
+ #endif
+ 
++#ifdef HAVE_SSL_CONF_CMD
++typedef struct {
++    const char *name;
++    const char *value;
++} ssl_ctx_param_t;
++#endif
++
+ typedef struct SSLSrvConfigRec SSLSrvConfigRec;
+ 
+ typedef struct {
+@@ -681,7 +692,9 @@
+     long ocsp_resptime_skew;
+     long ocsp_resp_maxage;
+     apr_interval_time_t ocsp_responder_timeout;
+-
++#ifdef HAVE_SSL_CONF_CMD
++    apr_array_header_t *ssl_ctx_param; /* parameters to pass to SSL_CTX */
++#endif
+ } modssl_ctx_t;
+ 
+ struct SSLSrvConfigRec {
+@@ -803,6 +816,8 @@
+ const char *ssl_cmd_SSLOCSPResponderTimeout(cmd_parms *cmd, void *dcfg, const char *arg);
+ const char *ssl_cmd_SSLOCSPEnable(cmd_parms *cmd, void *dcfg, int flag);
+ 
++const char *ssl_cmd_SSLOpenSSLConfCmd(cmd_parms *cmd, void *dcfg, const char *arg1, const char *arg2);
++
+ #ifndef OPENSSL_NO_SRP
+ const char *ssl_cmd_SSLSRPVerifierFile(cmd_parms *cmd, void *dcfg, const char *arg);
+ const char *ssl_cmd_SSLSRPUnknownUserSeed(cmd_parms *cmd, void *dcfg, const char *arg);
+Index: modules/ssl/ssl_engine_init.c
+===================================================================
+--- modules/ssl/ssl_engine_init.c	(revision 1418139)
++++ modules/ssl/ssl_engine_init.c	(working copy)
+@@ -687,6 +687,26 @@
+     SSL_CTX_set_options(ctx, SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION);
+ #endif
+ 
++#ifdef HAVE_SSL_CONF_CMD
++{
++    ssl_ctx_param_t *param = (ssl_ctx_param_t *)mctx->ssl_ctx_param->elts;
++    SSL_CONF_CTX *cctx;
++    int i;
++    cctx = SSL_CONF_CTX_new();
++    SSL_CONF_CTX_set_flags(cctx, SSL_CONF_FLAG_FILE|SSL_CONF_FLAG_SERVER);
++    SSL_CONF_CTX_set_ssl_ctx(cctx, ctx);
++    for (i = 0; i < mctx->ssl_ctx_param->nelts; i++, param++) {
++        if (SSL_CONF_CTX_ctrl_str(cctx, param->name, param->value) <= 0) {
++            ap_log_error(APLOG_MARK, APLOG_EMERG, 0, s, APLOGNO(02211)
++                    "Error SSL_CTX_ctrl_str(%s,%s)", param->name, param->value);
++            ssl_log_ssl_error(SSLLOG_MARK, APLOG_EMERG, s);
++            ssl_die(s);
++        }    
++    }
++    SSL_CONF_CTX_free(cctx);
++}
++#endif
++
+ #ifdef SSL_MODE_RELEASE_BUFFERS
+     /* If httpd is configured to reduce mem usage, ask openssl to do so, too */
+     if (ap_max_mem_free != APR_ALLOCATOR_MAX_FREE_UNLIMITED)
+Index: modules/ssl/ssl_engine_config.c
+===================================================================
+--- modules/ssl/ssl_engine_config.c	(revision 1418139)
++++ modules/ssl/ssl_engine_config.c	(working copy)
+@@ -100,7 +100,7 @@
+ **  _________________________________________________________________
+ */
+ 
+-static void modssl_ctx_init(modssl_ctx_t *mctx)
++static void modssl_ctx_init(modssl_ctx_t *mctx, apr_pool_t *p)
+ {
+     mctx->sc                  = NULL; /* set during module init */
+ 
+@@ -159,6 +159,9 @@
+     mctx->srp_unknown_user_seed = NULL;
+     mctx->srp_vbase =             NULL;
+ #endif
++#ifdef HAVE_SSL_CONF_CMD
++    mctx->ssl_ctx_param = apr_array_make(p, 10, sizeof(ssl_ctx_param_t));
++#endif
+ }
+ 
+ static void modssl_ctx_init_proxy(SSLSrvConfigRec *sc,
+@@ -168,7 +171,7 @@
+ 
+     mctx = sc->proxy = apr_palloc(p, sizeof(*sc->proxy));
+ 
+-    modssl_ctx_init(mctx);
++    modssl_ctx_init(mctx, p);
+ 
+     mctx->pkp = apr_palloc(p, sizeof(*mctx->pkp));
+ 
+@@ -186,7 +189,7 @@
+ 
+     mctx = sc->server = apr_palloc(p, sizeof(*sc->server));
+ 
+-    modssl_ctx_init(mctx);
++    modssl_ctx_init(mctx, p);
+ 
+     mctx->pks = apr_pcalloc(p, sizeof(*mctx->pks));
+ 
+@@ -293,6 +296,11 @@
+     cfgMergeString(srp_vfile);
+     cfgMergeString(srp_unknown_user_seed);
+ #endif
++
++#ifdef HAVE_SSL_CONF_CMD
++    apr_array_cat(mrg->ssl_ctx_param,  base->ssl_ctx_param);
++    apr_array_cat(mrg->ssl_ctx_param,  add->ssl_ctx_param);
++#endif
+ }
+ 
+ static void modssl_ctx_cfg_merge_proxy(modssl_ctx_t *base,
+@@ -1848,7 +1856,18 @@
+ }
+ 
+ #endif /* HAVE_OCSP_STAPLING */
+-
++#ifdef HAVE_SSL_CONF_CMD
++const char *ssl_cmd_SSLOpenSSLConfCmd(cmd_parms *cmd, void *dcfg,
++					const char *arg1, const char *arg2)
++{
++    ssl_ctx_param_t *param;
++    SSLSrvConfigRec *sc = mySrvConfig(cmd->server);
++    param = apr_array_push(sc->server->ssl_ctx_param);
++    param->name = arg1;
++    param->value = arg2;
++    return NULL;
++}
++#endif
+ #ifndef OPENSSL_NO_SRP
+ 
+ const char *ssl_cmd_SSLSRPVerifierFile(cmd_parms *cmd, void *dcfg,
