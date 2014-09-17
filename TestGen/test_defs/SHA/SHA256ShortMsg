@@ -16,9 +16,10 @@ input1_stepsize = 8
 outputs = 1
 
 output0_name = MD
-output0_args = 1
+output0_args = 2
 #number here refers to the input number
-output0_arg0 = 1
+output0_arg0 = 0
+output0_arg1 = 1
 output0_function = SHA256
 
 comment0 = L = 32
