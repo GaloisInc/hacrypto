@@ -354,7 +354,6 @@ public class RunDSATests {
 								throw new RuntimeException("Unexpected algorithm: " + testparams.alg);
 						}
 					} catch (final Throwable cnfe) {
-						System.err.println("Class not found for algorithm " + testparams.alg + ", skipping tests");
 						the_output.println("P = ? (algorithm " + testparams.alg + " not available)");
 						the_output.println("Q = ? (algorithm " + testparams.alg + " not available)");
 						the_output.println("domain_parameter_seed = ? (algorithm " + testparams.alg + " not available)");
@@ -548,7 +547,6 @@ public class RunDSATests {
 								throw new RuntimeException("Unexpected algorithm: " + testparams.alg);
 						}
 					} catch (final Throwable cnfe) {
-						System.err.println("Class not found for algorithm " + testparams.alg + ", skipping tests");
 						the_output.println("G = ? (test skipped, " + testparams.alg + " not available)\n");
 						the_output.flush();
 						continue;
@@ -649,7 +647,6 @@ public class RunDSATests {
 								throw new RuntimeException("Unexpected algorithm: " + testparams.alg);
 						}
 					} catch (final Throwable cnfe) {
-						System.err.println("Class not found for algorithm " + testparams.alg + ", skipping tests");
 						out.println(last);
 						out.println("Y = ? (test skipped, " + testparams.alg + " not available)");
 						out.println("R = ? (test skipped, " + testparams.alg + " not available)");
@@ -797,12 +794,12 @@ public class RunDSATests {
 								throw new RuntimeException("Unexpected algorithm: " + testparams.alg);
 						}
 					} catch (final Throwable cnfe) {
-						System.err.println("Class not found for algorithm " + testparams.alg + ", skipping tests");
-						out.println("\n\n\n\n\n");
-						out.flush();
+						out.println(last);
 						while (!last.toUpperCase().startsWith("S")) {
 							last = sc.nextLine();
+							out.println(last);
 						}
+						out.println("Result = ? (algorithm " + testparams.alg + " not available)\n");
 						last = "";
 						while (sc.hasNextLine() && last.trim().length() == 0) {
 							last = sc.nextLine();

@@ -1,4 +1,0 @@
-User-agent: *
-Disallow: /svn/
-Disallow: /testing/
-Disallow: /export/httpd-patches/

@@ -961,53 +961,97 @@ public class Output {
 				break;
 				
 			case "CBC":
-				byte[][] cvs = new byte[10001][];
-				byte[][] ps = new byte[10001][];
-				byte[][] cs = new byte[10001][];
-				
-				combinedKey = combinedKey(key1, key2, key3);
-				Cipher cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, iv);
-				cvs[0] = iv;
-				ps[0] = text;
-				
-				for (int j = 0; j < 10000; j++) {
-					cs[j] = cipher.update(ps[j]);
-					if (j == 0) {
-						ps[1] = cvs[0];
-					} else {
-						ps[j + 1] = cs[j - 1];
+				if (direction == Cipher.ENCRYPT_MODE) {
+					byte[][] cvs = new byte[10001][];
+					byte[][] ps = new byte[10001][];
+					byte[][] cs = new byte[10001][];
+					
+					combinedKey = combinedKey(key1, key2, key3);
+					Cipher cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, iv);
+					cvs[0] = iv;
+					ps[0] = text;
+					
+					for (int j = 0; j < 10000; j++) {
+						cs[j] = cipher.update(ps[j]);
+						if (j == 0) {
+							ps[1] = cvs[0];
+						} else {
+							ps[j + 1] = cs[j - 1];
+						}
+						cvs[j + 1] = cs[j];
 					}
-					cvs[j + 1] = cs[j];
-				}
-				
-				// modified key depends on keying type
-				
-				newKey1 = Util.xor(key1, cs[9999]); 
-				
-				if (Arrays.equals(key1, key2)) {
-					newKey2 = Util.xor(key2, cs[9999]);
+					
+					// modified key depends on keying type
+					
+					newKey1 = Util.xor(key1, cs[9999]); 
+					
+					if (Arrays.equals(key1, key2)) {
+						newKey2 = Util.xor(key2, cs[9999]);
+					} else {
+						newKey2 = Util.xor(key2, cs[9998]);
+					}
+					
+					if (Arrays.equals(key1, key3)) {
+						newKey3 = Util.xor(key3, cs[9999]);
+					} else {
+						newKey3 = Util.xor(key3, cs[9997]);
+					}
+					
+					Util.adjustParity(newKey1);
+					Util.adjustParity(newKey2);
+					Util.adjustParity(newKey3);
+					
+					inputs.set(inputOrder[0], newKey1);
+					inputs.set(inputOrder[1], newKey2);
+					inputs.set(inputOrder[2], newKey3);
+					inputs.set(inputOrder[3], cs[9999]);
+					inputs.set(inputOrder[4], cs[9998]);
+					result = cs[9999];
+					break;
 				} else {
-					newKey2 = Util.xor(key2, cs[9998]);
+					// decrypt mode
+					byte[][] cvs = new byte[10001][];
+					byte[][] cs = new byte[10001][];
+					
+					combinedKey = combinedKey(key1, key2, key3);
+					Cipher cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, iv);
+					cvs[0] = iv;
+					cs[0] = text;
+					
+					for (int j = 0; j < 10000; j++) {
+						byte[] oj = cipher.update(cs[j]);
+						cs[j + 1] = oj;
+						cvs[j + 1] = cs[j];
+					}
+					
+					// modified key depends on keying type
+					
+					newKey1 = Util.xor(key1, cs[10000]); 
+					
+					if (Arrays.equals(key1, key2)) {
+						newKey2 = Util.xor(key2, cs[10000]);
+					} else {
+						newKey2 = Util.xor(key2, cs[9999]);
+					}
+					
+					if (Arrays.equals(key1, key3)) {
+						newKey3 = Util.xor(key3, cs[10000]);
+					} else {
+						newKey3 = Util.xor(key3, cs[9998]);
+					}
+					
+					Util.adjustParity(newKey1);
+					Util.adjustParity(newKey2);
+					Util.adjustParity(newKey3);
+					
+					inputs.set(inputOrder[0], newKey1);
+					inputs.set(inputOrder[1], newKey2);
+					inputs.set(inputOrder[2], newKey3);
+					inputs.set(inputOrder[3], cs[9999]);
+					inputs.set(inputOrder[4], cs[10000]);
+					result = cs[10000];
+					break;					
 				}
-				
-				if (Arrays.equals(key1, key3)) {
-					newKey3 = Util.xor(key3, cs[9999]);
-				} else {
-					newKey3 = Util.xor(key3, cs[9997]);
-				}
-				
-				Util.adjustParity(newKey1);
-				Util.adjustParity(newKey2);
-				Util.adjustParity(newKey3);
-				
-				inputs.set(inputOrder[0], newKey1);
-				inputs.set(inputOrder[1], newKey2);
-				inputs.set(inputOrder[2], newKey3);
-				inputs.set(inputOrder[3], cs[9999]);
-				inputs.set(inputOrder[4], cs[9998]);
-				result = cs[9999];
-				break;
-				
 						
 			case "OFB":
 				byte[] text0 = text;
@@ -1015,7 +1059,7 @@ public class Output {
 				byte[] empty = new byte[iv.length];
 				
 				combinedKey = combinedKey(key1, key2, key3);
-				cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, iv);
+				Cipher cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, iv);
 				for (int j = 0; j < 10000; j++) {
 					byte[] out = cipher.update(empty);
 					result = Util.xor(out, text);
