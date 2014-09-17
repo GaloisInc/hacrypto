@@ -1,0 +1,119 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <title>OpenSSL Software Foundation, Inc.</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <meta name="resource-type" content="document">
+  <meta name="description" content="OpenSSL Software Foundation home page">
+  <meta name="keywords" content="OSF">
+  <meta name="distribution" content="global">
+  <meta name="copyright" content="Copyright 2009-2014 by OSF">
+</head>
+<body topmargin="0" leftmargin="0" marginheight="0" marginwidth="0" text="#000000" bgcolor="#ffffff">
+<table height="100%" width="100%" border="0" cellpadding="1" cellspacing="0" summary="">
+<tbody>
+  <tr>
+    <td rowspan="2" valign="top" bgcolor="#b0b0b0">
+      <br>
+      <table cellspacing="0" cellpadding="0" border="0" summary="">
+<a href="../index.html" onmouseover="self.status = '../'; return true" onmouseout="self.status = ''; return true" onfocus="self.status = '../'; return true" onblur="self.status = ''; return true"><b><big>Home</big></b><br></a>
+  </table>
+      <p><hr></p>
+      <b><big>About OSF</big></b><br>
+      <table cellspacing="0" cellpadding="0" border="0" summary="">
+&nbsp;<a href="../what.html" onmouseover="self.status = '../what.html'; return true" onmouseout="self.status = ''; return true" onfocus="self.status = '../what.html'; return true" onblur="self.status = ''; return true">What We Do<br></a>&nbsp;<a href="../who.html" onmouseover="self.status = '../who.html'; return true" onmouseout="self.status = ''; return true" onfocus="self.status = '../who.html'; return true" onblur="self.status = ''; return true">Who We Are<br></a>&nbsp;<a href="../contact.html" onmouseover="self.status = '../contact.html'; return true" onmouseout="self.status = ''; return true" onfocus="self.status = '../contact.html'; return true" onblur="self.status = ''; return true">Contact Info<br></a>
+  </table>
+      <p><hr></p>
+      <b><big>Resources</big></b><br>
+      <table cellspacing="0" cellpadding="0" border="0" summary="">
+&nbsp;<a href="http://openssl.org" onmouseover="self.status = 'http://openssl.org'; return true" onmouseout="self.status = ''; return true" onfocus="self.status = 'http://openssl.org'; return true" onblur="self.status = ''; return true">OpenSSL<br></a>&nbsp;<a href="../download.html" onmouseover="self.status = '../download.html'; return true" onmouseout="self.status = ''; return true" onfocus="self.status = '../download.html'; return true" onblur="self.status = ''; return true">Download<br></a>&nbsp;<a href="index.html" onmouseover="self.status = '../fips/'; return true" onmouseout="self.status = ''; return true" onfocus="self.status = '../fips/'; return true" onblur="self.status = ''; return true">FIPS&nbsp;140-2<br></a>&nbsp;<a href="http://openssl.com/testing/" onmouseover="self.status = '../testing/'; return true" onmouseout="self.status = ''; return true" onfocus="self.status = '../testing/'; return true" onblur="self.status = ''; return true">Testing<br></a>&nbsp;<a href="../data/index.html" onmouseover="self.status = '../data/'; return true" onmouseout="self.status = ''; return true" onfocus="self.status = '../data/'; return true" onblur="self.status = ''; return true">Data&nbsp;Archives<br></a>&nbsp;<a href="../export/index.html" onmouseover="self.status = '../export/'; return true" onmouseout="self.status = ''; return true" onfocus="self.status = '../export/'; return true" onblur="self.status = ''; return true">Export<br></a>&nbsp;<a href="../mirrors.html" onmouseover="self.status = '../mirrors.html'; return true" onmouseout="self.status = ''; return true" onfocus="self.status = '../mirrors.html'; return true" onblur="self.status = ''; return true">Mirrors<br></a>
+  </table>
+      <p><br></p>
+    </td>
+    <td rowspan="2" bgcolor="#7f7f7f"><font size="1">&nbsp;</font>
+    </td>
+    <td valign="top" bgcolor="#ffffff"><div align="center">
+	
+<title>OpenSSL Software Foundation, Inc.</title>
+<img src="../images/verifycd.jpg" align="left" border="0" alt="image of CD label" width="200" height="200">
+<h1>FIPS 140-2 verification of the OpenSSL FIPS Object Module source distribution file</h1>
+<p>
+<div align="left">
+The latest of the OpenSSL FIPS Object Module ("FIPS module") FIPS 140-2 validations saw the introduction of a new requirement
+by the CMVP:
+<blockquote>
+<em>
+The distribution tar file, shall be verified using an independently acquired FIPS 140-2 validated cryptographic module...
+</em>
+</blockquote>
+Some prospective users of the OpenSSL FIPS Object Module 2.0 already have ready access to an existing
+securely installed<small><sup>1</sup></small>
+software product
+using FIPS 140-2 validated cryptography that is capable of calculating the HMAC-SHA-1 digest of a file on disk, in
+which case satisfying this requirement is easy (simply calculate the HMAC-SHA-1
+digest of the source distribution file using the key "<em>etaonrishdlcupfm</em>" and confirm it is that same as documented in the
+<a href="http://csrc.nist.gov/groups/STM/cmvp/documents/140-1/140val-all.htm">Security Policy</a>
+document (e.g. "<em>2cdd29913c6523df8ad38da11c342b80ed3f1dae</em>" for <em>openssl-fips-2.0.tar.gz</em>).
+<p>
+For most prospective users the identification, acquisition, installation<small><sup>1</sup></small>, and
+configuration of a suitable product may
+be a non-trivial challenge. The requirement for this verification with an independendly acquired FIPS 140-2 validated
+cryptographic module does not apply when the distribution file is distributed using a "secure" means. Distribution on
+physical media is considered secure in this context, so as a convenience for users a copy of the distribution files can
+be obtained from OSF on physical media (a CD-ROM disk) via snail-mail (USPS).
+<p>
+Until and if the postage costs get out of hand we will send those CDs on request at no cost (we'd rather not bother
+with invoicing for the approximately US$5 it costs to generate and mail each disk). Please include a full postal
+address in your request and send it with a subject line of "FIPS module CD request" to
+<a href="mailto:verifycd@opensslfoundation.com">verifycd@opensslfoundation.com</a>.
+We can mail internationally (the CD contains only open source code and so may be exported under the TSU exception of
+EAR ECCN 5D002).
+<p>
+We have received a number of requests with residential addresses from throw-away E-mail addresses; preference will
+be given to institutional destinations on the assumption that anonymous individuals are less likely to be creating
+validated products requiring formal FIPS 140-2 validation.
+<p>
+Note that the files you will receive on these CDs will be <em>identical</em> in every respect (except for formal FIPS 140-2
+compliance) with the files you can download from:
+<blockquote>
+    <a href="http://www.openssl.org/source/">http://www.openssl.org/source/</a>
+</blockquote>
+Once the distribution files have been received on this CD they can be redistributed internally within an organizational
+entity (corporation, institution, or agency) by normal means.
+We ask that you only request this CD if you plan to use it for generation of FIPS 140-2 validated cryptography in
+a context that <em>requires</em> such formal compliance. For any other purposes the downloaded files are
+<em>precisely</em> bit-for-bit identical and will generate <em>exactly</em> the same results.
+<p>
+NOTE: we have received several donations along with requests for CDs, and a suggestion that the donation link
+ be referenced here. Donations or payment of any kind in exchange for the CD mailing are entirely optional, but if
+desired can be made via the <a href="http://openssl.org/support/donations.html">donations page</a>.
+<p>
+<p>
+<small>
+<sup>1</sup>The "secure installation" turns out to be a surprisingly tricky issue. See Section 6.6 of the
+<a href="http://www.openssl.org/docs/fips/UserGuide-2.0.pdf">User Guide</a> for a discussion.
+</small>
+</div>
+	</td>
+  </tr>
+  <tr>
+    <td valign="bottom" bgcolor="#ffffff">
+      <table width="100%" border="0" summary="">
+	<tbody>
+          <tr>
+            <td>
+              <hr>
+              <small>
+              <em>This site Copyright &#169; 2009-2014 OSF.</em>
+              </small>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+</tbody>
+</table>
+</body>
+</html>
+

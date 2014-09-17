@@ -1,0 +1,14 @@
+#!/bin/sh
+#
+# MacOS / Darwin configuration for building OpenSSL for Android
+#
+#
+# note: do not forget you will need to run the following in the 
+#       android-sdk-macos directory if you are using a relatively new
+#	version of the Android SDK where the tools are not included in
+#	the base download
+#		tools/android update sdk --no-ui
+#
+WGET="curl -O" ANDK=android-ndk-r8c ASDK=android-sdk-macosx make "$@" 2>&1 |
+			tee -a LOG
+
