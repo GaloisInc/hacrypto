@@ -67,6 +67,8 @@
 #include <openssl/err.h>
 #include <openssl/bn.h>
 
+#include "utl/fips_cryptodev.h"
+
 #ifndef OPENSSL_FIPS
 
 int main(int argc, char *argv[])
@@ -80,8 +82,8 @@ int main(int argc, char *argv[])
 #include <openssl/fips.h>
 #include "fips_utl.h"
 
-static int hmac_test(const EVP_MD *md, FILE *out, FILE *in);
-static int print_hmac(const EVP_MD *md, FILE *out,
+static int hmac_test(enum cryptodev_crypto_op_t md, FILE *out, FILE *in);
+static int print_hmac(enum cryptodev_crypto_op_t emd, FILE *out,
 		unsigned char *Key, int Klen,
 		unsigned char *Msg, int Msglen, int Tlen);
 
@@ -118,7 +120,7 @@ int main(int argc, char **argv)
 		goto end;
 		}
 
-	if (!hmac_test(EVP_sha1(), out, in))
+	if (!hmac_test(CRYPTO_SHA1_HMAC, out, in))
 		{
 		fprintf(stderr, "FATAL hmac file processing error\n");
 		goto end;
@@ -139,7 +141,7 @@ int main(int argc, char **argv)
 
 #define HMAC_TEST_MAXLINELEN	1024
 
-int hmac_test(const EVP_MD *md, FILE *out, FILE *in)
+int hmac_test(enum cryptodev_crypto_op_t md, FILE *out, FILE *in)
 	{
 	char *linebuf, *olinebuf, *p, *q;
 	char *keyword, *value;
@@ -202,11 +204,11 @@ int hmac_test(const EVP_MD *md, FILE *out, FILE *in)
 			{
 			switch (atoi(value))
 				{
-				case 20: md=EVP_sha1();   break;
-				case 28: md=EVP_sha224(); break;
-				case 32: md=EVP_sha256(); break;
-				case 48: md=EVP_sha384(); break;
-				case 64: md=EVP_sha512(); break;
+				case 20: md=CRYPTO_SHA1_HMAC;     break;
+				case 28: md=CRYPTO_SHA2_224_HMAC; break;
+				case 32: md=CRYPTO_SHA2_256_HMAC; break;
+				case 48: md=CRYPTO_SHA2_384_HMAC; break;
+				case 64: md=CRYPTO_SHA2_512_HMAC; break;
 				default: goto parse_error;
 				}
 			}
@@ -297,21 +299,26 @@ int hmac_test(const EVP_MD *md, FILE *out, FILE *in)
 
 	}
 
-static int print_hmac(const EVP_MD *emd, FILE *out,
+static int print_hmac(enum cryptodev_crypto_op_t emd, FILE *out,
 		unsigned char *Key, int Klen,
 		unsigned char *Msg, int Msglen, int Tlen)
 	{
-	int i, mdlen;
+	int i;
 	unsigned char md[EVP_MAX_MD_SIZE];
-	if (!HMAC(emd, Key, Klen, Msg, Msglen, md,
-						(unsigned int *)&mdlen))
+	struct session_op session = {
+		.mac       = emd,
+		.mackeylen = Klen,
+		.mackey    = Key
+	};
+	struct crypt_op op = {
+		.op  = COP_ENCRYPT,
+		.len = Msglen,
+		.src = Msg,
+		.mac = md
+	};
+	if (!cryptodev_op(session, op))
 		{
 		fputs("Error calculating HMAC\n", stderr);
-		return 0;
-		}
-	if (Tlen > mdlen)
-		{
-		fputs("Parameter error, Tlen > HMAC length\n", stderr);
 		return 0;
 		}
 	fputs("Mac = ", out);
