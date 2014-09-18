@@ -581,7 +581,7 @@ public class Req {
 
 		Entry<String, String> reqrsp = r.createReqRsp();
 
-		File rspdir = new File(outDir.getPath() + File.separator + "rsp"
+		File rspdir = new File(outDir.getPath() + File.separator + "resp"
 				+ File.separator + dir);
 		rspdir.mkdirs();
 		Util.writeStringToOutDir(fileName + ".rsp", outDir.getPath()
