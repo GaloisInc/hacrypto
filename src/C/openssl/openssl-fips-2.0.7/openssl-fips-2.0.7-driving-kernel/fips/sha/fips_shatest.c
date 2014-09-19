@@ -65,7 +65,6 @@
 #include <openssl/evp.h>
 #include <openssl/err.h>
 #include <openssl/bn.h>
-
 #include "utl/fips_cryptodev.h"
 
 #ifndef OPENSSL_FIPS
@@ -334,42 +333,33 @@ static int print_dgst(enum cryptodev_crypto_op_t emd, FILE *out,
 static int print_monte(enum cryptodev_crypto_op_t md, FILE *out,
 		unsigned char *Seed, int SeedLen)
 	{
+	// TODO
+	return 0;
+	/*
 	unsigned int i, j, k;
 	int ret = 0;
-	unsigned int mlen;
-	int cryptofd = -1;
+	EVP_MD_CTX ctx;
+	unsigned char *m1, *m2, *m3, *p;
+	unsigned int mlen, m1len, m2len, m3len;
 
-	struct session_op session = { .mac = md };
-	struct crypt_op ops[] = {
-		{ .flags = COP_FLAG_UPDATE },
-		{ .flags = COP_FLAG_UPDATE },
-		{ .flags = COP_FLAG_UPDATE },
-		{ .flags = COP_FLAG_FINAL  }
-	};
-	struct crypt_op *tmp,
-		*m1       = ops + 0,
-		*m2       = ops + 1,
-		*m3       = ops + 2,
-		*finalize = ops + 3;
-
-	if(!cryptodev_start_session(&session, &cryptofd)) return 0;
+	FIPS_md_ctx_init(&ctx);
 
 	if (SeedLen > EVP_MAX_MD_SIZE)
 		mlen = SeedLen;
 	else
 		mlen = EVP_MAX_MD_SIZE;
 
-	m1->src = OPENSSL_malloc(mlen);
-	m2->src = OPENSSL_malloc(mlen);
-	m3->src = OPENSSL_malloc(mlen);
+	m1 = OPENSSL_malloc(mlen);
+	m2 = OPENSSL_malloc(mlen);
+	m3 = OPENSSL_malloc(mlen);
 
-	if (!m1->src || !m2->src || !m3->src)
+	if (!m1 || !m2 || !m3)
 		goto mc_error;
 
-	m1->len = m2->len = m3->len = SeedLen;
-	memcpy(m1->src, Seed, SeedLen);
-	memcpy(m2->src, Seed, SeedLen);
-	memcpy(m3->src, Seed, SeedLen);
+	m1len = m2len = m3len = SeedLen;
+	memcpy(m1, Seed, SeedLen);
+	memcpy(m2, Seed, SeedLen);
+	memcpy(m3, Seed, SeedLen);
 
 	fputs(RESP_EOL, out);
 
@@ -377,43 +367,42 @@ static int print_monte(enum cryptodev_crypto_op_t md, FILE *out,
 		{
 		for (i = 0; i < 1000; i++)
 			{
-			int success = 1;
-			m1->flags |= COP_FLAG_RESET;
-			success = success && cryptodev_session_op(session, cryptofd, *m1);
-			m1->flags &= ~COP_FLAG_RESET;
-			success = success && cryptodev_session_op(session, cryptofd, *m2);
-			success = success && cryptodev_session_op(session, cryptofd, *m3);
-			tmp = m1;
+			FIPS_digestinit(&ctx, md);
+			FIPS_digestupdate(&ctx, m1, m1len);
+			FIPS_digestupdate(&ctx, m2, m2len);
+			FIPS_digestupdate(&ctx, m3, m3len);
+			p = m1;
 			m1 = m2;
+			m1len = m2len;
 			m2 = m3;
-			m3 = tmp;
-			finalize->mac = m3->src;
-			success = success && cryptodev_session_op(session, cryptofd, *finalize);
-			if(!success) goto mc_error;
+			m2len = m3len;
+			m3 = p;
+			FIPS_digestfinal(&ctx, m3, &m3len);
 			}
 		fprintf(out, "COUNT = %d" RESP_EOL, j);
 		fputs("MD = ", out);
-		for (k = 0; k < m3->len; k++)
-			fprintf(out, "%02x", m3->src[k]);
+		for (k = 0; k < m3len; k++)
+			fprintf(out, "%02x", m3[k]);
 		fputs(RESP_EOL RESP_EOL, out);
-		memcpy(m1->src, m3->src, m3->len);
-		memcpy(m2->src, m3->src, m3->len);
-		m1->len = m2->len = m3->len;
+		memcpy(m1, m3, m3len);
+		memcpy(m2, m3, m3len);
+		m1len = m2len = m3len;
 		}
 
 	ret = 1;
 
 	mc_error:
-	if (m1->src)
-		OPENSSL_free(m1->src);
-	if (m2->src)
-		OPENSSL_free(m2->src);
-	if (m3->src)
-		OPENSSL_free(m3->src);
+	if (m1)
+		OPENSSL_free(m1);
+	if (m2)
+		OPENSSL_free(m2);
+	if (m3)
+		OPENSSL_free(m3);
 
-	cryptodev_end_session(session, cryptofd);
+	FIPS_md_ctx_cleanup(&ctx);
 
 	return ret;
+	*/
 	}
 
 #endif

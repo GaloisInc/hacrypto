@@ -1,0 +1,19 @@
+This repository contains modifications to open source software
+products that are or could be construed as cryptographic in 
+nature.  In order to comply with the terms of the TSU Exemption
+for ECCN 5D002 of the EAR (U.S. export controls on cryptographic
+software) a publicly accessible location from which the software
+may be accessed must be reported to the U.S. Department of
+Commerce.  Open source software written or modified by the OpenSSL
+Software Foundation is gathered in this one location for ease of
+complying with those reporting requirements.  Some or all of this
+software may also be accessible elsewhere.
+
+This software is provided subject to the original license terms
+as noted in the source file comments, or under the standard
+license terms of the respective project (Apache, OpenSSL, OpenSSL,
+etc.).  This software is provided with no warranty or representation
+that it is useful or suitable for any purpose whatsoever; use at
+your own risk, may cause death, dismemberment, global catastrophe,
+indigestion, etc.
+

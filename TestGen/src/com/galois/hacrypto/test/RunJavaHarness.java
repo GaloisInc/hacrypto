@@ -111,7 +111,7 @@ public class RunJavaHarness {
 			return;
 		}
 		File rspDir = new File(outputDir.getPath() + File.separator + algName 
-				+ File.separator + "rsp");
+				+ File.separator + "resp");
 		rspDir.mkdirs();
 		try {
 			r = new Req(req.getAbsolutePath(), testSpec.getAbsolutePath());

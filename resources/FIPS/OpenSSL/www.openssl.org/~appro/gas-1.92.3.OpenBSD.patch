@@ -1,0 +1,10 @@
+--- config/tc-i386.c.orig	Mon Sep 17 19:51:00 2001
++++ config/tc-i386.c	Sun Jan 12 21:57:51 2003
+@@ -1718,6 +1718,7 @@
+ 				}
+ 				break;
+ 			case SEG_TEXT: case SEG_DATA: case SEG_BSS:
++			case SEG_DIFFERENCE:
+ 			case SEG_UNKNOWN:	/* must be 32 bit displacement (i.e. address) */
+ 				if (
+ #ifdef PIC
