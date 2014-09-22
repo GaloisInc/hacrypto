@@ -30,8 +30,20 @@ int main(int argc, char **argv)
 #include <openssl/fips_rand.h>
 #include <string.h>
 #include <ctype.h>
+#include <inttypes.h>
 
+#include "utl/fips_cryptodev.h"
 #include "fips_utl.h"
+
+int build_seed(uint8_t * const seed, uint8_t *v, uint8_t *key, uint8_t *dt, int keylen) {
+	uint8_t *cur = seed;
+	memmove(cur, v  , 16    ); cur += 16    ;
+	memmove(cur, key, keylen); cur += keylen;
+	if(dt) {
+	memmove(cur, dt , 16    ); cur += 16    ;
+	}
+	return cur - seed;
+}
 
 static void vst(FILE *in, FILE *out)
     {
@@ -41,8 +53,18 @@ static void vst(FILE *in, FILE *out)
     unsigned char ret[16];
     char buf[1024];
     char lbuf[1024];
+    uint8_t seed[1024];
     char *keyword, *value;
     long i, keylen;
+
+    struct session_op session = {
+    	.rng = CRYPTO_ANSI_CPRNG,
+    	.key = seed
+    };
+    struct crypt_op op = {
+    	.dst = ret,
+    	.len = 16
+    };
 
     keylen = 0;
 
@@ -90,10 +112,12 @@ static void vst(FILE *in, FILE *out)
 		return;
 		}
 
-	    FIPS_x931_set_key(key, keylen);
-	    FIPS_x931_seed(v,16);
-	    FIPS_x931_set_dt(dt);
-	    if (FIPS_x931_bytes(ret,16) <= 0)
+	    session.keylen = build_seed(seed, v, key, dt, keylen);
+	    if (session.keylen > sizeof(seed)/sizeof(*seed)) {
+	    	fprintf(stderr, "Seed buffer overrun\n");
+	    	return;
+	    }
+	    if (!cryptodev_op(session,op))
 		{
 		fprintf(stderr, "Error getting PRNG value\n");
 	        return;
@@ -118,9 +142,19 @@ static void mct(FILE *in, FILE *out)
     unsigned char ret[16];
     char buf[1024];
     char lbuf[1024];
+    uint8_t seed[1024];
     char *keyword, *value;
     long i, keylen;
-    int j;
+
+    int cryptofd;
+    struct session_op session = {
+    	.rng = CRYPTO_ANSI_CPRNG,
+    	.key = seed
+    };
+    struct crypt_op op = {
+    	.dst = ret,
+    	.len = 16
+    };
 
     keylen = 0;
 
@@ -168,24 +202,22 @@ static void mct(FILE *in, FILE *out)
 		return;
 		}
 
-	    FIPS_x931_set_key(key, keylen);
-	    FIPS_x931_seed(v,16);
+	    session.keylen = build_seed(seed, v, key, dt, keylen);
+	    if (session.keylen > sizeof(seed)/sizeof(*seed)) {
+	    	fprintf(stderr, "Seed buffer overrun\n");
+	    	return;
+	    }
+
+	    cryptodev_start_session(&session, &cryptofd);
 	    for (i = 0; i < 10000; i++)
 		{
-		    FIPS_x931_set_dt(dt);
-		    if (FIPS_x931_bytes(ret,16) <= 0)
+		    if (cryptodev_session_op(session, cryptofd, op) <= 0)
 			{
 			fprintf(stderr, "Error getting PRNG value\n");
 		        return;
 		        }
-		    /* Increment DT */
-		    for (j = 15; j >= 0; j--)
-			{
-			dt[j]++;
-			if (dt[j])
-				break;
-			}
 		}
+	    cryptodev_end_session(session, cryptofd);
 
 	    OutputValue("R", ret, 16, out, 0);
 	    OPENSSL_free(key);
@@ -228,13 +260,6 @@ int main(int argc, char **argv)
     else
 	{
 	fprintf(stderr,"%s [mct|vst]\n",argv[0]);
-	exit(1);
-	}
-    fips_algtest_init();
-    FIPS_x931_reset();
-    if (!FIPS_x931_test_mode())
-	{
-	fprintf(stderr, "Error setting PRNG test mode\n");
 	exit(1);
 	}
     if(!strcmp(argv[1],"mct"))
