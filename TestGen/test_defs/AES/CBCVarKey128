@@ -24,7 +24,7 @@ input3_minlength0 = 128
 input3_maxlength0 = 128
 input3_ct0 = 1
 
-comment1 = DECRYPT
+comment128 = DECRYPT
 input3_name1 = CIPHERTEXT
 input3_type1 = RANDOM
 input3_minlength1 = 128

@@ -24,7 +24,7 @@ input3_type0 = random
 input3_minlength0 = 64
 input3_maxlength0 = 64
 
-comment20 = DECRYPT
+comment19 = DECRYPT
 input3_name1 = CIPHERTEXT
 input3_type1 = random
 input3_minlength1 = 64

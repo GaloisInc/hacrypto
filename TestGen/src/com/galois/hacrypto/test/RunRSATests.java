@@ -27,6 +27,7 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
  * @author dmz
  */
 public class RunRSATests {
+	private static byte[] SEED = "GaloisCAVP".getBytes();
 	private static final BouncyCastleProvider BCP = new BouncyCastleProvider();
 	private static int HEX = 16;
 	private static String MOD_START = "[MOD";
@@ -147,12 +148,12 @@ public class RunRSATests {
 			String mod_str = last;
 			String[] mod_parts = mod_str.split(" = ");
 			int mod = Integer.parseInt(mod_parts[1].substring(0, mod_parts[1].length() - 1));
-			int certainty = 80;
+			int certainty = 128;
 			if (mod > 512) {
-				certainty = 112;
+				certainty = 160;
 			}
 			if (mod > 1024) {
-				certainty = 128;
+				certainty = 200;
 			}
 			System.err.println("mod = " + mod);
 			last = "";
@@ -176,7 +177,7 @@ public class RunRSATests {
 				kpg.init(new RSAKeyGenerationParameters
 				    (
 				        new BigInteger("10001", 16), // public exponent
-				        new SecureRandom(),
+				        new SecureRandom(SEED),
 				        mod, // key length
 				        certainty // certainty
 				    ));
@@ -186,11 +187,11 @@ public class RunRSATests {
 					final RSAPrivateCrtKeyParameters priv = (RSAPrivateCrtKeyParameters) kp.getPrivate();
 					
 					// E, P, Q, N, D
-					out.println("E = " + toHexString(priv.getPublicExponent(), mod / 4));
-					out.println("P = " + toHexString(priv.getP(), mod / 8));
-					out.println("Q = " + toHexString(priv.getQ(), mod / 8));
-					out.println("N = " + toHexString(priv.getModulus(), mod / 4));
-					out.println("D = " + toHexString(priv.getExponent(), mod / 4));
+					out.println("e = " + priv.getPublicExponent().toString(HEX));
+					out.println("p = " + priv.getP().toString(HEX));
+					out.println("q = " + priv.getQ().toString(HEX));
+					out.println("n = " + priv.getModulus().toString(HEX));
+					out.println("d = " + priv.getExponent().toString(HEX));
 					out.println();
 				}
 			} catch (final Exception e) {
@@ -249,12 +250,12 @@ public class RunRSATests {
 				// with the specified SHA algorithm
 				
 				final KeyPairGenerator kpg = KeyPairGenerator.getInstance("RSA", BCP);
-				kpg.initialize(mod, new SecureRandom());
+				kpg.initialize(mod, new SecureRandom(SEED));
 				final KeyPair kp = kpg.generateKeyPair();
 				final BCRSAPrivateCrtKey priv = (BCRSAPrivateCrtKey) kp.getPrivate();
 					
-				out.println("N = " + toHexString(priv.getModulus(), mod / 4));
-				out.println("E = " + toHexString(priv.getPublicExponent(), mod / 4));
+				out.println("n = " + priv.getModulus().toString(HEX));
+				out.println("e = " + priv.getPublicExponent().toString(HEX));
 
 				last = sc.nextLine();
 				while (sc.hasNextLine() && !last.toUpperCase().startsWith(MOD_START)) {
@@ -304,7 +305,7 @@ public class RunRSATests {
 	}
 
 	private void runSigVer15(final Scanner sc) {
-		System.err.println("Running SigGen15 tests");
+		System.err.println("Running SigVer15 tests");
 		StringBuilder header = new StringBuilder();
 		String last = sc.nextLine();
 		while (last.startsWith("#")) {
