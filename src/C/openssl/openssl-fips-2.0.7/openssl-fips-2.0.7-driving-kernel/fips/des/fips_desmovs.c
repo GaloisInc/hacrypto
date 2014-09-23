@@ -270,6 +270,8 @@ static int do_tmct(char *amode,
 	if(imode == TOFB)
 	    for(n=0 ; n < 8 ; ++n)
 		text[n]=text0[n]^old_iv[n];
+
+	if(!cryptodev_end_session(session, cryptofd)) return 0;
 	}
     free(ivec);
     return 1;
