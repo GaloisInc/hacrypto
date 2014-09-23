@@ -92,16 +92,25 @@ int main(int argc, char *argv[])
 
 /*-----------------------------------------------*/
 
-static int AESTest(EVP_CIPHER_CTX *ctx,
+int AESInit(struct session_op *session, int akeysz, unsigned char *aKey, char *amode) {
+    session->keylen = akeysz / 8;
+    session->key = aKey;
+
+    if     (fips_strcasecmp(amode, "ECB") == 0) session->cipher = CRYPTO_AES_ECB;
+    else if(fips_strcasecmp(amode, "CBC") == 0) session->cipher = CRYPTO_AES_CBC;
+    else return 0;
+
+    return 1;
+}
+
+static int AESTest(struct session_op *session, int *cryptofd,
 	    char *amode, int akeysz, unsigned char *aKey, 
 	    unsigned char *iVec, 
 	    int dir,  /* 0 = decrypt, 1 = encrypt */
 	    unsigned char *plaintext, unsigned char *ciphertext, int len)
     {
-    struct session_op session = {
-    	.keylen = akeysz / 8,
-    	.key = aKey
-    };
+    int success, local_cryptofd;
+    struct session_op local_session = {};
     struct crypt_op op = {
     	.len = len,
     	.iv  = iVec,
@@ -110,11 +119,16 @@ static int AESTest(EVP_CIPHER_CTX *ctx,
     	.dst = dir ? ciphertext  : plaintext
     };
 
-    if     (fips_strcasecmp(amode, "ECB") == 0) session.cipher = CRYPTO_AES_ECB;
-    else if(fips_strcasecmp(amode, "CBC") == 0) session.cipher = CRYPTO_AES_CBC;
-    else return 0;
+    if(NULL == session) {
+    	session = &local_session;
+    	cryptofd = &local_cryptofd;
+    }
+    if(!AESInit(session, akeysz, aKey, amode)) return 0;
 
-    return cryptodev_op(session, op);
+    if(&local_session == session) cryptodev_start_session(session, cryptofd);
+    success = cryptodev_session_op(*session, *cryptofd, op);
+    if(&local_session == session) cryptodev_end_session(*session, *cryptofd);
+    return success;
     }
 
 /*-----------------------------------------------*/
@@ -146,8 +160,6 @@ static int do_mct(char *amode,
     unsigned char ciphertext[64+4];
     int i, j, n, n1, n2;
     int imode = 0, nkeysz = akeysz/8;
-    EVP_CIPHER_CTX ctx;
-    FIPS_cipher_ctx_init(&ctx);
 
     if (len > 32)
 	{
@@ -173,6 +185,11 @@ static int do_mct(char *amode,
 	memcpy(ctext[0], text, len);
     for (i = 0; i < 100; ++i)
 	{
+	struct session_op session = {};
+	int cryptofd;
+	if(!AESInit(&session, akeysz, key[i], amode)) return 0;
+	if(!cryptodev_start_session(&session, &cryptofd)) return 0;
+
 	/* printf("Iteration %d\n", i); */
 	if (i > 0)
 	    {
@@ -189,29 +206,13 @@ static int do_mct(char *amode,
 	    switch (imode)
 		{
 	    case ECB:
-		if (j == 0)
-		    { /* set up encryption */
-		    ret = AESTest(&ctx, amode, akeysz, key[i], NULL, 
-				  dir,  /* 0 = decrypt, 1 = encrypt */
-				  ptext[j], ctext[j], len);
-		    if (dir == XENCRYPT)
-			memcpy(ptext[j+1], ctext[j], len);
-		    else
-			memcpy(ctext[j+1], ptext[j], len);
-		    }
+		ret = AESTest(&session, &cryptofd, amode, akeysz, key[i], NULL, 
+			      dir,  /* 0 = decrypt, 1 = encrypt */
+			      ptext[j], ctext[j], len);
+		if (dir == XENCRYPT)
+		    memcpy(ptext[j+1], ctext[j], len);
 		else
-		    {
-		    if (dir == XENCRYPT)
-			{
-			FIPS_cipher(&ctx, ctext[j], ptext[j], len);
-			memcpy(ptext[j+1], ctext[j], len);
-			}
-		    else
-			{
-			FIPS_cipher(&ctx, ptext[j], ctext[j], len);
-			memcpy(ctext[j+1], ptext[j], len);
-			}
-		    }
+		    memcpy(ctext[j+1], ptext[j], len);
 		break;
 
 	    case CBC:
@@ -219,7 +220,7 @@ static int do_mct(char *amode,
 	    case CFB128:
 		if (j == 0)
 		    {
-		    ret = AESTest(&ctx, amode, akeysz, key[i], iv[i], 
+		    ret = AESTest(&session, &cryptofd, amode, akeysz, key[i], iv[i], 
 				  dir,  /* 0 = decrypt, 1 = encrypt */
 				  ptext[j], ctext[j], len);
 		    if (dir == XENCRYPT)
@@ -229,19 +230,21 @@ static int do_mct(char *amode,
 		    }
 		else
 		    {
+		    AESTest(&session, &cryptofd, amode, akeysz, NULL, NULL,
+			    dir,
+			    ptext[j], ctext[j], len);
 		    if (dir == XENCRYPT)
 			{
-			FIPS_cipher(&ctx, ctext[j], ptext[j], len);
 			memcpy(ptext[j+1], ctext[j-1], len);
 			}
 		    else
 			{
-			FIPS_cipher(&ctx, ptext[j], ctext[j], len);
 			memcpy(ctext[j+1], ptext[j-1], len);
 			}
 		    }
 		break;
 
+#if 0
 	    case CFB8:
 		if (j == 0)
 		    {
@@ -306,6 +309,7 @@ static int do_mct(char *amode,
 			sb(ctext[j+1],0,gb(ptext[j-128],0));
 		    }
 		break;
+#endif
 		}
 	    }
 	--j; /* reset to last of range */
@@ -427,8 +431,9 @@ static int do_mct(char *amode,
 		break;
 		}
 	    }
+
+	if(!cryptodev_end_session(session, cryptofd)) return 0;
 	}
-    FIPS_cipher_ctx_cleanup(&ctx);
     return ret;
     }
 
@@ -457,8 +462,6 @@ static int proc_file(char *rqfile, char *rspfile)
     unsigned char plaintext[2048];
     unsigned char ciphertext[2048];
     char *rp;
-    EVP_CIPHER_CTX ctx;
-    FIPS_cipher_ctx_init(&ctx);
 
     if (!rqfile || !(*rqfile))
 	{
@@ -674,7 +677,7 @@ static int proc_file(char *rqfile, char *rspfile)
 		    }
 		else
 		    {
-		    AESTest(&ctx, amode, akeysz, aKey, iVec, 
+		    AESTest(NULL, NULL, amode, akeysz, aKey, iVec, 
 				  dir,  /* 0 = decrypt, 1 = encrypt */
 				  plaintext, ciphertext, len);
 		    OutputValue("CIPHERTEXT",ciphertext,len,rfp,
@@ -712,7 +715,7 @@ static int proc_file(char *rqfile, char *rspfile)
 		    }
 		else
 		    {
-		    AESTest(&ctx, amode, akeysz, aKey, iVec, 
+		    AESTest(NULL, NULL, amode, akeysz, aKey, iVec, 
 				  dir,  /* 0 = decrypt, 1 = encrypt */
 				  plaintext, ciphertext, len);
 		    OutputValue("PLAINTEXT",(unsigned char *)plaintext,len,rfp,
@@ -740,7 +743,6 @@ static int proc_file(char *rqfile, char *rspfile)
 	fclose(rfp);
     if (afp)
 	fclose(afp);
-    FIPS_cipher_ctx_cleanup(&ctx);
     return err;
     }
 
