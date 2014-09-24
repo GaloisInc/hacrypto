@@ -1,12 +1,16 @@
 package com.galois.hacrypto.test;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Date;
 import java.util.Scanner;
 
+import org.bouncycastle.asn1.ASN1InputStream;
+import org.bouncycastle.asn1.ASN1Integer;
+import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.Digest;
 import org.bouncycastle.crypto.digests.SHA1Digest;
@@ -34,6 +38,7 @@ import org.bouncycastle.util.encoders.Hex;
  * @author dmz
  */
 public class RunDSATests {
+	private static byte[] SEED = "GaloisCAVP".getBytes();
 	private static int HEX = 16;
 	private static String MOD_START = "[MOD";
 	
@@ -110,7 +115,7 @@ public class RunDSATests {
 			switch (the_test) {
 				case KEYPAIR: runKeyPair(sc); break;
 				case PQG: runPQG(sc); break;
-				case SIGGEN: runSigGen(sc); break;
+			    case SIGGEN: runSigGen(sc); break;
 				case SIGVER: runSigVer(sc); break;
 				default: // this can't happen
 			}
@@ -223,18 +228,18 @@ public class RunDSATests {
 				final DSAParametersGenerator dpg = new DSAParametersGenerator(new SHA256Digest());
 				System.err.println("L=" + testparams.L + ", N=" + testparams.N);
 				dpg.init(new DSAParameterGenerationParameters(
-							testparams.L, testparams.N, 80, new SecureRandom()));
+							testparams.L, testparams.N, 128, new SecureRandom(SEED)));
 				final DSAParameters dsaparams = dpg.generateParameters();
 				
 				out.println("P = " + dsaparams.getP().toString(HEX));
 				out.println("Q = " + dsaparams.getQ().toString(HEX));
-				out.println("G = " + toHexString(dsaparams.getG(), 512));
+				out.println("G = " + toHexString(dsaparams.getG(), testparams.L / 4));
 				out.println("");
 				
 				// now, generate key pairs
 				
 				final DSAKeyPairGenerator kpg = new DSAKeyPairGenerator();
-				kpg.init(new DSAKeyGenerationParameters(new SecureRandom(), dsaparams));
+				kpg.init(new DSAKeyGenerationParameters(new SecureRandom(SEED), dsaparams));
 
 				for (int i = 0; i < reps; i++) {
 					final AsymmetricCipherKeyPair pair = kpg.generateKeyPair();
@@ -364,7 +369,7 @@ public class RunDSATests {
 					
 					final DSAParametersGenerator dpg = new DSAParametersGenerator(d);
 					dpg.init(new DSAParameterGenerationParameters(
-								testparams.L, testparams.N, 80, new SecureRandom()));
+								testparams.L, testparams.N, 80, new SecureRandom(SEED)));
 					final DSAParameters dsaparams = dpg.generateParameters();
 					final DSAValidationParameters valparams = dsaparams.getValidationParameters();
 					
@@ -443,7 +448,7 @@ public class RunDSATests {
 					// do DSA parameter generation with this P and Q
 					
 					BigInteger g = DSAParametersGenerator.calculateGenerator_FIPS186_3_Unverifiable(
-							p, q, new SecureRandom());
+							p, q, new SecureRandom(SEED));
 					
 					the_output.println("G = " + toHexString(g, testparams.L / 4));
 					the_output.println();
@@ -571,7 +576,7 @@ public class RunDSATests {
 		
 		return last;
 	}
-	
+
 	private void runSigGen(final Scanner sc) {
 		StringBuilder header = new StringBuilder();
 		String last = sc.nextLine();
@@ -612,7 +617,7 @@ public class RunDSATests {
 				System.err.println("L=" + testparams.L 
 						+ ", N=" + testparams.N + ", alg=" + testparams.alg);
 				dpg.init(new DSAParameterGenerationParameters(
-							testparams.L, testparams.N, 80, new SecureRandom()));
+							testparams.L, testparams.N, 80, new SecureRandom(SEED)));
 				final DSAParameters dsaparams = dpg.generateParameters();
 				
 				out.println("P = " + dsaparams.getP().toString(HEX));
@@ -667,7 +672,7 @@ public class RunDSATests {
 					// now, generate key pairs and sign messages
 
 					final DSAKeyPairGenerator kpg = new DSAKeyPairGenerator();
-					kpg.init(new DSAKeyGenerationParameters(new SecureRandom(), dsaparams));
+					kpg.init(new DSAKeyGenerationParameters(new SecureRandom(SEED), dsaparams));
 
 					final AsymmetricCipherKeyPair pair = kpg.generateKeyPair();
 					final DSAPrivateKeyParameters private_params = 
@@ -675,14 +680,17 @@ public class RunDSATests {
 					final DSAPublicKeyParameters public_params = 
 							(DSAPublicKeyParameters) pair.getPublic();
 					
+					
 					out.println(last);
-					out.println("Y = " + toHexString(public_params.getY(), testparams.L / 8));
+					out.println("Y = " + toHexString(public_params.getY(), testparams.L / 4));
 					
 					final DSASigner signer = new DSASigner();
 					signer.init(true, private_params);
 					final BigInteger[] signature = signer.generateSignature(digested_msg);
-					out.println("R = " + toHexString(signature[0], 20));
-					out.println("S = " + toHexString(signature[1], 20));
+					out.println("R = " + signature[0].toString(HEX));
+					out.println("S = " + signature[1].toString(HEX));
+					out.flush();
+					
 					last = "";
 					while (sc.hasNextLine() && last.trim().length() == 0) {
 						last = sc.nextLine();
@@ -700,7 +708,7 @@ public class RunDSATests {
 		
 		out.close();
 	}
-
+	
 	private void runSigVer(final Scanner sc) {
 		StringBuilder header = new StringBuilder();
 		String last = sc.nextLine();
@@ -869,6 +877,18 @@ public class RunDSATests {
 		}
 		
 		out.close();
+	}
+	
+	private static BigInteger[] derDecode(byte[] encoding) throws IOException {
+        ASN1InputStream aIn = new ASN1InputStream(encoding);
+        ASN1Sequence s = (ASN1Sequence) aIn.readObject();
+
+        BigInteger[] sig = new BigInteger[2];
+
+        sig[0] = ((ASN1Integer) s.getObjectAt(0)).getValue();
+        sig[1] = ((ASN1Integer) s.getObjectAt(1)).getValue();
+
+        return sig;
 	}
 	
 	public static void main(final String... the_args) {

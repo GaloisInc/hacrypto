@@ -496,7 +496,7 @@ public class Output {
 		try {
 			digest = MessageDigest.getInstance(algorithm, BCP);
 		} catch (NoSuchAlgorithmException e) {
-			System.err.println("algorithm " + algorithm + " not found, skipping test");
+			// ignore this, no need to clutter the output
 		}
 		byte[] result = new byte[0];
 		if (digest != null) {
@@ -710,7 +710,7 @@ public class Output {
 			result = new byte[outlen];
 			System.arraycopy(fullResult, 0, result, 0, result.length);
 		} catch (NoSuchAlgorithmException e) {
-			System.err.println("algorithm " + algorithm + " not found, skipping test");
+			// ignore this, no need to clutter the output
 		} catch (InvalidKeyException e) {
 			System.err.println("invalid key " + key + ", skipping test");
 		}
@@ -927,8 +927,10 @@ public class Output {
 			case "ECB": 
 				byte[] combinedKey = combinedKey(key1, key2, key3);
 				byte[] prevResult = null, prevPrevResult = null;
+				Cipher cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, null);
+				
 				for (int j = 0; j < 10000; j++) {
-					result = cipherBouncyCastle(bcAlgorithm, direction, combinedKey, null, text);
+					result = cipher.update(text);
 					prevPrevResult = prevResult;
 					prevResult = text;
 					text = result;
@@ -967,7 +969,7 @@ public class Output {
 					byte[][] cs = new byte[10001][];
 					
 					combinedKey = combinedKey(key1, key2, key3);
-					Cipher cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, iv);
+					cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, iv);
 					cvs[0] = iv;
 					ps[0] = text;
 					
@@ -1014,7 +1016,7 @@ public class Output {
 					byte[][] cs = new byte[10001][];
 					
 					combinedKey = combinedKey(key1, key2, key3);
-					Cipher cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, iv);
+					cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, iv);
 					cvs[0] = iv;
 					cs[0] = text;
 					
@@ -1059,7 +1061,7 @@ public class Output {
 				byte[] empty = new byte[iv.length];
 				
 				combinedKey = combinedKey(key1, key2, key3);
-				Cipher cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, iv);
+				cipher = initCipherBouncyCastle(bcAlgorithm, direction, combinedKey, iv);
 				for (int j = 0; j < 10000; j++) {
 					byte[] out = cipher.update(empty);
 					result = Util.xor(out, text);
