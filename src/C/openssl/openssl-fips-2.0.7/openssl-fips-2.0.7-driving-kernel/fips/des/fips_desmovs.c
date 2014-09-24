@@ -291,9 +291,7 @@ static int tproc_file(char *rqfile, char *rspfile)
     unsigned char plaintext[2048];
     unsigned char ciphertext[2048];
     char *rp;
-    EVP_CIPHER_CTX ctx;
     int numkeys=1;
-    FIPS_cipher_ctx_init(&ctx);
 
     if (!rqfile || !(*rqfile))
 	{
@@ -629,7 +627,6 @@ static int tproc_file(char *rqfile, char *rspfile)
 	fclose(rfp);
     if (afp)
 	fclose(afp);
-    FIPS_cipher_ctx_cleanup(&ctx);
     return err;
     }
 
