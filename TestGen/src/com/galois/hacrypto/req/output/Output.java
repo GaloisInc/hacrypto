@@ -646,9 +646,9 @@ public class Output {
 			break;
 		case 32:
 			// this is a terrible, terrible hack
-			if (hmacRuns < 900) {
+			if (hmacRuns < 525) {
 				algorithm = "HmacSHA256";
-			} else if (hmacRuns < 1200){
+			} else if (hmacRuns < 825){
 				algorithm = "HmacSHA384";
 			} else {
 				algorithm = "HmacSHA512";
@@ -657,7 +657,7 @@ public class Output {
 		case 40:
 		case 48:
 			// this is a terrible, terrible hack
-			if (hmacRuns < 1200) {
+			if (hmacRuns < 825) {
 				algorithm = "HmacSHA384";
 			} else {
 				algorithm = "HmacSHA512";
@@ -671,25 +671,17 @@ public class Output {
 			// this is a terrible, terrible hack
 			if (hmacRuns < 300) {
 				algorithm = "HmacSHA1";
-			} else if (hmacRuns < 675) {
-				algorithm = "HmacSHA224";
 			} else {
 				algorithm = "HmacSHA256";
 			}
 			break;
 		case 20:
 			// this is a terrible, terrible hack
-			if (hmacRuns < 300) {
-				algorithm = "HmacSHA1";
-			} else {
-				algorithm = "HmacSHA224";
-			} 
+			algorithm = "HmacSHA1";
 			break;
 		case 24:
 			// this is a terrible, terrible hack
-			if (hmacRuns < 675) {
-				algorithm = "HmacSHA224";
-			} else if (hmacRuns < 900) {
+			if (hmacRuns < 525) {
 				algorithm = "HmacSHA256";
 			} else {
 				algorithm = "HmacSHA384";

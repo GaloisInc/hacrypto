@@ -58,7 +58,7 @@ public class TestRSAKeyGen {
 			System.out.println("n = pq? " + n.equals(pq));
 			BigInteger mod = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
 			System.out.println("d = e inverse mod ((p - 1)(q - 1))? " + 
-								e.equals(d.modInverse(mod)));
+								d.equals(e.modInverse(mod)));
 			System.out.println();
 			
 			// now, read lines until we run into another line with an equals sign 
