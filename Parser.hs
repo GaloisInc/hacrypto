@@ -1,34 +1,12 @@
 {-# LANGUAGE FlexibleContexts, NoMonomorphismRestriction, Rank2Types #-}
-module ReqParser
-	( Value(..)
-	, Equation(..)
-	, Block(..)
-	, Vectors(..)
-	, parseVectors
-	) where
+module Parser (module Types, parseVectors) where
 
-import Data.ByteString (ByteString, pack)
+import Data.ByteString (pack)
 import Data.Char
-import Data.Default
-import Data.Traversable
 import Text.ParserCombinators.UU
 import Text.ParserCombinators.UU.BasicInstances
 import Text.ParserCombinators.UU.Utils hiding (pParens, pBrackets)
-
-data Value
-	= Basic
-		{ uninterpreted :: String
-		, decimal       :: Maybe Integer
-		, hexadecimal   :: Maybe ByteString
-		}
-	| Boolean Bool
-	| SuccessReport
-		{ success :: Bool
-		, message :: String
-		}
-	| ErrorMessage String
-	| Flag
-	deriving (Eq, Ord, Read, Show)
+import Types
 
 basicFromString :: String -> Value
 basicFromString s = Basic s (execParserMaybe pIntegerRaw s) (execParserMaybe pHexRaw s) where
@@ -40,21 +18,6 @@ basicFromString s = Basic s (execParserMaybe pIntegerRaw s) (execParserMaybe pHe
 execParserMaybe :: Parser a -> String -> Maybe a
 execParserMaybe p s = guard (null errors) >> return v where
 	(v, errors) = execParser p s
-
-data Equation = Equation
-	{ label :: String
-	, value :: Value
-	} deriving (Eq, Ord, Read, Show)
-
-data Block = Block
-	{ bracketed :: Bool
-	, equations :: [Equation]
-	} deriving (Eq, Ord, Read, Show)
-
-data Vectors = Vectors
-	{ header :: [String]
-	, blocks :: [Block]
-	} deriving (Eq, Ord, Read, Show)
 
 isLabel   c = isAlphaNum c || c `elem` "-_ "
 isValue   c = isAlphaNum c || c `elem` "./"
