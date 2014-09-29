@@ -1,13 +1,9 @@
 module AES (aes) where
 
-import Data.ByteString (pack)
 import Transducer
 
--- TODO: probably need to return an Either String ByteString or something so we
--- can report errors
-zero = pack []
-encrypt k t = putStr "Encrypting " >> print (k, t) >> return zero
-decrypt k t = putStr "Decrypting " >> print (k, t) >> return zero
+encrypt k t = putStr "Encrypting " >> print (k, t) >> return (Left "AES encryption not supported")
+decrypt k t = putStr "Decrypting " >> print (k, t) >> return (Left "AES decryption not supported")
 
 chunk directionName inputName outputName directionFunction = do2
 	(parameters $ flag directionName)

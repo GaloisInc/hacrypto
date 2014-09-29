@@ -1,6 +1,7 @@
 import AES
 import Control.Applicative
 import Control.Monad
+import Control.Monad.Trans.Maybe
 import Parser
 import PPrint
 import System.Environment
@@ -12,7 +13,7 @@ checkFile f = do
 	(v, es) <- parseVectors <$> readFile f
 	case es of
 		[]  -> do
-			v_ <- aes v
+			v_ <- runMaybeT $ aes v
 			case v_ of
 				Just v' -> writeFile (f ++ ".out") (pprint v')
 				Nothing -> hPutStrLn stderr "Request file didn't match AES specs"
