@@ -1,4 +1,4 @@
-module AES where
+module AES (aes) where
 
 import Data.ByteString (pack)
 import Transducer
