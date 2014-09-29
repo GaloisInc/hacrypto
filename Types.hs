@@ -6,10 +6,15 @@ module Types
 	, ByteString
 	, basicHex
 	, basicDec
+	, basicString
 	) where
 
-import Data.ByteString (ByteString, pack)
-import Data.Char (isSpace)
+import Control.Monad
+import Data.ByteString (ByteString, pack, unpack)
+import Data.Char (digitToInt, isHexDigit, isSpace)
+import Data.List
+import Numeric
+import Text.Regex.Applicative
 
 data Value
 	= Basic
@@ -26,25 +31,44 @@ data Value
 	| Flag
 	deriving (Eq, Ord, Read, Show)
 
-basicHex :: ByteString -> Value
-basicDec :: Integer    -> Value
+basicHex    :: ByteString -> Value
+basicDec    :: Integer    -> Value
+basicString :: String     -> Value
 
-basicHex bs = Basic { uninterpreted = u, decimal = d, hexadecimal = h } where
+basicHex    bs = Basic { uninterpreted = u, decimal = d, hexadecimal = h } where
 	u = pprintHex bs
-	d = case reads u of
-	    	(n, s):_ | all isSpace s -> Just n
-	    	_ -> Nothing
+	d = parseDec u
 	h = Just bs
 
-basicDec n = Basic { uninterpreted = u, decimal = d, hexadecimal = h } where
-	u = show n
+basicDec    n  = Basic { uninterpreted = u, decimal = d, hexadecimal = h } where
+	u = pprintDec n
 	d = Just n
 	h = parseHex u
 
+basicString s  = Basic { uninterpreted = u, decimal = d, hexadecimal = h } where
+	u = s
+	d = parseDec u
+	h = parseHex u
+
+pprintDec :: Integer    -> String
 pprintHex :: ByteString -> String
-parseHex  :: String -> Maybe ByteString
-pprintHex _ = "" -- TODO
-parseHex  _ = Just $ pack [] -- TODO
+pprintDec = show
+pprintHex = unpack >=> showByte where
+	showByte n = [digits !! (n `rem` 16), digits !! (n `quot` 16)]
+	(!!)   = genericIndex
+	digits = "0123456789ABCDEF"
+
+parseDec :: String -> Maybe Integer
+parseHex :: String -> Maybe ByteString
+
+parseDec s = case readDec s of
+	(n, s):_ | all isSpace s -> Just n
+	_ -> Nothing
+
+parseHex s = pack <$> match pairs s where
+	pairs    = many (liftA2 byte hexDigit hexDigit)
+	byte a b = a*0x10 + b
+	hexDigit = fromIntegral . digitToInt <$> psym isHexDigit
 
 data Equation = Equation
 	{ label :: String

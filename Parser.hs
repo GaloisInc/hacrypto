@@ -8,13 +8,6 @@ import Text.ParserCombinators.UU.BasicInstances
 import Text.ParserCombinators.UU.Utils hiding (pParens, pBrackets)
 import Types
 
-basicFromString :: String -> Value
-basicFromString s = Basic s (execParserMaybe pIntegerRaw s) (execParserMaybe pHexRaw s) where
-	pHexDigit      = digitToNum <$> pSatisfy isHexDigit (Insertion "hex digit" '0' 10)
-	pHexRaw        = pack <$> many (createByte <$> pHexDigit <*> pHexDigit)
-	createByte a b = a*0x10 + b
-	digitToNum     = fromIntegral . digitToInt
-
 execParserMaybe :: Parser a -> String -> Maybe a
 execParserMaybe p s = guard (null errors) >> return v where
 	(v, errors) = execParser p s
@@ -55,7 +48,7 @@ pSuccess =  SuccessReport . ('P' ==)
         <*> pParenthesizedMessage
 pValue =  pErrorMessage
       <|> pBoolean
-     <<|> (basicFromString <$> pMunch isValue)
+     <<|> (basicString <$> pMunch isValue)
       <|> pSuccess
 
 pEquationRaw    = Equation <$> pLexeme pLabel <* pLexSym '=' <*> pValue
