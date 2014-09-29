@@ -102,21 +102,6 @@ public class RunRSATests {
 		}
 	}
 	
-	/**
-	 * @param the_int The big integer.
-	 * @param the_digits The desired number of hex digits.
-	 * @return a hex string of the specified length representing the big integer,
-	 * with as many leading 0s as necessary.
-	 */
-	private String toHexString(final BigInteger the_int, final int the_digits) {
-		final StringBuilder result = new StringBuilder();
-		for (int i = 0; i < the_digits; i++) {
-			result.append("0");
-		}
-		result.append(the_int.toString(HEX));
-		return result.substring(result.length() - the_digits, result.length());
-	}
-	
 	private void runKeyGenRPP(final Scanner sc) {
 		System.err.println("Running KeyGenRPP tests");
 		StringBuilder header = new StringBuilder();
@@ -183,8 +168,11 @@ public class RunRSATests {
 				    ));
 
 				for (int i = 0; i < reps; i++) {
-					final AsymmetricCipherKeyPair kp = kpg.generateKeyPair();
-					final RSAPrivateCrtKeyParameters priv = (RSAPrivateCrtKeyParameters) kp.getPrivate();
+					AsymmetricCipherKeyPair kp;
+					RSAPrivateCrtKeyParameters priv = null;
+					
+					kp = kpg.generateKeyPair();
+					priv = (RSAPrivateCrtKeyParameters) kp.getPrivate();
 					
 					// E, P, Q, N, D
 					out.println("e = " + priv.getPublicExponent().toString(HEX));

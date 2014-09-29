@@ -11,13 +11,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
-import javax.crypto.spec.DESedeKeySpec;
 import javax.management.RuntimeErrorException;
 
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupDir;
 
-import com.galois.hacrypto.req.*;
+import com.galois.hacrypto.req.Req;
 
 /**
  * Responsible for language-independent parts of tests. Reads configuration

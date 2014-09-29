@@ -28,14 +28,14 @@ public class Rng {
 	// it from the system date time string
 	public byte[] nextRandom(byte[] dt) {
 
-		byte[] i = com.galois.hacrypto.req.output.Output.cipherBouncyCastle(
+		byte[] i = Output.cipherBouncyCastle(
 				algorithm + "/CBC/NoPadding", Cipher.ENCRYPT_MODE, key, iv, dt);
 
-		byte[] rand = com.galois.hacrypto.req.output.Output.cipherBouncyCastle(
+		byte[] rand = Output.cipherBouncyCastle(
 				algorithm + "/CBC/NoPadding", Cipher.ENCRYPT_MODE, key, iv,
 				Util.xor(i, seed));
 
-		this.seed = com.galois.hacrypto.req.output.Output.cipherBouncyCastle(
+		this.seed = Output.cipherBouncyCastle(
 				algorithm + "/CBC/NoPadding", Cipher.ENCRYPT_MODE, key, iv,
 				Util.xor(i, rand));
 

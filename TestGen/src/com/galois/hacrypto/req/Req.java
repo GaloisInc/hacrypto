@@ -142,9 +142,6 @@ public class Req {
 				// 100 repetitions by default
 				int repetitions = Integer.valueOf(p.getProperty(
 							"output" + currentOutput + "_repetitions", "100"));	
-				// counter goes in argument 0 by default
-				int countOutput = Integer.valueOf(p.getProperty(
-						"output" + currentOutput + "_count", "0"));
 				// we get the arguments similarly to a regular test, but
 				// they get updated by the monte carlo routine and we 
 				// print them every time

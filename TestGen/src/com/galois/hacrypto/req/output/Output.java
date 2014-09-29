@@ -446,28 +446,6 @@ public class Output {
 	}
 
 	/**
-	 * Splits the supplied key into three equal-length keys and returns
-	 * them in an array. No length checking is performed other than
-	 * divisibility by 3.
-	 * 
-	 * @param key The key.
-	 * @return an array of 3 keys.
-	 */
-	private static byte[][] splitKey(final byte[] key) {
-		if (key.length % 3 != 0) {
-			throw new IllegalArgumentException(
-					"key length must be divisible by 3, was " + key.length);
-		}
-		
-		byte[][] result = new byte[3][key.length / 3];
-		for (int i = 0; i < 3; i++) {
-			System.arraycopy(key, i * key.length / 3, result[i], 0, key.length / 3);
-		}
-		
-		return result;
-	}
-
-	/**
 	 * Wrapper function for the {@link Rng} class
 	 * @param key
 	 *            the secret key

@@ -1,10 +1,7 @@
 package com.galois.hacrypto.req.input;
 
-import java.security.InvalidKeyException;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Map.Entry;
-
-import javax.crypto.spec.DESedeKeySpec;
 
 import com.galois.hacrypto.req.length.InputLength;
 import com.galois.hacrypto.test.Util;

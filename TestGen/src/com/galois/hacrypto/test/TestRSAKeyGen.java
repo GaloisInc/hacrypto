@@ -56,10 +56,24 @@ public class TestRSAKeyGen {
 			System.out.println("q prime? " + q.isProbablePrime(CERTAINTY));
 			BigInteger pq = p.multiply(q);
 			System.out.println("n = pq? " + n.equals(pq));
-			BigInteger mod = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
+			BigInteger pm1 = p.subtract(BigInteger.ONE);
+			BigInteger qm1 = q.subtract(BigInteger.ONE);
+			BigInteger mod = pm1.multiply(qm1);
 			System.out.println("d = e inverse mod ((p - 1)(q - 1))? " + 
 								d.equals(e.modInverse(mod)));
+			BigInteger lcm = mod.divide(pm1.gcd(qm1));
+			System.out.println("d = e inverse mod (LCM(p - 1, q - 1))? " + 
+								d.equals(e.modInverse(lcm)));
 			System.out.println();
+			
+			// try encrypting and decrypting with the key
+			
+			byte[] test = new byte[256];
+			for (int i = 0; i < 256; i++) {
+				test[i] = (byte) (i + 1);
+			}
+			
+			System.err.println();
 			
 			// now, read lines until we run into another line with an equals sign 
 			

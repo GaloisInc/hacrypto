@@ -1,16 +1,12 @@
 package com.galois.hacrypto.test;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Date;
 import java.util.Scanner;
 
-import org.bouncycastle.asn1.ASN1InputStream;
-import org.bouncycastle.asn1.ASN1Integer;
-import org.bouncycastle.asn1.ASN1Sequence;
 import org.bouncycastle.crypto.AsymmetricCipherKeyPair;
 import org.bouncycastle.crypto.Digest;
 import org.bouncycastle.crypto.digests.SHA1Digest;
@@ -877,18 +873,6 @@ public class RunDSATests {
 		}
 		
 		out.close();
-	}
-	
-	private static BigInteger[] derDecode(byte[] encoding) throws IOException {
-        ASN1InputStream aIn = new ASN1InputStream(encoding);
-        ASN1Sequence s = (ASN1Sequence) aIn.readObject();
-
-        BigInteger[] sig = new BigInteger[2];
-
-        sig[0] = ((ASN1Integer) s.getObjectAt(0)).getValue();
-        sig[1] = ((ASN1Integer) s.getObjectAt(1)).getValue();
-
-        return sig;
 	}
 	
 	public static void main(final String... the_args) {
