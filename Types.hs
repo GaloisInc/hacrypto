@@ -4,9 +4,12 @@ module Types
 	, Block(..)
 	, Vectors(..)
 	, ByteString
+	, basicHex
+	, basicDec
 	) where
 
-import Data.ByteString (ByteString)
+import Data.ByteString (ByteString, pack)
+import Data.Char (isSpace)
 
 data Value
 	= Basic
@@ -22,6 +25,26 @@ data Value
 	| ErrorMessage String
 	| Flag
 	deriving (Eq, Ord, Read, Show)
+
+basicHex :: ByteString -> Value
+basicDec :: Integer    -> Value
+
+basicHex bs = Basic { uninterpreted = u, decimal = d, hexadecimal = h } where
+	u = pprintHex bs
+	d = case reads u of
+	    	(n, s):_ | all isSpace s -> Just n
+	    	_ -> Nothing
+	h = Just bs
+
+basicDec n = Basic { uninterpreted = u, decimal = d, hexadecimal = h } where
+	u = show n
+	d = Just n
+	h = parseHex u
+
+pprintHex :: ByteString -> String
+parseHex  :: String -> Maybe ByteString
+pprintHex _ = "" -- TODO
+parseHex  _ = Just $ pack [] -- TODO
 
 data Equation = Equation
 	{ label :: String

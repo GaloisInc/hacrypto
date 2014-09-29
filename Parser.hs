@@ -19,7 +19,7 @@ execParserMaybe :: Parser a -> String -> Maybe a
 execParserMaybe p s = guard (null errors) >> return v where
 	(v, errors) = execParser p s
 
-isLabel   c = isAlphaNum c || c `elem` "-_ "
+isLabel   c = isAlphaNum c || c `elem` "-_"
 isValue   c = isAlphaNum c || c `elem` "./"
 isMessage c = c `notElem` "\r\n"
 
@@ -41,7 +41,8 @@ pCommentGarbage = pToken "NOTE: Salt lengths > SHA lengths is ONLY allowed for F
 pComment        = pKeep pCommentNormal <|> pKeep pCommentGarbage <|> pIgnore pEOL
 pHeader         = concat <$> many pComment
 
-pLabel = pList1 (pSatisfy isLabel (Insertion "equation label" 'X' 1000))
+pLabelWord = pList1 (pSatisfy isLabel (Insertion "equation label" 'X' 1000))
+pLabel = unwords <$> pMany1SepBy pLabelWord (pSym ' ')
 pParenthesizedMessage
 	= pParens . pList1_ng . pSatisfy isMessage
 	$ Insertion "parenthesized message contents" '-' 30
