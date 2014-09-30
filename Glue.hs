@@ -9,7 +9,7 @@ import Control.Monad.Writer
 import Control.Applicative
 import Data.Functor.Compose
 
-onOutput :: (o -> o') -> WriterT o IO a -> WriterT o' IO a
+onOutput :: Functor f => (o -> o') -> WriterT o f a -> WriterT o' f a
 onOutput f = mapWriterT ((\(a, o) -> (a, f o)) <$>)
 
 -- TODO: is this really the best abstraction Haskell can offer here?

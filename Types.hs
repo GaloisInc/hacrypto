@@ -3,6 +3,7 @@ module Types
 	, Equation(..)
 	, Block(..)
 	, Vectors(..)
+	, Computation
 	, ByteString
 	, basicHex
 	, basicDec
@@ -84,3 +85,5 @@ data Vectors = Vectors
 	{ header :: [String]
 	, blocks :: [Block]
 	} deriving (Eq, Ord, Read, Show)
+
+type Computation m t = m (Either String t)

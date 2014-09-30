@@ -1,9 +1,8 @@
-module AES (aes) where
+{-# LANGUAGE NoMonomorphismRestriction #-}
+module Test.AES (aes) where
 
+import AlgorithmTypes
 import Transducer
-
-encrypt k t = putStr "Encrypting " >> print (k, t) >> return (Left "AES encryption not supported")
-decrypt k t = putStr "Decrypting " >> print (k, t) >> return (Left "AES decryption not supported")
 
 chunk directionName inputName outputName directionFunction = do2
 	(parameters $ flag directionName)
