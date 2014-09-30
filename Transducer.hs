@@ -16,6 +16,8 @@ import Types
 
 -- TODO: switch "reference" back to "match" everywhere once we clear up
 -- https://github.com/feuerbach/regex-applicative/issues/19
+-- update: see transformers.dpatch for the fix to the transformers package that
+-- makes "match" terminate
 
 type Transducer_  i o = RE i `Compose` WriterT o IO
 type Transducer     t = Transducer_ t [t]

@@ -1,0 +1,66 @@
+1 patch for repository http://178.63.91.44/~ross/transformers:
+
+Tue Sep 30 15:24:36 PDT 2014  Daniel Wagner <me@dmwit.com>
+  * dispatch Compose's "many" and "some" to the underlying implementations
+  
+  Instances of Alternative are allowed to specialize the "many" and "some"
+  combinators for performance reasons. The instance for Compose should ship out
+  to specialized definitions whenever possible for the same reasons. In
+  particular the default recursive implementation can cause nontermination for
+  certain instances, e.g. see
+  https://github.com/feuerbach/regex-applicative/issues/19
+
+New patches:
+
+[dispatch Compose's "many" and "some" to the underlying implementations
+Daniel Wagner <me@dmwit.com>**20140930222436
+ Ignore-this: a330228461bcf298bdb7bea438116e24
+ 
+ Instances of Alternative are allowed to specialize the "many" and "some"
+ combinators for performance reasons. The instance for Compose should ship out
+ to specialized definitions whenever possible for the same reasons. In
+ particular the default recursive implementation can cause nontermination for
+ certain instances, e.g. see
+ https://github.com/feuerbach/regex-applicative/issues/19
+] {
+hunk ./Data/Functor/Compose.hs 26
+ 
+ import Control.Applicative
+ import Data.Foldable (Foldable(foldMap))
+-import Data.Traversable (Traversable(traverse))
++import Data.Traversable (Traversable(sequenceA, traverse))
+ 
+ infixr 9 `Compose`
+ 
+hunk ./Data/Functor/Compose.hs 93
+ instance (Alternative f, Applicative g) => Alternative (Compose f g) where
+     empty = Compose empty
+     Compose x <|> Compose y = Compose (x <|> y)
++    many (Compose x) = Compose (sequenceA <$> many x)
++    some (Compose x) = Compose (sequenceA <$> some x)
+}
+
+Context:
+
+[mfix on ExceptT and MaybeT: expand messages, consistent style
+Ross Paterson <ross@soi.city.ac.uk>**20140831092356
+ Ignore-this: 9911ad00eaf3aa5f60a8e641125fd284
+] 
+[consistent format for header comments
+Ross Paterson <ross@soi.city.ac.uk>**20140830171719
+ Ignore-this: 456abf75bccbd3968c165778e87557f4
+] 
+[minor version bump (non-orphan instances of Typeable added)
+Ross Paterson <ross@soi.city.ac.uk>**20140830171326
+ Ignore-this: 2ac33d789ad87d49bd37e559e4e47f99
+] 
+[add AutoDeriveTypeable for GHC >= 7.8
+Ross Paterson <ross@soi.city.ac.uk>**20140830171147
+ Ignore-this: 6f8b298bbec47f2a27a63b7fba30bc0c
+] 
+[TAG 0.4.1.0
+Ross Paterson <ross@soi.city.ac.uk>**20140506235327
+ Ignore-this: 5c3c8b59b9543a21510bc0144af14e8f
+] 
+Patch bundle hash:
+b04b0df8edbb78ec17277c7e881191e5723b95ba
