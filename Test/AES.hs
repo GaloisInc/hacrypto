@@ -1,5 +1,5 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
-module Test.AES (aes) where
+module Test.AES (test) where
 
 import AlgorithmTypes
 import Transducer
@@ -14,7 +14,7 @@ chunk directionName inputName outputName directionFunction = do2
 	)
 	(\_ _ -> return ())
 
-aesBlocks = many (chunk "ENCRYPT" "PLAINTEXT"  "CIPHERTEXT" encrypt <|>
-                  chunk "DECRYPT" "CIPHERTEXT" "PLAINTEXT"  decrypt)
+chunks = many (chunk "ENCRYPT" "PLAINTEXT"  "CIPHERTEXT" callEncrypt <|>
+               chunk "DECRYPT" "CIPHERTEXT" "PLAINTEXT"  callDecrypt)
 
-aes = anyHeader aesBlocks
+test = anyHeader chunks
