@@ -41,11 +41,14 @@ instance PPrint Block where
 		| e <- es
 		]
 
--- TODO: also not quite right, because of the ridiculous special-case we have
--- for the salt lengths comment, sigh (search for "Salt lengths" in the parser
--- code)
 instance PPrint Vectors where
 	pprint Vectors { header = h, blocks = b }
 		= intercalate "\n"
-		$ unlines (map ("# "++) h)
+		$ unlines (map comment h)
 		: map pprint b
+
+comment s
+	| s == unhashedComment = s
+	| otherwise = "# " ++ s
+	where
+	unhashedComment = "NOTE: Salt lengths > SHA lengths is ONLY allowed for FIPS186-2 SigGenPSS testing for use with CMVP 1SUB, 2SUB and 4SUB report submissions."
