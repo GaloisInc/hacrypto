@@ -16,5 +16,5 @@ checkFile f = do
 			v_ <- runMaybeT $ aes v
 			case v_ of
 				Just v' -> writeFile (f ++ ".out") (pprint v')
-				Nothing -> hPutStrLn stderr "Request file didn't match AES specs"
+				Nothing -> hPutStrLn stderr f >> hPutStrLn stderr "\tRequest file didn't match AES specs"
 		e:_ -> hPutStrLn stderr f >> hPrint stderr e
