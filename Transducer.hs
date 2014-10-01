@@ -40,6 +40,7 @@ transSym f = Compose (maybeSym f') where
 	f' a = (\b -> tell [a] >> return b) <$> f a
 
 -- TODO: check for ambiguity at every call to "match"/"reference"
+-- TODO: give some basic building blocks for parsing headers
 vectors :: MonadIO' m => Transducer m String a -> (a -> Transducer m Block b) -> Transformer m Vectors
 vectors transHead fTransBlock Vectors { header = h, blocks = bs } = do
 	(a, h' ) <- runTransducer transHead h
