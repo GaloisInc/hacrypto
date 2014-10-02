@@ -1,6 +1,6 @@
 import Control.Applicative
 import Control.Monad
-import Implementation.Debug
+import Implementation.Cryptodev
 import Parser
 import PPrint
 import SuiteB

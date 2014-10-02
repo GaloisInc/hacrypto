@@ -88,11 +88,12 @@ flag = equation $ \case
 	Flag -> Just ()
 	_    -> Nothing
 
-emit       :: MonadIO' m => (a -> Value) -> String -> Computation m a              -> Producer m Equation
-emitInt    :: MonadIO' m =>                 String -> Computation m Integer        -> Producer m Equation
-emitHex    :: MonadIO' m =>                 String -> Computation m ByteString     -> Producer m Equation
-emitBool   :: MonadIO' m =>                 String -> Computation m Bool           -> Producer m Equation
-emitReport :: MonadIO' m =>                 String -> Computation m (Bool, String) -> Producer m Equation
+emit       :: MonadIO' m => (a -> Value)
+                         -> String -> Computation m a              -> Producer m Equation
+emitInt    :: MonadIO' m => String -> Computation m Integer        -> Producer m Equation
+emitHex    :: MonadIO' m => String -> Computation m ByteString     -> Producer m Equation
+emitBool   :: MonadIO' m => String -> Computation m Bool           -> Producer m Equation
+emitReport :: MonadIO' m => String -> Computation m (Bool, String) -> Producer m Equation
 
 emit f l io = do
 	v <- lift io
