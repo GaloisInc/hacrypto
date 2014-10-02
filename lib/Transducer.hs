@@ -96,7 +96,7 @@ emitBool   :: MonadIO' m => String -> Computation m Bool           -> Producer m
 emitReport :: MonadIO' m => String -> Computation m (Bool, String) -> Producer m Equation
 
 emit f l io = do
-	v <- lift io
+	v <- lift (runExceptT io)
 	tell [Equation { label = l, value = case v of
 		Left  e -> ErrorMessage e
 		Right a -> f a

@@ -11,4 +11,4 @@ unimplemented :: String -> SuiteB
 unimplemented libraryName = SuiteB
 	{ aes = notImplemented "AES"
 	} where
-	notImplemented algorithm = return (Left (algorithm ++ " not supported by " ++ libraryName))
+	notImplemented algorithm = throwE (algorithm ++ " not supported by " ++ libraryName)

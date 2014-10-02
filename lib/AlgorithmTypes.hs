@@ -1,6 +1,7 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 module AlgorithmTypes where
 
+import Control.Monad.Except
 import Control.Monad.Reader
 import Data.ByteString (ByteString)
 import Types
@@ -21,9 +22,9 @@ data Hash = Hash
 	, hash     :: Plaintext -> Computation IO Digest
 	}
 
-ask0 fSelector       = join . asks $ \v -> liftIO $ fSelector v
-ask1 fSelector i1    = join . asks $ \v -> liftIO $ fSelector v i1
-ask2 fSelector i1 i2 = join . asks $ \v -> liftIO $ fSelector v i1 i2
+ask0 fSelector       = join . asks $ \v -> mapExceptT liftIO $ fSelector v
+ask1 fSelector i1    = join . asks $ \v -> mapExceptT liftIO $ fSelector v i1
+ask2 fSelector i1 i2 = join . asks $ \v -> mapExceptT liftIO $ fSelector v i1 i2
 
 callEncrypt  = ask2 encrypt
 callDecrypt  = ask2 decrypt

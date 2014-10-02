@@ -5,12 +5,17 @@ module Types
 	, Vectors(..)
 	, Computation
 	, ByteString
+	, ExceptT(..), runExceptT, throwE, catchE
 	, basicHex
 	, basicDec
 	, basicString
 	) where
 
+-- TODO: what the heck, this module is called Types but it's exporting things
+-- that are not types. that's weird, fix it
+
 import Control.Monad
+import Control.Monad.Trans.Except
 import Data.ByteString (ByteString, pack, unpack)
 import Data.Char (digitToInt, isHexDigit, isSpace)
 import Data.List
@@ -86,4 +91,4 @@ data Vectors = Vectors
 	, blocks :: [Block]
 	} deriving (Eq, Ord, Read, Show)
 
-type Computation m t = m (Either String t)
+type Computation = ExceptT String

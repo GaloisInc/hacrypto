@@ -1,11 +1,13 @@
-{-# LANGUAGE GeneralizedNewtypeDeriving, MultiParamTypeClasses #-}
+{-# LANGUAGE FlexibleContexts, GeneralizedNewtypeDeriving, MultiParamTypeClasses #-}
 module Implementation.Cryptodev (implementation) where
 
 #include <crypto/cryptodev.h>
 #include <asm-generic/ioctl.h>
 
 import AlgorithmTypes
+import Control.Exception
 import Control.Monad
+import Control.Monad.Except
 import Data.Bits
 import Data.ByteString.Char8
 import Data.Default
@@ -17,8 +19,10 @@ import Foreign.Ptr
 import Foreign.Storable
 import SuiteB
 import System.Mem.Weak
-import System.Posix.IO.ByteString
+import System.Posix.IO
 import System.Posix.IOCtl
+import System.Posix.Types
+import Types
 
 -- TODO: for now, can't cut off the CRYPTO_ prefix because the leftover bits
 -- can start with 3, and can't properly rename things starting with 3 because
@@ -76,6 +80,7 @@ toOperationType n = Just (toEnum (fromIntegral n))
 fromOperationType Nothing  = 0
 fromOperationType (Just o) = fromIntegral (fromEnum o)
 
+-- TODO: move somewhere this can be used for other bindings
 -- for comparison, type CStringLen = (Ptr CChar, CInt)
 type CUStringLen = (Ptr CUChar, CUInt)
 useAsCUStringLen :: ByteString -> (CUStringLen -> IO a) -> IO a
@@ -167,30 +172,70 @@ instance IOControl StartSession Session   where ioctlReq _ = fromIntegral . from
 instance IOControl Crypt        Operation where ioctlReq _ = fromIntegral . fromEnum $ CtlCrypt
 instance IOControl EndSession   Word32    where ioctlReq _ = fromIntegral . fromEnum $ CtlEndSession
 
-aesImplementation = do
-	-- TODO: catch exceptions and put errno into the failing side of the return value
-	cryptofd <- openFd (pack "/dev/crypto") ReadWrite def def
-	addFinalizer cryptofd (closeFd cryptofd)
-	return $ Right Cipher
-		{ encrypt = \k t -> do
-			sessionID <- sSes <$> ioctl cryptofd StartSession def
-				{ sCipher = Just CRYPTO_AES_ECB
-				, sKey    = Just k
+catchIO :: (MonadIO m, Exception e) => IO a -> (e -> m a) -> m a
+catchIO io throw = join . liftIO $
+	catch (return <$> io) (return . throw)
+
+reifyException :: (MonadIO m, MonadError e' m, Exception e) => IO a -> (e -> e') -> m a
+reifyException io transform = catchIO io (throwError . transform)
+
+reifyIOException :: (MonadIO m, MonadError String m) => String -> IO a -> m a
+reifyIOException prefix io = reifyException io (\e -> prefix ++ " " ++ show (e :: IOException))
+
+openCryptodev :: MonadIO m => Computation m Fd
+openCryptodev = do
+	fd <- reifyIOException "Could not open" (openFd "/dev/crypto" ReadWrite def def)
+	liftIO $ addFinalizer fd (closeFd fd)
+	return fd
+
+startSession :: MonadIO m => Fd -> Session -> Computation m Word32
+startSession cryptofd session
+	= reifyIOException "Could not start cryptodev session;"
+	$ sSes <$> ioctl cryptofd StartSession session
+
+endSession :: MonadIO m => Fd -> Word32 -> Computation m ()
+endSession cryptofd session
+	= reifyIOException "Failed to end cryptodev session;"
+	$ ioctl_ cryptofd EndSession session
+
+operation :: MonadIO m => Fd -> Operation -> Computation m ()
+operation cryptofd op
+	= reifyIOException ("Operation " ++ show op ++ " failed;")
+	$ ioctl_ cryptofd Crypt op
+
+sessionOperation :: MonadIO m => Fd -> Session -> Operation -> Computation m ()
+sessionOperation cryptofd session op = do
+	sID    <- startSession cryptofd session
+	crypt' <- delayFailure $ operation cryptofd op { oSes = sID }
+	endSession cryptofd sID
+	deliverFailure crypt'
+
+crypt cryptofd dir k t
+	= ExceptT .
+	allocaBytes lenK   $ \out ->
+	useAsCUStringLen t $ \(ptrT, lenT) ->
+	runExceptT         $ do
+		sessionOperation cryptofd
+			def { sCipher = Just CRYPTO_AES_ECB, sKey = Just k }
+			def { oOp  = dir
+				, oLen = fromIntegral lenT
+				, oSrc = castPtr ptrT
+				, oDst = out
 				}
-			let lenK = Data.ByteString.Char8.length k
-			res <- allocaBytes lenK   $ \out ->
-			       useAsCUStringLen t $ \(ptrT, lenT) -> do
-			       	ioctl cryptofd Crypt def
-			       		{ oSes = sessionID
-			       		, oOp  = Encrypt
-			       		, oLen = fromIntegral lenT
-			       		, oSrc = castPtr      ptrT
-			       		, oDst = out
-			       		}
-			       	packCStringLen (castPtr out, lenK)
-			ioctl cryptofd EndSession sessionID
-			return (Right res)
-		, decrypt = \k t -> return (Left "not implemented yet")
+		liftIO $ packCUStringLen (castPtr out, fromIntegral lenK)
+	where lenK = Data.ByteString.Char8.length k
+
+type Delayed = Either String
+delayFailure   :: Monad m => Computation m a -> Computation m (Delayed a)
+deliverFailure :: Monad m => Delayed       a -> Computation m          a
+delayFailure   = lift . runExceptT
+deliverFailure = ExceptT . return
+
+aesImplementation = do
+	cryptofd <- openCryptodev
+	return Cipher
+		{ encrypt = crypt cryptofd Encrypt
+		, decrypt = crypt cryptofd Decrypt
 		}
 
 implementation = (unimplemented "kernel-crypto via cryptodev-linux") { aes = aesImplementation }
