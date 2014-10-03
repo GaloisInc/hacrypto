@@ -179,10 +179,10 @@ sessionOperation cryptofd session op = do
 	deliverFailure crypt'
 
 ptrWords       :: ByteStringConversion (Computation IO) ByteString (Ptr Word8, Word32) r
-weirdStringLen :: ByteStringConversion (Computation IO) ByteString (Ptr Word8, Int) r
+hybridStringLen:: ByteStringConversion (Computation IO) ByteString (Ptr Word8, Int) r
 mcuStringLen   :: ByteStringConversion IO (Maybe ByteString) CUStringLen r
 ptrWords       = inComputation unsafeArbStringLen
-weirdStringLen = inComputation unsafeArbStringLen
+hybridStringLen= inComputation unsafeArbStringLen
 mcuStringLen   = useDefAsNothing cuStringLen
 
 crypt cryptofd dir k t =
@@ -195,7 +195,7 @@ crypt cryptofd dir k t =
 				, oSrc = ptrT
 				, oDst = out
 				}
-		pack weirdStringLen (out, lenK)
+		pack hybridStringLen (out, lenK)
 	where lenK = Data.ByteString.length k
 
 aesImplementation = do
