@@ -178,12 +178,12 @@ sessionOperation cryptofd session op = do
 	endSession cryptofd sID
 	deliverFailure crypt'
 
-ptrWords       :: ByteStringConversion (Computation IO) ByteString (Ptr Word8, Word32) r
-hybridStringLen:: ByteStringConversion (Computation IO) ByteString (Ptr Word8, Int) r
-mcuStringLen   :: ByteStringConversion IO (Maybe ByteString) CUStringLen r
-ptrWords       = inComputation unsafeArbStringLen
-hybridStringLen= inComputation unsafeArbStringLen
-mcuStringLen   = useDefAsNothing cuStringLen
+ptrWords        :: ByteStringConversion (Computation IO) ByteString (Ptr Word8, Word32) r
+hybridStringLen :: ByteStringConversion (Computation IO) ByteString (Ptr Word8, Int) r
+mcuStringLen    :: ByteStringConversion IO (Maybe ByteString) CUStringLen r
+ptrWords        = inComputation unsafeArbStringLen
+hybridStringLen = inComputation unsafeArbStringLen
+mcuStringLen    = useDefAsNothing cuStringLen
 
 crypt cryptofd dir k t =
 	allocaBytes lenK $ \out ->
