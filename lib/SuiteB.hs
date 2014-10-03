@@ -1,7 +1,7 @@
-module SuiteB (SuiteB(..), unimplemented) where
+module SuiteB (SuiteB(..), unimplemented, module AlgorithmTypes) where
 
 import AlgorithmTypes
-import Types
+import Computation
 
 data SuiteB = SuiteB
 	{ aes :: Computation IO Cipher
@@ -11,4 +11,4 @@ unimplemented :: String -> SuiteB
 unimplemented libraryName = SuiteB
 	{ aes = notImplemented "AES"
 	} where
-	notImplemented algorithm = throwE (algorithm ++ " not supported by " ++ libraryName)
+	notImplemented algorithm = throwError (algorithm ++ " not supported by " ++ libraryName)

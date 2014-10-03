@@ -1,10 +1,14 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
-module AlgorithmTypes where
+module AlgorithmTypes
+	( Key, Ciphertext, Plaintext, Digest
+	, Cipher(..), Hash(..)
+	, callEncrypt, callDecrypt
+	, callUpdate, callFinalize, callHash
+	) where
 
+import Computation
 import Control.Monad.Except
 import Control.Monad.Reader
-import Data.ByteString (ByteString)
-import Types
 
 type Key        = ByteString
 type Ciphertext = ByteString

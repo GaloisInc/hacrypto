@@ -8,6 +8,7 @@ module Transducer
 import Control.Monad.Reader
 import Control.Monad.Trans.Maybe
 import Control.Monad.Writer
+import Computation
 import Data.Maybe
 import Data.Traversable
 import Glue
@@ -20,13 +21,10 @@ import Types
 -- update: see transformers.dpatch for the fix to the transformers package that
 -- makes "match" terminate
 
--- TODO: MaybeT sucks, Computation is better, some appropriate EitherT is even
--- better still
-
 type Transducer_  m i o = RE i `Compose` WriterT o m
-type Transducer   m   t = Transducer_ m t [t]
-type Transformer_ m i o = i -> MaybeT m o
-type Transformer  m   t = Transformer_ m t t
+type Transformer_ m i o = i -> Computation m o
+type Transducer   m   t = Transducer_  m t [t]
+type Transformer  m   t = Transformer_ m t  t
 type Producer     m   t = WriterT [t] m ()
 
 type MonadIO' m = (Applicative m, MonadIO m)
@@ -96,7 +94,7 @@ emitBool   :: MonadIO' m => String -> Computation m Bool           -> Producer m
 emitReport :: MonadIO' m => String -> Computation m (Bool, String) -> Producer m Equation
 
 emit f l io = do
-	v <- lift (runExceptT io)
+	v <- lift (runComputation io)
 	tell [Equation { label = l, value = case v of
 		Left  e -> ErrorMessage e
 		Right a -> f a
@@ -111,9 +109,9 @@ runTransducer  :: MonadIO' m => Transducer m t a -> Transformer_ m [t] (a, [t])
 execTransducer :: MonadIO' m => Transducer m t a -> Transformer  m [t]
 evalTransducer :: MonadIO' m => Transducer m t a -> Transformer_ m [t]  a
 
-runTransducer (Compose trans) = MaybeT . traverse runWriterT . reference trans
+runTransducer (Compose trans) = liftMaybe "transducer failed" . traverse runWriterT . reference trans
 execTransducer trans input = snd <$> runTransducer trans input
 evalTransducer trans input = fst <$> runTransducer trans input
 
-runTransformer :: Transformer_ (ReaderT r m) i o -> r -> i -> m (Maybe o)
-runTransformer f r i = runReaderT (runMaybeT (f i)) r
+runTransformer :: Transformer_ (ReaderT r m) i o -> r -> i -> Computation m o
+runTransformer f r i = computation $ runReaderT (runComputation (f i)) r

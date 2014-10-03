@@ -1,7 +1,6 @@
 {-# LANGUAGE FlexibleContexts, NoMonomorphismRestriction, Rank2Types #-}
 module Parser (module Types, parseVectors) where
 
-import Data.ByteString (pack)
 import Data.Char
 import Text.ParserCombinators.UU
 import Text.ParserCombinators.UU.BasicInstances

@@ -3,24 +3,17 @@ module Types
 	, Equation(..)
 	, Block(..)
 	, Vectors(..)
-	, Computation
-	, ByteString
-	, ExceptT(..), runExceptT, throwE, catchE
 	, basicHex
 	, basicDec
 	, basicString
 	) where
 
--- TODO: what the heck, this module is called Types but it's exporting things
--- that are not types. that's weird, fix it
-
+import Control.Applicative
 import Control.Monad
-import Control.Monad.Trans.Except
 import Data.ByteString (ByteString, pack, unpack)
-import Data.Char (digitToInt, isHexDigit, isSpace)
-import Data.List
-import Numeric
-import Text.Regex.Applicative
+import Data.Char (digitToInt, intToDigit, isHexDigit, isSpace)
+import Numeric (readDec)
+import Text.Regex.Applicative (psym, match)
 
 data Value
 	= Basic
@@ -60,9 +53,8 @@ pprintDec :: Integer    -> String
 pprintHex :: ByteString -> String
 pprintDec = show
 pprintHex = unpack >=> showByte where
-	showByte n = [digits !! (n `rem` 16), digits !! (n `quot` 16)]
-	(!!)   = genericIndex
-	digits = "0123456789ABCDEF"
+	showByte n = [showNibble (n `rem` 16), showNibble (n `quot` 16)]
+	showNibble = intToDigit . fromIntegral
 
 parseDec :: String -> Maybe Integer
 parseHex :: String -> Maybe ByteString
@@ -90,5 +82,3 @@ data Vectors = Vectors
 	{ header :: [String]
 	, blocks :: [Block]
 	} deriving (Eq, Ord, Read, Show)
-
-type Computation = ExceptT String

@@ -1,20 +1,16 @@
-{-# LANGUAGE FlexibleContexts, GeneralizedNewtypeDeriving, MultiParamTypeClasses #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving, MultiParamTypeClasses #-}
 module Implementation.Cryptodev (implementation) where
 
 #include <crypto/cryptodev.h>
 #include <asm-generic/ioctl.h>
 
-import AlgorithmTypes
-import Control.Exception
-import Control.Monad
-import Control.Monad.Except
+import Computation
 import Data.Bits
-import Data.ByteString.Char8
+import Data.ByteString (length)
 import Data.Default
 import Data.Functor
 import Data.Word
 import Foreign.C.Types
-import Foreign.Marshal.Alloc
 import Foreign.Ptr
 import Foreign.Storable
 import SuiteB
@@ -22,7 +18,6 @@ import System.Mem.Weak
 import System.Posix.IO
 import System.Posix.IOCtl
 import System.Posix.Types
-import Types
 
 -- TODO: for now, can't cut off the CRYPTO_ prefix because the leftover bits
 -- can start with 3, and can't properly rename things starting with 3 because
@@ -70,6 +65,7 @@ data Operation = Operation
 	} deriving (Eq, Ord, Show)
 
 instance Default (Ptr a)       where def = nullPtr
+instance Default CUInt         where def = 0
 instance Default Direction     where def = Encrypt
 instance Default Flag          where def = 0
 instance Default Session       where def = Session   def def def def def def
@@ -79,24 +75,6 @@ toOperationType 0 = Nothing
 toOperationType n = Just (toEnum (fromIntegral n))
 fromOperationType Nothing  = 0
 fromOperationType (Just o) = fromIntegral (fromEnum o)
-
--- TODO: move somewhere this can be used for other bindings
--- for comparison, type CStringLen = (Ptr CChar, CInt)
-type CUStringLen = (Ptr CUChar, CUInt)
-useAsCUStringLen :: ByteString -> (CUStringLen -> IO a) -> IO a
-useAsCUStringLen bs f = useAsCStringLen bs $ \(ptr, len) -> f (castPtr ptr, fromIntegral len)
-
-useMAsCUStringLen :: Maybe ByteString -> (CUStringLen -> IO a) -> IO a
-useMAsCUStringLen Nothing   f = f (nullPtr, 0)
-useMAsCUStringLen (Just bs) f = useAsCUStringLen bs f
-
-packCUStringLen :: CUStringLen -> IO ByteString
-packCUStringLen (ptr, len) = packCStringLen (castPtr ptr, fromIntegral len)
-
-packMCUStringLen :: CUStringLen -> IO (Maybe ByteString)
-packMCUStringLen (ptr, len)
-	| ptr == nullPtr = return Nothing
-	| otherwise      = Just <$> packCUStringLen (ptr, len)
 
 instance Storable Session where
 	sizeOf    _ = {#sizeof  session_op#}
@@ -110,8 +88,8 @@ instance Storable Session where
 		vMackeylen <- {#get session_op.mackeylen#} p
 		vMackey    <- {#get session_op.mackey   #} p
 		vSes       <- {#get session_op.ses      #} p
-		bsKey      <- packMCUStringLen (   vKey,    vKeylen)
-		bsMacKey   <- packMCUStringLen (vMackey, vMackeylen)
+		bsKey      <- pack mcuStringLen (   vKey,    vKeylen)
+		bsMacKey   <- pack mcuStringLen (vMackey, vMackeylen)
 		return Session
 			{ sCipher    = toOperationType vCipher
 			, sMac       = toOperationType vMac
@@ -120,8 +98,8 @@ instance Storable Session where
 			, sMacKey    = bsMacKey
 			, sSes       = fromIntegral vSes
 			}
-	poke p v = useMAsCUStringLen (sKey    v) $ \(   keyPtr,    keyLen) ->
-	           useMAsCUStringLen (sMacKey v) $ \(mackeyPtr, mackeyLen) -> do
+	poke p v = useAs mcuStringLen (sKey    v) $ \(   keyPtr,    keyLen) ->
+	           useAs mcuStringLen (sMacKey v) $ \(mackeyPtr, mackeyLen) -> do
 		{#set session_op.cipher   #} p (fromOperationType $ sCipher    v)
 		{#set session_op.mac      #} p (fromOperationType $ sMac       v)
 		{#set session_op.rng      #} p (fromOperationType $ sRNG       v)
@@ -172,16 +150,6 @@ instance IOControl StartSession Session   where ioctlReq _ = fromIntegral . from
 instance IOControl Crypt        Operation where ioctlReq _ = fromIntegral . fromEnum $ CtlCrypt
 instance IOControl EndSession   Word32    where ioctlReq _ = fromIntegral . fromEnum $ CtlEndSession
 
-catchIO :: (MonadIO m, Exception e) => IO a -> (e -> m a) -> m a
-catchIO io throw = join . liftIO $
-	catch (return <$> io) (return . throw)
-
-reifyException :: (MonadIO m, MonadError e' m, Exception e) => IO a -> (e -> e') -> m a
-reifyException io transform = catchIO io (throwError . transform)
-
-reifyIOException :: (MonadIO m, MonadError String m) => String -> IO a -> m a
-reifyIOException prefix io = reifyException io (\e -> prefix ++ " " ++ show (e :: IOException))
-
 openCryptodev :: MonadIO m => Computation m Fd
 openCryptodev = do
 	fd <- reifyIOException "Could not open" (openFd "/dev/crypto" ReadWrite def def)
@@ -210,26 +178,25 @@ sessionOperation cryptofd session op = do
 	endSession cryptofd sID
 	deliverFailure crypt'
 
-crypt cryptofd dir k t
-	= ExceptT .
-	allocaBytes lenK   $ \out ->
-	useAsCUStringLen t $ \(ptrT, lenT) ->
-	runExceptT         $ do
+ptrWords       :: ByteStringConversion (Computation IO) ByteString (Ptr Word8, Word32) r
+weirdStringLen :: ByteStringConversion (Computation IO) ByteString (Ptr Word8, Int) r
+mcuStringLen   :: ByteStringConversion IO (Maybe ByteString) CUStringLen r
+ptrWords       = inComputation unsafeArbStringLen
+weirdStringLen = inComputation unsafeArbStringLen
+mcuStringLen   = useDefAsNothing cuStringLen
+
+crypt cryptofd dir k t =
+	allocaBytes lenK $ \out ->
+	useAs ptrWords t $ \(ptrT, lenT) -> do
 		sessionOperation cryptofd
 			def { sCipher = Just CRYPTO_AES_ECB, sKey = Just k }
 			def { oOp  = dir
-				, oLen = fromIntegral lenT
-				, oSrc = castPtr ptrT
+				, oLen = lenT
+				, oSrc = ptrT
 				, oDst = out
 				}
-		liftIO $ packCUStringLen (castPtr out, fromIntegral lenK)
-	where lenK = Data.ByteString.Char8.length k
-
-type Delayed = Either String
-delayFailure   :: Monad m => Computation m a -> Computation m (Delayed a)
-deliverFailure :: Monad m => Delayed       a -> Computation m          a
-delayFailure   = lift . runExceptT
-deliverFailure = ExceptT . return
+		pack weirdStringLen (out, lenK)
+	where lenK = Data.ByteString.length k
 
 aesImplementation = do
 	cryptofd <- openCryptodev
