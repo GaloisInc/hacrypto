@@ -1,20 +1,37 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 module Test.AES (test) where
 
-import AlgorithmTypes
+import Computation
+import Control.Monad.Reader
+import Data.Default
+import Data.Foldable
+import SuiteB
 import Transducer
 
-chunk directionName inputName outputName directionFunction = do2
+anyVal = asum [m <$ transString (show m) | m <- [minBound..maxBound]]
+mode = do3
+	(many transAny)
+	(header (transString "AESVS " *> many transAny *> transString " test data for " *> anyVal))
+	(many transAny)
+	(\_ mode _ -> do
+		suite  <- ask
+		cipher <- liftIO $ cipherAlg suite AES mode
+		return (cipher, usesIV mode)
+	)
+
+chunk usesIV directionName inputName outputName crypt = do2
 	(parameters $ flag directionName)
-	(many . tests $ do3
+	(many . tests $ do4
 		(int "COUNT")
 		(hex "KEY")
+		(if usesIV then hex "IV" else pure def)
 		(hex inputName)
-		(\_ key bytes -> emitHex outputName (directionFunction key bytes))
+		(\_ key iv bytes -> emitHex outputName (liftComputation $ crypt key iv bytes))
 	)
 	(\_ _ -> return ())
 
-chunks = many (chunk "ENCRYPT" "PLAINTEXT"  "CIPHERTEXT" callEncrypt <|>
-               chunk "DECRYPT" "CIPHERTEXT" "PLAINTEXT"  callDecrypt)
+chunks (cipher, usesIV)
+	= many (chunk usesIV "ENCRYPT" "PLAINTEXT"  "CIPHERTEXT" (encrypt_ cipher) <|>
+	        chunk usesIV "DECRYPT" "CIPHERTEXT" "PLAINTEXT"  (decrypt_ cipher))
 
-test = anyHeader chunks
+test = vectors mode chunks

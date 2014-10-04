@@ -1,23 +1,36 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 module AlgorithmTypes
-	( Key, Ciphertext, Plaintext, Digest
+	( Key, IV, Ciphertext, Plaintext, Digest
 	, Cipher(..), Hash(..)
-	, callEncrypt, callDecrypt
-	, callUpdate, callFinalize, callHash
+	, cipher
 	) where
 
 import Computation
-import Control.Monad.Except
-import Control.Monad.Reader
+import Control.Applicative
 
 type Key        = ByteString
+type IV         = ByteString
 type Ciphertext = ByteString
 type Plaintext  = ByteString
 type Digest     = ByteString
 
 data Cipher = Cipher
-	{ encrypt :: Key -> Plaintext  -> Computation IO Ciphertext
-	, decrypt :: Key -> Ciphertext -> Computation IO Plaintext
+	{ encrypt  :: Key -> IV -> Plaintext  -> Computation IO (IV, Ciphertext)
+	, decrypt  :: Key -> IV -> Ciphertext -> Computation IO (IV, Plaintext )
+	, encrypt_ :: Key -> IV -> Plaintext  -> Computation IO Ciphertext
+	, decrypt_ :: Key -> IV -> Ciphertext -> Computation IO Plaintext
+	}
+
+-- for speed, we allow 'Cipher's to have separate functions that don't return
+-- their 'IV' and so require less marshalling; for convenience, we allow
+-- implementors to choose to ignore this possible performance boost by only
+-- writing 'encrypt' and 'decrypt' and providing default 'encrypt_' and
+-- 'decrypt_' operations with 'cipher'
+cipher e d = Cipher
+	{ encrypt  = e
+	, decrypt  = d
+	, encrypt_ = \key iv pt -> snd <$> e key iv pt
+	, decrypt_ = \key iv ct -> snd <$> d key iv ct
 	}
 
 data Hash = Hash
@@ -25,13 +38,3 @@ data Hash = Hash
 	, finalize ::              Computation IO Digest
 	, hash     :: Plaintext -> Computation IO Digest
 	}
-
-ask0 fSelector       = join . asks $ \v -> mapExceptT liftIO $ fSelector v
-ask1 fSelector i1    = join . asks $ \v -> mapExceptT liftIO $ fSelector v i1
-ask2 fSelector i1 i2 = join . asks $ \v -> mapExceptT liftIO $ fSelector v i1 i2
-
-callEncrypt  = ask2 encrypt
-callDecrypt  = ask2 decrypt
-callUpdate   = ask1 update
-callFinalize = ask0 finalize
-callHash     = ask1 hash

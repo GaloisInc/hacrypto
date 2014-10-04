@@ -185,24 +185,26 @@ ptrWords        = inComputation unsafeArbStringLen
 hybridStringLen = inComputation unsafeArbStringLen
 mcuStringLen    = useDefAsNothing cuStringLen
 
-crypt cryptofd dir k t =
+crypt cryptofd dir k iv t =
 	allocaBytes lenK $ \out ->
 	useAs ptrWords t $ \(ptrT, lenT) -> do
 		sessionOperation cryptofd
 			def { sCipher = Just CRYPTO_AES_ECB, sKey = Just k }
-			def { oOp  = dir
-				, oLen = lenT
-				, oSrc = ptrT
-				, oDst = out
-				}
-		pack hybridStringLen (out, lenK)
+			def { oOp  = dir, oLen = lenT, oSrc = ptrT, oDst = out }
+		t' <- pack hybridStringLen (out, lenK)
+		return (iv, t')
 	where lenK = Data.ByteString.length k
 
-aesImplementation = do
+aesECBImplementation = replicateError $ do
 	cryptofd <- openCryptodev
-	return Cipher
-		{ encrypt = crypt cryptofd Encrypt
-		, decrypt = crypt cryptofd Decrypt
-		}
+	return $ cipher
+		(crypt cryptofd Encrypt)
+		(crypt cryptofd Decrypt)
 
-implementation = (unimplemented "kernel-crypto via cryptodev-linux") { aes = aesImplementation }
+libraryName = "kernel-crypto via cryptodev-linux"
+implementation = SuiteB
+	{ cipherAlg = \alg mode -> case (alg, mode) of
+	  	(AES, ECB) -> aesECBImplementation
+	  	_ -> unimplemented_ libraryName alg mode
+	,   hashAlg = unimplemented_ libraryName
+	}

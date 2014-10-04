@@ -27,28 +27,40 @@ type Transducer   m   t = Transducer_  m t [t]
 type Transformer  m   t = Transformer_ m t  t
 type Producer     m   t = WriterT [t] m ()
 
-type MonadIO' m = (Applicative m, MonadIO m)
+type Monad' m = (Applicative m, Monad m)
 
 -- TODO: move this into regex-applicative to avoid recomputing f
 maybeSym :: (s -> Maybe a) -> RE s a
 maybeSym f = fromJust . f <$> psym (isJust . f)
 
-transSym :: MonadIO' m => (a -> Maybe b) -> Transducer m a b
+transSym :: Monad' m => (a -> Maybe b) -> Transducer m a b
 transSym f = Compose (maybeSym f') where
 	f' a = (\b -> tell [a] >> return b) <$> f a
 
 -- TODO: check for ambiguity at every call to "match"/"reference"
 -- TODO: give some basic building blocks for parsing headers
-vectors :: MonadIO' m => Transducer m String a -> (a -> Transducer m Block b) -> Transformer m Vectors
-vectors transHead fTransBlock Vectors { header = h, blocks = bs } = do
+vectors :: Monad' m => Transducer m String a -> (a -> Transducer m Block b) -> Transformer m Vectors
+vectors transHead fTransBlock Vectors { headers = h, blocks = bs } = do
 	(a, h' ) <- runTransducer transHead h
 	(_, bs') <- runTransducer (fTransBlock a) bs
-	return Vectors { header = h', blocks = bs' }
+	return Vectors { headers = h', blocks = bs' }
 
-anyHeader :: MonadIO' m => Transducer m Block a -> Transformer m Vectors
-anyHeader trans = vectors (many (transSym return)) (const trans)
+anyHeader :: Monad' m => Transducer m Block a -> Transformer m Vectors
+anyHeader trans = vectors (many transAny) (const trans)
 
-block :: MonadIO' m => Bool -> Transducer m Equation a -> Transducer m Block a
+header :: Monad' m => Transducer m Char a -> Transducer m String a
+header = Compose . go . getCompose where
+	go pChars = maybeSym $ reference pChars >=> return . onOutput return
+
+-- TODO: this "trans" prefix is a symptom of not using the module system
+-- properly
+transString :: (Monad m, Eq a) => [a] -> Transducer m a ()
+transString s = Compose $ tell s <$ string s
+
+transAny :: Monad' m => Transducer m a a
+transAny = transSym return
+
+block :: Monad' m => Bool -> Transducer m Equation a -> Transducer m Block a
 block bRequest = Compose . go . getCompose where
 	go pEqs = maybeSym $ unwrap >=> reference pEqs >=> return . onOutput wrap
 
@@ -59,20 +71,20 @@ block bRequest = Compose . go . getCompose where
 	unwrap Block { bracketed = bActual, equations = eqs }
 		= guard (bRequest == bActual) >> return eqs
 
-parameters :: MonadIO' m => Transducer m Equation a -> Transducer m Block a
-tests      :: MonadIO' m => Transducer m Equation a -> Transducer m Block a
+parameters :: Monad' m => Transducer m Equation a -> Transducer m Block a
+tests      :: Monad' m => Transducer m Equation a -> Transducer m Block a
 parameters = block True
 tests      = block False
 
-equation :: MonadIO' m => (Value -> Maybe a) -> String -> Transducer m Equation a
+equation :: Monad' m => (Value -> Maybe a) -> String -> Transducer m Equation a
 equation extract lRequest = transSym $ \Equation { label = lActual, value = v } -> do
 	guard (lRequest == lActual)
 	extract v
 
 -- TODO: probably a lot of this could be cleaner with lenses
-int  :: MonadIO' m => String -> Transducer m Equation Integer
-hex  :: MonadIO' m => String -> Transducer m Equation ByteString
-flag :: MonadIO' m => String -> Transducer m Equation ()
+int  :: Monad' m => String -> Transducer m Equation Integer
+hex  :: Monad' m => String -> Transducer m Equation ByteString
+flag :: Monad' m => String -> Transducer m Equation ()
 
 int = equation $ \case
 	Basic { decimal = v } -> v
@@ -86,12 +98,12 @@ flag = equation $ \case
 	Flag -> Just ()
 	_    -> Nothing
 
-emit       :: MonadIO' m => (a -> Value)
-                         -> String -> Computation m a              -> Producer m Equation
-emitInt    :: MonadIO' m => String -> Computation m Integer        -> Producer m Equation
-emitHex    :: MonadIO' m => String -> Computation m ByteString     -> Producer m Equation
-emitBool   :: MonadIO' m => String -> Computation m Bool           -> Producer m Equation
-emitReport :: MonadIO' m => String -> Computation m (Bool, String) -> Producer m Equation
+emit       :: Monad' m => (a -> Value)
+                       -> String -> Computation m a              -> Producer m Equation
+emitInt    :: Monad' m => String -> Computation m Integer        -> Producer m Equation
+emitHex    :: Monad' m => String -> Computation m ByteString     -> Producer m Equation
+emitBool   :: Monad' m => String -> Computation m Bool           -> Producer m Equation
+emitReport :: Monad' m => String -> Computation m (Bool, String) -> Producer m Equation
 
 emit f l io = do
 	v <- lift (runComputation io)
@@ -105,9 +117,9 @@ emitHex    = emit basicHex
 emitBool   = emit Boolean
 emitReport = emit (uncurry SuccessReport)
 
-runTransducer  :: MonadIO' m => Transducer m t a -> Transformer_ m [t] (a, [t])
-execTransducer :: MonadIO' m => Transducer m t a -> Transformer  m [t]
-evalTransducer :: MonadIO' m => Transducer m t a -> Transformer_ m [t]  a
+runTransducer  :: Monad' m => Transducer m t a -> Transformer_ m [t] (a, [t])
+execTransducer :: Monad' m => Transducer m t a -> Transformer  m [t]
+evalTransducer :: Monad' m => Transducer m t a -> Transformer_ m [t]  a
 
 runTransducer (Compose trans) = liftMaybe "transducer failed" . traverse runWriterT . reference trans
 execTransducer trans input = snd <$> runTransducer trans input

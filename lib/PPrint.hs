@@ -42,7 +42,7 @@ instance PPrint Block where
 		]
 
 instance PPrint Vectors where
-	pprint Vectors { header = h, blocks = b }
+	pprint Vectors { headers = h, blocks = b }
 		= intercalate "\n"
 		$ unlines (map comment h)
 		: map pprint b

@@ -79,6 +79,6 @@ data Block = Block
 	} deriving (Eq, Ord, Read, Show)
 
 data Vectors = Vectors
-	{ header :: [String]
-	, blocks :: [Block]
+	{ headers :: [String]
+	, blocks  :: [Block]
 	} deriving (Eq, Ord, Read, Show)

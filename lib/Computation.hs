@@ -1,8 +1,8 @@
 {-# LANGUAGE FlexibleContexts #-}
 module Computation
-	( Computation, runComputation, computation, throwError
+	( Computation, computation, runComputation, liftComputation
 	, liftMaybe, liftMaybe_
-	, onError, (<?>)
+	, throwError, onError, (<?>)
 	, reifyException, reifyIOException
 	, Delayed, delayFailure, deliverFailure
 	, MonadIO, liftIO
@@ -26,8 +26,15 @@ import Foreign.C.Types
 import Foreign.C.String
 
 type Computation = ExceptT String
-runComputation = runExceptT
 computation = ExceptT
+runComputation = runExceptT
+
+liftComputation :: (MonadIO m, MonadError String m) => Computation IO a -> m a
+liftComputation m = do
+	v_ <- liftIO (runComputation m)
+	case v_ of
+		Left err -> throwError err
+		Right v  -> return v
 
 liftMaybe :: Monad m => String -> m (Maybe a) -> Computation m a
 liftMaybe err m = do
