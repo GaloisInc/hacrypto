@@ -8,11 +8,11 @@ import Data.Foldable
 import SuiteB
 import Transducer
 
-anyVal = asum [m <$ transString (show m) | m <- [minBound..maxBound]]
+anyVal = asum [m <$ string (show m) | m <- [minBound..maxBound]]
 mode = do3
-	(many transAny)
-	(header (transString "AESVS " *> many transAny *> transString " test data for " *> anyVal))
-	(many transAny)
+	(many anySym)
+	(header (string "AESVS " *> many anySym *> string " test data for " *> anyVal))
+	(many anySym)
 	(\_ mode _ -> do
 		suite  <- ask
 		cipher <- liftIO $ cipherAlg suite AES mode

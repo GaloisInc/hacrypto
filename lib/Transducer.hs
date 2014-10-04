@@ -12,9 +12,11 @@ import Computation
 import Data.Maybe
 import Data.Traversable
 import Glue
-import Text.Regex.Applicative
+import Text.Regex.Applicative hiding (anySym, string, sym)
 import Text.Regex.Applicative.Reference
 import Types
+
+import qualified Text.Regex.Applicative as RE
 
 -- TODO: switch "reference" back to "match" everywhere once we clear up
 -- https://github.com/feuerbach/regex-applicative/issues/19
@@ -33,8 +35,8 @@ type Monad' m = (Applicative m, Monad m)
 maybeSym :: (s -> Maybe a) -> RE s a
 maybeSym f = fromJust . f <$> psym (isJust . f)
 
-transSym :: Monad' m => (a -> Maybe b) -> Transducer m a b
-transSym f = Compose (maybeSym f') where
+sym :: Monad' m => (a -> Maybe b) -> Transducer m a b
+sym f = Compose (maybeSym f') where
 	f' a = (\b -> tell [a] >> return b) <$> f a
 
 -- TODO: check for ambiguity at every call to "match"/"reference"
@@ -46,19 +48,17 @@ vectors transHead fTransBlock Vectors { headers = h, blocks = bs } = do
 	return Vectors { headers = h', blocks = bs' }
 
 anyHeader :: Monad' m => Transducer m Block a -> Transformer m Vectors
-anyHeader trans = vectors (many transAny) (const trans)
+anyHeader trans = vectors (many anySym) (const trans)
 
 header :: Monad' m => Transducer m Char a -> Transducer m String a
 header = Compose . go . getCompose where
 	go pChars = maybeSym $ reference pChars >=> return . onOutput return
 
--- TODO: this "trans" prefix is a symptom of not using the module system
--- properly
-transString :: (Monad m, Eq a) => [a] -> Transducer m a ()
-transString s = Compose $ tell s <$ string s
+string :: (Monad m, Eq a) => [a] -> Transducer m a ()
+string s = Compose $ tell s <$ RE.string s
 
-transAny :: Monad' m => Transducer m a a
-transAny = transSym return
+anySym :: Monad' m => Transducer m a a
+anySym = sym return
 
 block :: Monad' m => Bool -> Transducer m Equation a -> Transducer m Block a
 block bRequest = Compose . go . getCompose where
@@ -77,7 +77,7 @@ parameters = block True
 tests      = block False
 
 equation :: Monad' m => (Value -> Maybe a) -> String -> Transducer m Equation a
-equation extract lRequest = transSym $ \Equation { label = lActual, value = v } -> do
+equation extract lRequest = sym $ \Equation { label = lActual, value = v } -> do
 	guard (lRequest == lActual)
 	extract v
 
