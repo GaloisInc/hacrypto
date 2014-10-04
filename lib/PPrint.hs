@@ -10,7 +10,7 @@ instance PPrint Value where
 	pprint (Boolean b) = show b
 	pprint SuccessReport { success = b, message = m } = concat
 		[ if b then "P" else "F"
-		, "(", m, ")"
+		, " (", m, ")"
 		]
 	pprint (ErrorMessage s) = "? (" ++ s ++ ")"
 	pprint Flag = ""
