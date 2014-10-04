@@ -9,6 +9,7 @@ import Control.Monad.Reader
 import Control.Monad.Trans.Maybe
 import Control.Monad.Writer
 import Computation
+import Data.Foldable
 import Data.Maybe
 import Data.Traversable
 import Glue
@@ -59,6 +60,9 @@ string s = Compose $ tell s <$ RE.string s
 
 anySym :: Monad' m => Transducer m a a
 anySym = sym return
+
+anyVal :: (Monad' m, Bounded a, Enum a, Show a) => Transducer m Char a
+anyVal = asum [m <$ string (show m) | m <- [minBound..maxBound]]
 
 block :: Monad' m => Bool -> Transducer m Equation a -> Transducer m Block a
 block bRequest = Compose . go . getCompose where

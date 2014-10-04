@@ -4,11 +4,9 @@ module Test.AES (test) where
 import Computation
 import Control.Monad.Reader
 import Data.Default
-import Data.Foldable
 import SuiteB
 import Transducer
 
-anyVal = asum [m <$ string (show m) | m <- [minBound..maxBound]]
 mode = do3
 	(many anySym)
 	(header (string "AESVS " *> many anySym *> string " test data for " *> anyVal))
