@@ -110,8 +110,8 @@ public class RunKeyWrapTests {
 	private void runTest(final KeyWrapTestType the_test, final File the_file) {
 		try {
 			switch (the_test) {
-				//case KW: runKW(the_file, false); break;
-				//case KWP: runKW(the_file, true); break;
+				case KW: runKW(the_file, false); break;
+				case KWP: runKW(the_file, true); break;
 				case TKW: runTKW(the_file); break;
 				default: // this can't happen
 			}
