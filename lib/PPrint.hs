@@ -24,7 +24,7 @@ instance PPrint Equation where
 		]
 
 instance PPrint Block where
-	pprint block = connect (bracketing block) [pprint e | e <- equations block] where
+	pprint Block { bracketing = b, equations = e } = connect b (map pprint e) where
 		bracket s = "[" ++ s ++ "]"
 		onHead f (x:xs) = f x:xs
 		onHead f []     = []
