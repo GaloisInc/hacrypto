@@ -22,11 +22,11 @@ import Control.Monad.Trans.Identity
 import Control.Monad.Trans.Maybe
 import Control.Monad.Writer
 
-data CipherAlgorithm = AES
+data CipherAlgorithm = AES | TDES
 	deriving (Bounded, Enum, Eq, Ord, Read, Show)
-data HashAlgorithm = SHA1
+data HashAlgorithm = SHA1 | SHA224 | SHA256 | SHA384 | SHA512
 	deriving (Bounded, Enum, Eq, Ord, Read, Show)
-data Mode = CBC | CFB1 | CFB8 | CFB128 | ECB | OFB
+data Mode = CBC | CFB1 | CFB8 | CFB128 | CTR | ECB | OFB
 	deriving (Bounded, Enum, Eq, Ord, Read, Show)
 
 usesIV ECB = False

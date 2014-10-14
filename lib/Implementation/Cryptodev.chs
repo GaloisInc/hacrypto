@@ -185,28 +185,36 @@ ptrWords        = inComputation unsafeArbStringLen
 hybridStringLen = inComputation unsafeArbStringLen
 mcuStringLen    = useDefAsNothing cuStringLen
 
-crypt cryptofd dir k iv t =
+crypt cryptofd flag dir k iv t =
 	allocaBytes lenK $ \out ->
 	useAs ptrWords t $ \(ptrT, lenT) -> do
 		sessionOperation cryptofd
-			def { sCipher = Just CRYPTO_AES_ECB, sKey = Just k }
+			def { sCipher = Just flag, sKey = Just k }
 			def { oOp  = dir, oLen = lenT, oSrc = ptrT, oDst = out }
 		t' <- pack hybridStringLen (out, lenK)
 		return (iv, t')
 	where lenK = Data.ByteString.length k
 
-aesECBImplementation = do
+cipherImplementation flag = do
 	cryptofd <- openCryptodev
 	return $ cipher
-		(crypt cryptofd Encrypt)
-		(crypt cryptofd Decrypt)
+		(crypt cryptofd flag Encrypt)
+		(crypt cryptofd flag Decrypt)
+
+cipherFlag AES  CBC = Just CRYPTO_AES_CBC
+cipherFlag AES  CTR = Just CRYPTO_AES_CTR
+cipherFlag AES  ECB = Just CRYPTO_AES_ECB
+cipherFlag TDES CBC = Just CRYPTO_3DES_CBC
+cipherFlag TDES CTR = Just CRYPTO_3DES_CTR
+cipherFlag TDES ECB = Just CRYPTO_3DES_ECB
+cipherFlag  _    _  = Nothing
 
 libraryName = "kernel-crypto via cryptodev-linux"
 
 implementation :: SuiteB (Computation IO)
 implementation = SuiteB
-	{ cipherAlg = \alg mode -> case (alg, mode) of
-	  	(AES, ECB) -> aesECBImplementation
+	{ cipherAlg = \alg mode -> case cipherFlag alg mode of
+	  	Just flag -> cipherImplementation flag
 	  	_ -> unimplemented libraryName alg mode
 	, hashAlg = unimplemented libraryName
 	}
