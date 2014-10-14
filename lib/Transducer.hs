@@ -5,7 +5,6 @@ module Transducer
 	, module Types
 	) where
 
-import Control.Monad.Except
 import Control.Monad.Reader
 import Control.Monad.Trans.Maybe
 import Control.Monad.Writer
