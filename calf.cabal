@@ -20,6 +20,8 @@ library
                        Implementation.Debug,
                        SuiteB,
                        Test.AES,
+                       Test.TDES,
+                       Test.Util,
                        Types,
                        Transducer
   other-modules:       Glue
