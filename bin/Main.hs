@@ -29,8 +29,17 @@ processFile f = do
 	v' <- runTransformer test implementation v
 	writeFile' (f ++ ".out") (pprint v')
 
--- TODO: move this closer and closer to closeEnough = (==)
-closeEnough a b = filter (not . isSpace) a == filter (not . isSpace) b
+normalizeNewlines ('\r':'\n':rest) = '\n':normalizeNewlines rest
+normalizeNewlines (c:rest) = c:normalizeNewlines rest
+normalizeNewlines [] = []
+
+normalizeRepeats (x:y:rest) | isSpace x && isSpace y && x == y = normalizeRepeats (y:rest)
+normalizeRepeats (c:rest) = c:normalizeRepeats rest
+normalizeRepeats [] = []
+
+-- TODO: move this closer and closer to id
+normalize = filter (/=' ') . normalizeRepeats . normalizeNewlines
+closeEnough a b = normalize a == normalize b
 
 checkRoundtrip :: FilePath -> Computation IO ()
 checkRoundtrip f = do

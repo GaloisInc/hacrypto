@@ -1,7 +1,9 @@
 module Types
 	( Value(..)
 	, Equation(..)
+	, Bracketing(..)
 	, Block(..)
+	, bracketed
 	, Vectors(..)
 	, basicHex
 	, basicDec
@@ -73,10 +75,14 @@ data Equation = Equation
 	, value :: Value
 	} deriving (Eq, Ord, Read, Show)
 
+data Bracketing = None | Brackets | ModEq | Multiline
+	deriving (Bounded, Enum, Eq, Ord, Read, Show)
+
 data Block = Block
-	{ bracketed :: Bool
-	, equations :: [Equation]
+	{ bracketing :: Bracketing
+	, equations  :: [Equation]
 	} deriving (Eq, Ord, Read, Show)
+bracketed b = bracketing b /= None
 
 data Vectors = Vectors
 	{ headers :: [String]

@@ -53,15 +53,18 @@ pValue =  pErrorMessage
 pEquationRaw    = Equation <$> pLexeme pLabel <* pLexSym '=' <*> pValue
 
 pFlag           = flip Equation Flag <$> pMunch (`notElem` "=]")
-pKeyPairGarbage = () <$ (pLexeme (pToken "mod") *> pLexSym '=')
-pEquationParam  = opt pKeyPairGarbage () *> pEquationRaw
-pParameters     = pBrackets (pManySepBy (pEquationParam <|> pFlag) (pLexSym ',')) <* pEOL
+pKeyPairGarbage = ModEq <$ (pLexeme (pToken "mod") *> pLexSym '=')
+pEquationParam  = (,) <$> opt pKeyPairGarbage Brackets <*> pEquationRaw
+pParameters     = pBrackets (pManySepBy (pEquationParam <|> ((,) Brackets <$> pFlag)) (pLexSym ',')) <* pEOL
 
 pFlagLine       = flip Equation Flag <$> pLabel
 pEquationLine   = (pLexeme pEquationRaw <|> pFlagLine) <* pEOL
 
-pBlock   =  (Block True . concat <$> pList1 pParameters  )
-        <|> (Block False         <$> pList1 pEquationLine)
+identifyParameters [(kind, lines):rest] = Block kind (lines:map snd rest)
+identifyParameters lines                = Block Multiline (lines >>= map snd)
+
+pBlock   =  (identifyParameters <$> pList1 pParameters  )
+        <|> (Block None         <$> pList1 pEquationLine)
 pBlocks  = concat <$> pMany1SepBy (pList1 pBlock) (pList1 pEOL)
 pVectors = Vectors <$> pHeader <*> (pBlocks <* many pEOL <|> pure [])
 

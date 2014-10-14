@@ -65,14 +65,11 @@ anyVal = asum [m <$ string (show m) | m <- [minBound..maxBound]]
 
 block :: Monad' m => Bool -> Transducer m Equation a -> Transducer m Block a
 block bRequest = Compose . go . getCompose where
-	go pEqs = maybeSym $ unwrap >=> reference pEqs >=> return . onOutput wrap
+	go pEqs = maybeSym $ \block -> do
+		guard (bracketed block == bRequest)
+		onOutput (updateEqs block) <$> reference pEqs (equations block)
 
-	wrap   :: [Equation] -> [Block]
-	unwrap :: Block -> Maybe [Equation]
-
-	wrap newEqs = [Block { bracketed = bRequest, equations = newEqs}]
-	unwrap Block { bracketed = bActual, equations = eqs }
-		= guard (bRequest == bActual) >> return eqs
+	updateEqs block newEqs = [block { equations = newEqs }]
 
 parameters :: Monad' m => Transducer m Equation a -> Transducer m Block a
 tests      :: Monad' m => Transducer m Equation a -> Transducer m Block a

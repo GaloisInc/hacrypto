@@ -23,23 +23,15 @@ instance PPrint Equation where
 		, pprint v
 		]
 
--- TODO: this isn't right, since bracketed blocks can look like any of these:
--- 1. [k1 = v1]
---    [k2 = v2]
--- 2. [k1 = v1, k2 = v2]
--- 3. [mod = k1 = v1, k2 = v2]
--- ...but we only produce output of kind (1). The parser will have to store
--- this information and hide it from clients other than pprint somehow (or at
--- least make it easy for other clients to ignore the extra information).
 instance PPrint Block where
-	pprint Block { bracketed = b, equations = es } = unlines
-		[ concat
-			[ ['[' | b]
-			, pprint e
-			, [']' | b]
-			]
-		| e <- es
-		]
+	pprint block = connect (bracketing block) [pprint e | e <- equations block] where
+		bracket s = "[" ++ s ++ "]"
+		onHead f (x:xs) = f x:xs
+		onHead f []     = []
+		connect None      = unlines
+		connect Brackets  = bracket . intercalate ","
+		connect ModEq     = bracket . intercalate ", " . onHead ("mod = " ++)
+		connect Multiline = unlines . map bracket
 
 instance PPrint Vectors where
 	pprint Vectors { headers = h, blocks = b }
