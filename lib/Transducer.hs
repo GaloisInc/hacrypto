@@ -101,16 +101,16 @@ flag = equation $ \case
 	Flag -> Just ()
 	_    -> Nothing
 
-type Emit m = (MonadIO m, MonadWriter [Equation] m)
+type Emit m = (MonadError String m, MonadWriter [Equation] m)
 emit       :: Emit m => (a -> Value)
-                     -> String -> Computation IO a              -> m ()
-emitInt    :: Emit m => String -> Computation IO Integer        -> m ()
-emitHex    :: Emit m => String -> Computation IO ByteString     -> m ()
-emitBool   :: Emit m => String -> Computation IO Bool           -> m ()
-emitReport :: Emit m => String -> Computation IO (Bool, String) -> m ()
+                     -> String -> m a              -> m ()
+emitInt    :: Emit m => String -> m Integer        -> m ()
+emitHex    :: Emit m => String -> m ByteString     -> m ()
+emitBool   :: Emit m => String -> m Bool           -> m ()
+emitReport :: Emit m => String -> m (Bool, String) -> m ()
 
-emit f l io = do
-	v <- liftIO (runComputation io)
+emit f l m = do
+	v <- catchError (Right `liftM` m) (return . Left)
 	tell [Equation { label = l, value = case v of
 		Left  e -> ErrorMessage e
 		Right a -> f a
@@ -129,5 +129,5 @@ runTransducer (Compose trans) = maybe (throwError "transducer failed") runWriter
 execTransducer trans input = snd <$> runTransducer trans input
 evalTransducer trans input = fst <$> runTransducer trans input
 
-runTransformer :: Transformer_ (Computation (ReaderT r m)) i o -> r -> i -> Computation m o
-runTransformer f r i = computation $ runReaderT (runComputation (f i)) r
+runTransformer :: Transformer_ (ReaderT r (Computation m)) i o -> r -> i -> Computation m o
+runTransformer f r i = runReaderT (f i) r

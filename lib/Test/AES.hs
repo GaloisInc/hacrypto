@@ -13,7 +13,7 @@ mode = do3
 	(many anySym)
 	(\_ mode _ -> do
 		suite  <- ask
-		cipher <- liftComputation $ cipherAlg suite AES mode
+		cipher <- lift . lift $ cipherAlg suite AES mode
 		return (cipher, usesIV mode)
 	)
 
@@ -24,7 +24,7 @@ chunk usesIV directionName inputName outputName crypt = do2
 		(hex "KEY")
 		(if usesIV then hex "IV" else pure def)
 		(hex inputName)
-		(\_ key iv bytes -> emitHex outputName (liftComputation $ crypt key iv bytes))
+		(\_ key iv bytes -> emitHex outputName (lift . lift $ crypt key iv bytes))
 	)
 	(\_ _ -> return ())
 

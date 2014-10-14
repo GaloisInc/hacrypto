@@ -2,7 +2,7 @@
 module Computation
 	( Computation, computation, runComputation, liftComputation
 	, liftMaybe, liftMaybe_
-	, MonadError, throwError, onError, (<?>)
+	, MonadError(..), onError, (<?>)
 	, reifyException, reifyIOException
 	, Delayed, delayFailure, deliverFailure
 	, MonadIO, liftIO
