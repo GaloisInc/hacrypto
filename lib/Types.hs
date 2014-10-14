@@ -55,7 +55,7 @@ pprintDec :: Integer    -> String
 pprintHex :: ByteString -> String
 pprintDec = show
 pprintHex = unpack >=> showByte where
-	showByte n = [showNibble (n `rem` 16), showNibble (n `quot` 16)]
+	showByte n = [showNibble (n `quot` 16), showNibble (n `rem` 16)]
 	showNibble = intToDigit . fromIntegral
 
 parseDec :: String -> Maybe Integer
