@@ -1,15 +1,26 @@
-{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleContexts, TypeFamilies #-}
 module SuiteB
 	( CipherAlgorithm(..)
 	, HashAlgorithm(..)
 	, Mode(..), usesIV
-	, SuiteB(..)
-	, replicateError, unimplemented, unimplemented_
+	, SuiteB, SuiteB_(..)
+	, Unimplemented(..), UnimplementedArg(..), unimplemented
 	, module AlgorithmTypes
 	) where
 
 import AlgorithmTypes
 import Computation
+import Data.List (intercalate)
+import Glue
+
+import Control.Monad.Except
+import Control.Monad.Reader
+import Control.Monad.RWS
+import Control.Monad.State.Lazy   as Lazy
+import Control.Monad.State.Strict as Strict
+import Control.Monad.Trans.Identity
+import Control.Monad.Trans.Maybe
+import Control.Monad.Writer
 
 data CipherAlgorithm = AES
 	deriving (Bounded, Enum, Eq, Ord, Read, Show)
@@ -21,64 +32,39 @@ data Mode = CBC | CFB1 | CFB8 | CFB128 | ECB | OFB
 usesIV ECB = False
 usesIV _   = True
 
--- initialization is not permitted to fail; if something goes wrong, report it
--- when somebody tries to invoke one of the fields of 'Cipher' or 'Hash'
-data SuiteB = SuiteB
-	{ cipherAlg :: CipherAlgorithm -> Mode -> IO Cipher
-	,   hashAlg ::   HashAlgorithm         -> IO Hash
+data SuiteB_ m m' = SuiteB
+	{ cipherAlg :: CipherAlgorithm -> Mode -> m (Cipher m')
+	,   hashAlg ::   HashAlgorithm         -> m (Hash   m')
 	}
-
-class ReplicateError a where replicateError :: Computation IO a -> IO a
-
-instance ReplicateError Cipher where
-	replicateError m = do
-		v_ <- runComputation m
-		case v_ of
-			Right v -> return v
-			Left  e -> return $ cipher
-				(\_ _ _ -> throwError ("Error while initializing cipher: " ++ e))
-				(\_ _ _ -> throwError ("Error while initializing cipher: " ++ e))
-
-instance ReplicateError Hash where
-	replicateError m = do
-		v_ <- runComputation m
-		case v_ of
-			Right v -> return v
-			Left  e -> return $ Hash
-				{ update   = \_ -> throwError ("Error while initializing hash: " ++ e)
-				, finalize =       throwError ("Error while initializing hash: " ++ e)
-				, hash     = \_ -> throwError ("Error while initializing hash: " ++ e)
-				}
+type SuiteB m = SuiteB_ m m
 
 class Unimplemented a where
-	unimplemented :: String -> String -> a
+	unimplemented_ :: ([String] -> String) -> String -> a
 
-unimplemented_ :: Unimplemented a => String -> a
-unimplemented_ = unimplemented ""
+-- the two basic instances: String and (arg1 -> arg2 -> ... -> String)
+instance a ~ Char => Unimplemented [a] where
+	unimplemented_ f lib = unwords [f [], "not supported by", lib]
 
-instance Monad m => Unimplemented (Computation m a) where
-	unimplemented operation libraryName = throwError (operation ++ " not supported by " ++ libraryName)
+instance (UnimplementedArg a, Unimplemented b) => Unimplemented (a -> b) where
+	unimplemented_ f lib op = unimplemented_ (\ops -> f (showArg op:ops)) lib
 
-instance (Show a, Unimplemented b) => Unimplemented (a -> b) where
-	unimplemented op lib a = unimplemented (show a ++ ['-' | not (null op)] ++ op) lib
+-- MonadError instances
+instance (Monad m, e ~ String)           => Unimplemented (      ExceptT e     m a) where unimplemented_ f lib = throwError (unimplemented_ f lib)
+instance  Unimplemented (m a)            => Unimplemented (    IdentityT       m a) where unimplemented_ f lib = IdentityT  (unimplemented_ f lib)
+instance (Unimplemented (m a), Monad m)  => Unimplemented (       MaybeT       m a) where unimplemented_ f lib = lift       (unimplemented_ f lib)
+instance  MonadError String m            => Unimplemented (      ReaderT r     m a) where unimplemented_ f lib = throwError (unimplemented_ f lib)
+instance (MonadError String m, Monoid w) => Unimplemented (         RWST r w s m a) where unimplemented_ f lib = throwError (unimplemented_ f lib)
+instance  MonadError String m            => Unimplemented (Strict.StateT     s m a) where unimplemented_ f lib = throwError (unimplemented_ f lib)
+instance  MonadError String m            => Unimplemented (  Lazy.StateT     s m a) where unimplemented_ f lib = throwError (unimplemented_ f lib)
+instance (MonadError String m, Monoid w) => Unimplemented (      WriterT   w   m a) where unimplemented_ f lib = throwError (unimplemented_ f lib)
 
-instance Unimplemented a => Unimplemented (IO a) where
-	unimplemented = (return .) . unimplemented
+class UnimplementedArg a where showArg :: a -> String
+instance a ~ Char => UnimplementedArg [a] where showArg = id
+instance UnimplementedArg CipherAlgorithm where showArg = show
+instance UnimplementedArg   HashAlgorithm where showArg = show
+instance UnimplementedArg Mode            where showArg = show
 
-instance Unimplemented Cipher where
-	unimplemented op lib = cipher
-		(\_ _ _ -> unimplemented ("Encrypting with " ++ op) lib)
-		(\_ _ _ -> unimplemented ("Decrypting with " ++ op) lib)
-
-instance Unimplemented Hash where
-	unimplemented op lib = Hash
-		{ update   = \_ -> unimplemented (    "Updating with " ++ op) lib
-		, finalize =       unimplemented ("Finalization with " ++ op) lib
-		, hash     = \_ -> unimplemented (     "Hashing with " ++ op) lib
-		}
-
-instance Unimplemented SuiteB where
-	unimplemented _ lib = SuiteB
-		{ cipherAlg = unimplemented_ lib
-		,   hashAlg = unimplemented_ lib
-		}
+unimplemented :: Unimplemented a => String -> a
+unimplemented = unimplemented_ $ \xs -> case xs of
+	[] -> "<unknown operation>"
+	_  -> intercalate "-" xs

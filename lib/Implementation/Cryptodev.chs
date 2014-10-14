@@ -195,16 +195,18 @@ crypt cryptofd dir k iv t =
 		return (iv, t')
 	where lenK = Data.ByteString.length k
 
-aesECBImplementation = replicateError $ do
+aesECBImplementation = do
 	cryptofd <- openCryptodev
 	return $ cipher
 		(crypt cryptofd Encrypt)
 		(crypt cryptofd Decrypt)
 
 libraryName = "kernel-crypto via cryptodev-linux"
+
+implementation :: SuiteB (Computation IO)
 implementation = SuiteB
 	{ cipherAlg = \alg mode -> case (alg, mode) of
 	  	(AES, ECB) -> aesECBImplementation
-	  	_ -> unimplemented_ libraryName alg mode
-	,   hashAlg = unimplemented_ libraryName
+	  	_ -> unimplemented libraryName alg mode
+	, hashAlg = unimplemented libraryName
 	}

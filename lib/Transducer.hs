@@ -1,10 +1,11 @@
-{-# LANGUAGE ConstraintKinds, LambdaCase, TypeOperators #-}
+{-# LANGUAGE ConstraintKinds, FlexibleContexts, LambdaCase, TypeOperators #-}
 module Transducer
 	( module Glue
 	, module Transducer
 	, module Types
 	) where
 
+import Control.Monad.Except
 import Control.Monad.Reader
 import Control.Monad.Trans.Maybe
 import Control.Monad.Writer
@@ -25,10 +26,9 @@ import qualified Text.Regex.Applicative as RE
 -- makes "match" terminate
 
 type Transducer_  m i o = RE i `Compose` WriterT o m
-type Transformer_ m i o = i -> Computation m o
+type Transformer_ m i o = i -> m o
 type Transducer   m   t = Transducer_  m t [t]
 type Transformer  m   t = Transformer_ m t  t
-type Producer     m   t = WriterT [t] m ()
 
 type Monad' m = (Applicative m, Monad m)
 
@@ -42,13 +42,13 @@ sym f = Compose (maybeSym f') where
 
 -- TODO: check for ambiguity at every call to "match"/"reference"
 -- TODO: give some basic building blocks for parsing headers
-vectors :: Monad' m => Transducer m String a -> (a -> Transducer m Block b) -> Transformer m Vectors
+vectors :: (Monad' m, MonadError String m) => Transducer m String a -> (a -> Transducer m Block b) -> Transformer m Vectors
 vectors transHead fTransBlock Vectors { headers = h, blocks = bs } = do
 	(a, h' ) <- runTransducer transHead h
 	(_, bs') <- runTransducer (fTransBlock a) bs
 	return Vectors { headers = h', blocks = bs' }
 
-anyHeader :: Monad' m => Transducer m Block a -> Transformer m Vectors
+anyHeader :: (Monad' m, MonadError String m) => Transducer m Block a -> Transformer m Vectors
 anyHeader trans = vectors (many anySym) (const trans)
 
 header :: Monad' m => Transducer m Char a -> Transducer m String a
@@ -102,15 +102,16 @@ flag = equation $ \case
 	Flag -> Just ()
 	_    -> Nothing
 
-emit       :: Monad' m => (a -> Value)
-                       -> String -> Computation m a              -> Producer m Equation
-emitInt    :: Monad' m => String -> Computation m Integer        -> Producer m Equation
-emitHex    :: Monad' m => String -> Computation m ByteString     -> Producer m Equation
-emitBool   :: Monad' m => String -> Computation m Bool           -> Producer m Equation
-emitReport :: Monad' m => String -> Computation m (Bool, String) -> Producer m Equation
+type Emit m = (MonadIO m, MonadWriter [Equation] m)
+emit       :: Emit m => (a -> Value)
+                     -> String -> Computation IO a              -> m ()
+emitInt    :: Emit m => String -> Computation IO Integer        -> m ()
+emitHex    :: Emit m => String -> Computation IO ByteString     -> m ()
+emitBool   :: Emit m => String -> Computation IO Bool           -> m ()
+emitReport :: Emit m => String -> Computation IO (Bool, String) -> m ()
 
 emit f l io = do
-	v <- lift (runComputation io)
+	v <- liftIO (runComputation io)
 	tell [Equation { label = l, value = case v of
 		Left  e -> ErrorMessage e
 		Right a -> f a
@@ -121,13 +122,13 @@ emitHex    = emit basicHex
 emitBool   = emit Boolean
 emitReport = emit (uncurry SuccessReport)
 
-runTransducer  :: Monad' m => Transducer m t a -> Transformer_ m [t] (a, [t])
-execTransducer :: Monad' m => Transducer m t a -> Transformer  m [t]
-evalTransducer :: Monad' m => Transducer m t a -> Transformer_ m [t]  a
+runTransducer  :: (Monad' m, MonadError String m) => Transducer m t a -> Transformer_ m [t] (a, [t])
+execTransducer :: (Monad' m, MonadError String m) => Transducer m t a -> Transformer  m [t]
+evalTransducer :: (Monad' m, MonadError String m) => Transducer m t a -> Transformer_ m [t]  a
 
-runTransducer (Compose trans) = liftMaybe "transducer failed" . traverse runWriterT . reference trans
+runTransducer (Compose trans) = maybe (throwError "transducer failed") runWriterT . reference trans
 execTransducer trans input = snd <$> runTransducer trans input
 evalTransducer trans input = fst <$> runTransducer trans input
 
-runTransformer :: Transformer_ (ReaderT r m) i o -> r -> i -> Computation m o
+runTransformer :: Transformer_ (Computation (ReaderT r m)) i o -> r -> i -> Computation m o
 runTransformer f r i = computation $ runReaderT (runComputation (f i)) r

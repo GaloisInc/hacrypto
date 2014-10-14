@@ -14,11 +14,11 @@ type Ciphertext = ByteString
 type Plaintext  = ByteString
 type Digest     = ByteString
 
-data Cipher = Cipher
-	{ encrypt  :: Key -> IV -> Plaintext  -> Computation IO (IV, Ciphertext)
-	, decrypt  :: Key -> IV -> Ciphertext -> Computation IO (IV, Plaintext )
-	, encrypt_ :: Key -> IV -> Plaintext  -> Computation IO Ciphertext
-	, decrypt_ :: Key -> IV -> Ciphertext -> Computation IO Plaintext
+data Cipher m = Cipher
+	{ encrypt  :: Key -> IV -> Plaintext  -> m (IV, Ciphertext)
+	, decrypt  :: Key -> IV -> Ciphertext -> m (IV, Plaintext )
+	, encrypt_ :: Key -> IV -> Plaintext  -> m Ciphertext
+	, decrypt_ :: Key -> IV -> Ciphertext -> m Plaintext
 	}
 
 -- for speed, we allow 'Cipher's to have separate functions that don't return
@@ -33,8 +33,8 @@ cipher e d = Cipher
 	, decrypt_ = \key iv ct -> snd <$> d key iv ct
 	}
 
-data Hash = Hash
-	{ update   :: Plaintext -> Computation IO ()
-	, finalize ::              Computation IO Digest
-	, hash     :: Plaintext -> Computation IO Digest
+data Hash m = Hash
+	{ update   :: Plaintext -> m ()
+	, finalize ::              m Digest
+	, hash     :: Plaintext -> m Digest
 	}

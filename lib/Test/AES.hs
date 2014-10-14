@@ -13,7 +13,7 @@ mode = do3
 	(many anySym)
 	(\_ mode _ -> do
 		suite  <- ask
-		cipher <- liftIO $ cipherAlg suite AES mode
+		cipher <- liftComputation $ cipherAlg suite AES mode
 		return (cipher, usesIV mode)
 	)
 
