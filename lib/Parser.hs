@@ -51,17 +51,23 @@ pValue =  pErrorMessage
       <|> pSuccess
 
 pEquationRaw    = Equation <$> pLexeme pLabel <* pLexSym '=' <*> pValue
+annotatedFlag   = flip Equation Flag
 
-pFlag           = flip Equation Flag <$> pMunch (`notElem` "=]")
+pFlag           = annotatedFlag <$> pMunch (`notElem` "=]")
 pKeyPairGarbage = ModEq <$ (pLexeme (pToken "mod") *> pLexSym '=')
 pEquationParam  = (,) <$> opt pKeyPairGarbage Brackets <*> pEquationRaw
 pParameters     = pBrackets (pManySepBy (pEquationParam <|> ((,) Brackets <$> pFlag)) (pLexSym ',')) <* pEOL
 
-pFlagLine       = flip Equation Flag <$> pLabel
+pFlagLine       = annotatedFlag <$> pLabel
 pEquationLine   = (pLexeme pEquationRaw <|> pFlagLine) <* pEOL
 
-identifyParameters [(kind, lines):rest] = Block kind (lines:map snd rest)
-identifyParameters lines                = Block Multiline (lines >>= map snd)
+-- when there's just one line of parameters, use whatever kind it claims to be;
+-- otherwise there isn't really a good way to combine different kinds of
+-- parameters, so just say it's Multiline
+identifyParameters lines = Block kind (lines >>= map snd) where
+	kind = case lines of
+		[(k, _):_] -> k
+		_          -> Multiline
 
 pBlock   =  (identifyParameters <$> pList1 pParameters  )
         <|> (Block None         <$> pList1 pEquationLine)
