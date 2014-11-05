@@ -85,6 +85,7 @@ data Block = Block
 	{ bracketing :: Bracketing
 	, spacing    :: Spacing
 	, equations  :: [Equation]
+	, padding    :: Int -- how many extra blank lines follow?
 	} deriving (Eq, Ord, Read, Show)
 bracketed b = bracketing b /= None
 

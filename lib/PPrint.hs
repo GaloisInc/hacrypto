@@ -28,18 +28,20 @@ instance (a ~ Spacing, b ~ Equation) => PPrint (a, b) where
 		]
 
 instance PPrint Block where
-	pprint Block { bracketing = b, spacing = s, equations = e } = connect b [pprint (s, eq) | eq <- e] where
+	pprint Block { bracketing = b, spacing = s, equations = e, padding = p }
+		= connect b [pprint (s, eq) | eq <- e] ++ replicate p '\n'
+		where
 		bracket s = "[" ++ s ++ "]"
 		onHead f (x:xs) = f x:xs
 		onHead f []     = []
-		connect None      = unlines
+		connect None      = intercalate "\n"
 		connect Brackets  = bracket . intercalate ", "
 		connect ModEq     = bracket . intercalate ", " . onHead ("mod = " ++)
-		connect Multiline = unlines . map bracket
+		connect Multiline = intercalate "\n" . map bracket
 
 instance PPrint Vectors where
 	pprint Vectors { headers = h, blocks = b }
-		= intercalate "\n"
+		= unlines
 		$ unlines (map comment h)
 		: map pprint b
 

@@ -107,8 +107,13 @@ pBlock  =  mangle
 	mangle (b, eqs) = Block b
 		(coalesceWhitespaces (annotation <$> eqs))
 		(annotated <$> eqs)
+		0
 
-pBlocks  = concat <$> pMany1SepBy (pList1 pBlock) (pList1 pEOL)
-pVectors = Vectors <$> pHeader <*> (pBlocks <* many pEOL <|> pure [])
+onLast f [x] = [f x]
+onLast f (x:xs) = x:onLast f xs
+onLast f [] = []
+
+pBlocks  = concat <$> many ((\bs eols -> onLast (\b -> b { padding = length eols }) bs) <$> pList1 pBlock <*> many pEOL)
+pVectors = Vectors <$> pHeader <*> (pBlocks <|> pure [])
 
 parseVectors = execParser pVectors

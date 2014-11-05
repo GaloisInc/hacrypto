@@ -44,7 +44,7 @@ normalizeEndlineSpace (x:xs) = x : normalizeEndlineSpace xs
 normalizeEndlineSpace [] = []
 
 -- TODO: move this closer and closer to id
-normalize = normalizeEndlineSpace . normalizeRepeats . normalizeNewlines
+normalize = normalizeEndlineSpace . normalizeNewlines
 closeEnough a b = normalize a == normalize b
 
 checkRoundtrip :: FilePath -> Computation IO ()
@@ -54,3 +54,6 @@ checkRoundtrip f = do
 	unless (closeEnough s s') $ do
 		writeFile' "out" s'
 		throwError $ f ++ "\n\tdoesn't roundtrip; output written to out"
+
+checkParse :: FilePath -> Computation IO ()
+checkParse f = readFile' f >>= parseVectors' f >> return ()
