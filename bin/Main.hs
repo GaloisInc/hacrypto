@@ -12,7 +12,7 @@ import System.IO
 import Test.AES
 import Transducer
 
-main = getArgs >>= mapM_ (runAndReport . processFile)
+main = getArgs >>= mapM_ (runAndReport . checkRoundtrip)
 runAndReport = runComputation >=> either (hPutStrLn stderr) (\_ -> return ())
 
 readFile'  =  reifyIOException "Couldn't open"    .  readFile
@@ -37,8 +37,14 @@ normalizeRepeats (x:y:rest) | isSpace x && isSpace y && x == y = normalizeRepeat
 normalizeRepeats (c:rest) = c:normalizeRepeats rest
 normalizeRepeats [] = []
 
+normalizeEndlineSpace (' ':xs) = case span (==' ') xs of
+	(ws, '\n':rest) -> '\n':normalizeEndlineSpace rest
+	(ws, rest) -> " " ++ ws ++ normalizeEndlineSpace rest
+normalizeEndlineSpace (x:xs) = x : normalizeEndlineSpace xs
+normalizeEndlineSpace [] = []
+
 -- TODO: move this closer and closer to id
-normalize = filter (/=' ') . normalizeRepeats . normalizeNewlines
+normalize = normalizeEndlineSpace . normalizeRepeats . normalizeNewlines
 closeEnough a b = normalize a == normalize b
 
 checkRoundtrip :: FilePath -> Computation IO ()

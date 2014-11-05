@@ -1,3 +1,4 @@
+{-# LANGUAGE TypeFamilies #-}
 module PPrint (module Types, PPrint(..)) where
 
 import Data.List
@@ -15,21 +16,24 @@ instance PPrint Value where
 	pprint (ErrorMessage s) = "? (" ++ s ++ ")"
 	pprint Flag = ""
 
--- TODO: do spaces really always occur? is it okay for them to always occur?
-instance PPrint Equation where
-	pprint Equation { label = s, value = v } = concat
+instance PPrint Equation where pprint eq = pprint (Spread, eq)
+instance (a ~ Spacing, b ~ Equation) => PPrint (a, b) where
+	pprint (spacing, Equation { label = s, value = v }) = concat
 		[ s
-		, if v == Flag then "" else " = "
+		, case (spacing, v) of
+			(_      , Flag) -> ""
+			(Compact, _   ) -> "="
+			(Spread , _   ) -> " = "
 		, pprint v
 		]
 
 instance PPrint Block where
-	pprint Block { bracketing = b, equations = e } = connect b (map pprint e) where
+	pprint Block { bracketing = b, spacing = s, equations = e } = connect b [pprint (s, eq) | eq <- e] where
 		bracket s = "[" ++ s ++ "]"
 		onHead f (x:xs) = f x:xs
 		onHead f []     = []
 		connect None      = unlines
-		connect Brackets  = bracket . intercalate ","
+		connect Brackets  = bracket . intercalate ", "
 		connect ModEq     = bracket . intercalate ", " . onHead ("mod = " ++)
 		connect Multiline = unlines . map bracket
 

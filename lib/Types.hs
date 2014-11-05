@@ -2,6 +2,7 @@ module Types
 	( Value(..)
 	, Equation(..)
 	, Bracketing(..)
+	, Spacing(..)
 	, Block(..)
 	, bracketed
 	, Vectors(..)
@@ -77,9 +78,12 @@ data Equation = Equation
 
 data Bracketing = None | Brackets | ModEq | Multiline
 	deriving (Bounded, Enum, Eq, Ord, Read, Show)
+data Spacing = Compact | Spread
+	deriving (Bounded, Enum, Eq, Ord, Read, Show)
 
 data Block = Block
 	{ bracketing :: Bracketing
+	, spacing    :: Spacing
 	, equations  :: [Equation]
 	} deriving (Eq, Ord, Read, Show)
 bracketed b = bracketing b /= None

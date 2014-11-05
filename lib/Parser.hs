@@ -2,14 +2,34 @@
 module Parser (module Types, parseVectors) where
 
 import Data.Char
+import Data.Maybe
 import Text.ParserCombinators.UU
 import Text.ParserCombinators.UU.BasicInstances
 import Text.ParserCombinators.UU.Utils hiding (pParens, pBrackets)
 import Types
 
+-- utilities {{{
 execParserMaybe :: Parser a -> String -> Maybe a
 execParserMaybe p s = guard (null errors) >> return v where
 	(v, errors) = execParser p s
+
+coalesceEqualBy :: (a -> a -> Bool) -> [a] -> Maybe a
+coalesceEqualBy eq (x:xs) | all (eq x) xs = Just x
+coalesceEqualBy _ _ = Nothing
+
+coalesceEqual   :: Eq a =>             [a] -> Maybe a
+coalesceEqualOn :: Eq b => (a -> b) -> [a] -> Maybe a
+coalesceEqual     = coalesceEqualBy (==)
+coalesceEqualOn f = coalesceEqualBy (\x -> (f x ==) . f)
+
+eqAnnotations :: Eq a => [Annotated v a] -> Maybe (Annotated [v] a)
+eqAnnotations vs = Annotated (annotated <$> vs) . annotation <$> coalesceEqualOn annotation vs
+-- }}}
+
+data Annotated v a = Annotated
+	{ annotated  :: v
+	, annotation :: a
+	} deriving (Eq, Ord, Read, Show)
 
 isLabel   c = isAlphaNum c || c `elem` "-_"
 isValue   c = isAlphaNum c || c `elem` "./"
@@ -50,8 +70,14 @@ pValue =  pErrorMessage
      <<|> (basicString <$> pMunch isValue)
       <|> pSuccess
 
-pEquationRaw    = Equation <$> pLexeme pLabel <* pLexSym '=' <*> pValue
-annotatedFlag   = flip Equation Flag
+pEquationRaw   = (\label ws _eq ws' value -> Annotated (Equation label value) (Just (ws, ws')))
+              <$> pLabel
+              <*> pSpace
+              <*> pSym '='
+              <*> pSpace
+              <*> pValue
+
+annotatedFlag   = flip Annotated Nothing . flip Equation Flag
 
 pFlag           = annotatedFlag <$> pMunch (`notElem` "=]")
 pKeyPairGarbage = ModEq <$ (pLexeme (pToken "mod") *> pLexSym '=')
@@ -64,13 +90,24 @@ pEquationLine   = (pLexeme pEquationRaw <|> pFlagLine) <* pEOL
 -- when there's just one line of parameters, use whatever kind it claims to be;
 -- otherwise there isn't really a good way to combine different kinds of
 -- parameters, so just say it's Multiline
-identifyParameters lines = Block kind (lines >>= map snd) where
+identifyParameters lines = (kind, lines >>= map snd) where
 	kind = case lines of
 		[(k, _):_] -> k
 		_          -> Multiline
 
-pBlock   =  (identifyParameters <$> pList1 pParameters  )
-        <|> (Block None         <$> pList1 pEquationLine)
+coalesceWhitespaces spaces = case coalesceEqual (catMaybes spaces) of
+	Just ("", "") -> Compact
+	_ -> Spread
+
+pBlock  =  mangle
+       <$> (  (identifyParameters <$> pList1 pParameters  )
+          <|> ((,) None           <$> pList1 pEquationLine)
+           )
+	where
+	mangle (b, eqs) = Block b
+		(coalesceWhitespaces (annotation <$> eqs))
+		(annotated <$> eqs)
+
 pBlocks  = concat <$> pMany1SepBy (pList1 pBlock) (pList1 pEOL)
 pVectors = Vectors <$> pHeader <*> (pBlocks <* many pEOL <|> pure [])
 
