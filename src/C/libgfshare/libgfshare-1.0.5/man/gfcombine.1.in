@@ -1,0 +1,31 @@
+.\" This is the man page for gfcombine
+.TH GFCOMBINE "1" "February 2006" "@PACKAGE_VERSION@" "UserCommands"
+.SH NAME
+gfcombine \- combine a number of shares to form the original file
+.SH SYNOPSIS
+.B gfcombine
+[\fB\-o\fR \fIOUTPUTFILE\fR] \fIINPUTFILE\fR...
+.SH DESCRIPTION
+.PP
+Combine a set of files (as produced by \fBgfsplit\fR) to produce the
+original file by interpolating the shares on the commandline.
+.TP
+\fB\-o\fR \fIOUTPUTFILE\fR
+The name of the file to write out.
+.PP
+All \fIINPUTFILE\fRs should be called \fBsomething\fR\fI.NNN\fR
+where the \fI.NNN\fR is the share number. (The \fBgfsplit tool will
+output files named appropriately).
+The \fIOUTPUTFILE\fR if omitted will default to the name of the first
+\fIINPUTFILE\fR with the \.NNN removed.
+.SH AUTHOR
+Written by Daniel Silverstone.
+.SH "REPORTING BUGS"
+Report bugs against the libgfshare product on www.launchpad.net.
+.SH COPYRIGHT
+Copyright \(co 2006 Daniel Silverstone.
+.br
+This is free software. You may redistribute copies of it under the terms of the MIT licence (the COPYRIGHT file in the source distribution).
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+gfsplit(1), libgfshare(3), gfshare(7)

@@ -1,0 +1,31 @@
+.\" This is the man page for gfsplit
+.TH GFSPLIT "1" "February 2006" "@PACKAGE_VERSION@" "UserCommands"
+.SH NAME
+gfsplit \- split a file into a number of shares
+.SH SYNOPSIS
+.B gfsplit
+[\fIOPTIONS\fR] \fIINPUTFILE\fR [\fIOUTPUTSTEM\fR]
+.SH DESCRIPTION
+.PP
+Generate an \fIN\fR\-of\-\fIM\fR share of the \fIINPUTFILE\fR.
+.TP
+\fB\-n\fR \fIN\fR
+the threshold for recombination
+.TP
+\fB\-m\fR \fIM\fR
+the number of shares to generate
+.PP
+The \fIOUTPUTSTEM\fR if omitted will default to the name of the
+\fIINPUTFILE\fR. The program defaults to a 3-of-5 share if not
+otherwise instructed.
+.SH AUTHOR
+Written by Daniel Silverstone.
+.SH "REPORTING BUGS"
+Report bugs against the libgfshare product on www.launchpad.net.
+.SH COPYRIGHT
+Copyright \(co 2006 Daniel Silverstone.
+.br
+This is free software. You may redistribute copies of it under the terms of the MIT licence (the COPYRIGHT file in the source distribution).
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+gfcombine(1), libgfshare(3), gfshare(7)

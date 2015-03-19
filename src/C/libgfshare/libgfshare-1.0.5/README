@@ -1,0 +1,56 @@
+Library for Shamir Secret Sharing in the Galois Field 2**8
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This library implements what is known as Shamir Secret Sharing. This
+entails encoding a secret as an integer and then constructing a
+polynomial whose coefficients are random and calculating coordinate
+pairs along the resultant curve. These coordinate pairs are considered
+'shares' and by controlling the order of the polynomial we can control
+the number of shares required to be able to recover the secret.
+
+In this manner we can split a secret into any 'C' shares, any 'T' of
+which can be used to recover the secret.
+
+This would be useful, for example, in looking after GPG secret keys
+used rarely, but whose security is paramount. For example a key used
+to sign the key which signs the Debian or Ubuntu package archives.
+
+If you wish to know more about how the secret sharing works and why it
+is safe, then there exist many articles on the mathematics behind it.
+
+This particular implementation was very heavily inspired by the work
+of Mark D. Wooding (mdw) in his catacomb library. Thanks go to Mark
+for offering to share this implementation with me.
+
+Using the library is very easy. The tests and sample tools are very
+straightforward and the header file tells you what each function is
+used for.
+
+ -- Daniel Silverstone. 2006-01-15
+
+Recovering from previous versions of gfsplit producing foo.000
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The quick version: if you have split a secret into shares and one
+of them is numbered 000, recover the secret by re-labelling it to
+001 (i.e. rename the file, if you're using gfcombine).
+
+Previous versions of libgfshare could incorrectly produce a share
+numbered 000, and the gfsplit utility would produce such a share
+sometimes (with the default settings, a 3-of-5 share, this will
+happen about 2% of the time). In gfsplit this produces filenames
+ending with ".000".
+
+Mathematically, the "share" numbered 0 would be the secret itself,
+which is why it shouldn't be used. However, due to the way libgfshare
+implements multiplication via exp/log tables, the output will
+actually be a copy of the data that would appear in share number 001,
+so the secret is not actually leaked.
+
+Recombining shares that include share number 000 doesn't work: it's
+silently ignored. If share 000 is renamed to share 001, recombination
+should work; the exception is if you already had a copy of share 001,
+in which case you can only recover the secret by having one extra share
+above the normal threshold.
+
+ -- Simon McVittie. 2009-11-18

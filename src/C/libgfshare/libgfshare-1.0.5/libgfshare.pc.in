@@ -1,0 +1,12 @@
+# Copyright (c) Daniel Silverstone <dsilvers@digital-scurf.org> 2006
+
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libgfshare
+Description: Secret Sharing in gf(2^8) library.
+Version: @VERSION@
+Libs: -L${libdir} -lgfshare
+Cflags: -I${includedir}

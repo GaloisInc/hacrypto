@@ -1,0 +1,137 @@
+.\" This is the man page for libgfshare
+.TH LIBGFSHARE "5" "February 2006" "@PACKAGE_VERSION@" "Shamir Secret Sharing in gf(2**8)"
+.SH NAME
+gfshare_ctx_init_enc, etc. \- Shamir Secret Sharing
+.SH SYNOPSIS
+.nf
+.B #include <libgfshare.h>
+.sp
+.BI "gfshare_ctx *gfshare_ctx_init_enc( unsigned char *" sharenrs ,
+.br
+.BI "                                   unsigned int   " sharecount ,
+.br
+.BI "                                   unsigned char  " threshold ,
+.br
+.BI "                                   unsigned int   " size " );"
+.sp
+.BI "gfshare_ctx *gfshare_ctx_init_dec( unsigned char *" sharenrs ,
+.br
+.BI "                                   unsigned int   " sharecount ,
+.br
+.BI "                                   unsigned int   " size " );"
+.sp
+.BI "void gfshare_ctx_free( gfshare_ctx *" ctx " );"
+.sp
+.BI "void gfshare_ctx_enc_setsecret( gfshare_ctx   *" ctx ,
+.br
+.BI "                                unsigned char *" secret " );"
+.sp
+.BI "void gfshare_ctx_enc_getshare( gfshare_ctx   *" ctx ,
+.br
+.BI "                               unsigned char  " sharenr ,
+.br
+.BI "                               unsigned char *" share " );"
+.sp
+.BI "void gfshare_ctx_dec_newshares( gfshare_ctx   *" ctx ,
+.br
+.BI "                                unsigned char *" sharenrs " );"
+.sp
+.BI "void gfshare_ctx_dec_giveshare( gfshare_ctx   *" ctx ,
+.br
+.BI "                                unsigned char  " sharenr ,
+.br
+.BI "                                unsigned char *" share " );"
+.sp
+.BI "void gfshare_ctx_dec_extract( gfshare_ctx   *" ctx ,
+.br
+.BI "                              unsigned char *" secretbuf " );"
+.SH DESCRIPTION
+The
+.BR gfshare_ctx_init_enc ()
+function returns a context object which can be used for encoding
+shares of a secret. The context encodes against
+.IR sharecount
+shares which are numbered in the array
+.IR sharenrs .
+The secret is always
+.IR size
+bytes long and the resultant shares will need at least
+.IR threshold
+of the shares present for recombination. It is critical that
+.IR threshold
+be at least one lower than
+.IR sharecount .
+.PP
+The
+.BR gfshare_ctx_init_dec ()
+function returns a context object which can be used to recombine shares to
+recover a secret. Each share and the resulting secret will be
+.IR size
+bytes long. The context can be used to recombine
+.IR sharecount
+shares which are numbered in the
+.IR sharenrs
+array.
+.PP
+The
+.BR gfshare_ctx_free ()
+function frees all the memory associated with a gfshare context including
+the memory belonging to the context itself.
+.PP
+The
+.BR gfshare_ctx_enc_setsecret ()
+function provides the secret you wish to encode to the context. The
+.IR secret
+will be copied into the internal buffer of the library.
+.PP
+The
+.BR gfshare_ctx_enc_getshare ()
+function extracts a particular share from the context. The
+.IR share
+buffer must be preallocated to the size of the shares and the
+.IR sharenr
+parameter is an index into the
+.IR sharenrs
+array used to initialise the context
+.PP
+The
+.BR gfshare_ctx_dec_newshares ()
+function informs the decode context of a change in the share numbers
+available to the context. The number of shares cannot be changed but the
+.IR sharenrs
+can be zero to indicate that a particular share is missing currently.
+.PP
+The
+.BR gfshare_ctx_dec_giveshare ()
+function provides the decode context with a given share. The share number
+itself was previously provided in a
+.IR sharenrs
+array and the
+.IR sharenr
+parameter is the index into that array of the number of the share being
+provided in the
+.IR share
+memory block.
+.PP
+The
+.BR gfshare_ctx_dec_extract ()
+function combines the provided shares to recalculate the secret. It is
+recommended that you \fBmlock()\fR the
+.IR secretbuf
+before calling this function, so that the recombined secret will never be
+written to swap. This may help to prevent a malicious party discovering the
+content of your secret. You should also randomise the content of the buffer
+once you are finished using the recombined secret.
+.SH ERRORS
+Any function which can fail for any reason will return NULL on error.
+.SH AUTHOR
+Written by Daniel Silverstone.
+.SH "REPORTING BUGS"
+Report bugs against the libgfshare product on www.launchpad.net.
+.SH COPYRIGHT
+Copyright \(co 2006 Daniel Silverstone.
+.br
+This is free software. You may redistribute copies of it under the terms of the MIT licence (the COPYRIGHT file in the source distribution).
+There is NO WARRANTY, to the extent permitted by law.
+.SH "SEE ALSO"
+gfsplit(1), gfcombine(1), gfshare(7)
