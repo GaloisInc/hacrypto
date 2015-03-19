@@ -1,0 +1,50 @@
+This package is the official portable version of LibreSSL
+	(http://www.libressl.org).
+
+LibreSSL is a fork of OpenSSL developed by the OpenBSD project
+(http://www.openbsd.org). LibreSSL is developed on OpenBSD. This
+package then adds portability shims for other operating systems.
+
+Official release tarballs are available at your friendly neighborhood
+OpenBSD mirror in directory LibreSSL, e.g.:
+
+	http://ftp.openbsd.org/pub/OpenBSD/LibreSSL/
+
+although we suggest that you use a mirror:
+
+	http://www.openbsd.org/ftp.html
+
+The LibreSSL portable build framework is also mirrored in Github:
+
+	https://github.com/libressl-portable/portable
+
+Please report bugs either to tech@openbsd.org, or to the github issue tracker:
+
+	https://github.com/libressl-portable/portable/issues
+
+If you have checked this source using Git, follow these initial steps to
+prepare the source tree for building:
+
+ 1. ensure you have the following packages installed:
+	automake, autoconf, bash, git, libtool, perl, pod2man
+ 2. run './autogen.sh' to prepare the source tree for building
+    or run './dist.sh' to prepare a tarball.
+
+Once you have a source tree from Git or FTP, run these commands to build and
+install the package:
+
+  ./configure   # see ./configure --help for configuration options
+  make check    # runs builtin unit tests
+  make install  # set DESTDIR= to install to an alternate location
+
+The resulting library and 'openssl' utility is largely API-compatible with
+OpenSSL 1.0.1. However, it is not ABI compatible - you will need to relink your
+programs to LibreSSL in order to use it, just as in moving from OpenSSL 0.9.8
+to 1.0.1.
+
+The project attempts to provide working alternatives for operating systems with
+limited or broken security primitives (e.g. arc4random(3), issetugid(2)) and
+assists with improving OS-native implementations where possible.
+
+LibreSSL portable will build on any reasonably modern version of Linux,
+Solaris, or OSX with a standards-compliant compiler and C library.

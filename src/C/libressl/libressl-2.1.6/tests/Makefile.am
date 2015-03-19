@@ -1,0 +1,179 @@
+include $(top_srcdir)/Makefile.am.common
+
+AM_CPPFLAGS += -I $(top_srcdir)/crypto/modes
+AM_CPPFLAGS += -I $(top_srcdir)/crypto/asn1
+AM_CPPFLAGS += -I $(top_srcdir)/ssl
+
+LDADD = $(PLATFORM_LDADD) $(PROG_LDADD)
+LDADD += $(top_builddir)/ssl/libssl.la
+LDADD += $(top_builddir)/crypto/libcrypto.la
+
+TESTS =
+check_PROGRAMS =
+EXTRA_DIST =
+DISTCLEANFILES = pidwraptest.txt
+
+check_PROGRAMS += aeadtest
+aeadtest_SOURCES = aeadtest.c
+TESTS += aes_wrap
+check_PROGRAMS += aes_wrap
+aes_wrap_SOURCES = aes_wrap.c
+if !HOST_WIN
+check_PROGRAMS += arc4randomforktest
+arc4randomforktest_SOURCES = arc4randomforktest.c
+endif
+TESTS += asn1test
+check_PROGRAMS += asn1test
+asn1test_SOURCES = asn1test.c
+TESTS += base64test
+check_PROGRAMS += base64test
+base64test_SOURCES = base64test.c
+TESTS += bftest
+check_PROGRAMS += bftest
+bftest_SOURCES = bftest.c
+TESTS += bntest
+check_PROGRAMS += bntest
+bntest_SOURCES = bntest.c
+TESTS += bytestringtest
+check_PROGRAMS += bytestringtest
+bytestringtest_SOURCES = bytestringtest.c
+TESTS += casttest
+check_PROGRAMS += casttest
+casttest_SOURCES = casttest.c
+TESTS += chachatest
+check_PROGRAMS += chachatest
+chachatest_SOURCES = chachatest.c
+TESTS += cipherstest
+check_PROGRAMS += cipherstest
+cipherstest_SOURCES = cipherstest.c
+TESTS += cts128test
+check_PROGRAMS += cts128test
+cts128test_SOURCES = cts128test.c
+TESTS += destest
+check_PROGRAMS += destest
+destest_SOURCES = destest.c
+TESTS += dhtest
+check_PROGRAMS += dhtest
+dhtest_SOURCES = dhtest.c
+TESTS += dsatest
+check_PROGRAMS += dsatest
+dsatest_SOURCES = dsatest.c
+TESTS += ecdhtest
+check_PROGRAMS += ecdhtest
+ecdhtest_SOURCES = ecdhtest.c
+TESTS += ecdsatest
+check_PROGRAMS += ecdsatest
+ecdsatest_SOURCES = ecdsatest.c
+TESTS += ectest
+check_PROGRAMS += ectest
+ectest_SOURCES = ectest.c
+TESTS += enginetest
+check_PROGRAMS += enginetest
+enginetest_SOURCES = enginetest.c
+check_PROGRAMS += evptest
+evptest_SOURCES = evptest.c
+if !HOST_WIN
+TESTS += explicit_bzero
+check_PROGRAMS += explicit_bzero
+explicit_bzero_SOURCES = explicit_bzero.c
+if !HAVE_MEMMEM
+explicit_bzero_SOURCES += memmem.c
+endif
+endif
+TESTS += exptest
+check_PROGRAMS += exptest
+exptest_SOURCES = exptest.c
+TESTS += gcm128test
+check_PROGRAMS += gcm128test
+gcm128test_SOURCES = gcm128test.c
+TESTS += gost2814789t
+check_PROGRAMS += gost2814789t
+gost2814789t_SOURCES = gost2814789t.c
+TESTS += hmactest
+check_PROGRAMS += hmactest
+hmactest_SOURCES = hmactest.c
+TESTS += ideatest
+check_PROGRAMS += ideatest
+ideatest_SOURCES = ideatest.c
+TESTS += igetest
+check_PROGRAMS += igetest
+igetest_SOURCES = igetest.c
+TESTS += md4test
+check_PROGRAMS += md4test
+md4test_SOURCES = md4test.c
+TESTS += md5test
+check_PROGRAMS += md5test
+md5test_SOURCES = md5test.c
+TESTS += mdc2test
+check_PROGRAMS += mdc2test
+mdc2test_SOURCES = mdc2test.c
+TESTS += mont
+check_PROGRAMS += mont
+mont_SOURCES = mont.c
+TESTS += pbkdf2
+check_PROGRAMS += pbkdf2
+pbkdf2_SOURCES = pbkdf2.c
+if !HOST_WIN
+check_PROGRAMS += pidwraptest
+pidwraptest_SOURCES = pidwraptest.c
+endif
+TESTS += pkcs7test
+check_PROGRAMS += pkcs7test
+pkcs7test_SOURCES = pkcs7test.c
+TESTS += poly1305test
+check_PROGRAMS += poly1305test
+poly1305test_SOURCES = poly1305test.c
+check_PROGRAMS += pq_test
+pq_test_SOURCES = pq_test.c
+TESTS += randtest
+check_PROGRAMS += randtest
+randtest_SOURCES = randtest.c
+TESTS += rc2test
+check_PROGRAMS += rc2test
+rc2test_SOURCES = rc2test.c
+TESTS += rc4test
+check_PROGRAMS += rc4test
+rc4test_SOURCES = rc4test.c
+TESTS += rmdtest
+check_PROGRAMS += rmdtest
+rmdtest_SOURCES = rmdtest.c
+TESTS += sha1test
+check_PROGRAMS += sha1test
+sha1test_SOURCES = sha1test.c
+TESTS += sha256test
+check_PROGRAMS += sha256test
+sha256test_SOURCES = sha256test.c
+TESTS += sha512test
+check_PROGRAMS += sha512test
+sha512test_SOURCES = sha512test.c
+TESTS += shatest
+check_PROGRAMS += shatest
+shatest_SOURCES = shatest.c
+check_PROGRAMS += ssltest
+ssltest_SOURCES = ssltest.c
+TESTS += timingsafe
+check_PROGRAMS += timingsafe
+timingsafe_SOURCES = timingsafe.c
+TESTS += utf8test
+check_PROGRAMS += utf8test
+utf8test_SOURCES = utf8test.c
+TESTS += aeadtest.sh
+EXTRA_DIST += aeadtest.sh
+TESTS += evptest.sh
+EXTRA_DIST += evptest.sh
+TESTS += pq_test.sh
+EXTRA_DIST += pq_test.sh
+TESTS += ssltest.sh
+EXTRA_DIST += ssltest.sh
+if !HOST_WIN
+TESTS += arc4randomforktest.sh
+endif
+EXTRA_DIST += arc4randomforktest.sh
+if !HOST_WIN
+TESTS += pidwraptest.sh
+endif
+EXTRA_DIST += pidwraptest.sh
+EXTRA_DIST += aeadtests.txt
+EXTRA_DIST += evptests.txt
+EXTRA_DIST += pq_expected.txt
+EXTRA_DIST += testssl ca.pem server.pem
