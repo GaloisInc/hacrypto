@@ -1,0 +1,17 @@
+local/
+
+_build/
+setup.data
+setup.log
+log
+
+main.ml
+*.native
+*.byte
+*.docdir
+mir-*-*
+*-*.xl
+*-*.xe
+*-*_libvirt.xml
+*.cmt
+mirage/*/Makefile
