@@ -18,4 +18,4 @@ BON specifications for the hacrypto library can be found in the [arch](arch) fol
 The TestGen contains a project that generates test cases and harnesses for crypto libraries. A primary goal is to generate CAVP tests and hopefully find some insufficiencies in the testing.
 
 ## Verification/Validation
-The [Verification/VSH/sha](Verification/VSH/sha) folder contains experiments with building, calling, and running frama-c value analysis on SHA256 implementations from NSS, Sodium, and a [macro expanded and verified in Coq](http://www.cs.princeton.edu/~appel/papers/verif-sha.pdf) OpenSSL.
+The [Verification/VST/sha](Verification/VST/sha) folder contains experiments with building, calling, and running frama-c value analysis on SHA256 implementations from NSS, Sodium, and a [macro expanded and verified in Coq](http://www.cs.princeton.edu/~appel/papers/verif-sha.pdf) OpenSSL.
