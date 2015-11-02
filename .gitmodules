@@ -1,3 +1,18 @@
 [submodule "src/C++/MIRACL/MIRACL"]
 	path = src/C++/MIRACL/MIRACL
 	url = https://github.com/CertiVox/MIRACL.git
+[submodule "src/C/avr-crypto-lib"]
+	path = src/C/avr-crypto-lib
+	url = https://git.cryptolib.org/avr-crypto-lib.git
+[submodule "src/C/arm-crypto-lib"]
+	path = src/C/arm-crypto-lib
+	url = https://git.cryptolib.org/arm-crypto-lib.git
+[submodule "src/C/ed448goldilocks"]
+	path = src/C/ed448goldilocks
+	url = git://git.code.sf.net/p/ed448goldilocks/code
+[submodule "src/Javascript/Forge/forge"]
+	path = src/Javascript/Forge/forge
+	url = https://github.com/digitalbazaar/forge.git
+[submodule "src/Javascript/end-to-end"]
+	path = src/Javascript/end-to-end
+	url = https://code.google.com/p/end-to-end/
