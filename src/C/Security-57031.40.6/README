@@ -1,0 +1,38 @@
+Update June 17, 2014
+
+Here lie the iOS and OS X versions of Security, including securityd and SecurityTool for OS X.
+
+-----------
+
+
+              Projects in Security
+               Last update Dec 1 2005
+
+
+Standalone crypto libs
+----------------------
+
+libCert/
+	Library to parse and verify X509 certificates. Uses libgRSA,
+	libDER, libMD5, and libSHA1. 
+
+libDER/
+	DER decoding library, ROM_capable, no malloc. 
+
+libGiants/
+	General purpose ROM-capable giantIntegers package. No malloc. 
+	Performs unsigned arithmetic ONLY as of Nov. 28 2005. 
+		
+libgRSA/
+	Full ROM-capable RSA package based on libGiants. 
+	Provided to Mike Smith and Chris Aycock 8/23/05.
+	Converted to unsigned libGiants circa 11/30/05.
+
+libScripts/
+	Scripts to build and test all of these libraries. 
+
+====
+
+To regenerate strings file run:
+genstrings -o resources/English.lproj -s SecString sec/Security/SecFrameworkStrings.h
+in the top level dir.
