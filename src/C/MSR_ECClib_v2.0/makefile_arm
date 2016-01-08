@@ -1,0 +1,63 @@
+####  Makefile provided for compilation of MSR ECCLib using the GNU GCC compiler on ARM CPUs  ####
+####  See the accompanying README file for instructions.                                      ####
+
+CC=gcc
+CFLAGS=-c -O3 -D _ARM_ -D __LINUX__ -D TARGET_GENERIC=0 -D USE_ASM=0
+LDFLAGS=
+OBJECTS=curves.o ecc256.o ecc384.o ecc512.o fp.o extras.o ecc_additional.o
+OBJECTS_CRYPTO_TESTS=$(OBJECTS) crypto_tests.o 
+OBJECTS_ECC_TESTS=$(OBJECTS) ecc_tests.o
+OBJECTS_FP_TESTS=$(OBJECTS) fp_tests.o
+OBJECTS_SAMPLE_TESTS=$(OBJECTS) sample.o
+OBJECTS_ALL=$(OBJECTS) crypto_tests.o ecc_tests.o fp_tests.o sample.o
+
+crypto_tests: $(OBJECTS_CRYPTO_TESTS)
+	$(CC) -o crypto_tests $(OBJECTS_CRYPTO_TESTS) -lrt
+
+ecc_tests: $(OBJECTS_ECC_TESTS)
+	$(CC) -o ecc_tests $(OBJECTS_ECC_TESTS) -lrt
+
+fp_tests: $(OBJECTS_FP_TESTS)
+	$(CC) -o fp_tests $(OBJECTS_FP_TESTS) -lrt
+
+sample: $(OBJECTS_SAMPLE_TESTS)
+	$(CC) -o sample $(OBJECTS_SAMPLE_TESTS) -lrt
+
+curves.o: MSR_ECClib/curves.c MSR_ECClib/msr_ecclib.h
+	$(CC) $(CFLAGS) MSR_ECClib/curves.c
+
+ecc256.o: MSR_ECClib/ecc256.c MSR_ECClib/ecc_template.c MSR_ECClib/fp_template.c MSR_ECClib/ecc_crypto.c MSR_ECClib/msr_ecclib.h
+	$(CC) $(CFLAGS) MSR_ECClib/ecc256.c
+
+ecc384.o: MSR_ECClib/ecc384.c MSR_ECClib/ecc_template.c MSR_ECClib/fp_template.c MSR_ECClib/ecc_crypto.c MSR_ECClib/msr_ecclib.h
+	$(CC) $(CFLAGS) MSR_ECClib/ecc384.c
+
+ecc512.o: MSR_ECClib/ecc512.c MSR_ECClib/ecc_template.c MSR_ECClib/fp_template.c MSR_ECClib/ecc_crypto.c MSR_ECClib/msr_ecclib.h
+	$(CC) $(CFLAGS) MSR_ECClib/ecc512.c
+
+fp.o: MSR_ECClib/fp.c MSR_ECClib/msr_ecclib_priv.h MSR_ECClib/msr_ecclib.h 
+	$(CC) $(CFLAGS) MSR_ECClib/fp.c
+
+ecc_additional.o: MSR_ECClib/ecc_additional.c MSR_ECClib/msr_ecclib_priv.h MSR_ECClib/msr_ecclib.h 
+	$(CC) $(CFLAGS) MSR_ECClib/ecc_additional.c
+
+extras.o: Tests/extras.c Tests/tests.h MSR_ECClib/msr_ecclib.h
+	$(CC) $(CFLAGS) -I MSR_ECClib Tests/extras.c
+
+crypto_tests.o: Tests/crypto_tests.c MSR_ECClib/msr_ecclib.h MSR_ECClib/msr_ecclib_priv.h Tests/tests.h
+	$(CC) $(CFLAGS) -I MSR_ECClib Tests/crypto_tests.c
+
+ecc_tests.o: Tests/ecc_tests.c MSR_ECClib/msr_ecclib.h MSR_ECClib/msr_ecclib_priv.h Tests/tests.h
+	$(CC) $(CFLAGS) -I MSR_ECClib Tests/ecc_tests.c
+
+fp_tests.o: Tests/fp_tests.c MSR_ECClib/msr_ecclib.h Tests/tests.h
+	$(CC) $(CFLAGS) -I MSR_ECClib Tests/fp_tests.c
+
+sample.o: Sample/sample.c MSR_ECClib/msr_ecclib.h Tests/tests.h
+	$(CC) $(CFLAGS) -I MSR_ECClib Sample/sample.c
+
+.PHONY: clean
+
+clean:
+	rm crypto_tests ecc_tests fp_tests sample $(OBJECTS_ALL)
+

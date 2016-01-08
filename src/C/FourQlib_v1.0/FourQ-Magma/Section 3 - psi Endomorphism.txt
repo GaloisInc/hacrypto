@@ -1,0 +1,112 @@
+/*************************************************************************************
+* FourQ: 4-dimensional decomposition on a Q-curve with CM in twisted Edwards form
+*
+*    Copyright (c) Microsoft Corporation. All rights reserved.
+*
+*
+* Abstract: This MAGMA script derives the endomorphism psi: E -> E on the twisted 
+*			Edwards curve E, starting with Smith's Q-curve endomorphism psi_W: W->W 
+*			on the Weierstrass curve isogenous to E. We pass through the twisted 
+*			Edwards curve Ehat that is isomorphic to W, and isogenous to E. Note 
+*			that the high degree of Frobenius makes illustrations in the function 
+*			field (like we did for phi) complicated. We therefore illustrate 
+*			everything using random points on E.
+*
+* This code is based on the paper "FourQ: four-dimensional decompositions on a 
+* Q-curve over the Mersenne prime" by Craig Costello and Patrick Longa, in Advances 
+* in Cryptology - ASIACRYPT, 2015.
+* Preprint available at http://eprint.iacr.org/2015/565.
+**************************************************************************************/  
+
+clear;
+
+p:=2^127-1;
+Fp:=GF(p);
+Fp2<i>:=ExtensionField<Fp,x|x^2+1>;
+AS<x,y>:=AffineSpace(Fp2,2);
+
+//constants as fixed in the paper
+rt2:=2^64; //\sqrt{2}
+rtn2:=rt2*i; //\sqrt{-2}
+rt5:=87392807087336976318005368820707244464*i; //\sqrt{5}
+
+//Weierstrass curve over Fp2
+s_rt_delta:=4/9*rt5; 
+C:=9*(1+s_rt_delta);
+A:=2*(C-24);
+B:=-8*(C-16);
+W:=EllipticCurve([Fp2|A,B]);
+
+//The two isogenous twisted Edwards curves, E and Ehat
+d:=125317048443780598345676279555970305165*i + 4205857648805777768770;
+dhat:=137083759440177715049851009143131547129*i + 4205857648805777768125;
+E:=Curve(AS,[-x^2+y^2-(1+d*x^2*y^2)]);
+Ehat:=Curve(AS,[-x^2+y^2-(1+dhat*x^2*y^2)]);
+
+gamma0:=9*(1+4/9*rt5); //s_rt_delta
+gamma1:=Sqrt(2*gamma0);
+gamma2:=Sqrt(-12-2*gamma1);
+
+//The endomorphism psi_W on the Weierstrass curve
+psi_W:=function(P)
+	x:=P[1]; y:=P[2];
+	xdash:=(-x/2-gamma0/(x-4))^p;
+	ydash:=(y/rtn2*(-1/2+gamma0/(x-4)^2))^p;
+	return W![xdash,ydash];
+end function;
+
+//The isomorphism delta: W -> Ehat in Section 3
+delta:=function(P)
+	x:=P[1]; y:=P[2];
+	xdash:=gamma2*(x-4)/y;
+	ydash:=(x-4-gamma1)/(x-4+gamma1);
+	return Ehat![xdash,ydash];
+end function;
+
+//The inverse delta_inv: Ehat -> W in Section 3
+delta_inv:=function(P)
+	x:=P[1]; y:=P[2];
+	xdash:=gamma1*(y+1)/(1-y)+4;
+	ydash:=gamma1*gamma2*(y+1)/(x*(1-y));
+	return W![xdash,ydash];
+end function;
+
+//The isogeny tau_dual: E -> Ehat from Proposition 1
+tau:=function(P)
+	x:=P[1]; y:=P[2];
+	xdash:=2*x*y/((x^2+y^2)*Sqrt(dhat));
+	ydash:=(x^2-y^2+2)/(y^2-x^2);
+	return Ehat![xdash,ydash];
+end function;
+
+//The dual isogeny tau_dual: Ehat -> E from Proposition 1
+tau_dual:=function(P)
+	x:=P[1]; y:=P[2];
+	xdash:=2*x*y*Sqrt(dhat)/(x^2-y^2+2);
+	ydash:=(y^2-x^2)/(y^2+x^2);
+	return E![xdash,ydash];
+end function;
+
+//The endomorphism psi_Ehat: Ehat -> Ehat
+psi_Ehat:=function(P)
+	return delta(psi_W(delta_inv(P)));
+end function;
+
+//The endomorphism psi: E-> E
+psi:=function(P)
+	return tau_dual(psi_Ehat(tau(P)));
+end function;
+
+while true do
+	
+	//Get a random point 
+	_<y>:=PolynomialRing(Fp2);
+	repeat x:=Random(Fp2);
+	until HasRoot(-x^2+y^2-(1+d*x^2*y^2));
+	_,y:=HasRoot(-x^2+y^2-(1+d*x^2*y^2));
+	P:=E![x,y];
+
+	psi(P) in E;
+
+end while;
+

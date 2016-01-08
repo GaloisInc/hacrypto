@@ -1,0 +1,62 @@
+/*************************************************************************************
+* FourQ: 4-dimensional decomposition on a Q-curve with CM in twisted Edwards form
+*
+*    Copyright (c) Microsoft Corporation. All rights reserved.
+*
+*
+* Abstract: MAGMA script used to show correctness of isogenies in Proposition 1.
+*
+* This code is based on the paper "FourQ: four-dimensional decompositions on a 
+* Q-curve over the Mersenne prime" by Craig Costello and Patrick Longa, in Advances 
+* in Cryptology - ASIACRYPT, 2015.
+* Preprint available at http://eprint.iacr.org/2015/565.
+**************************************************************************************/  
+
+clear;
+
+p:=2^127-1;
+Fp:=GF(p);
+Fp2<i>:=ExtensionField<Fp,x|x^2+1>;
+AS<x,y>:=AffineSpace(Fp2,2);
+
+//The two isogenous curves, E and Ehat
+d:=125317048443780598345676279555970305165*i + 4205857648805777768770;
+dhat:=137083759440177715049851009143131547129*i + 4205857648805777768125;
+E:=Curve(AS,[-x^2+y^2-(1+d*x^2*y^2)]);
+Ehat:=Curve(AS,[-x^2+y^2-(1+dhat*x^2*y^2)]);
+
+//The doubling function (on E)
+DBL:=function(P)
+	x:=P[1]; y:=P[2];
+	return E![2*x*y/(y^2-x^2),(y^2+x^2)/(2-y^2+x^2)];
+end function;
+
+//The isogeny tau: E -> Ehat
+tau:=function(P) 
+	x:=P[1]; y:=P[2];
+	xdash:=2*x*y/((x^2+y^2)*Sqrt(dhat));
+	ydash:=(x^2-y^2+2)/(y^2-x^2);
+	return Ehat![xdash,ydash];
+end function;
+
+//The dual isogeny tau_dual: Ehat -> E
+tau_dual:=function(P)
+	x:=P[1]; y:=P[2];
+	xdash:=2*x*y*Sqrt(dhat)/(x^2-y^2+2);
+	ydash:=(y^2-x^2)/(y^2+x^2);
+	return E![xdash,ydash];
+end function;
+
+while true do
+
+	//Get a random point 
+	_<y>:=PolynomialRing(Fp2);
+	repeat x:=Random(Fp2);
+	until HasRoot(-x^2+y^2-(1+d*x^2*y^2));
+	_,y:=HasRoot(-x^2+y^2-(1+d*x^2*y^2));
+	P:=E![x,y];
+
+	//Test isogenies work and composition corresponds to [4]
+	tau_dual(tau(P)) eq DBL(DBL(P));
+
+end while;

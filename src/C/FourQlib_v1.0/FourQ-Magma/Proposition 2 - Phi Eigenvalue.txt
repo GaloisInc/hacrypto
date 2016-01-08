@@ -1,0 +1,134 @@
+/*************************************************************************************
+* FourQ: 4-dimensional decomposition on a Q-curve with CM in twisted Edwards form
+*
+*    Copyright (c) Microsoft Corporation. All rights reserved.
+*
+*
+* Abstract: MAGMA script used to show correctness of the eigenvalue in Proposition 2.
+*
+* This code is based on the paper "FourQ: four-dimensional decompositions on a 
+* Q-curve over the Mersenne prime" by Craig Costello and Patrick Longa, in Advances 
+* in Cryptology - ASIACRYPT, 2015.
+* Preprint available at http://eprint.iacr.org/2015/565.
+**************************************************************************************/  
+
+clear;
+
+p:=2^127-1;
+Fp:=GF(p);
+Fp2<i>:=ExtensionField<Fp,x|x^2+1>;
+AS<x,y>:=AffineSpace(Fp2,2);
+
+rt2:=2^64;
+rt5:=87392807087336976318005368820707244464*i;
+
+//curve and prime subgroup order - dhat needed for tau and tau_dual
+d:=125317048443780598345676279555970305165*i + 4205857648805777768770;
+dhat:=137083759440177715049851009143131547129*i + 4205857648805777768125;
+E:=Curve(AS,[-x^2+y^2-(1+d*x^2*y^2)]);
+N:=73846995687063900142583536357581573884798075859800097461294096333596429543;
+
+//constants defined in Section 3.3
+V:=49293975489306344711751403123270296814; r:=15437785290780909242;
+
+//claimed eigenvalue from Equation (12), i.e., Proposition 2
+lambda_phi:=Integers()!(GF(N)!(4*(p-1)*r^3/((p+1)^2*V)));
+
+//define DBL, ADD and GenericScalarMult to test endomorphism against eigenvalue
+DBL:=function(P)
+    x:=P[1]; y:=P[2];
+    return E![2*x*y/(y^2-x^2),(y^2+x^2)/(2-y^2+x^2)];
+end function;
+
+ADD:=function(P,Q);
+    x1:=P[1]; y1:=P[2]; x2:=Q[1]; y2:=Q[2];
+    return E![(x1*y2+y1*x2)/(1+d*x1*x2*y1*y2),(y1*y2+x1*x2)/(1-d*x1*x2*y1*y2)];
+end function;
+
+//generic scalar multiplication on E
+GenericScalarMult:=function(P,k)
+    
+    bits:=IntegerToSequence(k,2);
+    Q:=P;
+
+    for i:=#bits-1 to 1 by -1 do
+        Q:=DBL(Q);
+        if bits[i] eq 1 then
+            Q:=ADD(Q,P);
+        end if;
+    end for;
+
+    return Q;
+
+end function;
+
+//Define tau, tau_gual and 
+
+//The isogeny tau: E -> Ehat from Proposition 1
+tau:=function(x,y)
+    xdash:=2*x*y/((x^2+y^2)*Sqrt(dhat));
+    ydash:=(x^2-y^2+2)/(y^2-x^2);
+    return xdash,ydash;
+end function;
+
+//The dual isogeny tau_dual: Ehat -> E from Proposition 1
+tau_dual:=function(x,y)
+    xdash:=2*x*y*Sqrt(dhat)/(x^2-y^2+2);
+    ydash:=(y^2-x^2)/(y^2+x^2);
+    return xdash,ydash;
+end function;
+
+
+//The endomorphism phi_Ehat: Ehat->Ehat from Section 3.2 derived in "Phi" 
+//the constants first
+const0:=9-6*rt2+4*rt5-3*rt2*rt5;
+const1:=7+5*rt2+3*rt5+2*rt2*rt5;
+const2:=21+15*rt2+10*rt5+7*rt2*rt5;
+const3:=3+2*rt2+1*rt5+1*rt2*rt5;
+const4:=3+3*rt2+2*rt5+1*rt2*rt5;
+const5:=15+10*rt2+6*rt5+4*rt2*rt5;
+const6:=120+90*rt2+60*rt5+40*rt2*rt5;
+const7:=175+120*rt2+74*rt5+54*rt2*rt5;
+const8:=240+170*rt2+108*rt5+76*rt2*rt5;
+const9:=3055+2160*rt2+1366*rt5+966*rt2*rt5;
+
+phi_Ehat:=function(x,y) 
+
+	X:=const0*x*(y^2-const1*y+const2)*(y^2+const1*y+const2)/((y^2+const3*y+const4)*(y^2-const3*y+const4));
+	Y:=const5*(5*y^4+const6*y^2+const7)/(5*y*(y^4+const8*y^2+const9));
+
+	return X^p,Y^p;
+
+end function;
+
+//Define phi as the composition of phi_W and the isogenies tau and tau_dual
+phi:=function(P);
+
+    x:=P[1]; y:=P[2];
+    X,Y:=tau(x,y);
+    X,Y:=phi_Ehat(X,Y);
+    X,Y:=tau_dual(X,Y);
+
+    return E![X,Y];
+
+end function;
+
+//Tester: keep generating random points of order N and then test endomorphism 
+//against raw scalar multiplication by eigenvalue
+
+while true do
+    
+    //Get a random point in N torsion
+    _<y>:=PolynomialRing(Fp2);
+    repeat x:=Random(Fp2);
+    until HasRoot(-x^2+y^2-(1+d*x^2*y^2));
+    _,y:=HasRoot(-x^2+y^2-(1+d*x^2*y^2));
+    P:=GenericScalarMult(E![x,y],392);
+
+    phiP:=phi(P);
+    lambda_phiP:=GenericScalarMult(P,lambda_phi);
+
+    lambda_phiP eq phiP;
+
+end while;
+

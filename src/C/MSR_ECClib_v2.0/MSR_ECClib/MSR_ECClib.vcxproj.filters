@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\x64">
+      <UniqueIdentifier>{3b9e9529-198d-42fb-acf4-7cd535f440cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\x64">
+      <UniqueIdentifier>{ee43d262-ff36-4296-a17a-6e9d63c0d9a7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="msr_ecclib.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="msr_ecclib_priv.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AMD64\fp_x64.h">
+      <Filter>Header Files\x64</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="curves.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ecc_template.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fp_template.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ecc256.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ecc384.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ecc512.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ecc_crypto.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ecc_additional.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fp.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="mont_template.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="AMD64\fp256_x64_a.S">
+      <Filter>Source Files\x64</Filter>
+    </CustomBuild>
+    <CustomBuild Include="AMD64\fp384_x64_a.S">
+      <Filter>Source Files\x64</Filter>
+    </CustomBuild>
+    <CustomBuild Include="AMD64\fp512_x64_a.S">
+      <Filter>Source Files\x64</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

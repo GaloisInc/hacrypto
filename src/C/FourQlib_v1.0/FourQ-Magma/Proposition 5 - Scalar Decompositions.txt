@@ -1,0 +1,78 @@
+/*************************************************************************************
+* FourQ: 4-dimensional decomposition on a Q-curve with CM in twisted Edwards form
+*
+*    Copyright (c) Microsoft Corporation. All rights reserved.
+*
+*
+* Abstract: MAGMA script used to show bounds on full decomposition as in Proposition 5.
+*
+* This code is based on the paper "FourQ: four-dimensional decompositions on a 
+* Q-curve over the Mersenne prime" by Craig Costello and Patrick Longa, in Advances 
+* in Cryptology - ASIACRYPT, 2015.
+* Preprint available at http://eprint.iacr.org/2015/565.
+**************************************************************************************/  
+
+clear;
+
+//curve parameters from paper
+V:=49293975489306344711751403123270296814; r:=15437785290780909242;
+assert V mod r eq 0;
+alpha:=V div r;
+
+//This is the basis from Proposition 3
+B:=Matrix(Rationals(),4,4,
+[16*(-60*alpha+13*r-10), 4*(-10*alpha-3*r+12), 4*(-15*alpha+5*r-13), -13*alpha-6*r+3,
+32*(5*alpha-r), -8, 8, 2*alpha+r,
+16*(80*alpha-15*r+18), 4*(18*alpha-3*r-16), 4*(-15*alpha-9*r+15), 15*alpha+8*r+3,
+16*(-360*alpha+77*r+42), 4*(42*alpha+17*r+72), 4*(85*alpha-21*r-77),(-77*alpha-36*r-17)
+]);
+
+for i:=1 to 4 do
+        B[1,i]:=B[1,i] / 224;
+        B[2,i]:=B[2,i] / 8;
+        B[3,i]:=B[3,i] / 224;
+        B[4,i]:=B[4,i] / 448;
+end for;
+
+//Define c and c' as the two offset vectors in Proposition 5
+c:=5*B[2]-3*B[3]+2*B[4];
+c_dash:=c+B[4];
+
+/*
+Show that the 16 corners of P_eps(B)+c and P_eps(B)+c_dash have all four in the convex body of H
+*/
+
+for s1 in  [-1/2,3/2] do
+    for s2 in  [-1/2,3/2] do
+        for s3 in  [-1/2,3/2] do
+            for s4 in  [-1/2,3/2] do
+
+                corner_c:=s1*B[1]+s2*B[2]+s3*B[3]+s4*B[4]+c;
+
+                assert Rationals()!corner_c[1] gt 0;
+                assert Rationals()!corner_c[2] gt 0;
+                assert Rationals()!corner_c[3] gt 0;
+                assert Rationals()!corner_c[4] gt 0;
+
+                assert Rationals()!corner_c[1] lt 2^64;
+                assert Rationals()!corner_c[2] lt 2^64;
+                assert Rationals()!corner_c[3] lt 2^64;
+                assert Rationals()!corner_c[4] lt 2^64;
+
+                corner_c_dash:=s1*B[1]+s2*B[2]+s3*B[3]+s4*B[4]+c_dash;
+
+                assert Rationals()!corner_c_dash[1] gt 0;
+                assert Rationals()!corner_c_dash[2] gt 0;
+                assert Rationals()!corner_c_dash[3] gt 0;
+                assert Rationals()!corner_c_dash[4] gt 0;
+
+                assert Rationals()!corner_c_dash[1] lt 2^64;
+                assert Rationals()!corner_c_dash[2] lt 2^64;
+                assert Rationals()!corner_c_dash[3] lt 2^64;
+                assert Rationals()!corner_c_dash[4] lt 2^64;
+
+            end for;
+        end for;
+    end for;
+end for;
+

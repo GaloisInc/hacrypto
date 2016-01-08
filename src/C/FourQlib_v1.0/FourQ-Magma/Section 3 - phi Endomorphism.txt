@@ -1,0 +1,67 @@
+/*************************************************************************************
+* FourQ: 4-dimensional decomposition on a Q-curve with CM in twisted Edwards form
+*
+*    Copyright (c) Microsoft Corporation. All rights reserved.
+*
+*
+* Abstract: This MAGMA script uses derives explicit formulas the endomorphism phi_W 
+*			on the Weierstrass curve W defined over an extension of Q.
+*
+* This code is based on the paper "FourQ: four-dimensional decompositions on a 
+* Q-curve over the Mersenne prime" by Craig Costello and Patrick Longa, in Advances 
+* in Cryptology - ASIACRYPT, 2015.
+* Preprint available at http://eprint.iacr.org/2015/565.
+**************************************************************************************/  
+
+clear;
+
+/*
+Define our Weierstrass curve W over Q(\sqrt{5},\sqrt{-2})=Q(\sqrt{5},\sqrt{-10}). W 
+defined over Q(\sqrt{5}) as Delta=5 in the paper, and field extended to incorporate W 
+having CM by sqrt{-ell}=sqrt{-10}
+*/
+
+Q:=Rationals();
+_<x>:=PolynomialRing(Q);
+N<rt5>:=NumberField(x^2-5);
+
+s_rt_delta:=4/9*rt5; 
+C:=9*(1+s_rt_delta);
+A:=2*(C-24);
+B:=-8*(C-16);
+Aconj:=-(30+8*rt5);
+Bconj:=56+32*rt5;
+
+W:=EllipticCurve([N|A,B]);
+Wconj:=EllipticCurve([N|Aconj,Bconj]);
+
+_<x>:=PolynomialRing(N);
+pol5:=DivisionPolynomial(W,5);
+Factorization(pol5);
+ker:=Factorization(pol5)[1][1];
+_<x,y>:=FunctionField(W);
+W1,phi_W_sigma:=IsogenyFromKernel(W,ker);
+_,W1toWconj:=IsIsomorphic(W1,Wconj);
+
+//Given the simplicity of the map W1toWconj, we compose it with phi_W_sigma manually
+
+FF<x,y>:=FunctionField(W);
+
+X:=1/5*(x^5 + 8*rt5*x^4 + (40*rt5 + 260)*x^3 + (720*rt5 + 640)*x^2 + (656*rt5 + 4340)*x
+ + (1920*rt5 + 960)) / (x^4 + 8*rt5*x^3 +  1/5*(-8*rt5 + 580)*x^2 + (144*rt5 - 32)*x 
+ + 1/5*(-144*rt5 + 1636));
+
+Y:= -1/25*rt5*(x^6*y + 12*rt5*x^5*y + (-44*rt5 + 150)*x^4*y + (176*rt5 - 608)*x^3*y 
++ (-432*rt5 + 540)*x^2*y + (-144*rt5 + 320)*x*y + (656*rt5 - 1304)*y)
+ / (x^6 + 12*rt5*x^5 + 1/5*(-12*rt5 + 1470)*x^4 + (752*rt5 - 96)*x^3 
+ + 1/5*(-1392*rt5 + 26508)*x^2 + 1/5*(19632*rt5 - 8640)*x + 1/25*(-19504*rt5 + 150120));
+
+assert Y^2 eq (X^3+Aconj*X+Bconj);
+
+///////////////////////////////////////////////////////////////
+/*
+From here we use Frobenius to come back to W, then compose with the maps delta and 
+delta_inv to transfer to an endomorphism on E_hat (simplifying the composition in 
+the function field of E_hat). This was done in maple. 
+The maps are in the file "Proposition 2"
+*/
