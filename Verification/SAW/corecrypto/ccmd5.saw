@@ -1,0 +1,10 @@
+import "MD5.cry";
+m <- llvm_load_module "ccmd5_ltc.bc";
+let one = rewrite (cryptol_ss ()) {{ 1 : [64] }};
+s <- fresh_symbolic "s" {| [4][32] |};
+inp <- fresh_symbolic "inp" {| [64][8] |};
+cc_md5 <- llvm_symexec m "md5_compress_simple"
+            [("s", 4), ("in", 64)]
+            [("*s", s, 4), ("nblocks", one, 1), ("*in", inp, 64)]
+            [("*s", 4)]
+            false;

@@ -1,0 +1,43 @@
+m <- llvm_load_module "cced25519.bc";
+h <- fresh_symbolic "h" {| [10][32] |};
+f <- fresh_symbolic "f" {| [10][32] |};
+g <- fresh_symbolic "g" {| [10][32] |};
+inp <- fresh_symbolic "inp" {| [4][8] |};
+fe_add <- llvm_symexec m "fe_add"
+            [("h", 10), ("f", 10), ("g", 10)]
+            [("*h", h, 10), ("*f", f, 10), ("*g", g, 10)]
+            [("*h", 10)]
+            false;
+fe_zero <- llvm_symexec m "fe_0"
+            [("h", 10)]
+            [("*h", h, 10)]
+            [("*h", 10)]
+            false;
+fe_one <- llvm_symexec m "fe_1"
+            [("h", 10)]
+            [("*h", h, 10)]
+            [("*h", 10)]
+            false;
+fe_mul <- llvm_symexec m "fe_mul"
+            [("h", 10), ("f", 10), ("g", 10)]
+            [("*h", h, 10), ("*f", f, 10), ("*g", g, 10)]
+            [("*h", 10)]
+            false;
+
+let add_thm = {{ fe_add == f + g }};
+let zero_thm = {{ fe_zero == zero }};
+let one_thm = {{ fe_one == (reverse (split 1) : [10][32]) }};
+let mul_thm = {{ fe_mul ==
+                 (reverse (split (join (reverse f) * join (reverse g))) : [10][32]) }};
+
+add_f <- abstract_symbolic add_thm;
+time (prove_print abc add_f);
+
+zero_f <- abstract_symbolic zero_thm;
+time (prove_print abc zero_f);
+
+one_f <- abstract_symbolic one_thm;
+time (prove_print abc one_f);
+
+mul_f <- abstract_symbolic mul_thm;
+time (prove_print (quickcheck 10) mul_f);

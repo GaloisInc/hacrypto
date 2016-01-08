@@ -1,0 +1,86 @@
+m <- llvm_load_module "ccn.bc";
+r <- fresh_symbolic "r" {| [2][64] |};
+r2 <- fresh_symbolic "r2" {| [4][64] |};
+s <- fresh_symbolic "s" {| [2][64] |};
+t <- fresh_symbolic "t" {| [2][64] |};
+k <- fresh_symbolic "k" {| [64] |};
+let two = rewrite (cryptol_ss ()) {{ 2:[64] }};
+let allocs = [("r", 2), ("s", 2), ("t", 2)];
+let sallocs = [("r", 2), ("s", 2)];
+let inputs = [("count", two, 1), ("*r", r, 2), ("*s", s, 2), ("*t", t, 2)];
+let sinputs = [("count", two, 1), ("*r", r, 2), ("*s", s, 2), ("k", k, 1)];
+let run_simple n r = llvm_symexec m n allocs inputs r false;
+let run_shift n r = llvm_symexec m n sallocs sinputs r false;
+
+ccn_add <- run_simple "ccn_add" [("*r", 2)];
+ccn_sub <- run_simple "ccn_sub" [("*r", 2)];
+ccn_mul <- run_simple "ccn_sub" [("*r", 4)];
+ccn_lsl <- run_shift "ccn_shift_left" [("*r", 2)];
+//ccn_lsr <- run_shift "ccn_shift_right" [("*r", 2)];
+
+let add_thm = {{
+  ccn_add == reverse (split (join (reverse s) + join (reverse t)))
+}};
+
+let sub_thm = {{
+  ccn_sub == reverse (split (join (reverse s) - join (reverse t)))
+}};
+
+let lsl_thm = {{
+  if k <= 64 then ccn_lsl == reverse (split ((join (reverse s)) << k)) else True
+}};
+
+/*
+let lsr_thm = {{
+  if k <= 64 then ccn_lsr == reverse (split ((join (reverse s)) >> k)) else True
+}};
+
+ccn_mul_f <- abstract_symbolic ccn_mul;
+
+let {{
+  limit = 0x0000000000000010
+
+  mul_ref : [2][64] -> [2][64] -> [4][64]
+  mul_ref a b = reverse ((split (an2 * bn2)) : [4][64])
+      where an = join (reverse a)
+            bn = join (reverse b)
+            an2 = (zero # an) : [256]
+            bn2 = (zero # bn) : [256]
+
+  mul_ref_bound a b =
+    if (a@0 < limit) && (b@0 < limit) && (a@1 < limit) && (b@1 < limit)
+      then mul_ref a b
+      else ccn_mul_f a b
+}};
+
+let mul_thm = {{
+  ccn_mul == mul_ref_bound s t
+}};
+*/
+
+add_f <- abstract_symbolic add_thm;
+time (prove_print abc add_f);
+
+sub_f <- abstract_symbolic sub_thm;
+time (prove_print abc sub_f);
+
+lsl_f <- abstract_symbolic lsl_thm;
+time (prove_print abc lsl_f);
+
+//lsr_f <- abstract_symbolic lsr_thm;
+//time (prove_print abc lsr_f);
+
+//let v1 = {{ [2,0] : [2][64] }};
+//let v2 = {{ [9223372036854775808,0] : [2][64] }};
+//print {{ mul_ref v1 v2 }};
+//print {{ ccn_mul_f v1 v2 }};
+
+//mul_f <- abstract_symbolic mul_thm;
+//time (prove_print (quickcheck 1000) mul_f);
+
+//ref_aig <- bitblast {{ mul_ref_bound }};
+//ccn_aig <- bitblast {{ ccn_mul_f }};
+//r <- time (cec ref_aig ccn_aig);
+//print r;
+
+//time (prove_print abc mul_f);

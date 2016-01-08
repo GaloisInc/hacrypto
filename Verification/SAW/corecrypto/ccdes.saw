@@ -1,0 +1,10 @@
+import "DES.cry";
+m <- llvm_load_module "ltc_des.bc";
+block <- fresh_symbolic "block" {| [2][32] |};
+keys <- fresh_symbolic "keys" {| [3][32] |};
+
+cc_3des <- llvm_symexec m "desfunc3"
+           [("block", 2), ("keys", 3)]
+           [("*block", block, 2), ("*keys", keys, 3)]
+           [("*block", 4)]
+           false;
