@@ -25,3 +25,15 @@
 [submodule "src/C/openssl/openssl"]
 	path = src/C/openssl/openssl
 	url = https://github.com/openssl/openssl.git
+[submodule "src/C/BoringSSL/HEAD/boringssl"]
+	path = src/C/BoringSSL/HEAD/boringssl
+	url = https://boringssl.googlesource.com/boringssl
+[submodule "src/C/hs-cryptohash/HEAD/hs-cryptohash"]
+        path = src/C/hs-cryptohash/HEAD/hs-cryptohash
+        url = https://github.com/vincenthz/hs-cryptohash.git
+[submodule "src/C/libsodium/HEAD/libsodium"]
+        path = src/C/libsodium/HEAD/libsodium
+        url = https://github.com/vincenthz/hs-cryptohash.git
+[submodule "src/Java/ximix"]
+        path = src/Java/ximix
+        url = https://github.com/cwgit/ximix.git
