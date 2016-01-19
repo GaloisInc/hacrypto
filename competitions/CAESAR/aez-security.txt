@@ -1,0 +1,40 @@
+Subject: AEZ: omission of a table or concrete-security formula for Sect 2 (Security Goals)
+From: Phillip Rogaway <rogaway@cs.ucdavis.edu>
+Date: Mon, 31 Mar 2014 16:50:40 -0700 (Pacific Daylight Time)
+To: crypto-competitions@googlegroups.com
+Message-ID: <alpine.WNT.2.00.1403311641240.6812@RogawaySamsung9>
+User-Agent: Alpine 2.00 (WNT 1167 2008-08-23)
+
+ As requested by the CAESAR secretary, this note is to concretize
+ the security goals for AEZ parameter set "aez".
+
+ The basic security goal for aez is that an adversary can't be
+ exhibited that violates confidentiality or integrity with
+ advantage exceeding
+
+   22 s^2 / 2^128  +  max(t/2^128, 2^-61)
+
+ where s is the total number of 16-byte blocks of messages
+ encrypted-or-authenticated (plus 3 blocks per message, by
+ convention) and t is the time (including the description size)
+ in which the adversary runs.  (a) When we speak here of violating
+ confidentiality or integrity we mean the MRAE (misuse-resistant AE)
+ notion of Rogaway-Shrimpton-2004.  (b) The second addend in the
+ formula above is just a stand-in for an advantage term associated
+ to breaking the strong-PRP property for AES.  The value has been
+ increased over the more naive t/2^128 value to account for
+ low-advantage distinguishing attacks on AES (see
+ [Bernstein and Lange, AC13]) that can be adapted to AEZ and
+ other AE schemes.  (c) The constants 22 and 3 are sufficient
+ for our security bounds for AEZ+.  We heuristically assume
+ that these same bounds hold for AEZ itself.  (d) The number
+ of encryption and decryption queries does not appear in
+ the formula above because, for simplicity, we have folded
+ them into 's'.
+
+
+Kind regards,
+
+Viet Tung Hoang
+Ted Krovetz
+Phil Rogaway

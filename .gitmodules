@@ -19,3 +19,9 @@
 [submodule "src/C++/botan"]
 	path = src/C++/botan
 	url = git@github.com:randombit/botan.git
+[submodule "src/C/OpenWhiteBox/AES"]
+	path = src/C/OpenWhiteBox/AES
+	url = https://github.com/OpenWhiteBox/AES.git
+[submodule "src/C/openssl/openssl"]
+	path = src/C/openssl/openssl
+	url = https://github.com/openssl/openssl.git
