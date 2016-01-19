@@ -8,7 +8,7 @@
 <script type="text/javascript">
 <!--
 
-var items = ['system_chart:HACRYPTO_SYSTEM','class_chart:SHA_512','class_chart:NUMBER','class_chart:FLOAT','class_chart:SHA_256','class_chart:ARRAY','class_chart:SET','class_chart:SHA_224','class_chart:VALUE','class_chart:ANY','class_chart:SHA_1','class_chart:BOOLEAN','class_chart:TUPLE','class_chart:HASH','class_chart:TABLE','class_chart:STRING','class_chart:TREE','class_chart:FILE','class_chart:LIST','class_chart:SHA_384','class_chart:INTEGER','cluster_chart:BUILT_IN','cluster_chart:STANDARDIZATION','cluster_chart:BLOCK_CIPHER_MODES','cluster_chart:AUTHENTICATED_ENCRYPTION_MODES','cluster_chart:KEY_DERIVATION_FUNCTIONS','cluster_chart:TEXT','cluster_chart:PADDING','cluster_chart:MD_FAMILY','cluster_chart:KEY_MANAGEMENT','cluster_chart:STRUCTURES','cluster_chart:KERNEL','cluster_chart:SHA_3_FINALISTS','cluster_chart:GENERAL_ATTACKS','cluster_chart:HASH_STANDARDIZATION','cluster_chart:CORE_CONCEPTS','cluster_chart:SYMMETRIC_CIPHERS','cluster_chart:SHA_FAMILY','cluster_chart:NUMBERS','cluster_chart:HASH_DESIGNS','cluster_chart:SIGNATURES','cluster_chart:HACRYPTO_SYSTEM','cluster_chart:BLOCK_CIPHER_ATTACKS','cluster_chart:ALGORITHM_DESIGNS','cluster_chart:MESSAGE_AUTHENTICATION','cluster_chart:HASH_ATTACKS','cluster_chart:HASHES','cluster_chart:SHA_3_FAMILY','cluster_chart:SHA_1_FAMILY','cluster_chart:SHA_2_FAMILY','cluster_chart:PUBLIC_KEY_CRYPTOGRAPHY','cluster_chart:PUBLIC_KEY_ALGORITHMS','cluster_chart:CIPHERS','cluster_chart:THREATS','cluster_chart:CRYPTOGRAPHIC_KEY_CONCEPTS','cluster_chart:PUBLIC_KEY_IMPLEMENTATIONS','cluster_chart:KEY_EXCHANGE','event_chart:1','event_chart:2','creation_chart:1','scenario_chart:1','scenario_chart:2'];
+var items = ['system_chart:HACRYPTO_SYSTEM','class_chart:SHA_1','class_chart:INTEGER','class_chart:TUPLE','class_chart:ANY','class_chart:BOOLEAN','class_chart:SHA_224','class_chart:TREE','class_chart:SHA_512','class_chart:NUMBER','class_chart:HASH','class_chart:SHA_384','class_chart:TABLE','class_chart:SET','class_chart:FLOAT','class_chart:SHA_256','class_chart:VALUE','class_chart:LIST','class_chart:FILE','class_chart:ARRAY','class_chart:STRING','cluster_chart:ALGORITHM_DESIGNS','cluster_chart:SYMMETRIC_CIPHERS','cluster_chart:PUBLIC_KEY_IMPLEMENTATIONS','cluster_chart:SHA_3_FINALISTS','cluster_chart:STANDARDIZATION','cluster_chart:BLOCK_CIPHER_ATTACKS','cluster_chart:MESSAGE_AUTHENTICATION','cluster_chart:HASHES','cluster_chart:TEXT','cluster_chart:SHA_3_FAMILY','cluster_chart:STRUCTURES','cluster_chart:HASH_ATTACKS','cluster_chart:PUBLIC_KEY_ALGORITHMS','cluster_chart:CRYPTOGRAPHIC_KEY_CONCEPTS','cluster_chart:BUILT_IN','cluster_chart:PADDING','cluster_chart:HASH_STANDARDIZATION','cluster_chart:GENERAL_ATTACKS','cluster_chart:KERNEL','cluster_chart:PUBLIC_KEY_CRYPTOGRAPHY','cluster_chart:SHA_2_FAMILY','cluster_chart:SHA_FAMILY','cluster_chart:CIPHERS','cluster_chart:KEY_EXCHANGE','cluster_chart:KEY_DERIVATION_FUNCTIONS','cluster_chart:KEY_MANAGEMENT','cluster_chart:HACRYPTO_SYSTEM','cluster_chart:SIGNATURES','cluster_chart:SHA_1_FAMILY','cluster_chart:THREATS','cluster_chart:MD_FAMILY','cluster_chart:HASH_DESIGNS','cluster_chart:AUTHENTICATED_ENCRYPTION_MODES','cluster_chart:BLOCK_CIPHER_MODES','cluster_chart:CORE_CONCEPTS','cluster_chart:NUMBERS','event_chart:1','event_chart:2','creation_chart:1','scenario_chart:1','scenario_chart:2'];
 var topOptions = [ 'System Chart', 'system_chart', 'Cluster Charts', 'cluster_chart', 'Class Charts', 'class_chart', 'Event Charts', 'event_chart', 'Scenario Charts', 'scenario_chart', 'Creation Charts', 'creation_chart' ];
 var subOptions = [];
 subOptions['system_chart'] = [ 'HACRYPTO_SYSTEM', 'system_chart:HACRYPTO_SYSTEM' ];
@@ -406,6 +406,428 @@ dd {
 
 <div id="main">
 
+<div class="top-level" id="scenario_chart:1">
+  <table class="outer">
+    <tr class="top">
+      <th class="type">SCENARIOS</th>
+      <td class="name" colspan="2">HACRYPTO_CLIENT_DEVELOPER</td>
+      <td class="part"><strong>Part:</strong> 1/1</td>
+    </tr>
+    <tr class="middle">
+      <td class="explanation" colspan="2">
+        <dl>
+          <dt>Comment</dt>
+          <dd>&quot;@todo&quot;</dd>
+        </dl>
+      </td>
+      <td class="indexing" colspan="2">
+        <dl>
+          <dt>Indexing</dt>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bottom">
+        <table>
+          <tr>
+            <td class="white">
+              <dl class="scenario_entry">
+                <dt>&quot;ChooseHash&quot;</dt>
+                <dd>&quot;Choose an appropriate hash function for a given context.&quot;</dd>
+              </dl>
+            </td>
+          </tr>          <tr>
+            <td class="white">
+              <dl class="scenario_entry">
+                <dt>&quot;PerformHash&quot;</dt>
+                <dd>&quot;Compute the hash digest of a message.&quot;</dd>
+              </dl>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="top-level" id="scenario_chart:2">
+  <table class="outer">
+    <tr class="top">
+      <th class="type">SCENARIOS</th>
+      <td class="name" colspan="2">HASHES</td>
+      <td class="part"><strong>Part:</strong> 1/1</td>
+    </tr>
+    <tr class="middle">
+      <td class="explanation" colspan="2">
+        <dl>
+          <dt>Comment</dt>
+          <dd>&quot;Scenarios describing the correct and incorrect uses of hashes.&quot;</dd>
+        </dl>
+      </td>
+      <td class="indexing" colspan="2">
+        <dl>
+          <dt>Indexing</dt>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bottom">
+        <table>
+          <tr>
+            <td class="white">
+              <dl class="scenario_entry">
+                <dt>&quot;Idempotence&quot;</dt>
+                <dd>&quot;Hashing the same messages twice results in equal digests.&quot;</dd>
+              </dl>
+            </td>
+          </tr>          <tr>
+            <td class="white">
+              <dl class="scenario_entry">
+                <dt>&quot;NoCollisions&quot;</dt>
+                <dd>&quot;Hashing two different messages results in two different hashes.&quot;</dd>
+              </dl>
+            </td>
+          </tr>          <tr>
+            <td class="white">
+              <dl class="scenario_entry">
+                <dt>&quot;Sensitive&quot;</dt>
+                <dd>&quot;A small change in a message results in a large change in its digest.&quot;</dd>
+              </dl>
+            </td>
+          </tr>          <tr>
+            <td class="white">
+              <dl class="scenario_entry">
+                <dt>&quot;Cheap&quot;</dt>
+                <dd>&quot;It is easy to compute the digest of any message.&quot;</dd>
+              </dl>
+            </td>
+          </tr>          <tr>
+            <td class="white">
+              <dl class="scenario_entry">
+                <dt>&quot;Pre-image resistance&quot;</dt>
+                <dd>&quot;It should be difficult to find any message for a given digest.&quot;</dd>
+              </dl>
+            </td>
+          </tr>          <tr>
+            <td class="white">
+              <dl class="scenario_entry">
+                <dt>&quot;Second pre-image resistance&quot;</dt>
+                <dd>&quot;Given an message, it should be difficult to find a different message such that their digests are equal.&quot;</dd>
+              </dl>
+            </td>
+          </tr>          <tr>
+            <td class="white">
+              <dl class="scenario_entry">
+                <dt>&quot;Collision resistance&quot;</dt>
+                <dd>&quot;It should be difficult to find two different messages that have equal digests.&quot;</dd>
+              </dl>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="top-level" id="cluster_chart:CRYPTOGRAPHIC_KEY_CONCEPTS">
+  <table class="outer">
+    <tr class="top">
+      <th class="type">CLUSTER</th>
+      <td class="name" colspan="2">CRYPTOGRAPHIC_KEY_CONCEPTS</td>
+      <td class="part"><strong>Part:</strong> 1/1</td>
+    </tr>
+    <tr class="middle">
+      <td class="explanation" colspan="2">
+        <dl>
+          <dt>Purpose</dt>
+          <dd></dd>
+        </dl>
+      </td>
+      <td class="indexing" colspan="2">
+        <dl>
+          <dt>Indexing</dt>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bottom">
+        <table>
+          <tr>
+            <th class="grey">Class</th>
+            <th class="grey">Description</th>
+          </tr>
+          <tr>
+            <td class="light-grey"><a href="#class_chart:KEY" onclick="return linkSelect('class_chart','class_chart:KEY');">KEY</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:KEY_STRETCHING" onclick="return linkSelect('class_chart','class_chart:KEY_STRETCHING');">KEY_STRETCHING</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:KEY_DERIVATION" onclick="return linkSelect('class_chart','class_chart:KEY_DERIVATION');">KEY_DERIVATION</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>
+        </table>
+        <table>
+          <tr>
+            <th>Cluster</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td class="light-grey"><a href="#cluster_chart:KEY_DERIVATION_FUNCTIONS" onclick="return linkSelect('cluster_chart','cluster_chart:KEY_DERIVATION_FUNCTIONS');">KEY_DERIVATION_FUNCTIONS</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#cluster_chart:KEY_MANAGEMENT" onclick="return linkSelect('cluster_chart','cluster_chart:KEY_MANAGEMENT');">KEY_MANAGEMENT</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#cluster_chart:KEY_EXCHANGE" onclick="return linkSelect('cluster_chart','cluster_chart:KEY_EXCHANGE');">KEY_EXCHANGE</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="top-level" id="cluster_chart:KEY_DERIVATION_FUNCTIONS">
+  <table class="outer">
+    <tr class="top">
+      <th class="type">CLUSTER</th>
+      <td class="name" colspan="2">KEY_DERIVATION_FUNCTIONS</td>
+      <td class="part"><strong>Part:</strong> 1/1</td>
+    </tr>
+    <tr class="middle">
+      <td class="explanation" colspan="2">
+        <dl>
+          <dt>Purpose</dt>
+          <dd></dd>
+        </dl>
+      </td>
+      <td class="indexing" colspan="2">
+        <dl>
+          <dt>Indexing</dt>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bottom">
+        <table>
+          <tr>
+            <th class="grey">Class</th>
+            <th class="grey">Description</th>
+          </tr>
+          <tr>
+            <td class="light-grey"><a href="#class_chart:PBKDF_2" onclick="return linkSelect('class_chart','class_chart:PBKDF_2');">PBKDF_2</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:BCRYPT" onclick="return linkSelect('class_chart','class_chart:BCRYPT');">BCRYPT</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:SCRIPT" onclick="return linkSelect('class_chart','class_chart:SCRIPT');">SCRIPT</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>
+        </table>
+              </td>
+    </tr>
+  </table>
+</div>
+
+<div class="top-level" id="cluster_chart:KEY_MANAGEMENT">
+  <table class="outer">
+    <tr class="top">
+      <th class="type">CLUSTER</th>
+      <td class="name" colspan="2">KEY_MANAGEMENT</td>
+      <td class="part"><strong>Part:</strong> 1/1</td>
+    </tr>
+    <tr class="middle">
+      <td class="explanation" colspan="2">
+        <dl>
+          <dt>Purpose</dt>
+          <dd></dd>
+        </dl>
+      </td>
+      <td class="indexing" colspan="2">
+        <dl>
+          <dt>Indexing</dt>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bottom">
+        <table>
+          <tr>
+            <th class="grey">Class</th>
+            <th class="grey">Description</th>
+          </tr>
+          <tr>
+            <td class="light-grey"><a href="#class_chart:X509" onclick="return linkSelect('class_chart','class_chart:X509');">X509</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:PKI" onclick="return linkSelect('class_chart','class_chart:PKI');">PKI</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>
+        </table>
+              </td>
+    </tr>
+  </table>
+</div>
+
+<div class="top-level" id="cluster_chart:KEY_EXCHANGE">
+  <table class="outer">
+    <tr class="top">
+      <th class="type">CLUSTER</th>
+      <td class="name" colspan="2">KEY_EXCHANGE</td>
+      <td class="part"><strong>Part:</strong> 1/1</td>
+    </tr>
+    <tr class="middle">
+      <td class="explanation" colspan="2">
+        <dl>
+          <dt>Purpose</dt>
+          <dd></dd>
+        </dl>
+      </td>
+      <td class="indexing" colspan="2">
+        <dl>
+          <dt>Indexing</dt>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bottom">
+        <table>
+          <tr>
+            <th class="grey">Class</th>
+            <th class="grey">Description</th>
+          </tr>
+          <tr>
+            <td class="light-grey"><a href="#class_chart:KEY_EXCHANGE" onclick="return linkSelect('class_chart','class_chart:KEY_EXCHANGE');">KEY_EXCHANGE</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:NEEDHAM_SCHROEDER" onclick="return linkSelect('class_chart','class_chart:NEEDHAM_SCHROEDER');">NEEDHAM_SCHROEDER</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:RSA_KEM" onclick="return linkSelect('class_chart','class_chart:RSA_KEM');">RSA_KEM</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:PSEC_KEM" onclick="return linkSelect('class_chart','class_chart:PSEC_KEM');">PSEC_KEM</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>
+        </table>
+              </td>
+    </tr>
+  </table>
+</div>
+
+<div class="top-level" id="creation_chart:1">
+  <table class="outer">
+    <tr class="top">
+      <th class="type">CREATION</th>
+      <td class="name" colspan="2">HACRYPTO_SYSTEM</td>
+      <td class="part"><strong>Part:</strong> 1/1</td>
+    </tr>
+    <tr class="middle">
+      <td class="explanation" colspan="2">
+        <dl>
+          <dt>Comment</dt>
+          <dd>&quot;&quot;</dd>
+        </dl>
+      </td>
+      <td class="indexing" colspan="2">
+        <dl>
+          <dt>Indexing</dt>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bottom">
+        <table>
+          <tr>
+            <th class="grey">Class</th>
+            <th class="grey">Creates instances of</th>
+          </tr>
+          <tr>
+            <td class="light-grey"><a href="#class_chart:PIGGIE" onclick="return linkSelect('class_chart','class_chart:PIGGIE');">PIGGIE</a></td>
+            <td class="white"><a href="#class_chart:FOO" onclick="return linkSelect('class_chart','class_chart:FOO');">FOO</a></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="top-level" id="event_chart:1">
+  <table class="outer">
+    <tr class="top">
+      <th class="type">EVENT</th>
+      <td class="name" colspan="2">HACRYPTO_API</td>
+      <td class="part"><strong>Part:</strong> 1/1</td>
+    </tr>
+    <tr class="middle">
+      <td class="explanation" colspan="2">
+        <dl>
+          <dt>Comment</dt>
+          <dd>&quot;&quot;</dd>
+        </dl>
+      </td>
+      <td class="indexing" colspan="2">
+        <dl>
+          <dt>Indexing</dt>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bottom">
+        <table>
+          <tr>
+            <th class="grey">incoming</th>
+            <th class="grey">Involved object types</th>
+          </tr>
+          <tr>
+            <td class="light-grey">&quot;@todo_1&quot;</td>
+            <td class="white spaced-lines"><a href="#class_chart:PIGGIE" onclick="return linkSelect('class_chart','class_chart:PIGGIE');">PIGGIE</a>, <a href="#class_chart:FOO" onclick="return linkSelect('class_chart','class_chart:FOO');">FOO</a></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="top-level" id="event_chart:2">
+  <table class="outer">
+    <tr class="top">
+      <th class="type">EVENT</th>
+      <td class="name" colspan="2">HACRYPTO_OUTBOUND</td>
+      <td class="part"><strong>Part:</strong> 1/1</td>
+    </tr>
+    <tr class="middle">
+      <td class="explanation" colspan="2">
+        <dl>
+          <dt>Comment</dt>
+          <dd></dd>
+        </dl>
+      </td>
+      <td class="indexing" colspan="2">
+        <dl>
+          <dt>Indexing</dt>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bottom">
+        <table>
+          <tr>
+            <th class="grey">outgoing</th>
+            <th class="grey">Involved object types</th>
+          </tr>
+          <tr>
+            <td class="light-grey">&quot;@todo_2&quot;</td>
+            <td class="white spaced-lines"><a href="#class_chart:PIGGIES" onclick="return linkSelect('class_chart','class_chart:PIGGIES');">PIGGIES</a>, <a href="#class_chart:FOO" onclick="return linkSelect('class_chart','class_chart:FOO');">FOO</a></td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+
 <div class="top-level" id="cluster_chart:HASHES">
   <table class="outer">
     <tr class="top">
@@ -439,9 +861,6 @@ dd {
           </tr>          <tr>
             <td class="light-grey"><a href="#class_chart:RIPEMD_160" onclick="return linkSelect('class_chart','class_chart:RIPEMD_160');">RIPEMD_160</a></td>
             <td class="white">&quot;http://en.wikipedia.org/wiki/RIPEMD&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:DES" onclick="return linkSelect('class_chart','class_chart:DES');">DES</a></td>
-            <td class="white">&quot;http://en.wikipedia.org/wiki/Data_Encryption_Standard&quot;</td>
           </tr>          <tr>
             <td class="light-grey"><a href="#class_chart:CRYPT" onclick="return linkSelect('class_chart','class_chart:CRYPT');">CRYPT</a></td>
             <td class="white">&quot;http://en.wikipedia.org/wiki/Crypt_(C)&quot;</td>
@@ -1040,6 +1459,211 @@ dd {
   </table>
 </div>
 
+<div class="top-level" id="system_chart:HACRYPTO_SYSTEM">
+  <table class="outer">
+    <tr class="top">
+      <th class="type">SYSTEM</th>
+      <td class="name" colspan="2">HACRYPTO_SYSTEM</td>
+      <td class="part"><strong>Part:</strong> 1/1</td>
+    </tr>
+    <tr class="middle">
+      <td class="explanation" colspan="2">
+        <dl>
+          <dt>Purpose</dt>
+          <dd>&quot;@todo&quot;</dd>
+        </dl>
+      </td>
+      <td class="indexing" colspan="2">
+        <dl>
+          <dt>Indexing</dt>
+          <dd>author : "Joseph Kiniry <kiniry@galois.com>";</dd>
+          <dd>organization : "Galois, Inc.";</dd>
+          <dd>keywords : "high-assurance", "cryptography", "verification", "Galois";</dd>
+          <dd>created : "Wed Jun 25 11:02:35 PDT 2014";</dd>
+          <dd>github : "https://github.com/GaloisInc/hacrypto";</dd>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bottom">
+        <table>
+          <tr>
+            <th class="grey">Cluster</th>
+            <th class="grey">Description</th>
+          </tr>
+          <tr>
+            <td class="light-grey"><a href="#cluster_chart:CORE_CONCEPTS" onclick="return linkSelect('cluster_chart','cluster_chart:CORE_CONCEPTS');">CORE_CONCEPTS</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#cluster_chart:THREATS" onclick="return linkSelect('cluster_chart','cluster_chart:THREATS');">THREATS</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#cluster_chart:CRYPTOGRAPHIC_KEY_CONCEPTS" onclick="return linkSelect('cluster_chart','cluster_chart:CRYPTOGRAPHIC_KEY_CONCEPTS');">CRYPTOGRAPHIC_KEY_CONCEPTS</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#cluster_chart:CIPHERS" onclick="return linkSelect('cluster_chart','cluster_chart:CIPHERS');">CIPHERS</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#cluster_chart:TEXT" onclick="return linkSelect('cluster_chart','cluster_chart:TEXT');">TEXT</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#cluster_chart:SIGNATURES" onclick="return linkSelect('cluster_chart','cluster_chart:SIGNATURES');">SIGNATURES</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#cluster_chart:HASHES" onclick="return linkSelect('cluster_chart','cluster_chart:HASHES');">HASHES</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#cluster_chart:MESSAGE_AUTHENTICATION" onclick="return linkSelect('cluster_chart','cluster_chart:MESSAGE_AUTHENTICATION');">MESSAGE_AUTHENTICATION</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="top-level" id="cluster_chart:TEXT">
+  <table class="outer">
+    <tr class="top">
+      <th class="type">CLUSTER</th>
+      <td class="name" colspan="2">TEXT</td>
+      <td class="part"><strong>Part:</strong> 1/1</td>
+    </tr>
+    <tr class="middle">
+      <td class="explanation" colspan="2">
+        <dl>
+          <dt>Purpose</dt>
+          <dd></dd>
+        </dl>
+      </td>
+      <td class="indexing" colspan="2">
+        <dl>
+          <dt>Indexing</dt>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bottom">
+        <table>
+          <tr>
+            <th class="grey">Class</th>
+            <th class="grey">Description</th>
+          </tr>
+          <tr>
+            <td class="light-grey"><a href="#class_chart:PLAINTEXT" onclick="return linkSelect('class_chart','class_chart:PLAINTEXT');">PLAINTEXT</a></td>
+            <td class="white">&quot;http://en.wikipedia.org/wiki/Plaintext&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:CIPHERTEXT" onclick="return linkSelect('class_chart','class_chart:CIPHERTEXT');">CIPHERTEXT</a></td>
+            <td class="white">&quot;http://en.wikipedia.org/wiki/Ciphertext&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:STREAM" onclick="return linkSelect('class_chart','class_chart:STREAM');">STREAM</a></td>
+            <td class="white">&quot;An unbounded length sequence of bits.&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:KEYSTREAM" onclick="return linkSelect('class_chart','class_chart:KEYSTREAM');">KEYSTREAM</a></td>
+            <td class="white">&quot;http://en.wikipedia.org/wiki/Keystream&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:BLOCK" onclick="return linkSelect('class_chart','class_chart:BLOCK');">BLOCK</a></td>
+            <td class="white">&quot;A fixed length sequence of bits.&quot;</td>
+          </tr>
+        </table>
+        <table>
+          <tr>
+            <th>Cluster</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td class="light-grey"><a href="#cluster_chart:PADDING" onclick="return linkSelect('cluster_chart','cluster_chart:PADDING');">PADDING</a></td>
+            <td class="white">&quot;http://en.wikipedia.org/wiki/Padding_(cryptography)&quot;</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="top-level" id="cluster_chart:PADDING">
+  <table class="outer">
+    <tr class="top">
+      <th class="type">CLUSTER</th>
+      <td class="name" colspan="2">PADDING</td>
+      <td class="part"><strong>Part:</strong> 1/1</td>
+    </tr>
+    <tr class="middle">
+      <td class="explanation" colspan="2">
+        <dl>
+          <dt>Purpose</dt>
+          <dd></dd>
+        </dl>
+      </td>
+      <td class="indexing" colspan="2">
+        <dl>
+          <dt>Indexing</dt>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bottom">
+        <table>
+          <tr>
+            <th class="grey">Class</th>
+            <th class="grey">Description</th>
+          </tr>
+          <tr>
+            <td class="light-grey"><a href="#class_chart:OAEP" onclick="return linkSelect('class_chart','class_chart:OAEP');">OAEP</a></td>
+            <td class="white">&quot;http://en.wikipedia.org/wiki/OAEP&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:RSA_OAEP" onclick="return linkSelect('class_chart','class_chart:RSA_OAEP');">RSA_OAEP</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>
+        </table>
+              </td>
+    </tr>
+  </table>
+</div>
+
+<div class="top-level" id="cluster_chart:SIGNATURES">
+  <table class="outer">
+    <tr class="top">
+      <th class="type">CLUSTER</th>
+      <td class="name" colspan="2">SIGNATURES</td>
+      <td class="part"><strong>Part:</strong> 1/1</td>
+    </tr>
+    <tr class="middle">
+      <td class="explanation" colspan="2">
+        <dl>
+          <dt>Purpose</dt>
+          <dd>&quot;The core concepts of cryptography.&quot;</dd>
+        </dl>
+      </td>
+      <td class="indexing" colspan="2">
+        <dl>
+          <dt>Indexing</dt>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bottom">
+        <table>
+          <tr>
+            <th class="grey">Class</th>
+            <th class="grey">Description</th>
+          </tr>
+          <tr>
+            <td class="light-grey"><a href="#class_chart:DIGITAL_SIGNATURE" onclick="return linkSelect('class_chart','class_chart:DIGITAL_SIGNATURE');">DIGITAL_SIGNATURE</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:SIGNATURE" onclick="return linkSelect('class_chart','class_chart:SIGNATURE');">SIGNATURE</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:SCHNORR_SIGNATURE" onclick="return linkSelect('class_chart','class_chart:SCHNORR_SIGNATURE');">SCHNORR_SIGNATURE</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>
+        </table>
+              </td>
+    </tr>
+  </table>
+</div>
+
 <div class="top-level" id="cluster_chart:CIPHERS">
   <table class="outer">
     <tr class="top">
@@ -1078,7 +1702,7 @@ dd {
             <td class="light-grey"><a href="#class_chart:BLOCK_CIPHER" onclick="return linkSelect('class_chart','class_chart:BLOCK_CIPHER');">BLOCK_CIPHER</a></td>
             <td class="white">&quot;@todo&quot;</td>
           </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:STREAM_CIPHER" onclick="return linkSelect('class_chart','class_chart:STREAM_CIPHER');">STREAM_CIPHER</a></td>
+            <td class="light-grey"><a href="#class_chart:STREM_CIPHER" onclick="return linkSelect('class_chart','class_chart:STREM_CIPHER');">STREM_CIPHER</a></td>
             <td class="white">&quot;@todo&quot;</td>
           </tr>
         </table>
@@ -1145,7 +1769,7 @@ dd {
             <td class="white">&quot;@todo&quot;</td>
           </tr>          <tr>
             <td class="light-grey"><a href="#class_chart:DES" onclick="return linkSelect('class_chart','class_chart:DES');">DES</a></td>
-            <td class="white">&quot;@todo&quot;</td>
+            <td class="white">&quot;http://en.wikipedia.org/wiki/Data_Encryption_Standard&quot;</td>
           </tr>          <tr>
             <td class="light-grey"><a href="#class_chart:IDEA" onclick="return linkSelect('class_chart','class_chart:IDEA');">IDEA</a></td>
             <td class="white">&quot;@todo&quot;</td>
@@ -1179,6 +1803,9 @@ dd {
           </tr>          <tr>
             <td class="light-grey"><a href="#class_chart:XTEA" onclick="return linkSelect('class_chart','class_chart:XTEA');">XTEA</a></td>
             <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:ZUC" onclick="return linkSelect('class_chart','class_chart:ZUC');">ZUC</a></td>
+            <td class="white">&quot;http://en.wikipedia.org/wiki/Zuc_stream_cipher&quot;</td>
           </tr>
         </table>
               </td>
@@ -1388,730 +2015,6 @@ dd {
           </tr>
         </table>
               </td>
-    </tr>
-  </table>
-</div>
-
-<div class="top-level" id="cluster_chart:MESSAGE_AUTHENTICATION">
-  <table class="outer">
-    <tr class="top">
-      <th class="type">CLUSTER</th>
-      <td class="name" colspan="2">MESSAGE_AUTHENTICATION</td>
-      <td class="part"><strong>Part:</strong> 1/1</td>
-    </tr>
-    <tr class="middle">
-      <td class="explanation" colspan="2">
-        <dl>
-          <dt>Purpose</dt>
-          <dd></dd>
-        </dl>
-      </td>
-      <td class="indexing" colspan="2">
-        <dl>
-          <dt>Indexing</dt>
-        </dl>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bottom">
-        <table>
-          <tr>
-            <th class="grey">Class</th>
-            <th class="grey">Description</th>
-          </tr>
-          <tr>
-            <td class="light-grey"><a href="#class_chart:MAC" onclick="return linkSelect('class_chart','class_chart:MAC');">MAC</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:HMAC" onclick="return linkSelect('class_chart','class_chart:HMAC');">HMAC</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:EMAC" onclick="return linkSelect('class_chart','class_chart:EMAC');">EMAC</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:TTMAC" onclick="return linkSelect('class_chart','class_chart:TTMAC');">TTMAC</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:UMAC" onclick="return linkSelect('class_chart','class_chart:UMAC');">UMAC</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>
-        </table>
-              </td>
-    </tr>
-  </table>
-</div>
-
-<div class="top-level" id="system_chart:HACRYPTO_SYSTEM">
-  <table class="outer">
-    <tr class="top">
-      <th class="type">SYSTEM</th>
-      <td class="name" colspan="2">HACRYPTO_SYSTEM</td>
-      <td class="part"><strong>Part:</strong> 1/1</td>
-    </tr>
-    <tr class="middle">
-      <td class="explanation" colspan="2">
-        <dl>
-          <dt>Purpose</dt>
-          <dd>&quot;@todo&quot;</dd>
-        </dl>
-      </td>
-      <td class="indexing" colspan="2">
-        <dl>
-          <dt>Indexing</dt>
-          <dd>author : "Joseph Kiniry <kiniry@galois.com>";</dd>
-          <dd>organization : "Galois, Inc.";</dd>
-          <dd>keywords : "high-assurance", "cryptography", "verification", "Galois";</dd>
-          <dd>created : "Wed Jun 25 11:02:35 PDT 2014";</dd>
-          <dd>github : "https://github.com/GaloisInc/hacrypto";</dd>
-        </dl>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bottom">
-        <table>
-          <tr>
-            <th class="grey">Cluster</th>
-            <th class="grey">Description</th>
-          </tr>
-          <tr>
-            <td class="light-grey"><a href="#cluster_chart:CORE_CONCEPTS" onclick="return linkSelect('cluster_chart','cluster_chart:CORE_CONCEPTS');">CORE_CONCEPTS</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#cluster_chart:THREATS" onclick="return linkSelect('cluster_chart','cluster_chart:THREATS');">THREATS</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#cluster_chart:CRYPTOGRAPHIC_KEY_CONCEPTS" onclick="return linkSelect('cluster_chart','cluster_chart:CRYPTOGRAPHIC_KEY_CONCEPTS');">CRYPTOGRAPHIC_KEY_CONCEPTS</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#cluster_chart:CIPHERS" onclick="return linkSelect('cluster_chart','cluster_chart:CIPHERS');">CIPHERS</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#cluster_chart:TEXT" onclick="return linkSelect('cluster_chart','cluster_chart:TEXT');">TEXT</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#cluster_chart:SIGNATURES" onclick="return linkSelect('cluster_chart','cluster_chart:SIGNATURES');">SIGNATURES</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#cluster_chart:HASHES" onclick="return linkSelect('cluster_chart','cluster_chart:HASHES');">HASHES</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#cluster_chart:MESSAGE_AUTHENTICATION" onclick="return linkSelect('cluster_chart','cluster_chart:MESSAGE_AUTHENTICATION');">MESSAGE_AUTHENTICATION</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</div>
-
-<div class="top-level" id="cluster_chart:CRYPTOGRAPHIC_KEY_CONCEPTS">
-  <table class="outer">
-    <tr class="top">
-      <th class="type">CLUSTER</th>
-      <td class="name" colspan="2">CRYPTOGRAPHIC_KEY_CONCEPTS</td>
-      <td class="part"><strong>Part:</strong> 1/1</td>
-    </tr>
-    <tr class="middle">
-      <td class="explanation" colspan="2">
-        <dl>
-          <dt>Purpose</dt>
-          <dd></dd>
-        </dl>
-      </td>
-      <td class="indexing" colspan="2">
-        <dl>
-          <dt>Indexing</dt>
-        </dl>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bottom">
-        <table>
-          <tr>
-            <th class="grey">Class</th>
-            <th class="grey">Description</th>
-          </tr>
-          <tr>
-            <td class="light-grey"><a href="#class_chart:KEY" onclick="return linkSelect('class_chart','class_chart:KEY');">KEY</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:KEY_STRETCHING" onclick="return linkSelect('class_chart','class_chart:KEY_STRETCHING');">KEY_STRETCHING</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:KEY_DERIVATION" onclick="return linkSelect('class_chart','class_chart:KEY_DERIVATION');">KEY_DERIVATION</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>
-        </table>
-        <table>
-          <tr>
-            <th>Cluster</th>
-            <th>Description</th>
-          </tr>
-          <tr>
-            <td class="light-grey"><a href="#cluster_chart:KEY_DERIVATION_FUNCTIONS" onclick="return linkSelect('cluster_chart','cluster_chart:KEY_DERIVATION_FUNCTIONS');">KEY_DERIVATION_FUNCTIONS</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#cluster_chart:KEY_MANAGEMENT" onclick="return linkSelect('cluster_chart','cluster_chart:KEY_MANAGEMENT');">KEY_MANAGEMENT</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#cluster_chart:KEY_EXCHANGE" onclick="return linkSelect('cluster_chart','cluster_chart:KEY_EXCHANGE');">KEY_EXCHANGE</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</div>
-
-<div class="top-level" id="cluster_chart:KEY_DERIVATION_FUNCTIONS">
-  <table class="outer">
-    <tr class="top">
-      <th class="type">CLUSTER</th>
-      <td class="name" colspan="2">KEY_DERIVATION_FUNCTIONS</td>
-      <td class="part"><strong>Part:</strong> 1/1</td>
-    </tr>
-    <tr class="middle">
-      <td class="explanation" colspan="2">
-        <dl>
-          <dt>Purpose</dt>
-          <dd></dd>
-        </dl>
-      </td>
-      <td class="indexing" colspan="2">
-        <dl>
-          <dt>Indexing</dt>
-        </dl>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bottom">
-        <table>
-          <tr>
-            <th class="grey">Class</th>
-            <th class="grey">Description</th>
-          </tr>
-          <tr>
-            <td class="light-grey"><a href="#class_chart:PBKDF_2" onclick="return linkSelect('class_chart','class_chart:PBKDF_2');">PBKDF_2</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:BCRYPT" onclick="return linkSelect('class_chart','class_chart:BCRYPT');">BCRYPT</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:SCRIPT" onclick="return linkSelect('class_chart','class_chart:SCRIPT');">SCRIPT</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>
-        </table>
-              </td>
-    </tr>
-  </table>
-</div>
-
-<div class="top-level" id="cluster_chart:KEY_MANAGEMENT">
-  <table class="outer">
-    <tr class="top">
-      <th class="type">CLUSTER</th>
-      <td class="name" colspan="2">KEY_MANAGEMENT</td>
-      <td class="part"><strong>Part:</strong> 1/1</td>
-    </tr>
-    <tr class="middle">
-      <td class="explanation" colspan="2">
-        <dl>
-          <dt>Purpose</dt>
-          <dd></dd>
-        </dl>
-      </td>
-      <td class="indexing" colspan="2">
-        <dl>
-          <dt>Indexing</dt>
-        </dl>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bottom">
-        <table>
-          <tr>
-            <th class="grey">Class</th>
-            <th class="grey">Description</th>
-          </tr>
-          <tr>
-            <td class="light-grey"><a href="#class_chart:X509" onclick="return linkSelect('class_chart','class_chart:X509');">X509</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:PKI" onclick="return linkSelect('class_chart','class_chart:PKI');">PKI</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>
-        </table>
-              </td>
-    </tr>
-  </table>
-</div>
-
-<div class="top-level" id="cluster_chart:KEY_EXCHANGE">
-  <table class="outer">
-    <tr class="top">
-      <th class="type">CLUSTER</th>
-      <td class="name" colspan="2">KEY_EXCHANGE</td>
-      <td class="part"><strong>Part:</strong> 1/1</td>
-    </tr>
-    <tr class="middle">
-      <td class="explanation" colspan="2">
-        <dl>
-          <dt>Purpose</dt>
-          <dd></dd>
-        </dl>
-      </td>
-      <td class="indexing" colspan="2">
-        <dl>
-          <dt>Indexing</dt>
-        </dl>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bottom">
-        <table>
-          <tr>
-            <th class="grey">Class</th>
-            <th class="grey">Description</th>
-          </tr>
-          <tr>
-            <td class="light-grey"><a href="#class_chart:KEY_EXCHANGE" onclick="return linkSelect('class_chart','class_chart:KEY_EXCHANGE');">KEY_EXCHANGE</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:NEEDHAM_SCHROEDER" onclick="return linkSelect('class_chart','class_chart:NEEDHAM_SCHROEDER');">NEEDHAM_SCHROEDER</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:RSA_KEM" onclick="return linkSelect('class_chart','class_chart:RSA_KEM');">RSA_KEM</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:PSEC_KEM" onclick="return linkSelect('class_chart','class_chart:PSEC_KEM');">PSEC_KEM</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>
-        </table>
-              </td>
-    </tr>
-  </table>
-</div>
-
-<div class="top-level" id="cluster_chart:TEXT">
-  <table class="outer">
-    <tr class="top">
-      <th class="type">CLUSTER</th>
-      <td class="name" colspan="2">TEXT</td>
-      <td class="part"><strong>Part:</strong> 1/1</td>
-    </tr>
-    <tr class="middle">
-      <td class="explanation" colspan="2">
-        <dl>
-          <dt>Purpose</dt>
-          <dd></dd>
-        </dl>
-      </td>
-      <td class="indexing" colspan="2">
-        <dl>
-          <dt>Indexing</dt>
-        </dl>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bottom">
-        <table>
-          <tr>
-            <th class="grey">Class</th>
-            <th class="grey">Description</th>
-          </tr>
-          <tr>
-            <td class="light-grey"><a href="#class_chart:PLAINTEXT" onclick="return linkSelect('class_chart','class_chart:PLAINTEXT');">PLAINTEXT</a></td>
-            <td class="white">&quot;http://en.wikipedia.org/wiki/Plaintext&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:CIPHERTEXT" onclick="return linkSelect('class_chart','class_chart:CIPHERTEXT');">CIPHERTEXT</a></td>
-            <td class="white">&quot;http://en.wikipedia.org/wiki/Ciphertext&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:STREAM" onclick="return linkSelect('class_chart','class_chart:STREAM');">STREAM</a></td>
-            <td class="white">&quot;An unbounded length sequence of bits.&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:KEYSTREAM" onclick="return linkSelect('class_chart','class_chart:KEYSTREAM');">KEYSTREAM</a></td>
-            <td class="white">&quot;http://en.wikipedia.org/wiki/Keystream&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:BLOCK" onclick="return linkSelect('class_chart','class_chart:BLOCK');">BLOCK</a></td>
-            <td class="white">&quot;A fixed length sequence of bits.&quot;</td>
-          </tr>
-        </table>
-        <table>
-          <tr>
-            <th>Cluster</th>
-            <th>Description</th>
-          </tr>
-          <tr>
-            <td class="light-grey"><a href="#cluster_chart:PADDING" onclick="return linkSelect('cluster_chart','cluster_chart:PADDING');">PADDING</a></td>
-            <td class="white">&quot;http://en.wikipedia.org/wiki/Padding_(cryptography)&quot;</td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</div>
-
-<div class="top-level" id="cluster_chart:PADDING">
-  <table class="outer">
-    <tr class="top">
-      <th class="type">CLUSTER</th>
-      <td class="name" colspan="2">PADDING</td>
-      <td class="part"><strong>Part:</strong> 1/1</td>
-    </tr>
-    <tr class="middle">
-      <td class="explanation" colspan="2">
-        <dl>
-          <dt>Purpose</dt>
-          <dd></dd>
-        </dl>
-      </td>
-      <td class="indexing" colspan="2">
-        <dl>
-          <dt>Indexing</dt>
-        </dl>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bottom">
-        <table>
-          <tr>
-            <th class="grey">Class</th>
-            <th class="grey">Description</th>
-          </tr>
-          <tr>
-            <td class="light-grey"><a href="#class_chart:OAEP" onclick="return linkSelect('class_chart','class_chart:OAEP');">OAEP</a></td>
-            <td class="white">&quot;http://en.wikipedia.org/wiki/OAEP&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:RSA_OAEP" onclick="return linkSelect('class_chart','class_chart:RSA_OAEP');">RSA_OAEP</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>
-        </table>
-              </td>
-    </tr>
-  </table>
-</div>
-
-<div class="top-level" id="cluster_chart:THREATS">
-  <table class="outer">
-    <tr class="top">
-      <th class="type">CLUSTER</th>
-      <td class="name" colspan="2">THREATS</td>
-      <td class="part"><strong>Part:</strong> 1/1</td>
-    </tr>
-    <tr class="middle">
-      <td class="explanation" colspan="2">
-        <dl>
-          <dt>Purpose</dt>
-          <dd></dd>
-        </dl>
-      </td>
-      <td class="indexing" colspan="2">
-        <dl>
-          <dt>Indexing</dt>
-        </dl>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bottom">
-        <table>
-          <tr>
-            <th>Cluster</th>
-            <th>Description</th>
-          </tr>
-          <tr>
-            <td class="light-grey"><a href="#cluster_chart:GENERAL_ATTACKS" onclick="return linkSelect('cluster_chart','cluster_chart:GENERAL_ATTACKS');">GENERAL_ATTACKS</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#cluster_chart:HASH_ATTACKS" onclick="return linkSelect('cluster_chart','cluster_chart:HASH_ATTACKS');">HASH_ATTACKS</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#cluster_chart:BLOCK_CIPHER_ATTACKS" onclick="return linkSelect('cluster_chart','cluster_chart:BLOCK_CIPHER_ATTACKS');">BLOCK_CIPHER_ATTACKS</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</div>
-
-<div class="top-level" id="cluster_chart:GENERAL_ATTACKS">
-  <table class="outer">
-    <tr class="top">
-      <th class="type">CLUSTER</th>
-      <td class="name" colspan="2">GENERAL_ATTACKS</td>
-      <td class="part"><strong>Part:</strong> 1/1</td>
-    </tr>
-    <tr class="middle">
-      <td class="explanation" colspan="2">
-        <dl>
-          <dt>Purpose</dt>
-          <dd></dd>
-        </dl>
-      </td>
-      <td class="indexing" colspan="2">
-        <dl>
-          <dt>Indexing</dt>
-        </dl>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bottom">
-        <table>
-          <tr>
-            <th class="grey">Class</th>
-            <th class="grey">Description</th>
-          </tr>
-          <tr>
-            <td class="light-grey"><a href="#class_chart:BRUTE_FORCE" onclick="return linkSelect('class_chart','class_chart:BRUTE_FORCE');">BRUTE_FORCE</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:MAN_IN_THE_MIDDLE" onclick="return linkSelect('class_chart','class_chart:MAN_IN_THE_MIDDLE');">MAN_IN_THE_MIDDLE</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>
-        </table>
-              </td>
-    </tr>
-  </table>
-</div>
-
-<div class="top-level" id="cluster_chart:BLOCK_CIPHER_ATTACKS">
-  <table class="outer">
-    <tr class="top">
-      <th class="type">CLUSTER</th>
-      <td class="name" colspan="2">BLOCK_CIPHER_ATTACKS</td>
-      <td class="part"><strong>Part:</strong> 1/1</td>
-    </tr>
-    <tr class="middle">
-      <td class="explanation" colspan="2">
-        <dl>
-          <dt>Purpose</dt>
-          <dd></dd>
-        </dl>
-      </td>
-      <td class="indexing" colspan="2">
-        <dl>
-          <dt>Indexing</dt>
-        </dl>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bottom">
-        <table>
-          <tr>
-            <th class="grey">Class</th>
-            <th class="grey">Description</th>
-          </tr>
-          <tr>
-            <td class="light-grey"><a href="#class_chart:LINEAR" onclick="return linkSelect('class_chart','class_chart:LINEAR');">LINEAR</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:DIFFERENTIAL" onclick="return linkSelect('class_chart','class_chart:DIFFERENTIAL');">DIFFERENTIAL</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:DIFFERENTIAL_LINEAR" onclick="return linkSelect('class_chart','class_chart:DIFFERENTIAL_LINEAR');">DIFFERENTIAL_LINEAR</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:INTEGRAL" onclick="return linkSelect('class_chart','class_chart:INTEGRAL');">INTEGRAL</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:BOOMERANG" onclick="return linkSelect('class_chart','class_chart:BOOMERANG');">BOOMERANG</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:SLIDE" onclick="return linkSelect('class_chart','class_chart:SLIDE');">SLIDE</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:ROTATIONAL" onclick="return linkSelect('class_chart','class_chart:ROTATIONAL');">ROTATIONAL</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:TIMING" onclick="return linkSelect('class_chart','class_chart:TIMING');">TIMING</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:XSL" onclick="return linkSelect('class_chart','class_chart:XSL');">XSL</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:INTERPOLATION" onclick="return linkSelect('class_chart','class_chart:INTERPOLATION');">INTERPOLATION</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:PARTITIONING" onclick="return linkSelect('class_chart','class_chart:PARTITIONING');">PARTITIONING</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:DAVIES" onclick="return linkSelect('class_chart','class_chart:DAVIES');">DAVIES</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:REBOUND" onclick="return linkSelect('class_chart','class_chart:REBOUND');">REBOUND</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:WEAK_KEY" onclick="return linkSelect('class_chart','class_chart:WEAK_KEY');">WEAK_KEY</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>
-        </table>
-              </td>
-    </tr>
-  </table>
-</div>
-
-<div class="top-level" id="cluster_chart:HASH_ATTACKS">
-  <table class="outer">
-    <tr class="top">
-      <th class="type">CLUSTER</th>
-      <td class="name" colspan="2">HASH_ATTACKS</td>
-      <td class="part"><strong>Part:</strong> 1/1</td>
-    </tr>
-    <tr class="middle">
-      <td class="explanation" colspan="2">
-        <dl>
-          <dt>Purpose</dt>
-          <dd></dd>
-        </dl>
-      </td>
-      <td class="indexing" colspan="2">
-        <dl>
-          <dt>Indexing</dt>
-        </dl>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bottom">
-        <table>
-          <tr>
-            <th class="grey">Class</th>
-            <th class="grey">Description</th>
-          </tr>
-          <tr>
-            <td class="light-grey"><a href="#class_chart:COLLISION" onclick="return linkSelect('class_chart','class_chart:COLLISION');">COLLISION</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:PREIMAGE" onclick="return linkSelect('class_chart','class_chart:PREIMAGE');">PREIMAGE</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:BIRTHDAY" onclick="return linkSelect('class_chart','class_chart:BIRTHDAY');">BIRTHDAY</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:RAINBOW" onclick="return linkSelect('class_chart','class_chart:RAINBOW');">RAINBOW</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:DISTINGUISHING" onclick="return linkSelect('class_chart','class_chart:DISTINGUISHING');">DISTINGUISHING</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:SIDE_CHANNEL" onclick="return linkSelect('class_chart','class_chart:SIDE_CHANNEL');">SIDE_CHANNEL</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:LENGTH_EXTENSION" onclick="return linkSelect('class_chart','class_chart:LENGTH_EXTENSION');">LENGTH_EXTENSION</a></td>
-            <td class="white">&quot;@todo&quot;</td>
-          </tr>
-        </table>
-              </td>
-    </tr>
-  </table>
-</div>
-
-<div class="top-level" id="creation_chart:1">
-  <table class="outer">
-    <tr class="top">
-      <th class="type">CREATION</th>
-      <td class="name" colspan="2">HACRYPTO_SYSTEM</td>
-      <td class="part"><strong>Part:</strong> 1/1</td>
-    </tr>
-    <tr class="middle">
-      <td class="explanation" colspan="2">
-        <dl>
-          <dt>Comment</dt>
-          <dd>&quot;&quot;</dd>
-        </dl>
-      </td>
-      <td class="indexing" colspan="2">
-        <dl>
-          <dt>Indexing</dt>
-        </dl>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bottom">
-        <table>
-          <tr>
-            <th class="grey">Class</th>
-            <th class="grey">Creates instances of</th>
-          </tr>
-          <tr>
-            <td class="light-grey"><a href="#class_chart:PIGGIE" onclick="return linkSelect('class_chart','class_chart:PIGGIE');">PIGGIE</a></td>
-            <td class="white"><a href="#class_chart:FOO" onclick="return linkSelect('class_chart','class_chart:FOO');">FOO</a></td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</div>
-
-<div class="top-level" id="event_chart:1">
-  <table class="outer">
-    <tr class="top">
-      <th class="type">EVENT</th>
-      <td class="name" colspan="2">HACRYPTO_API</td>
-      <td class="part"><strong>Part:</strong> 1/1</td>
-    </tr>
-    <tr class="middle">
-      <td class="explanation" colspan="2">
-        <dl>
-          <dt>Comment</dt>
-          <dd>&quot;&quot;</dd>
-        </dl>
-      </td>
-      <td class="indexing" colspan="2">
-        <dl>
-          <dt>Indexing</dt>
-        </dl>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bottom">
-        <table>
-          <tr>
-            <th class="grey">incoming</th>
-            <th class="grey">Involved object types</th>
-          </tr>
-          <tr>
-            <td class="light-grey">&quot;@todo_1&quot;</td>
-            <td class="white spaced-lines"><a href="#class_chart:PIGGIE" onclick="return linkSelect('class_chart','class_chart:PIGGIE');">PIGGIE</a>, <a href="#class_chart:FOO" onclick="return linkSelect('class_chart','class_chart:FOO');">FOO</a></td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</div>
-
-<div class="top-level" id="event_chart:2">
-  <table class="outer">
-    <tr class="top">
-      <th class="type">EVENT</th>
-      <td class="name" colspan="2">HACRYPTO_OUTBOUND</td>
-      <td class="part"><strong>Part:</strong> 1/1</td>
-    </tr>
-    <tr class="middle">
-      <td class="explanation" colspan="2">
-        <dl>
-          <dt>Comment</dt>
-          <dd></dd>
-        </dl>
-      </td>
-      <td class="indexing" colspan="2">
-        <dl>
-          <dt>Indexing</dt>
-        </dl>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bottom">
-        <table>
-          <tr>
-            <th class="grey">outgoing</th>
-            <th class="grey">Involved object types</th>
-          </tr>
-          <tr>
-            <td class="light-grey">&quot;@todo_2&quot;</td>
-            <td class="white spaced-lines"><a href="#class_chart:PIGGIES" onclick="return linkSelect('class_chart','class_chart:PIGGIES');">PIGGIES</a>, <a href="#class_chart:FOO" onclick="return linkSelect('class_chart','class_chart:FOO');">FOO</a></td>
-          </tr>
-        </table>
-      </td>
     </tr>
   </table>
 </div>
@@ -2392,141 +2295,18 @@ dd {
   </table>
 </div>
 
-<div class="top-level" id="scenario_chart:1">
-  <table class="outer">
-    <tr class="top">
-      <th class="type">SCENARIOS</th>
-      <td class="name" colspan="2">HACRYPTO_CLIENT_DEVELOPER</td>
-      <td class="part"><strong>Part:</strong> 1/1</td>
-    </tr>
-    <tr class="middle">
-      <td class="explanation" colspan="2">
-        <dl>
-          <dt>Comment</dt>
-          <dd>&quot;@todo&quot;</dd>
-        </dl>
-      </td>
-      <td class="indexing" colspan="2">
-        <dl>
-          <dt>Indexing</dt>
-        </dl>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bottom">
-        <table>
-          <tr>
-            <td class="white">
-              <dl class="scenario_entry">
-                <dt>&quot;ChooseHash&quot;</dt>
-                <dd>&quot;Choose an appropriate hash function for a given context.&quot;</dd>
-              </dl>
-            </td>
-          </tr>          <tr>
-            <td class="white">
-              <dl class="scenario_entry">
-                <dt>&quot;PerformHash&quot;</dt>
-                <dd>&quot;Compute the hash digest of a message.&quot;</dd>
-              </dl>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</div>
-
-<div class="top-level" id="scenario_chart:2">
-  <table class="outer">
-    <tr class="top">
-      <th class="type">SCENARIOS</th>
-      <td class="name" colspan="2">HASHES</td>
-      <td class="part"><strong>Part:</strong> 1/1</td>
-    </tr>
-    <tr class="middle">
-      <td class="explanation" colspan="2">
-        <dl>
-          <dt>Comment</dt>
-          <dd>&quot;Scenarios describing the correct and incorrect uses of hashes.&quot;</dd>
-        </dl>
-      </td>
-      <td class="indexing" colspan="2">
-        <dl>
-          <dt>Indexing</dt>
-        </dl>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="4" class="bottom">
-        <table>
-          <tr>
-            <td class="white">
-              <dl class="scenario_entry">
-                <dt>&quot;Idempotence&quot;</dt>
-                <dd>&quot;Hashing the same messages twice results in equal digests.&quot;</dd>
-              </dl>
-            </td>
-          </tr>          <tr>
-            <td class="white">
-              <dl class="scenario_entry">
-                <dt>&quot;NoCollisions&quot;</dt>
-                <dd>&quot;Hashing two different messages results in two different hashes.&quot;</dd>
-              </dl>
-            </td>
-          </tr>          <tr>
-            <td class="white">
-              <dl class="scenario_entry">
-                <dt>&quot;Sensitive&quot;</dt>
-                <dd>&quot;A small change in a message results in a large change in its digest.&quot;</dd>
-              </dl>
-            </td>
-          </tr>          <tr>
-            <td class="white">
-              <dl class="scenario_entry">
-                <dt>&quot;Cheap&quot;</dt>
-                <dd>&quot;It is easy to compute the digest of any message.&quot;</dd>
-              </dl>
-            </td>
-          </tr>          <tr>
-            <td class="white">
-              <dl class="scenario_entry">
-                <dt>&quot;Pre-image resistance&quot;</dt>
-                <dd>&quot;It should be difficult to find any message for a given digest.&quot;</dd>
-              </dl>
-            </td>
-          </tr>          <tr>
-            <td class="white">
-              <dl class="scenario_entry">
-                <dt>&quot;Second pre-image resistance&quot;</dt>
-                <dd>&quot;Given an message, it should be difficult to find a different message such that their digests are equal.&quot;</dd>
-              </dl>
-            </td>
-          </tr>          <tr>
-            <td class="white">
-              <dl class="scenario_entry">
-                <dt>&quot;Collision resistance&quot;</dt>
-                <dd>&quot;It should be difficult to find two different messages that have equal digests.&quot;</dd>
-              </dl>
-            </td>
-          </tr>
-        </table>
-      </td>
-    </tr>
-  </table>
-</div>
-
-<div class="top-level" id="cluster_chart:SIGNATURES">
+<div class="top-level" id="cluster_chart:MESSAGE_AUTHENTICATION">
   <table class="outer">
     <tr class="top">
       <th class="type">CLUSTER</th>
-      <td class="name" colspan="2">SIGNATURES</td>
+      <td class="name" colspan="2">MESSAGE_AUTHENTICATION</td>
       <td class="part"><strong>Part:</strong> 1/1</td>
     </tr>
     <tr class="middle">
       <td class="explanation" colspan="2">
         <dl>
           <dt>Purpose</dt>
-          <dd>&quot;The core concepts of cryptography.&quot;</dd>
+          <dd></dd>
         </dl>
       </td>
       <td class="indexing" colspan="2">
@@ -2543,13 +2323,233 @@ dd {
             <th class="grey">Description</th>
           </tr>
           <tr>
-            <td class="light-grey"><a href="#class_chart:DIGITAL_SIGNATURE" onclick="return linkSelect('class_chart','class_chart:DIGITAL_SIGNATURE');">DIGITAL_SIGNATURE</a></td>
+            <td class="light-grey"><a href="#class_chart:MAC" onclick="return linkSelect('class_chart','class_chart:MAC');">MAC</a></td>
             <td class="white">&quot;@todo&quot;</td>
           </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:SIGNATURE" onclick="return linkSelect('class_chart','class_chart:SIGNATURE');">SIGNATURE</a></td>
+            <td class="light-grey"><a href="#class_chart:HMAC" onclick="return linkSelect('class_chart','class_chart:HMAC');">HMAC</a></td>
             <td class="white">&quot;@todo&quot;</td>
           </tr>          <tr>
-            <td class="light-grey"><a href="#class_chart:SCHNORR_SIGNATURE" onclick="return linkSelect('class_chart','class_chart:SCHNORR_SIGNATURE');">SCHNORR_SIGNATURE</a></td>
+            <td class="light-grey"><a href="#class_chart:EMAC" onclick="return linkSelect('class_chart','class_chart:EMAC');">EMAC</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:TTMAC" onclick="return linkSelect('class_chart','class_chart:TTMAC');">TTMAC</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:UMAC" onclick="return linkSelect('class_chart','class_chart:UMAC');">UMAC</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>
+        </table>
+              </td>
+    </tr>
+  </table>
+</div>
+
+<div class="top-level" id="cluster_chart:THREATS">
+  <table class="outer">
+    <tr class="top">
+      <th class="type">CLUSTER</th>
+      <td class="name" colspan="2">THREATS</td>
+      <td class="part"><strong>Part:</strong> 1/1</td>
+    </tr>
+    <tr class="middle">
+      <td class="explanation" colspan="2">
+        <dl>
+          <dt>Purpose</dt>
+          <dd></dd>
+        </dl>
+      </td>
+      <td class="indexing" colspan="2">
+        <dl>
+          <dt>Indexing</dt>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bottom">
+        <table>
+          <tr>
+            <th>Cluster</th>
+            <th>Description</th>
+          </tr>
+          <tr>
+            <td class="light-grey"><a href="#cluster_chart:GENERAL_ATTACKS" onclick="return linkSelect('cluster_chart','cluster_chart:GENERAL_ATTACKS');">GENERAL_ATTACKS</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#cluster_chart:HASH_ATTACKS" onclick="return linkSelect('cluster_chart','cluster_chart:HASH_ATTACKS');">HASH_ATTACKS</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#cluster_chart:BLOCK_CIPHER_ATTACKS" onclick="return linkSelect('cluster_chart','cluster_chart:BLOCK_CIPHER_ATTACKS');">BLOCK_CIPHER_ATTACKS</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="top-level" id="cluster_chart:GENERAL_ATTACKS">
+  <table class="outer">
+    <tr class="top">
+      <th class="type">CLUSTER</th>
+      <td class="name" colspan="2">GENERAL_ATTACKS</td>
+      <td class="part"><strong>Part:</strong> 1/1</td>
+    </tr>
+    <tr class="middle">
+      <td class="explanation" colspan="2">
+        <dl>
+          <dt>Purpose</dt>
+          <dd></dd>
+        </dl>
+      </td>
+      <td class="indexing" colspan="2">
+        <dl>
+          <dt>Indexing</dt>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bottom">
+        <table>
+          <tr>
+            <th class="grey">Class</th>
+            <th class="grey">Description</th>
+          </tr>
+          <tr>
+            <td class="light-grey"><a href="#class_chart:BRUTE_FORCE" onclick="return linkSelect('class_chart','class_chart:BRUTE_FORCE');">BRUTE_FORCE</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:MAN_IN_THE_MIDDLE" onclick="return linkSelect('class_chart','class_chart:MAN_IN_THE_MIDDLE');">MAN_IN_THE_MIDDLE</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>
+        </table>
+              </td>
+    </tr>
+  </table>
+</div>
+
+<div class="top-level" id="cluster_chart:BLOCK_CIPHER_ATTACKS">
+  <table class="outer">
+    <tr class="top">
+      <th class="type">CLUSTER</th>
+      <td class="name" colspan="2">BLOCK_CIPHER_ATTACKS</td>
+      <td class="part"><strong>Part:</strong> 1/1</td>
+    </tr>
+    <tr class="middle">
+      <td class="explanation" colspan="2">
+        <dl>
+          <dt>Purpose</dt>
+          <dd></dd>
+        </dl>
+      </td>
+      <td class="indexing" colspan="2">
+        <dl>
+          <dt>Indexing</dt>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bottom">
+        <table>
+          <tr>
+            <th class="grey">Class</th>
+            <th class="grey">Description</th>
+          </tr>
+          <tr>
+            <td class="light-grey"><a href="#class_chart:LINEAR" onclick="return linkSelect('class_chart','class_chart:LINEAR');">LINEAR</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:DIFFERENTIAL" onclick="return linkSelect('class_chart','class_chart:DIFFERENTIAL');">DIFFERENTIAL</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:DIFFERENTIAL_LINEAR" onclick="return linkSelect('class_chart','class_chart:DIFFERENTIAL_LINEAR');">DIFFERENTIAL_LINEAR</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:INTEGRAL" onclick="return linkSelect('class_chart','class_chart:INTEGRAL');">INTEGRAL</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:BOOMERANG" onclick="return linkSelect('class_chart','class_chart:BOOMERANG');">BOOMERANG</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:SLIDE" onclick="return linkSelect('class_chart','class_chart:SLIDE');">SLIDE</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:ROTATIONAL" onclick="return linkSelect('class_chart','class_chart:ROTATIONAL');">ROTATIONAL</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:TIMING" onclick="return linkSelect('class_chart','class_chart:TIMING');">TIMING</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:XSL" onclick="return linkSelect('class_chart','class_chart:XSL');">XSL</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:INTERPOLATION" onclick="return linkSelect('class_chart','class_chart:INTERPOLATION');">INTERPOLATION</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:PARTITIONING" onclick="return linkSelect('class_chart','class_chart:PARTITIONING');">PARTITIONING</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:DAVIES" onclick="return linkSelect('class_chart','class_chart:DAVIES');">DAVIES</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:REBOUND" onclick="return linkSelect('class_chart','class_chart:REBOUND');">REBOUND</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:WEAK_KEY" onclick="return linkSelect('class_chart','class_chart:WEAK_KEY');">WEAK_KEY</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>
+        </table>
+              </td>
+    </tr>
+  </table>
+</div>
+
+<div class="top-level" id="cluster_chart:HASH_ATTACKS">
+  <table class="outer">
+    <tr class="top">
+      <th class="type">CLUSTER</th>
+      <td class="name" colspan="2">HASH_ATTACKS</td>
+      <td class="part"><strong>Part:</strong> 1/1</td>
+    </tr>
+    <tr class="middle">
+      <td class="explanation" colspan="2">
+        <dl>
+          <dt>Purpose</dt>
+          <dd></dd>
+        </dl>
+      </td>
+      <td class="indexing" colspan="2">
+        <dl>
+          <dt>Indexing</dt>
+        </dl>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" class="bottom">
+        <table>
+          <tr>
+            <th class="grey">Class</th>
+            <th class="grey">Description</th>
+          </tr>
+          <tr>
+            <td class="light-grey"><a href="#class_chart:COLLISION" onclick="return linkSelect('class_chart','class_chart:COLLISION');">COLLISION</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:PREIMAGE" onclick="return linkSelect('class_chart','class_chart:PREIMAGE');">PREIMAGE</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:BIRTHDAY" onclick="return linkSelect('class_chart','class_chart:BIRTHDAY');">BIRTHDAY</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:RAINBOW" onclick="return linkSelect('class_chart','class_chart:RAINBOW');">RAINBOW</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:DISTINGUISHING" onclick="return linkSelect('class_chart','class_chart:DISTINGUISHING');">DISTINGUISHING</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:SIDE_CHANNEL" onclick="return linkSelect('class_chart','class_chart:SIDE_CHANNEL');">SIDE_CHANNEL</a></td>
+            <td class="white">&quot;@todo&quot;</td>
+          </tr>          <tr>
+            <td class="light-grey"><a href="#class_chart:LENGTH_EXTENSION" onclick="return linkSelect('class_chart','class_chart:LENGTH_EXTENSION');">LENGTH_EXTENSION</a></td>
             <td class="white">&quot;@todo&quot;</td>
           </tr>
         </table>
@@ -2567,7 +2567,7 @@ dd {
     <select id="sub-menu" onchange="showSelected();"><option>processing...</option></select>
   </p>
   <p id="right-footer">
-    Generated by <a href="http://kind.ucd.ie/products/opensource/BONc">BONc</a> (version: bonc-0.2.7) <a href="http://validator.w3.org/check?uri=referer">XHTML</a> output, Jun 27, 2014 4:15:52 PM.
+    Generated by <a href="http://kind.ucd.ie/products/opensource/BONc">BONc</a> (version: bonc-0.2.7) <a href="http://validator.w3.org/check?uri=referer">XHTML</a> output, Nov 12, 2015 2:13:21 PM.
   </p>
 </div>
 
