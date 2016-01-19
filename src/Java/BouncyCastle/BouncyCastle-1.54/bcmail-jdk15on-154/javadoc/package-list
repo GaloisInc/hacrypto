@@ -1,0 +1,6 @@
+org.bouncycastle.mail.smime
+org.bouncycastle.mail.smime.examples
+org.bouncycastle.mail.smime.handlers
+org.bouncycastle.mail.smime.test
+org.bouncycastle.mail.smime.util
+org.bouncycastle.mail.smime.validator
