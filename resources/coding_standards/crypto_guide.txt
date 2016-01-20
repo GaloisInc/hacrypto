@@ -1,0 +1,384 @@
+                The Crypto Gardening Guide and Planting Tips
+                ============================================
+
+                   Peter Gutmann, pgut001@cs.auckland.ac.nz
+                               February 2003
+
+  "Looking at all of the security protocols deployed in the last 10 years,
+   you'd be forgiven for thinking that the only developments in crypto
+   during that time (beyond basic algorithms) were HMAC and SPEKE"
+
+   (Adi Shamir's version of the above quote is "crypto research will remain
+    vigorous, but only its simplest ideas will become practically useful").
+
+There has been a great deal of difficulty experienced in getting research
+performed by cryptographers in the last decade or so (beyond basic algorithms
+such as SHA and AES) applied in practice.  The reason for this is that
+cryptographers don't work on things that implementors need because it's not
+cool, and implementors don't use what cryptographers design because it's not
+useful or sufficiently aligned with real-world considerations to be practical.
+As a result, security standards are being created with mechanisms that have
+had little or no security analysis, often homebrew mechanisms or the standards
+editor's pet scheme.  The problem is a lack of communication: Cryptographers
+often don't seem aware of the real-world constraints that their design will
+need to work within in order to be successfully deployed.  The intent of this
+document is to cover some of those real-world constraints for cryptographers,
+to point out problems that their designs will run into when attempts are made
+to deploy them.  Also included is a motivational list of extremely uncool
+problems that implementors have been building ad-hoc solutions for since no
+formal ones exist.
+
+Question A: Does your design require more than one pass over the data?
+----------------------------------------------------------------------
+
+Discussion: Designs with features such as a MAC or signature placed at the
+start of the data or a key identifier or IV at the end of the data require
+two-pass processing.  Buffering the whole message is impractical in the
+absence of infinite amounts of infinitely cheap memory - some crypto
+hardware only has a kB or two of memory available for each encrypted channel,
+sometimes even less than that.
+
+Resolution: Place all information needed before processing data at the start
+of the message, and all information available after processing data at the end
+of the message.  As a corollary, order fields in the order in which they are
+used (there is nothing more awkward than an implementation that has to jump
+around in a message to gather data scattered at random).  If in doubt,
+consider whether your design can be implemented on a system with a total of
+1kB of memory, or alternatively whether it can process a 1GB data block on a
+machine with 128MB of memory.
+
+See also: Question B.
+
+Question B: Does your design force sequential processing?
+---------------------------------------------------------
+
+Discussion: Most hardware performs crypto operations such as encryption and
+MAC'ing in parallel.  A design that prevents MAC'ing of the message from
+commencing before the crypto operation has completed, or vice versa, more than
+halves throughput.
+
+Resolution: Ensure that your design allows crypto operations such as
+encryption and MAC'ing to be performed in parallel.
+
+See also: Question A, Question C.
+
+Question C: Does your design require more than one continuous crypto operation
+------------------------------------------------------------------------------
+per message?
+------------
+
+Discussion: Crypto implementations are designed to stream data as quickly as
+possible, but typically have a high latency for initialising transactions.
+Starting a new transaction can be one to two orders of magnitude more
+expensive than continuing an existing operation, even worse for some older
+crypto hardware.  In other words, an IV pre-processing step that requires a
+separate crypto operation can result in a 100-fold slowdown in processing.
+
+Resolution: Ensure that your design performs only a single continuous crypto
+operation for each message block.
+
+See also: Question D.
+
+Question D: Does your design require out-of-band processing of additional data
+------------------------------------------------------------------------------
+alongside the payload?
+----------------------
+
+Discussion: Consider an operation that streams encrypted data through a
+system.  If additional out-of-band data needs to be processed separately, this
+requires two distinct crypto operations.  If the data is processed in-band, it
+leaves a gap between the end of the previous payload and the start of the
+current payload once the out-of-band data has been removed.  Combining the
+disjoint segments without manual copying requires hardware scatter/gather
+support, which is unlikely to be present.
+
+Resolution: Placing out-of-band data at the end of the payload allows it to be
+trivially skipped by overwriting it with the next message segment that
+arrives, with no extra overhead incurred when copying the data around.
+
+See also: Question C.
+
+Question E: Does your design require reloading keys in the middle of an
+-----------------------------------------------------------------------
+operation?
+----------
+
+Discussion: Reloading keys works for key-agile algorithms and software
+implementations, but in some implementations the cryptlogic can only hold one
+key at a time.  Requiring a key reload/schedule in the middle of an operation
+will result in a severe performance hit.
+
+Resolution: Avoid designs that require keys to be reloaded in the middle of an
+operation.
+
+See also: Question C, Question F.
+
+Question F: Does your design require reloading IVs in the middle of an
+----------------------------------------------------------------------
+operation?
+----------
+
+Discssion: Some crypto APIs, examples being JCE and PKCS #11, don't allow IVs
+to be changed in the middle of an operation, requiring a complete
+reinitialisation of the cipher to change the IV.
+
+Resolution: Avoid designs that require IVs to be reloaded in the middle of an
+operation.
+
+See also: Question E, Question C.
+
+Question G: How concrete is the description of your design?
+-----------------------------------------------------------
+
+Discussion: Crypto designs are often described as mathematical abstractions
+that, while easy to work with mathematically, require a significant amount of
+work to translate into an actual implementation.  For example replying to a
+request for a PRF with "Use HMAC" is of no use to an implementor because it
+tells them almost nothing about how to solve the problem.  What do they do if
+they want more than the HMAC blocksize worth of output?  How is the salt
+handled?  How is iteration of the PRF to defeat dictionary attacks handled?
+To illustrate some of the more obscure problems that can arise, what about
+diversifiers to ensure that the same input for two different encryption
+algorithms doesn't yield a key for the short-keylength algorithm which is a
+substring of the key for the long-keylength algorithm (yes, there are
+protocols that derive keys for different algorithms from the same keying
+material)?
+
+Resolution: Ensure that your design, alongside the mathematical abstraction,
+contains enough concrete details that an implementation can be built from it.
+By extension, if your description is too abstract, implementors won't even
+read it, let alone try to figure out how to do something with it.
+
+See also: Question H.
+
+Question H: How flexible is your design?
+----------------------------------------
+
+Discussion: That question isn't what you think.  A better way of phrasing it
+would be "How ambiguous is your design?".  Flexibility in an abstract crypto
+design is a Good Thing.  Ambiguity in a specification is a Bad Thing.
+Unfortunately, a cryptographer's flexibility is an implementor's ambiguity, or
+more bluntly an implementor's nightmare.  An example of this is IPsec's IKE,
+which is so flexible/ambiguous that no two people can agree on what it should
+look like.  As a result, even after years of work, there are still
+implementations that can't (or barely) interoperate, and even when they
+interoperate it's often only because implementors figured out what the other
+side was doing and adapted their code to match it.
+
+Resolution: Once you've impressed everyone with the power and flexibility of
+your design, provide a sketch of a simple, straightforward, easy-to-get-right
+profile that implementors can work with.  This is a standard feature of
+protocol specifications, either done explicitly (MUST/SHOULD/MAY) or
+implicitly when everyone ignores all but the most simple, straightforward part
+of the specification.  Another way of looking at this is that if implementors
+are going to ignore much of your design in order to make implementation
+practical, you want to be the one deciding which bits get used and which
+don't.
+
+See also: Question G.
+
+Question I: How big a problem are you really solving?
+-----------------------------------------------------
+
+Discussion: Many problems pointed out in crypto papers are relatively
+insignificant to non-cryptographers, or can be fixed with a trivial update of
+existing code rather than by changing the crypto design.  For example, the
+"correct" solution to various attacks (real and theoretical) on PKCS #1 v1.5
+padding is for implementors to switch to something better such as OAEP, Simple
+RSA, PSS, or whatever they're wearing in Santa Barbara this year.  However,
+since the problem can also be resolved with "Don't do that, then", it's easier
+to stick with an existing solution rather than re-engineering everything to
+use a new protocol (see the Final Thoughts for a longer discussion on this).
+
+Resolution: Unlike cryptographers, implementors probably won't appreciate the
+advantages of a design secure in the IND-CCAn+1 model where the previous was
+only IND-CCAn if it requires a complete redeployment of all of their products.
+Don't expect to see a new design widely adopted any time soon unless (a) it's
+being deployed in a greenfields development or (b) you've found a hole
+exploitable in O(1) time by an army of script kiddies.
+
+See also: Question J, Final Thoughts
+
+Question J: How big a change to existing systems does your design require?
+--------------------------------------------------------------------------
+
+Discussion: A design requiring heavy amounts of re-engineering of deployed
+hardware and software is unlikely to be adopted in a hurry unless it fixes a
+major security problem being actively exploited, with an accompany media
+circus to get management buy-in.  Even if it's reasonably important, it can
+take a significant amount of time to get it deployed.  A typical timeline to
+deployment might be:
+
+  Discussion in mailing lists:         2 months
+  RFC drafts:                          3 months
+  First preliminary implementations:   6 months
+  Final RFC:                         1-2 years
+  Support in 20% of implementations
+    (open source helps at this stage)
+    IPsec/TLS:                         1 year
+    S/MIME:                        1 1/2 years
+    X.509                                Never
+  Coverage in hardware standards:      3 years
+  Support in 50% of implementations
+    IPsec/TLS:                         3 years
+    S/MIME:                            5 years
+    X.509                                Never
+  Support in 20% of hardware:          5 years
+
+Notes:
+
+- PGP adopts each and every bleeding-edge technology that turns up, so it
+  doesn't figure in the above timeline.  Looking at this the other way, if you
+  want your design adopted quickly, present it as the solution for an attack
+  on PGP.
+
+- Servers typically follow the hardware timeline, so even if clients adopt it
+  fairly quickly, it won't come into general use until the hardware timeline
+  catches up.
+
+Resolution: Don't expect your design to take over the world.  Even if it's a
+significant contribution, it will take years to see widespread deployment.
+
+See also: Question I, Final Thoughts
+
+Question K: How many different cryptographic algorithms/mechanisms does your
+----------------------------------------------------------------------------
+design require?
+---------------
+
+Discussion: Many implementations only have a very limited number of algorithms
+and types of mechanism available for use.  If you can create a design that
+works when the only crypto mechanism present is DES or 3DES/CBC (even the most
+limited smart card does DES/CBC), you have a truly universal design that can
+be implemented with anything.  If your design requires a 128-bit block cipher
+combined with an HMAC implementation, you have a crypto conference paper.
+
+Resolution: Create your design so that it can work with the least number of
+lowest-common-denominator algorithms.  An IND-CPA design will *always* beat an
+IND-CCA2 design if the latter requires several uncommon algorithms or
+mechanisms in order to work, so that it can't be used with most of the
+implementations out there.
+
+Question L: Does your design include test vectors?
+--------------------------------------------------
+
+Discussion: Most crypto designs are, by their very nature, quite complex, and
+getting a single bit wrong at any stage completely changes the outcome of the
+protocol.  Test vectors for the various stages of the process, and for the
+final result, are essential in order to allow implementors to create a
+conforming implementation of your design.  There is nothing more awkward to
+debug than a design calling for a 15-stage handshake requiring 2,500 lines of
+code, at the end of which the protocol merely reports "Yes" or "No".
+
+In the absence of test vectors, it's up to implementors to fight it out over
+whose version is correct.  In some cases, bugs in widely-deployed
+implementations have had to be reverse-engineered back into the design because
+it was easier to change the design than to get new implementations out.
+
+Resolution: Include test vectors for the various stages of the process, and
+the final result (if nothing else, it proves that you've managed to implement
+the design yourself).  Then get someone else to do an implementation from the
+design document and see if they come up with the same results.
+
+Final Thoughts
+--------------
+
+  A Smith and Wesson beats four aces
+
+No matter how cool/interesting/useful/mandated in standards a new design is,
+it won't be used if it requires redeployment of all existing hardware and
+software for little apparent gain.  Two illustrative examples of this are
+X9.42 DH and OAEP with AES.
+
+An Internet standard RFC required that implementors support X9.42 DH key
+agreement, and provided RSA as an option (in IETF terms, "MUST X9.42, MAY
+RSA").  However, no existing software supported X9.42, no CAs would issue
+certificates for it, even if they did no-one wanted to renew all of their
+certificates ($$$) for an algorithm that provided no advantages over RSA, and
+no hardware (either crypto accelerators or smart cards) supported it (there
+was some token support after a few years, although even now there are problems
+being found with the X9.42 test vectors which indicate that no-one has really
+looked at them).  As a result, even though the standard mandated use of X9.42,
+everyone treated it as if it said "MUST RSA, SHOULD NOT X9.42", pretending to
+do X9.42 while running business as usual with RSA.
+
+OAEP is in a similar situation.  In order to get it usefully deployed, it
+would be necessary to issue certificates that would only work with OAEP
+otherwise everyone would just keep using them with PKCS #1 v1.5.  This would
+have exactly the same effect as X9.42.
+
+An attempt was made to force OAEP through by tying it to AES.  In other words,
+in order to use AES you also had to use OAEP.  Apart from the list of issues
+already mentioned with X9.42 above, this was also going to be deployed in an
+area where it was necessary to use crypto hardware for performance reasons
+(this area is almost always glossed over in crypto designs).  Most crypto
+hardware does RSA in hardware and either leaves the symmetric crypto for
+software to do (cheaper hardware) or leaves further key management to software
+and provides hardware acceleration for bulk data encryption once all further
+key processing has been performed (more expensive hardware).  In addition a
+few rather specialised crypto engines do everything in hardware.
+
+In all cases except the most primitive accelerators that consist of nothing
+but a bignum engine, moving to OAEP would require replacing the crypto
+hardware.  Crypto hardware boxes typically cost $10,000-$20,000 each, assuming
+you can find one that supports OAEP.  A server farm needs a great many of
+these $20,000 boxes.  Smaller devices like smart cards may only cost $10-$20
+each, but then you've got 100,000 of them to replace.  Some devices can upload
+new firmware, but will zeroise their keys when this occurs for security
+reasons, requiring a complete redeployment from scratch of all keys and
+certificates ($$$).
+
+As a result, a vendor would have two options: Supply a non-compliant solution
+that uses AES with PKCS #1 v1.5, or supply a compliant solution that uses AES
+with OAEP and requires rebuilding the entire infrastructure (hardware,
+software, and certificates) from the ground up.
+
+The standards group abandoned the idea of tying OAEP to AES ("It's X9.42 all
+over again").
+
+Nathan Bedford Forrest's motto for success was "Get there first with the most
+men".  In crypto it's "Get there first with something adequate", because once
+you've got that in place, nothing will be able to displace it.
+
+(Note: If you're in the media or telecoms industry this becomes "Get there
+first with something patented, proprietary, and broken, then send lawyers
+after anyone who points out problems", but this is a special case).
+
+Problems that Need Solving
+--------------------------
+
+* A universal PRF (before you say "Use HMAC", see Question G).  Currently
+every single security protocol in active use has its own incompatible PRF,
+often an ad hoc design with no real security analysis.  Implementors really,
+really, really hate having to solve the exact same problem ten times in a row,
+with a huge amount of interoperability testing required to ensure that all of
+the implementations are performing as required.  There is a skunkworks project
+currently working on a black-box plug-in PRF suitable for use in any
+situation.
+
+* A symmetric key wrap function capable of wrapping a key for a symmetric
+encryption algorithm using another symmetric algorithm.  There are various ad
+hoc solutions, many of which only work for a single algorithm or a small class
+of algorithms, but no standard solution.
+
+* A key wrap function where the wrapping key is derived from a password.  The
+requirements for this are subtly different from a straight symmetric key wrap
+in that the threat model is rather different.  For example a symmetric key
+wrap may use HMAC to ensure non-malleability, but for password-based key wrap
+this makes a dictionary attack rather easier (throw passwords at the HMAC,
+sidestepping the encrypted key altogether).  There exists a (ad-hoc) design
+that has rather limited non-malleability in order to avoid potential
+dictionary attacks.
+
+* A combined MAC+encryption mode for block ciphers.  The cool, efficient modes
+are tangled in patents and therefore unusable.  The unpatented CCM requires
+that the message length be known beforehand (see Question A) which severely
+limits it usefulness.
+
+Acknowledgements
+----------------
+
+The author would like to thank the members of the ietf-tls mailing list, Steve
+Henson, Trevor Perrin, and jetmarc for their input in the preparation of this
+document.
+
