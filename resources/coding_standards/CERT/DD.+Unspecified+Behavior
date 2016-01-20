@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html>
+<head>
+                    <title>DD. Unspecified Behavior - CERT C Coding Standard - CERT Secure Coding Standards</title>
+    
+        
+
+                        
+    
+                        
+    
+
+                
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE,chrome=IE7">
+<meta charset="UTF-8">
+<meta id="confluence-context-path" name="confluence-context-path" content="/confluence">
+<meta id="confluence-base-url" name="confluence-base-url" content="https://www.securecoding.cert.org/confluence">
+
+<meta id="atlassian-token" name="atlassian-token" content="1a608742d987f43f0ef89236cd92066c8b6c9f09">
+
+
+<meta id="confluence-space-key" name="confluence-space-key" content="c">
+<script type="text/javascript">
+        var contextPath = '/confluence';
+</script>
+
+    
+
+    <meta name="confluence-request-time" content="1453318724100">
+        
+    
+        
+            <meta name="ajs-is-space-admin" content=""> <meta name="ajs-has-space-config" content="">
+            <style>.ia-fixed-sidebar, .ia-splitter-left {width: 285px;}.theme-default .ia-splitter #main {margin-left: 285px;}.ia-fixed-sidebar {visibility: hidden;}</style>
+            <meta name="ajs-use-keyboard-shortcuts" content="true">
+            <meta name="ajs-discovered-plugin-features" content="$discoveredList">
+            <meta name="ajs-keyboardshortcut-hash" content="8ce703350926e3402402367afce58a3f">
+            
+    
+    
+            <meta name="ajs-page-id" content="46498136">
+            <meta name="ajs-latest-page-id" content="46498136">
+            <meta name="ajs-content-type" content="page">
+            <meta name="ajs-page-title" content="DD. Unspecified Behavior">
+            <meta name="ajs-parent-page-title" content="4 Back Matter">
+            <meta name="ajs-parent-page-id" content="158237111">
+            <meta name="ajs-space-key" content="c">
+            <meta name="ajs-space-name" content="CERT C Coding Standard">
+            <meta name="ajs-jira-metadata-count" content="-1">
+            <meta name="ajs-from-page-title" content="">
+            <meta name="ajs-can-remove-page" content="false">
+            <meta name="ajs-browse-page-tree-mode" content="view">
+            <meta name="ajs-shared-drafts" content="false">
+            <meta name="ajs-context-path" content="/confluence">
+            <meta name="ajs-base-url" content="https://www.securecoding.cert.org/confluence">
+            <meta name="ajs-version-number" content="5.8.13">
+            <meta name="ajs-build-number" content="5993">
+            <meta name="ajs-remote-user" content="">
+            <meta name="ajs-remote-user-key" content="">
+            <meta name="ajs-current-user-fullname" content="">
+            <meta name="ajs-current-user-avatar-url" content="">
+            <meta name="ajs-static-resource-url-prefix" content="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/_">
+            <meta name="ajs-global-settings-attachment-max-size" content="10485760">
+            <meta name="ajs-user-locale" content="en_GB">
+            <meta name="ajs-enabled-dark-features" content="confluence-inline-comments-resolved,notification.plugin.api.enabled.com.atlassian.confluence.plugins.sharepage.api.ShareContentEvent,notification.plugin.api.enabled.com.atlassian.confluence.plugins.mentions.api.ConfluenceMentionEvent,notification.plugin.api.enabled.com.atlassian.confluence.event.events.security.ForgotPasswordEvent,pdf-preview,notification.plugin.api.enabled.com.atlassian.confluence.plugins.tasklist.event.SendTaskEmailEvent,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.page.async.PageMovedEvent,previews.sharing,previews.versions,notification.plugin.api.enabled.com.atlassian.confluence.plugins.files.notifications.event.FileContentUpdateEvent,file-annotations,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.attachment.AttachmentBatchUploadCompletedEvent,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.comment.CommentCreateEvent,notification.plugin.api.enabled.com.atlassian.confluence.efi.emails.events.OnboardingLessUsersEvent,notification.plugin.api.enabled.com.atlassian.confluence.plugins.files.notifications.event.FileContentRemoveEvent,atlassian.aui.raphael.disabled,previews.conversion-service,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.comment.CommentUpdateEvent,notification.plugin.api.enabled.com.atlassian.confluence.event.events.follow.FollowEvent,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.page.async.PageEditedEvent,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.blogpost.BlogPostCreateEvent,previews.trigger-all-file-types,notification.plugin.api.enabled.com.atlassian.confluence.plugins.inlinecomments.events.InlineCommentResolveEvent,notification.plugin.api.enabled.com.atlassian.confluence.event.events.like.LikeCreatedEvent,notification.plugin.api.enabled.com.atlassian.confluence.plugins.inlinecomments.events.InlineCommentCreateEvent,previews.sharing.pushstate,confluence-inline-comments-rich-editor,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.blogpost.BlogPostUpdateEvent,file-annotations.likes,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.page.async.PageCreatedEvent,notification.plugin.api.enabled.com.atlassian.confluence.plugins.files.notifications.event.FileContentMentionUpdateEvent,notification.plugin.api.enabled.com.atlassian.confluence.efi.emails.events.OnboardingNoSpaceCreatedEvent,notification.plugin.api.enabled.com.atlassian.confluence.plugins.hipchat.api.events.HipChatUserMapped,notification.plugin.api.enabled.com.atlassian.confluence.plugins.sharepage.api.ShareAttachmentEvent,confluence-inline-comments,confluence-inline-comments-dangling-comment,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.blogpost.BlogPostMovedEvent">
+            <meta name="ajs-atl-token" content="1a608742d987f43f0ef89236cd92066c8b6c9f09">
+            <meta name="ajs-confluence-flavour" content="VANILLA">
+            <meta name="ajs-user-date-pattern" content="dd MMM yyyy">
+            <meta name="ajs-date.format" content="MMM dd, yyyy">
+    
+    <link rel="shortcut icon" href="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/_/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/_/favicon.ico">
+
+<link rel="search" type="application/opensearchdescription+xml" href="/confluence/opensearch/osd.action" title="CERT Secure Coding Standards"/>
+    
+                    
+            
+
+<script>
+window.WRM=window.WRM||{};window.WRM._unparsedData=window.WRM._unparsedData||{};
+WRM._unparsedData["com.atlassian.plugins.atlassian-plugins-webresource-plugin:context-path.context-path"]="\"/confluence\"";
+WRM._unparsedData["com.atlassian.plugins.atlassian-nps-plugin:atlassian-nps-plugin-resources.is-server-instance-data-provider"]="true";
+WRM._unparsedData["com.atlassian.plugins.browser.metrics.browser-metrics-plugin:browser-metrics.feature-data-provider-legacy"]="true";
+WRM._unparsedData["com.atlassian.plugins.atlassian-plugins-webresource-rest:web-resource-manager.resource-base-url-pattern"]="\"(?:/confluence(?:/s/.*?/_)?/download)\"";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-license-banner:confluence-license-banner-resources.license-details"]="{\"daysBeforeLicenseExpiry\":0,\"daysBeforeMaintenanceExpiry\":0,\"showLicenseExpiryBanner\":false,\"showMaintenanceExpiryBanner\":false,\"renewUrl\":null,\"salesEmail\":null}";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-hipchat-integration-plugin:discovery-javascript-data.link-active"]="{\"linkActive\":false,\"conditionsMet\":true,\"admin\":false}";
+WRM._unparsedData["com.atlassian.plugins.atlassian-nps-plugin:nps-acknowledgement-resources.analytics-enabled-data-provider"]="\"true\"";
+WRM._unparsedData["com.atlassian.plugins.atlassian-nps-plugin:nps-acknowledgement-resources.sen-data-provider"]="\"SEN-173742\"";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-feature-discovery-plugin:confluence-feature-discovery-plugin-resources.test-mode"]="false";
+WRM._unparsedData["com.atlassian.plugins.browser.metrics.browser-metrics-plugin:api.feature-data-provider"]="true";
+</script>
+<link type="text/css" rel="stylesheet" href="/confluence/s/80ea478da7e63d73b8b3a19808385d2f-CDN/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/292/_/download/superbatch/css/batch.css?build-number=5993" media="all">
+<!--[if lt IE 9]>
+<link type="text/css" rel="stylesheet" href="/confluence/s/d41d8cd98f00b204e9800998ecf8427e-CDN/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/292/_/download/superbatch/css/batch.css?conditionalComment=lt+IE+9" media="all">
+<![endif]-->
+<!--[if lte IE 9]>
+<link type="text/css" rel="stylesheet" href="/confluence/s/d41d8cd98f00b204e9800998ecf8427e-CDN/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/292/_/download/superbatch/css/batch.css?conditionalComment=lte+IE+9" media="all">
+<![endif]-->
+<link type="text/css" rel="stylesheet" href="/confluence/s/dfd17b0d8e6d815db22be45019a41d05-CDN/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/dc4b9f300bb631923fb0b364b2c4f9fe/_/download/contextbatch/css/page,viewcontent,atl.general,main,pagebanner,atl.confluence.plugins.pagetree-desktop,atl.comments/batch.css?flavour=VANILLA&amp;highlightactions=true" media="all">
+<!--[if lt IE 9]>
+<link type="text/css" rel="stylesheet" href="/confluence/s/d41d8cd98f00b204e9800998ecf8427e-CDN/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/dc4b9f300bb631923fb0b364b2c4f9fe/_/download/contextbatch/css/page,viewcontent,atl.general,main,pagebanner,atl.confluence.plugins.pagetree-desktop,atl.comments/batch.css?conditionalComment=lt+IE+9" media="all">
+<![endif]-->
+<link type="text/css" rel="stylesheet" href="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/1/_/styles/colors.css?spaceKey=c" media="all">
+<link type="text/css" rel="stylesheet" href="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/1.0/_/download/resources/com.atlassian.confluence.themes.default:styles/default-theme.css" media="all">
+<link type="text/css" rel="stylesheet" href="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/1/_/styles/custom.css?spaceKey=c" media="all">
+<script type="text/javascript" src="/confluence/s/d069d680e427dcf28c7953fca2f1168d-CDN/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/292/_/download/superbatch/js/batch.js?atlassian.aui.raphael.disabled=true&amp;locale=en-GB&amp;build-number=5993" ></script>
+<script type="text/javascript" src="/confluence/s/c4a5a34ae451be05d401eb7a8aa4a01a-CDN/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/dc4b9f300bb631923fb0b364b2c4f9fe/_/download/contextbatch/js/page,viewcontent,atl.general,main,pagebanner,atl.confluence.plugins.pagetree-desktop,atl.comments/batch.js?highlightactions=true&amp;flavour=VANILLA&amp;analytics-enabled=true&amp;locale=en-GB&amp;anonymous-access-enabled=true&amp;is-server-instance=true&amp;hostenabled=true" ></script>
+
+
+        
+    
+
+        
+        <meta name="ajs-site-title" content="CERT Secure Coding Standards" />
+
+    
+    
+
+    
+                <link rel="canonical" href="https://www.securecoding.cert.org/confluence/display/c/DD.+Unspecified+Behavior">
+        <link rel="shortlink" href="https://www.securecoding.cert.org/confluence/x/WIHFAg">
+    <meta name="wikilink" content="[c:DD. Unspecified Behavior]">
+    <meta name="page-version" content="19">
+
+</head>
+
+<body             onload="placeFocus()"
+     id="com-atlassian-confluence" class="theme-default  aui-layout aui-theme-default">
+
+        
+            <div id='stp-licenseStatus-banner'></div>
+    <ul id="assistive-skip-links" class="assistive">
+    <li><a href="#title-heading">Skip to content</a></li>
+    <li><a href="#breadcrumbs">Skip to breadcrumbs</a></li>
+    <li><a href="#header-menu-bar">Skip to header menu</a></li>
+    <li><a href="#navigation">Skip to action menu</a></li>
+    <li><a href="#quick-search-query">Skip to quick search</a></li>
+</ul>
+<div id="page">
+<div id="full-height-container">
+    <div id="header-precursor">
+        <div class="cell">
+            <!--BEGIN HEADER-->
+
+<table border="0" width="100%" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+<tr>
+  <td valign="middle">
+    <img src="https://www.cert.org/images/1pxinv.gif" width="1" height="10">
+    <a href="https://www.cert.org/"><img src="https://www.securecoding.cert.org/CERT_FL_CMYK.png" alt="CERT" border="0"></a>
+  </td>
+</tr>
+</table>
+
+<!--END HEADER-->
+                            </div>
+    </div>
+    
+
+
+
+<header id="header" role="banner">
+    <nav class="aui-header aui-dropdown2-trigger-group" role="navigation"><div class="aui-header-inner"><div class="aui-header-primary"><h1 id="logo" class="aui-header-logo aui-header-logo-custom"><a href="/confluence/"><img src="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/_/images/logo/confluence-logo.png" alt="CERT Secure Coding Standards" /></a></h1><ul class="aui-nav">
+                            <li>
+            
+        
+        
+<a  id="space-directory-link" href="/confluence/spacedirectory/view.action"  class=" aui-nav-imagelink"   title="Spaces">
+            <span>Spaces</span>
+    </a>
+        </li>
+                        </ul>
+</div><div class="aui-header-secondary"><ul class="aui-nav">
+                        <li>
+        <form id="quick-search" class="aui-quicksearch dont-default-focus header-quicksearch" action="/confluence/dosearchsite.action" method="get"><fieldset><label for="quick-search-query" class="assistive">Quick Search</label><input id="quick-search-query" class="text app-search search quick-search-query" type="text" accessKey="q" autocomplete="off" name="queryString" title="Quick Search" placeholder="Search" /><input id="quick-search-submit" class="quick-search-submit" type="submit" value="Search"/><div class="aui-dd-parent quick-nav-drop-down"></div></fieldset></form>
+    </li>
+        <li>
+            
+        <a id="help-menu-link" class="aui-nav-link aui-dropdown2-trigger" href="#" aria-haspopup="true" aria-owns="help-menu-link-content" title="Help">
+        <span class="aui-icon aui-icon-small aui-iconfont-help">Help</span>
+    </a>
+    <nav id="help-menu-link-content" class="aui-dropdown2 aui-style-default" aria-hidden="true">
+                    <div class="aui-dropdown2-section">
+                                <ul  id="help-menu-link-leading" class="aui-list-truncate section-leading first">
+                                            <li>
+        
+            
+<a  id="confluence-help-link" href="https://docs.atlassian.com/confluence/docs-58/Getting+Help+And+Support" class="    "      title="Visit the Confluence documentation home"  target="_blank"
+>
+        Online Help
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="keyboard-shortcuts-link" href="/confluence" class="    "      title="View available keyboard shortcuts" >
+        Keyboard Shortcuts
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="feed-builder-link" href="/confluence/dashboard/configurerssfeed.action" class="    "      title="Create your custom RSS feed." >
+        Feed Builder
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="whats-new-menu-link" href="https://docs.atlassian.com/confluence/docs-58/whatsnew/iframe" class="    "      title="" >
+        What’s new
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="gadget-directory-link" href="/confluence" class="   user-item administration-link "      title="Browse gadgets provided by Confluence" >
+        Available Gadgets
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="confluence-about-link" href="/confluence/aboutconfluencepage.action" class="    "      title="Get more information about Confluence" >
+        About Confluence
+</a>
+</li>
+                                    </ul>
+            </div>
+            </nav>
+    
+    </li>
+        <li>
+                
+    
+    </li>
+        <li>
+            
+    </li>
+        <li>
+                                            <li>
+        
+            
+<a  id="login-link" href="/confluence/login.action?os_destination=%2Fdisplay%2Fc%2FDD.%2BUnspecified%2BBehavior" class="   user-item login-link "      title="" >
+        Log in
+</a>
+</li>
+                        <li>
+    
+            
+<a  id="signup-link" href="/confluence/signup.action" class="   user-item signup-link "      title="" >
+        Sign up
+</a>
+</li>
+                        
+    </li>
+    </ul>
+</div></div><!-- .aui-header-inner--></nav><!-- .aui-header -->
+    <br class="clear">
+</header>
+
+    
+    	<div class="ia-splitter">
+    		<div class="ia-splitter-left">
+    			<div class="ia-fixed-sidebar">
+    				
+	    	<div class="acs-side-bar ia-scrollable-section"><div class="acs-side-bar-space-info tipsy-enabled" data-configure-tooltip="Edit space details"><div class="avatar"><div class="space-logo " data-key="c" data-name="CERT C Coding Standard" data-entity-type="confluence.space"><div class="avatar-img-container"><div class="avatar-img-wrapper"><a href="/confluence/display/c" title="CERT C Coding Standard"><img class="avatar-img" src="/confluence/download/attachments/158236757/c?version=1&amp;modificationDate=1425396591000&amp;api=v2" alt="CERT C Coding Standard"></a></div></div></div></div><div class="name"><a href="/confluence/display/c" title="CERT C Coding Standard">CERT C Coding Standard</a></div><div class="flyout-handle icon"></div></div><div class="acs-side-bar-content"><div class="acs-nav-wrapper"><div class="acs-nav" data-has-create-permission="false" data-quick-links-state="null" data-nav-type="page-tree"><div class="acs-nav-sections"><div class="main-links-section "><ul class="acs-nav-list"><li class="acs-nav-item wiki current-item"data-collector-key="spacebar-pages"><a class="acs-nav-item-link tipsy-enabled" href="/confluence/collector/pages.action?key=c" data-collapsed-tooltip="Pages"><span class="icon"></span><span class="acs-nav-item-label">Pages</span></a></li></ul></div><div class="quick-links-wrapper"><h5 class="ia-quick-links-header-title">Space shortcuts</h5><div class="quick-links-section tipsy-enabled "><ul class="acs-nav-list"><li class="acs-nav-item external_link"><a class="acs-nav-item-link tipsy-enabled" href="https://www.securecoding.cert.org/confluence/dashboard.action" data-collapsed-tooltip="null"><span class="icon"></span><span class="acs-nav-item-label">Dashboard</span></a></li><li class="acs-nav-item pinned_page"><a class="acs-nav-item-link tipsy-enabled" href="/confluence/display/seccode/SEI+CERT+Coding+Standards" data-collapsed-tooltip="null"><span class="icon"></span><span class="acs-nav-item-label">Home</span></a></li><li class="acs-nav-item pinned_page"><a class="acs-nav-item-link tipsy-enabled" href="/confluence/display/android/Android+Secure+Coding+Standard" data-collapsed-tooltip="null"><span class="icon"></span><span class="acs-nav-item-label">Android</span></a></li><li class="acs-nav-item pinned_page"><a class="acs-nav-item-link tipsy-enabled" href="/confluence/display/c/SEI+CERT+C+Coding+Standard" data-collapsed-tooltip="null"><span class="icon"></span><span class="acs-nav-item-label">C</span></a></li><li class="acs-nav-item pinned_page"><a class="acs-nav-item-link tipsy-enabled" href="/confluence/pages/viewpage.action?pageId=637" data-collapsed-tooltip="null"><span class="icon"></span><span class="acs-nav-item-label">C++</span></a></li><li class="acs-nav-item pinned_page"><a class="acs-nav-item-link tipsy-enabled" href="/confluence/display/java/SEI+CERT+Oracle+Coding+Standard+for+Java" data-collapsed-tooltip="null"><span class="icon"></span><span class="acs-nav-item-label">Java</span></a></li><li class="acs-nav-item pinned_page"><a class="acs-nav-item-link tipsy-enabled" href="/confluence/display/perl/SEI+CERT+Perl+Coding+Standard" data-collapsed-tooltip="null"><span class="icon"></span><span class="acs-nav-item-label">Perl</span></a></li><li class="acs-nav-item external_link"><a class="acs-nav-item-link tipsy-enabled" href="http://www.cert.org/secure-coding/" data-collapsed-tooltip="null"><span class="icon"></span><span class="acs-nav-item-label">CERT Website</span></a></li></ul></div></div></div></div></div><div class="ia-secondary-container tipsy-enabled" data-tree-type="page-tree"><div class="ia-secondary-header"><h5 class="ia-secondary-header-title page-tree"><span class="icon"></span><span class="label">Page tree</span></h5></div><div class="ia-secondary-content">
+
+
+<div class="plugin_pagetree">
+
+        
+        
+    <ul class="plugin_pagetree_children_list plugin_pagetree_children_list_noleftspace">
+        <div class="plugin_pagetree_children">
+        </div>
+    </ul>
+
+    <fieldset class="hidden">
+        <input type="hidden" name="treeId" value="">
+        <input type="hidden" name="treeRequestId" value="/confluence/plugins/pagetree/naturalchildren.action?decorator=none&amp;excerpt=false&amp;sort=position&amp;reverse=false&amp;disableLinks=false&amp;expandCurrent=true">
+        <input type="hidden" name="treePageId" value="46498136">
+
+        <input type="hidden" name="noRoot" value="false">
+        <input type="hidden" name="rootPageId" value="285">
+
+        <input type="hidden" name="rootPage" value="">
+        <input type="hidden" name="startDepth" value="0">
+        <input type="hidden" name="spaceKey" value="c" >
+
+        <input type="hidden" name="i18n-pagetree.loading" value="Loading...">
+        <input type="hidden" name="i18n-pagetree.error.permission" value="Unable to load page tree. It seems that you do not have permission to view the root page.">
+        <input type="hidden" name="i18n-pagetree.eeror.general" value="There was a problem retrieving the page tree. Please check the server log file for more information.">
+        <input type="hidden" name="loginUrl" value="/confluence/login.action?os_destination=%2Fpages%2Fviewpage.action%3FspaceKey%3Dc%26title%3DDD.%2BUnspecified%2BBehavior">
+        <input type="hidden" name="mobile" value="false">
+
+                <fieldset class="hidden">
+                                                <input type="hidden" name="ancestorId" value="158237111">
+                                    <input type="hidden" name="ancestorId" value="285">
+                                    </fieldset>
+    </fieldset>
+</div>
+</div></div></div><div class="hidden"><a href="/confluence/collector/pages.action?key=c" id="space-pages-link"></a><script type="text/x-template" title="logo-config-content"><h2>Space Details</h2><div class="personal-space-logo-hint">Your profile picture is used as the logo for your personal space. <a href="/confluence/users/profile/editmyprofilepicture.action" target="_blank">Change your profile picture</a>.</div></script></div></div><div class="space-tools-section"><div id="space-tools-menu-additional-items" class="hidden"><div data-label="Browse pages" data-class="" data-href="/confluence/pages/reorderpages.action?key=c">Browse pages</div></div><div id="space-tools-dd-dummy"></div><a id="space-tools-menu-trigger" class="aui-button aui-button-subtle aui-dropdown2-trigger tipsy-enabled" aria-owns="space-tools-dd-dummy"><span class="aui-icon aui-icon-small aui-iconfont-configure">Configure</span><span class="label">Space tools</span></a><a class="expand-collapse-trigger"></a></div>
+    
+    			</div>
+    		</div>
+        <!-- \#header -->
+
+        
+        <div id="main" class=" aui-page-panel">
+                <div id="main-header">
+            
+    <div id="navigation" class="content-navigation view">
+                    <ul class="ajs-menu-bar">
+                                                        
+                    
+        <li class="normal ajs-menu-item">
+        <a id="action-menu-link" class="action aui-dropdown2-trigger-arrowless aui-button aui-button-subtle ajs-menu-title aui-dropdown2-trigger" href="#" aria-haspopup="true" aria-owns="action-menu" data-container="#navigation">
+            <span>
+                                    <span class="aui-icon aui-icon-small aui-iconfont-more"></span>
+                                
+            </span>
+        </a>         <div id="action-menu" class="aui-dropdown2 aui-style-default">
+                            <ul  id="action-menu-primary"                     class="section-primary first aui-dropdown2-section">
+                                            <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="view-attachments-link" href="/confluence/pages/viewpageattachments.action?pageId=46498136" rel="nofollow" class="action-view-attachments"  accessKey="t"  title="View Attachments">
+                <span>
+                        A<u>t</u>tachments (0)
+        </span>    </a>
+</li>
+                                        <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="action-view-history-link" href="/confluence/pages/viewpreviousversions.action?pageId=46498136" rel="nofollow" class="action-view-history"   title="">
+                <span>
+                        Page History
+        </span>    </a>
+</li>
+                                        <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="action-page-permissions-link" href="/confluence/pages/viewinfo.action?pageId=46498136" rel="nofollow" class="action-page-permissions"   title="Edit restrictions">
+                <span>
+                        Restrictions
+        </span>    </a>
+</li>
+                                </ul>
+                            <ul  id="action-menu-secondary"                     class="section-secondary aui-dropdown2-section">
+                                            <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="view-page-info-link" href="/confluence/pages/viewinfo.action?pageId=46498136" rel="nofollow" class="action-view-info"   title="">
+                <span>
+                        Page Information
+        </span>    </a>
+</li>
+                                        <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="view-resolved-comments" href="/confluence" rel="nofollow" class=""   title="">
+                <span>
+                        Resolved comments
+        </span>    </a>
+</li>
+                                        <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="link-to-page-link" href="/confluence/pages/viewinfo.action?pageId=46498136" rel="nofollow" class=""   title="Link to this Page">
+                <span>
+                        Link to this Page…
+        </span>    </a>
+</li>
+                                        <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="view-in-hierarchy-link" href="/confluence/pages/reorderpages.action?key=c&amp;openId=46498136#selectedPageInHierarchy" rel="nofollow" class=""   title="">
+                <span>
+                        View in Hierarchy
+        </span>    </a>
+</li>
+                                        <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="action-view-source-link" href="/confluence/plugins/viewsource/viewpagesrc.action?pageId=46498136" rel="nofollow" class="action-view-source popup-link"   title="">
+                <span>
+                        View Source
+        </span>    </a>
+</li>
+                                        <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="action-export-pdf-link" href="/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=46498136" rel="nofollow" class=""   title="">
+                <span>
+                        Export to PDF
+        </span>    </a>
+</li>
+                                        <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="action-export-word-link" href="/confluence/exportword?pageId=46498136" rel="nofollow" class="action-export-word"   title="">
+                <span>
+                        Export to Word
+        </span>    </a>
+</li>
+                                </ul>
+                    </div>
+    </li>
+            </ul>
+    </div>
+
+            
+            <div id="title-heading" class="pagetitle with-breadcrumbs">
+                
+                                    <div id="breadcrumb-section">
+                        
+    
+    
+    <ol id="breadcrumbs">
+                                        
+                        
+        <li class="first" >
+                        
+                            <span class=""><a href="/confluence/collector/pages.action?key=c">Pages</a></span>
+                                                                    
+                        
+        <li>
+                        
+                            <span class=""><a href="/confluence/display/c/SEI+CERT+C+Coding+Standard">SEI CERT C Coding Standard</a></span>
+                                                                    
+                        
+        <li>
+                        
+                            <span class=""><a href="/confluence/display/c/4+Back+Matter">4 Back Matter</a></span>
+                                                    </ol>
+
+
+                    </div>
+                
+                
+        <a href="#page-banner-end" class="assistive">Skip to end of banner</a>
+<div id="page-banner-start" class="assistive"></div>
+
+                    
+            <div id="page-metadata-banner"><ul class="banner"><li id="system-content-items" class="noprint"><a href="" title="Restrictions apply" id="content-metadata-page-restrictions" class="hidden"><img class="page-banner-item-icon" src="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/_/download/resources/com.atlassian.confluence.plugins.confluence-page-banner:page-banner-resources/images/red_padlock.png" style="height: 16px; width: 16px;"/></a></li><li class="page-metadata-item noprint has-button"  id="content-metadata-jira-wrapper"><a href="" title="" id="content-metadata-jira" class="aui-button aui-button-subtle content-metadata-jira tipsy-disabled hidden"><img class="page-banner-item-icon" src="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/_/download/resources/com.atlassian.confluence.plugins.confluence-jira-metadata:confluence-jira-metadata-resources/img/icon-jira-link.png" style="height: 16px; width: 16px;"/><span>JIRA links</span></a></li></ul></div>
+            
+
+<a href="#page-banner-start" class="assistive">Go to start of banner</a>
+<div id="page-banner-end" class="assistive"></div>
+    
+
+                <h1 id="title-text" class="with-breadcrumbs">
+                                                <a href="/confluence/display/c/DD.+Unspecified+Behavior">DD. Unspecified Behavior</a>
+                                    </h1>
+            </div>
+        </div><!-- \#main-header -->
+        
+        
+
+        <div id="sidebar-container">
+                                                </div><!-- \#sidebar-container -->
+
+        
+    
+
+        
+
+
+
+
+        
+
+    
+    
+        
+    
+    
+                    
+    
+
+                        
+    
+    
+
+    
+
+
+
+
+<div id="content" class="page view">
+    
+
+
+<div id="action-messages">
+                        </div>
+
+
+
+        <script type="text/x-template" title="searchResultsGrid">
+    <table class="aui">
+        <thead>
+            <tr class="header">
+                <th class="search-result-title">Page Title</th>
+                <th class="search-result-space">Space</th>
+                <th class="search-result-date">Updated</th>
+            </tr>
+        </thead>
+    </table>
+</script>
+<script type="text/x-template" title="searchResultsGridCount">
+    <p class="search-result-count">{0}</p>
+</script>
+<script type="text/x-template" title="searchResultsGridRow">
+    <tr class="search-result">
+        <td class="search-result-title"><a href="{1}" class="content-type-{2}"><span>{0}</span></a></td>
+        <td class="search-result-space"><a class="space" href="/confluence/display/{4}/" title="{3}">{3}</a></td>
+        <td class="search-result-date"><span class="date" title="{6}">{5}</span></td>
+    </tr>
+</script>
+        
+    
+            
+
+        
+                            
+    
+
+                    
+
+        
+        <a href="#page-metadata-end" class="assistive">Skip to end of metadata</a>
+<div id="page-metadata-start" class="assistive"></div>
+
+    <div class="page-metadata">
+        <ul>
+            <li class="page-metadata-modification-info">
+                
+        
+    
+        
+    
+        
+            
+            Created by <span class='author'>     <a href="    /confluence/display/~martinsebor
+"
+                       class="url fn"
+                            >Martin Sebor</a></span>, last modified by <span class='editor'>     <a href="    /confluence/display/~lallierc
+"
+                       class="url fn"
+                            >Carol J. Lallier</a></span> on <a class='last-modified' title='Show changes' href='/confluence/pages/diffpagesbyversion.action?pageId=46498136&amp;selectedPageVersions=18&amp;selectedPageVersions=19'>May 28, 2014</a>
+                </li>
+        </ul>
+    </div>
+
+
+<a href="#page-metadata-start" class="assistive">Go to start of metadata</a>
+<div id="page-metadata-end" class="assistive"></div>
+
+        
+                                            
+        <div id="main-content" class="wiki-content">
+                           
+        <p>According to the C Standard, Annex J, J.1 [<a href="https://www.securecoding.cert.org/confluence/display/seccode/AA.+Bibliography#AABibliography-ISOIEC9899-2011" rel="nofollow">ISO/IEC 9899:2011</a>], the behavior of a program is <a href="/confluence/display/c/BB.+Definitions#BB.Definitions-unspecifiedbehavior">unspecified </a> in the circumstances outlined the following table. The descriptions of unspecified behaviors in the &quot;Description&quot; column are direct quotes from the standard. The parenthesized numbers refer to the subclause of the C Standard (C11) that identifies the unspecified behavior. The &quot;Guideline&quot; column in the table identifies the coding practices that address the specific case of unspecified behavior (USB).</p><div class="table-wrap"><table class="confluenceTable"><tbody><tr><th class="confluenceTh"><p>USB</p></th><th class="confluenceTh"><p>Description</p></th><th class="confluenceTh"><p>Guideline   </p></th></tr><tr><td class="confluenceTd"><p>1 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_1"></span></p></td><td class="confluenceTd"><p>The manner and timing of static initialization (5.1.2).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>2 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_2"></span></p></td><td class="confluenceTd"><p>The termination status returned to the hosted environment if the return type of <code>main</code> is not compatible with <code>int</code> (5.1.2.2.3).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td colspan="1" class="confluenceTd">3<span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_3"></span></td><td colspan="1" class="confluenceTd">The values of objects that are neither lock-free atomic objects nor of type <code>volatile sig_atomic_t</code> and the state of the floating-point environment when the processing of the abstract machine is interrupted by receipt of a signal (5.1.2.3).</td><td colspan="1" class="confluenceTd"> </td></tr><tr><td class="confluenceTd"><p>4 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_4"></span></p></td><td class="confluenceTd"><p>The behavior of the display device if a printing character is written when the active position is at the final position of a line (5.2.2).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>5 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_5"></span></p></td><td class="confluenceTd"><p>The behavior of the display device if a backspace character is written when the active position is at the initial position of a line 5.2.2).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>6 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_6"></span></p></td><td class="confluenceTd"><p>The behavior of the display device if a horizontal tab character is written when the active position is at or past the last defined horizontal tabulation position (5.2.2).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>7 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_7"></span></p></td><td class="confluenceTd"><p>The behavior of the display device if a vertical tab character is written when the active position is at or past the last defined vertical tabulation position (5.2.2).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>8 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_8"></span></p></td><td class="confluenceTd"><p>How an extended source character that does not correspond to a universal character name counts toward the significant initial characters in an external identifier (5.2.4.1).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>9 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_9"></span></p></td><td class="confluenceTd"><p>Many aspects of the representations of types (6.2.6).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>10 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_10"></span></p></td><td class="confluenceTd"><p>The value of padding bytes when storing values in structures or unions (6.2.6.1).</p></td><td class="confluenceTd"> </td></tr><tr><td class="confluenceTd"><p>11 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_11"></span></p></td><td class="confluenceTd"><p>The values of bytes that correspond to union members other than the one last stored into (6.2.6.1).</p></td><td class="confluenceTd"><p><a href="/confluence/display/c/EXP39-C.+Do+not+access+a+variable+through+a+pointer+of+an+incompatible+type">EXP39-C</a></p></td></tr><tr><td class="confluenceTd"><p>12 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_12"></span></p></td><td class="confluenceTd"><p>The representation used when storing a value in an object that has more than one object representation for that value (6.2.6.1).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>13 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_13"></span></p></td><td class="confluenceTd"><p>The values of any padding bits in integer representations (6.2.6.2).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>14 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_14"></span></p></td><td class="confluenceTd"><p>Whether certain operators can generate negative zeros and whether a negative zero becomes a normal zero when stored in an object (6.2.6.2).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>15 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_15"></span></p></td><td class="confluenceTd"><p>Whether two string literals result in distinct arrays (6.4.5).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>16 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_16"></span></p></td><td class="confluenceTd"><p>The order in which subexpressions are evaluated and the order in which side effects take place, except as specified for the function-call <code>()</code>, <code>&amp;&amp;</code>, <code>||</code>, <code>?:</code>, and comma operators (6.5).</p></td><td class="confluenceTd"><p><a href="/confluence/display/c/EXP30-C.+Do+not+depend+on+the+order+of+evaluation+for+side+effects">EXP30-C</a></p></td></tr><tr><td class="confluenceTd"><p>17 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_17"></span></p></td><td class="confluenceTd"><p>The order in which the function designator, arguments, and subexpressions within the arguments are evaluated in a function call (6.5.2.2).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>18 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_18"></span></p></td><td class="confluenceTd"><p>The order of side effects among compound literal initialization list expressions (6.5.2.5).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>19 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_19"></span></p></td><td class="confluenceTd"><p>The order in which the operands of an assignment operator are evaluated (6.5.16).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>20 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_20"></span></p></td><td class="confluenceTd"><p>The alignment of the addressable storage unit allocated to hold a bit-field (6.7.2.1).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>21 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_21"></span></p></td><td class="confluenceTd"><p>Whether a call to an inline function uses the inline definition or the external definition of the function (6.7.4).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>22 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_22"></span></p></td><td class="confluenceTd"><p>Whether or not a size expression is evaluated when it is part of the operand of a <code>sizeof</code> operator and changing the value of the size expression would not affect the result of the operator (6.7.6.2).</p></td><td class="confluenceTd"><p><a href="/confluence/display/c/EXP44-C.+Do+not+rely+on+side+effects+in+operands+to+sizeof%2C+_Alignof%2C+or+_Generic">EXP44-C</a></p></td></tr><tr><td class="confluenceTd"><p>23 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_23"></span></p></td><td class="confluenceTd"><p>The order in which any side effects occur among the initialization list expressions in an initializer (6.7.9).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>24 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_24"></span></p></td><td class="confluenceTd"><p>The layout of storage for function parameters (6.9.1).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>25 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_25"></span></p></td><td class="confluenceTd"><p>When a fully expanded macro replacement list contains a function-like macro name as its last preprocessing token and the next preprocessing token from the source file is a <code>(</code>, and the fully expanded replacement of that macro ends with the name of the first macro and the next preprocessing token from the source file is again a <code>(</code>, whether that is considered a nested replacement (6.10.3).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>26 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_26"></span></p></td><td class="confluenceTd"><p>The order in which <code>#</code> and <code>##</code> operations are evaluated during macro substitution (6.10.3.2, 6.10.3.3).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>27 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_27"></span></p></td><td class="confluenceTd"><p>The state of the floating-point status flags when execution passes from a part of the program translated with <code>FENV_ACCESS</code> &quot;off&quot; to a part translated with <code>FENV_ACCESS</code> &quot;on&quot; (7.6.1).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>28 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_28"></span></p></td><td class="confluenceTd"><p>The order in which <code>feraiseexcept</code> raises floating-point exceptions, except as stated in F.8.6 (7.6.2.3).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>29 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_29"></span></p></td><td class="confluenceTd"><p>Whether <code>math_errhandling</code> is a macro or an identifier with external linkage (7.12).</p></td><td class="confluenceTd"><p><a href="/confluence/display/c/DCL37-C.+Do+not+declare+or+define+a+reserved+identifier">DCL37-C</a></p></td></tr><tr><td class="confluenceTd"><p>30 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_30"></span></p></td><td class="confluenceTd"><p>The results of the <code>frexp</code> functions when the specified value is not a floating-point number (7.12.6.4).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td colspan="1" class="confluenceTd">31<span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_31"></span></td><td colspan="1" class="confluenceTd">The numeric result of the <code>ilogb</code> functions when the correct value is outside the range of the return type (7.12.6.5, F.10.3.5).</td><td colspan="1" class="confluenceTd"> </td></tr><tr><td class="confluenceTd"><p>32 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_32"></span></p></td><td class="confluenceTd"><p>The result of rounding when the value is out of range (7.12.9.5, 7.12.9.7, F.10.6.5).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td colspan="1" class="confluenceTd">33<span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_33"></span></td><td colspan="1" class="confluenceTd">The value stored by the <code>remquo</code> functions in the object pointed to by <code>quo</code> when <code>y</code> is zero (7.12.10.3).</td><td colspan="1" class="confluenceTd"> </td></tr><tr><td colspan="1" class="confluenceTd">34<span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_34"></span></td><td colspan="1" class="confluenceTd">Whether a comparison macro argument that is represented in a format wider than its semantic type is converted to the semantic type (7.12.14).</td><td colspan="1" class="confluenceTd"> </td></tr><tr><td class="confluenceTd"><p>35 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_35"></span></p></td><td class="confluenceTd"><p>Whether <code>setjmp</code> is a macro or an identifier with external linkage (7.13).</p></td><td class="confluenceTd"><p><a href="/confluence/display/c/DCL37-C.+Do+not+declare+or+define+a+reserved+identifier">DCL37-C</a></p></td></tr><tr><td class="confluenceTd"><p>36 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_36"></span></p></td><td class="confluenceTd"><p>Whether <code>va_copy</code> and <code>va_end</code> are macros or identifiers with external linkage (7.16.1).</p></td><td class="confluenceTd"><p><a href="/confluence/display/c/DCL37-C.+Do+not+declare+or+define+a+reserved+identifier">DCL37-C</a></p></td></tr><tr><td class="confluenceTd"><p>37 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_37"></span></p></td><td class="confluenceTd"><p>The hexadecimal digit before the decimal point when a non-normalized floating-point number is printed with an <code>a</code> or <code>A</code> conversion specifier (7.21.6.1, 7.29.2.1).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>38 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_38"></span></p></td><td class="confluenceTd"><p>The value of the file position indicator after a successful call to the <code>ungetc</code> function for a text stream, or the <code>ungetwc</code> function for any stream, until all pushed-back characters are read or discarded (7.21.7.10, 7.29.3.10).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>39 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_39"></span></p></td><td class="confluenceTd"><p>The details of the value stored by the <code>fgetpos</code> function (7.21.9.1).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>40 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_40"></span></p></td><td class="confluenceTd"><p>The details of the value returned by the <code>ftell</code> function for a text stream (7.21.9.4).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>41 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_41"></span></p></td><td class="confluenceTd"><p>Whether the <code>strtod</code>, <code>strtof</code>, <code>strtold</code>, <code>wcstod</code>, <code>wcstof</code>, and <code>wcstold</code> functions convert a minus-signed sequence to a negative number directly or by negating the value resulting from converting the corresponding unsigned sequence (7.22.1.3, 7.29.4.1.1).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>42 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_42"></span></p></td><td class="confluenceTd"><p>The order and contiguity of storage allocated by successive calls to the <code>calloc</code>, <code>malloc</code>, and <code>realloc</code> functions (7.22.3).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>43 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_43"></span></p></td><td class="confluenceTd"><p>The amount of storage allocated by a successful call to the <code>calloc</code>, <code>malloc</code>, and <code>realloc</code> function when 0 bytes was requested (7.22.3).</p></td><td class="confluenceTd"><p><a href="/confluence/display/c/MEM04-C.+Beware+of+zero-length+allocations">MEM04-C</a></p></td></tr><tr><td colspan="1" class="confluenceTd">44<span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_44"></span></td><td colspan="1" class="confluenceTd">Whether a call to the <code>atexit</code> function that does not happen before the <code>exit</code> function is called will succeed (7.22.4.2).</td><td colspan="1" class="confluenceTd"> </td></tr><tr><td colspan="1" class="confluenceTd">45<span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_45"></span></td><td colspan="1" class="confluenceTd">Whether a call to the <code>at_quick_exit</code> function that does not happen before the <code>quick_exit</code> function is called will succeed (7.22.4.3).</td><td colspan="1" class="confluenceTd"> </td></tr><tr><td class="confluenceTd"><p>46 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_46"></span></p></td><td class="confluenceTd"><p>Which of two elements that compare as equal is matched by the <code>bsearch</code> function (7.22.5.1).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>47 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_42"></span></p></td><td class="confluenceTd"><p>The order of two elements that compare as equal in an array sorted by the <code>qsort</code> function (7.22.5.2).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>48 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_48"></span></p></td><td class="confluenceTd"><p>The encoding of the calendar time returned by the <code>time</code> function (7.27.2.4).</p></td><td class="confluenceTd"><p><a href="/confluence/display/c/MSC05-C.+Do+not+manipulate+time_t+typed+values+directly">MSC05-C</a></p></td></tr><tr><td class="confluenceTd"><p>49 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_49"></span></p></td><td class="confluenceTd"><p>The characters stored by the <code>strftime</code> or <code>wcsftime</code> function if any of the time values being converted is outside the normal range (7.27.3.5, 7.29.5.1).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td colspan="1" class="confluenceTd">50<span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_50"></span></td><td colspan="1" class="confluenceTd">Whether an encoding error occurs if a <code>wchar_t</code> value that does not correspond to a member of the extended character set appears in the format string for a function in 7.29.2 or 7.29.5 and the specified semantics do not require that value to be processed by <code>wcrtomb</code> (7.29.1).</td><td colspan="1" class="confluenceTd"> </td></tr><tr><td class="confluenceTd"><p>51 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_51"></span></p></td><td class="confluenceTd"><p>The conversion state after an encoding error occurs (7.28.1.1, 7.28.1.2, 7.28.1.3, 7.28.1.4, 7.29.6.3.2, 7.29.6.3.3, 7.29.6.4.1, 7.29.6.4.2).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>52 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_52"></span></p></td><td class="confluenceTd"><p>The resulting value when the &quot;invalid&quot; floating-point exception is raised during IEC 60559 floating to integer conversion (F.4).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>53 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_53"></span></p></td><td class="confluenceTd"><p>Whether conversion of non-integer IEC 60559 floating values to integer raises the &quot;inexact&quot; floating-point exception (F.4).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td colspan="1" class="confluenceTd">54<span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_54"></span></td><td colspan="1" class="confluenceTd">Whether or when library functions in <code>&lt;math.h&gt;</code> raise the &quot;inexact&quot; floating-point exception in an IEC 60559 conformant implementation (F.10).</td><td colspan="1" class="confluenceTd"> </td></tr><tr><td colspan="1" class="confluenceTd">55<span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_55"></span></td><td colspan="1" class="confluenceTd">Whether or when library functions in <code>&lt;math.h&gt;</code> raise an undeserved &quot;underflow&quot; floating-point exception in an IEC 60559 conformant implementation (F.10).</td><td colspan="1" class="confluenceTd"> </td></tr><tr><td class="confluenceTd"><p>56 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_56"></span></p></td><td class="confluenceTd"><p>The exponent value stored by <code>frexp</code> for a NaN or infinity (F.10.3.4).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>57 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_57"></span></p></td><td class="confluenceTd"><p>The numeric result returned by the <code>lrint</code>, <code>llrint</code>, <code>lround</code>, and <code>llround</code> functions if the rounded value is outside the range of the return type (F.10.6.5, F.10.6.7).</p></td><td class="confluenceTd"><p> </p></td></tr><tr><td class="confluenceTd"><p>58 <span class="confluence-anchor-link" id="DD.UnspecifiedBehavior-usb_58"></span></p></td><td class="confluenceTd"><p>The sign of one part of the complex result of several math functions for certain exceptional values in IEC 60559 compatible implementations (G.6.1.1, G.6.2.2, G.6.2.3, G.6.2.4, G.6.2.5, G.6.2.6, G.6.3.1, G.6.4.2).</p></td><td class="confluenceTd"><p> </p></td></tr></tbody></table></div><p> </p><hr /><p><a href="https://www.securecoding.cert.org/confluence/display/seccode/CC.+Undefined+Behavior?showChildren=false&amp;showComments=false" rel="nofollow"><span class="confluence-embedded-file-wrapper"><img class="confluence-embedded-image" src="/confluence/download/attachments/285/button_arrow_left.png?version=1&amp;modificationDate=1201021124000&amp;api=v2" data-image-src="/confluence/download/attachments/285/button_arrow_left.png?version=1&amp;modificationDate=1201021124000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="11403289" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="button_arrow_left.png" data-base-url="https://www.securecoding.cert.org/confluence" data-linked-resource-content-type="image/png" data-linked-resource-container-id="285" data-linked-resource-container-version="134"></span></a> <a href="https://www.securecoding.cert.org/confluence/display/seccode/CERT+C+Coding+Standard" rel="nofollow"><span class="confluence-embedded-file-wrapper"><img class="confluence-embedded-image" src="/confluence/download/attachments/285/button_arrow_up.png?version=1&amp;modificationDate=1201021146000&amp;api=v2" data-image-src="/confluence/download/attachments/285/button_arrow_up.png?version=1&amp;modificationDate=1201021146000&amp;api=v2" data-unresolved-comment-count="0" data-linked-resource-id="11403291" data-linked-resource-version="1" data-linked-resource-type="attachment" data-linked-resource-default-alias="button_arrow_up.png" data-base-url="https://www.securecoding.cert.org/confluence" data-linked-resource-content-type="image/png" data-linked-resource-container-id="285" data-linked-resource-container-version="134"></span></a></p>
+
+                
+        
+    
+        </div>
+
+        <!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+         <rdf:Description
+    rdf:about="https://www.securecoding.cert.org/confluence/display/c/DD.+Unspecified+Behavior"
+    dc:identifier="https://www.securecoding.cert.org/confluence/display/c/DD.+Unspecified+Behavior"
+    dc:title="DD. Unspecified Behavior"
+    trackback:ping="https://www.securecoding.cert.org/confluence/rpc/trackback/46498136"/>
+</rdf:RDF>
+-->
+
+                        
+    
+
+
+
+<div id="labels-section" class="pageSection group">
+    <div class="labels-section-content content-column" entityid="46498136" entitytype="page">
+	<div class="labels-content">
+		
+    <ul class="label-list label-list-right ">
+                    
+        <li class="aui-label " data-label-id="41287698"><a class="aui-label-split-main" href="/confluence/label/c/section" rel="tag">section</a></li><li class="aui-label " data-label-id="156663815"><a class="aui-label-split-main" href="/confluence/label/c/bm" rel="tag">bm</a></li>
+            </ul>
+
+    </div>
+</div>
+</div>
+        
+		
+            
+
+
+
+
+            
+    
+
+
+
+
+
+
+
+
+                        
+    
+<div id="comments-section" class="pageSection group">
+        
+    
+
+
+
+</div>
+
+
+                
+    
+            
+</div>
+
+
+    
+
+
+
+
+    
+    
+
+    
+    
+    
+
+
+    
+<div id="space-tools-web-items" class="hidden">
+                <div data-label="Overview" data-href="/confluence/spaces/viewspacesummary.action?key=c">Overview</div>
+            <div data-label="Content Tools" data-href="/confluence/pages/reorderpages.action?key=c">Content Tools</div>
+            <div data-label="Activity" data-href="/confluence/spaces/usage/report.action?key=c">Activity</div>
+    </div>
+
+
+
+
+    </div><!-- \#main -->
+        
+    
+        
+            
+            
+
+<div id="footer" role="contentinfo">
+    <section class="footer-body">
+
+                                                    
+        
+
+        <ul id="poweredby">
+            <li class="noprint">Powered by <a href="http://www.atlassian.com/software/confluence" class="hover-footer-link">Atlassian Confluence</a> <span id='footer-build-information'>5.8.13</span>, <a href="http://www.atlassian.com/software/confluence/overview/team-collaboration-software?utm_source=confluence-footer" class="hover-footer-link">Team Collaboration Software</a></li>
+            <li class="print-only">Printed by Atlassian Confluence 5.8.13, Team Collaboration Software.</li>
+            <li class="noprint"><a href="https://jira.atlassian.com/browse/CONF" class="hover-footer-link">Report a bug</a></li>
+            <li class="noprint"><a href="http://www.atlassian.com/about/connected.jsp?s_kwcid=Confluence-stayintouch" class="hover-footer-link">Atlassian News</a></li>
+        </ul>
+
+        
+
+        <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+
+                    <!--BEGIN FOOTER-->
+
+<table border="0" width="100%" cellspacing="0" cellpadding="8" bgcolor="#666666">
+<tr>
+<td width="50%">
+<div style="text-align:right">
+<br>
+<img src="https://www.cert.org/images/sei_cmu_logo2.gif" alt="Software Engineering Institute | Carnegie Mellon University" border="0" usemap="#footermap"/>
+  <map name="footermap" id="footermap">
+     <area shape="rect" coords="2,2,233,19" href="http://www.sei.cmu.edu/"  alt="Software Engineering Institute"/>
+     <area shape="rect" coords="241,3,341,19" href="http://www.cmu.edu/" alt="Carnegie Mellon University" />
+  </map>
+</div>
+</td>
+<td width="50%" align="right">
+<br>
+<div style="text-align:right">
+  <span style="font-size:11px; color:#ffffff; font-family:Verdana">
+  <a style="color:#ffffff" href="https://www.cert.org/">Home</a> | 
+  <a style="color:#ffffff" href="https://www.cert.org/meet_cert/meetcertcc.html">About</a> | 
+  <a style="color:#ffffff" href="https://www.cert.org/contact_cert/">Contact</a> | 
+  <a style="color:#ffffff" href="https://www.cert.org/faq/cert_faq.html">FAQ</a> | 
+  <a style="color:#ffffff" href="https://www.cert.org/stats/">Statistics</a> | 
+  <a style="color:#ffffff" href="https://www.cert.org/jobs/">Jobs</a> | 
+  <a style="color:#ffffff" href="http://www.sei.cmu.edu/legal/index.cfm">Terms of Use</a>
+  <br/>
+  Copyright &copy; 1995-2014 Carnegie Mellon University 
+</div>
+</td>
+</tr>
+</table>
+
+<!--END FOOTER-->
+        
+    </section>
+</div>
+
+    
+</div>
+
+</div><!-- \#full-height-container -->
+</div><!-- \#page -->
+</body>
+</html>

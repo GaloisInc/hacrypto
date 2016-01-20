@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html>
+<head>
+                    <title>EE. Analyzers - CERT C Coding Standard - CERT Secure Coding Standards</title>
+    
+        
+
+                        
+    
+                        
+    
+
+                
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=EDGE,chrome=IE7">
+<meta charset="UTF-8">
+<meta id="confluence-context-path" name="confluence-context-path" content="/confluence">
+<meta id="confluence-base-url" name="confluence-base-url" content="https://www.securecoding.cert.org/confluence">
+
+<meta id="atlassian-token" name="atlassian-token" content="1a608742d987f43f0ef89236cd92066c8b6c9f09">
+
+
+<meta id="confluence-space-key" name="confluence-space-key" content="c">
+<script type="text/javascript">
+        var contextPath = '/confluence';
+</script>
+
+    
+
+    <meta name="confluence-request-time" content="1453318724108">
+        
+    
+        
+            <meta name="ajs-is-space-admin" content=""> <meta name="ajs-has-space-config" content="">
+            <style>.ia-fixed-sidebar, .ia-splitter-left {width: 285px;}.theme-default .ia-splitter #main {margin-left: 285px;}.ia-fixed-sidebar {visibility: hidden;}</style>
+            <meta name="ajs-use-keyboard-shortcuts" content="true">
+            <meta name="ajs-discovered-plugin-features" content="$discoveredList">
+            <meta name="ajs-keyboardshortcut-hash" content="8ce703350926e3402402367afce58a3f">
+            
+    
+    
+            <meta name="ajs-page-id" content="158237114">
+            <meta name="ajs-latest-page-id" content="158237114">
+            <meta name="ajs-content-type" content="page">
+            <meta name="ajs-page-title" content="EE. Analyzers">
+            <meta name="ajs-parent-page-title" content="4 Back Matter">
+            <meta name="ajs-parent-page-id" content="158237111">
+            <meta name="ajs-space-key" content="c">
+            <meta name="ajs-space-name" content="CERT C Coding Standard">
+            <meta name="ajs-jira-metadata-count" content="-1">
+            <meta name="ajs-from-page-title" content="">
+            <meta name="ajs-can-remove-page" content="false">
+            <meta name="ajs-browse-page-tree-mode" content="view">
+            <meta name="ajs-shared-drafts" content="false">
+            <meta name="ajs-context-path" content="/confluence">
+            <meta name="ajs-base-url" content="https://www.securecoding.cert.org/confluence">
+            <meta name="ajs-version-number" content="5.8.13">
+            <meta name="ajs-build-number" content="5993">
+            <meta name="ajs-remote-user" content="">
+            <meta name="ajs-remote-user-key" content="">
+            <meta name="ajs-current-user-fullname" content="">
+            <meta name="ajs-current-user-avatar-url" content="">
+            <meta name="ajs-static-resource-url-prefix" content="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/_">
+            <meta name="ajs-global-settings-attachment-max-size" content="10485760">
+            <meta name="ajs-user-locale" content="en_GB">
+            <meta name="ajs-enabled-dark-features" content="confluence-inline-comments-resolved,notification.plugin.api.enabled.com.atlassian.confluence.plugins.sharepage.api.ShareContentEvent,notification.plugin.api.enabled.com.atlassian.confluence.plugins.mentions.api.ConfluenceMentionEvent,notification.plugin.api.enabled.com.atlassian.confluence.event.events.security.ForgotPasswordEvent,pdf-preview,notification.plugin.api.enabled.com.atlassian.confluence.plugins.tasklist.event.SendTaskEmailEvent,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.page.async.PageMovedEvent,previews.sharing,previews.versions,notification.plugin.api.enabled.com.atlassian.confluence.plugins.files.notifications.event.FileContentUpdateEvent,file-annotations,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.attachment.AttachmentBatchUploadCompletedEvent,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.comment.CommentCreateEvent,notification.plugin.api.enabled.com.atlassian.confluence.efi.emails.events.OnboardingLessUsersEvent,notification.plugin.api.enabled.com.atlassian.confluence.plugins.files.notifications.event.FileContentRemoveEvent,atlassian.aui.raphael.disabled,previews.conversion-service,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.comment.CommentUpdateEvent,notification.plugin.api.enabled.com.atlassian.confluence.event.events.follow.FollowEvent,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.page.async.PageEditedEvent,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.blogpost.BlogPostCreateEvent,previews.trigger-all-file-types,notification.plugin.api.enabled.com.atlassian.confluence.plugins.inlinecomments.events.InlineCommentResolveEvent,notification.plugin.api.enabled.com.atlassian.confluence.event.events.like.LikeCreatedEvent,notification.plugin.api.enabled.com.atlassian.confluence.plugins.inlinecomments.events.InlineCommentCreateEvent,previews.sharing.pushstate,confluence-inline-comments-rich-editor,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.blogpost.BlogPostUpdateEvent,file-annotations.likes,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.page.async.PageCreatedEvent,notification.plugin.api.enabled.com.atlassian.confluence.plugins.files.notifications.event.FileContentMentionUpdateEvent,notification.plugin.api.enabled.com.atlassian.confluence.efi.emails.events.OnboardingNoSpaceCreatedEvent,notification.plugin.api.enabled.com.atlassian.confluence.plugins.hipchat.api.events.HipChatUserMapped,notification.plugin.api.enabled.com.atlassian.confluence.plugins.sharepage.api.ShareAttachmentEvent,confluence-inline-comments,confluence-inline-comments-dangling-comment,notification.plugin.api.enabled.com.atlassian.confluence.event.events.content.blogpost.BlogPostMovedEvent">
+            <meta name="ajs-atl-token" content="1a608742d987f43f0ef89236cd92066c8b6c9f09">
+            <meta name="ajs-confluence-flavour" content="VANILLA">
+            <meta name="ajs-user-date-pattern" content="dd MMM yyyy">
+            <meta name="ajs-date.format" content="MMM dd, yyyy">
+    
+    <link rel="shortcut icon" href="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/_/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/_/favicon.ico">
+
+<link rel="search" type="application/opensearchdescription+xml" href="/confluence/opensearch/osd.action" title="CERT Secure Coding Standards"/>
+    
+                    
+            
+
+<script>
+window.WRM=window.WRM||{};window.WRM._unparsedData=window.WRM._unparsedData||{};
+WRM._unparsedData["com.atlassian.plugins.atlassian-plugins-webresource-plugin:context-path.context-path"]="\"/confluence\"";
+WRM._unparsedData["com.atlassian.plugins.atlassian-nps-plugin:atlassian-nps-plugin-resources.is-server-instance-data-provider"]="true";
+WRM._unparsedData["com.atlassian.plugins.browser.metrics.browser-metrics-plugin:browser-metrics.feature-data-provider-legacy"]="true";
+WRM._unparsedData["com.atlassian.plugins.atlassian-plugins-webresource-rest:web-resource-manager.resource-base-url-pattern"]="\"(?:/confluence(?:/s/.*?/_)?/download)\"";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-license-banner:confluence-license-banner-resources.license-details"]="{\"daysBeforeLicenseExpiry\":0,\"daysBeforeMaintenanceExpiry\":0,\"showLicenseExpiryBanner\":false,\"showMaintenanceExpiryBanner\":false,\"renewUrl\":null,\"salesEmail\":null}";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-hipchat-integration-plugin:discovery-javascript-data.link-active"]="{\"linkActive\":false,\"conditionsMet\":true,\"admin\":false}";
+WRM._unparsedData["com.atlassian.plugins.atlassian-nps-plugin:nps-acknowledgement-resources.analytics-enabled-data-provider"]="\"true\"";
+WRM._unparsedData["com.atlassian.plugins.atlassian-nps-plugin:nps-acknowledgement-resources.sen-data-provider"]="\"SEN-173742\"";
+WRM._unparsedData["com.atlassian.confluence.plugins.confluence-feature-discovery-plugin:confluence-feature-discovery-plugin-resources.test-mode"]="false";
+WRM._unparsedData["com.atlassian.plugins.browser.metrics.browser-metrics-plugin:api.feature-data-provider"]="true";
+</script>
+<link type="text/css" rel="stylesheet" href="/confluence/s/80ea478da7e63d73b8b3a19808385d2f-CDN/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/292/_/download/superbatch/css/batch.css?build-number=5993" media="all">
+<!--[if lt IE 9]>
+<link type="text/css" rel="stylesheet" href="/confluence/s/d41d8cd98f00b204e9800998ecf8427e-CDN/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/292/_/download/superbatch/css/batch.css?conditionalComment=lt+IE+9" media="all">
+<![endif]-->
+<!--[if lte IE 9]>
+<link type="text/css" rel="stylesheet" href="/confluence/s/d41d8cd98f00b204e9800998ecf8427e-CDN/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/292/_/download/superbatch/css/batch.css?conditionalComment=lte+IE+9" media="all">
+<![endif]-->
+<link type="text/css" rel="stylesheet" href="/confluence/s/dfd17b0d8e6d815db22be45019a41d05-CDN/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/dc4b9f300bb631923fb0b364b2c4f9fe/_/download/contextbatch/css/page,viewcontent,atl.general,main,pagebanner,atl.confluence.plugins.pagetree-desktop,atl.comments/batch.css?flavour=VANILLA&amp;highlightactions=true" media="all">
+<!--[if lt IE 9]>
+<link type="text/css" rel="stylesheet" href="/confluence/s/d41d8cd98f00b204e9800998ecf8427e-CDN/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/dc4b9f300bb631923fb0b364b2c4f9fe/_/download/contextbatch/css/page,viewcontent,atl.general,main,pagebanner,atl.confluence.plugins.pagetree-desktop,atl.comments/batch.css?conditionalComment=lt+IE+9" media="all">
+<![endif]-->
+<link type="text/css" rel="stylesheet" href="/confluence/s/d41d8cd98f00b204e9800998ecf8427e-CDN/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/3.6.0/_/download/batch/confluence.macros.advanced:content-by-label-resources/confluence.macros.advanced:content-by-label-resources.css" media="all">
+<link type="text/css" rel="stylesheet" href="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/1/_/styles/colors.css?spaceKey=c" media="all">
+<link type="text/css" rel="stylesheet" href="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/1.0/_/download/resources/com.atlassian.confluence.themes.default:styles/default-theme.css" media="all">
+<link type="text/css" rel="stylesheet" href="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/1/_/styles/custom.css?spaceKey=c" media="all">
+<script type="text/javascript" src="/confluence/s/d069d680e427dcf28c7953fca2f1168d-CDN/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/292/_/download/superbatch/js/batch.js?atlassian.aui.raphael.disabled=true&amp;locale=en-GB&amp;build-number=5993" ></script>
+<script type="text/javascript" src="/confluence/s/c4a5a34ae451be05d401eb7a8aa4a01a-CDN/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/dc4b9f300bb631923fb0b364b2c4f9fe/_/download/contextbatch/js/page,viewcontent,atl.general,main,pagebanner,atl.confluence.plugins.pagetree-desktop,atl.comments/batch.js?highlightactions=true&amp;flavour=VANILLA&amp;analytics-enabled=true&amp;locale=en-GB&amp;anonymous-access-enabled=true&amp;is-server-instance=true&amp;hostenabled=true" ></script>
+
+
+        
+    
+
+        
+        <meta name="ajs-site-title" content="CERT Secure Coding Standards" />
+
+    
+    
+
+    
+                <link rel="canonical" href="https://www.securecoding.cert.org/confluence/display/c/EE.+Analyzers">
+        <link rel="shortlink" href="https://www.securecoding.cert.org/confluence/x/uoFuCQ">
+    <meta name="wikilink" content="[c:EE. Analyzers]">
+    <meta name="page-version" content="1">
+
+</head>
+
+<body             onload="placeFocus()"
+     id="com-atlassian-confluence" class="theme-default  aui-layout aui-theme-default">
+
+        
+            <div id='stp-licenseStatus-banner'></div>
+    <ul id="assistive-skip-links" class="assistive">
+    <li><a href="#title-heading">Skip to content</a></li>
+    <li><a href="#breadcrumbs">Skip to breadcrumbs</a></li>
+    <li><a href="#header-menu-bar">Skip to header menu</a></li>
+    <li><a href="#navigation">Skip to action menu</a></li>
+    <li><a href="#quick-search-query">Skip to quick search</a></li>
+</ul>
+<div id="page">
+<div id="full-height-container">
+    <div id="header-precursor">
+        <div class="cell">
+            <!--BEGIN HEADER-->
+
+<table border="0" width="100%" cellspacing="0" cellpadding="0" bgcolor="#ffffff">
+<tr>
+  <td valign="middle">
+    <img src="https://www.cert.org/images/1pxinv.gif" width="1" height="10">
+    <a href="https://www.cert.org/"><img src="https://www.securecoding.cert.org/CERT_FL_CMYK.png" alt="CERT" border="0"></a>
+  </td>
+</tr>
+</table>
+
+<!--END HEADER-->
+                            </div>
+    </div>
+    
+
+
+
+<header id="header" role="banner">
+    <nav class="aui-header aui-dropdown2-trigger-group" role="navigation"><div class="aui-header-inner"><div class="aui-header-primary"><h1 id="logo" class="aui-header-logo aui-header-logo-custom"><a href="/confluence/"><img src="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/_/images/logo/confluence-logo.png" alt="CERT Secure Coding Standards" /></a></h1><ul class="aui-nav">
+                            <li>
+            
+        
+        
+<a  id="space-directory-link" href="/confluence/spacedirectory/view.action"  class=" aui-nav-imagelink"   title="Spaces">
+            <span>Spaces</span>
+    </a>
+        </li>
+                        </ul>
+</div><div class="aui-header-secondary"><ul class="aui-nav">
+                        <li>
+        <form id="quick-search" class="aui-quicksearch dont-default-focus header-quicksearch" action="/confluence/dosearchsite.action" method="get"><fieldset><label for="quick-search-query" class="assistive">Quick Search</label><input id="quick-search-query" class="text app-search search quick-search-query" type="text" accessKey="q" autocomplete="off" name="queryString" title="Quick Search" placeholder="Search" /><input id="quick-search-submit" class="quick-search-submit" type="submit" value="Search"/><div class="aui-dd-parent quick-nav-drop-down"></div></fieldset></form>
+    </li>
+        <li>
+            
+        <a id="help-menu-link" class="aui-nav-link aui-dropdown2-trigger" href="#" aria-haspopup="true" aria-owns="help-menu-link-content" title="Help">
+        <span class="aui-icon aui-icon-small aui-iconfont-help">Help</span>
+    </a>
+    <nav id="help-menu-link-content" class="aui-dropdown2 aui-style-default" aria-hidden="true">
+                    <div class="aui-dropdown2-section">
+                                <ul  id="help-menu-link-leading" class="aui-list-truncate section-leading first">
+                                            <li>
+        
+            
+<a  id="confluence-help-link" href="https://docs.atlassian.com/confluence/docs-58/Getting+Help+And+Support" class="    "      title="Visit the Confluence documentation home"  target="_blank"
+>
+        Online Help
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="keyboard-shortcuts-link" href="/confluence" class="    "      title="View available keyboard shortcuts" >
+        Keyboard Shortcuts
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="feed-builder-link" href="/confluence/dashboard/configurerssfeed.action" class="    "      title="Create your custom RSS feed." >
+        Feed Builder
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="whats-new-menu-link" href="https://docs.atlassian.com/confluence/docs-58/whatsnew/iframe" class="    "      title="" >
+        What’s new
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="gadget-directory-link" href="/confluence" class="   user-item administration-link "      title="Browse gadgets provided by Confluence" >
+        Available Gadgets
+</a>
+</li>
+                                            <li>
+    
+            
+<a  id="confluence-about-link" href="/confluence/aboutconfluencepage.action" class="    "      title="Get more information about Confluence" >
+        About Confluence
+</a>
+</li>
+                                    </ul>
+            </div>
+            </nav>
+    
+    </li>
+        <li>
+                
+    
+    </li>
+        <li>
+            
+    </li>
+        <li>
+                                            <li>
+        
+            
+<a  id="login-link" href="/confluence/login.action?os_destination=%2Fdisplay%2Fc%2FEE.%2BAnalyzers" class="   user-item login-link "      title="" >
+        Log in
+</a>
+</li>
+                        <li>
+    
+            
+<a  id="signup-link" href="/confluence/signup.action" class="   user-item signup-link "      title="" >
+        Sign up
+</a>
+</li>
+                        
+    </li>
+    </ul>
+</div></div><!-- .aui-header-inner--></nav><!-- .aui-header -->
+    <br class="clear">
+</header>
+
+    
+    	<div class="ia-splitter">
+    		<div class="ia-splitter-left">
+    			<div class="ia-fixed-sidebar">
+    				
+	    	<div class="acs-side-bar ia-scrollable-section"><div class="acs-side-bar-space-info tipsy-enabled" data-configure-tooltip="Edit space details"><div class="avatar"><div class="space-logo " data-key="c" data-name="CERT C Coding Standard" data-entity-type="confluence.space"><div class="avatar-img-container"><div class="avatar-img-wrapper"><a href="/confluence/display/c" title="CERT C Coding Standard"><img class="avatar-img" src="/confluence/download/attachments/158236757/c?version=1&amp;modificationDate=1425396591000&amp;api=v2" alt="CERT C Coding Standard"></a></div></div></div></div><div class="name"><a href="/confluence/display/c" title="CERT C Coding Standard">CERT C Coding Standard</a></div><div class="flyout-handle icon"></div></div><div class="acs-side-bar-content"><div class="acs-nav-wrapper"><div class="acs-nav" data-has-create-permission="false" data-quick-links-state="null" data-nav-type="page-tree"><div class="acs-nav-sections"><div class="main-links-section "><ul class="acs-nav-list"><li class="acs-nav-item wiki current-item"data-collector-key="spacebar-pages"><a class="acs-nav-item-link tipsy-enabled" href="/confluence/collector/pages.action?key=c" data-collapsed-tooltip="Pages"><span class="icon"></span><span class="acs-nav-item-label">Pages</span></a></li></ul></div><div class="quick-links-wrapper"><h5 class="ia-quick-links-header-title">Space shortcuts</h5><div class="quick-links-section tipsy-enabled "><ul class="acs-nav-list"><li class="acs-nav-item external_link"><a class="acs-nav-item-link tipsy-enabled" href="https://www.securecoding.cert.org/confluence/dashboard.action" data-collapsed-tooltip="null"><span class="icon"></span><span class="acs-nav-item-label">Dashboard</span></a></li><li class="acs-nav-item pinned_page"><a class="acs-nav-item-link tipsy-enabled" href="/confluence/display/seccode/SEI+CERT+Coding+Standards" data-collapsed-tooltip="null"><span class="icon"></span><span class="acs-nav-item-label">Home</span></a></li><li class="acs-nav-item pinned_page"><a class="acs-nav-item-link tipsy-enabled" href="/confluence/display/android/Android+Secure+Coding+Standard" data-collapsed-tooltip="null"><span class="icon"></span><span class="acs-nav-item-label">Android</span></a></li><li class="acs-nav-item pinned_page"><a class="acs-nav-item-link tipsy-enabled" href="/confluence/display/c/SEI+CERT+C+Coding+Standard" data-collapsed-tooltip="null"><span class="icon"></span><span class="acs-nav-item-label">C</span></a></li><li class="acs-nav-item pinned_page"><a class="acs-nav-item-link tipsy-enabled" href="/confluence/pages/viewpage.action?pageId=637" data-collapsed-tooltip="null"><span class="icon"></span><span class="acs-nav-item-label">C++</span></a></li><li class="acs-nav-item pinned_page"><a class="acs-nav-item-link tipsy-enabled" href="/confluence/display/java/SEI+CERT+Oracle+Coding+Standard+for+Java" data-collapsed-tooltip="null"><span class="icon"></span><span class="acs-nav-item-label">Java</span></a></li><li class="acs-nav-item pinned_page"><a class="acs-nav-item-link tipsy-enabled" href="/confluence/display/perl/SEI+CERT+Perl+Coding+Standard" data-collapsed-tooltip="null"><span class="icon"></span><span class="acs-nav-item-label">Perl</span></a></li><li class="acs-nav-item external_link"><a class="acs-nav-item-link tipsy-enabled" href="http://www.cert.org/secure-coding/" data-collapsed-tooltip="null"><span class="icon"></span><span class="acs-nav-item-label">CERT Website</span></a></li></ul></div></div></div></div></div><div class="ia-secondary-container tipsy-enabled" data-tree-type="page-tree"><div class="ia-secondary-header"><h5 class="ia-secondary-header-title page-tree"><span class="icon"></span><span class="label">Page tree</span></h5></div><div class="ia-secondary-content">
+
+
+<div class="plugin_pagetree">
+
+        
+        
+    <ul class="plugin_pagetree_children_list plugin_pagetree_children_list_noleftspace">
+        <div class="plugin_pagetree_children">
+        </div>
+    </ul>
+
+    <fieldset class="hidden">
+        <input type="hidden" name="treeId" value="">
+        <input type="hidden" name="treeRequestId" value="/confluence/plugins/pagetree/naturalchildren.action?decorator=none&amp;excerpt=false&amp;sort=position&amp;reverse=false&amp;disableLinks=false&amp;expandCurrent=true">
+        <input type="hidden" name="treePageId" value="158237114">
+
+        <input type="hidden" name="noRoot" value="false">
+        <input type="hidden" name="rootPageId" value="285">
+
+        <input type="hidden" name="rootPage" value="">
+        <input type="hidden" name="startDepth" value="0">
+        <input type="hidden" name="spaceKey" value="c" >
+
+        <input type="hidden" name="i18n-pagetree.loading" value="Loading...">
+        <input type="hidden" name="i18n-pagetree.error.permission" value="Unable to load page tree. It seems that you do not have permission to view the root page.">
+        <input type="hidden" name="i18n-pagetree.eeror.general" value="There was a problem retrieving the page tree. Please check the server log file for more information.">
+        <input type="hidden" name="loginUrl" value="/confluence/login.action?os_destination=%2Fpages%2Fviewpage.action%3FspaceKey%3Dc%26title%3DEE.%2BAnalyzers">
+        <input type="hidden" name="mobile" value="false">
+
+                <fieldset class="hidden">
+                                                <input type="hidden" name="ancestorId" value="158237111">
+                                    <input type="hidden" name="ancestorId" value="285">
+                                    </fieldset>
+    </fieldset>
+</div>
+</div></div></div><div class="hidden"><a href="/confluence/collector/pages.action?key=c" id="space-pages-link"></a><script type="text/x-template" title="logo-config-content"><h2>Space Details</h2><div class="personal-space-logo-hint">Your profile picture is used as the logo for your personal space. <a href="/confluence/users/profile/editmyprofilepicture.action" target="_blank">Change your profile picture</a>.</div></script></div></div><div class="space-tools-section"><div id="space-tools-menu-additional-items" class="hidden"><div data-label="Browse pages" data-class="" data-href="/confluence/pages/reorderpages.action?key=c">Browse pages</div></div><div id="space-tools-dd-dummy"></div><a id="space-tools-menu-trigger" class="aui-button aui-button-subtle aui-dropdown2-trigger tipsy-enabled" aria-owns="space-tools-dd-dummy"><span class="aui-icon aui-icon-small aui-iconfont-configure">Configure</span><span class="label">Space tools</span></a><a class="expand-collapse-trigger"></a></div>
+    
+    			</div>
+    		</div>
+        <!-- \#header -->
+
+        
+        <div id="main" class=" aui-page-panel">
+                <div id="main-header">
+            
+    <div id="navigation" class="content-navigation view">
+                    <ul class="ajs-menu-bar">
+                                                        
+                    
+        <li class="normal ajs-menu-item">
+        <a id="action-menu-link" class="action aui-dropdown2-trigger-arrowless aui-button aui-button-subtle ajs-menu-title aui-dropdown2-trigger" href="#" aria-haspopup="true" aria-owns="action-menu" data-container="#navigation">
+            <span>
+                                    <span class="aui-icon aui-icon-small aui-iconfont-more"></span>
+                                
+            </span>
+        </a>         <div id="action-menu" class="aui-dropdown2 aui-style-default">
+                            <ul  id="action-menu-primary"                     class="section-primary first aui-dropdown2-section">
+                                            <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="view-attachments-link" href="/confluence/pages/viewpageattachments.action?pageId=158237114" rel="nofollow" class="action-view-attachments"  accessKey="t"  title="View Attachments">
+                <span>
+                        A<u>t</u>tachments (0)
+        </span>    </a>
+</li>
+                                        <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="action-view-history-link" href="/confluence/pages/viewpreviousversions.action?pageId=158237114" rel="nofollow" class="action-view-history"   title="">
+                <span>
+                        Page History
+        </span>    </a>
+</li>
+                                        <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="action-page-permissions-link" href="/confluence/pages/viewinfo.action?pageId=158237114" rel="nofollow" class="action-page-permissions"   title="Edit restrictions">
+                <span>
+                        Restrictions
+        </span>    </a>
+</li>
+                                </ul>
+                            <ul  id="action-menu-secondary"                     class="section-secondary aui-dropdown2-section">
+                                            <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="view-page-info-link" href="/confluence/pages/viewinfo.action?pageId=158237114" rel="nofollow" class="action-view-info"   title="">
+                <span>
+                        Page Information
+        </span>    </a>
+</li>
+                                        <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="view-resolved-comments" href="/confluence" rel="nofollow" class=""   title="">
+                <span>
+                        Resolved comments
+        </span>    </a>
+</li>
+                                        <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="link-to-page-link" href="/confluence/pages/viewinfo.action?pageId=158237114" rel="nofollow" class=""   title="Link to this Page">
+                <span>
+                        Link to this Page…
+        </span>    </a>
+</li>
+                                        <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="view-in-hierarchy-link" href="/confluence/pages/reorderpages.action?key=c&amp;openId=158237114#selectedPageInHierarchy" rel="nofollow" class=""   title="">
+                <span>
+                        View in Hierarchy
+        </span>    </a>
+</li>
+                                        <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="action-view-source-link" href="/confluence/plugins/viewsource/viewpagesrc.action?pageId=158237114" rel="nofollow" class="action-view-source popup-link"   title="">
+                <span>
+                        View Source
+        </span>    </a>
+</li>
+                                        <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="action-export-pdf-link" href="/confluence/spaces/flyingpdf/pdfpageexport.action?pageId=158237114" rel="nofollow" class=""   title="">
+                <span>
+                        Export to PDF
+        </span>    </a>
+</li>
+                                        <li>
+
+    
+        
+                                            
+    
+    
+    <a  id="action-export-word-link" href="/confluence/exportword?pageId=158237114" rel="nofollow" class="action-export-word"   title="">
+                <span>
+                        Export to Word
+        </span>    </a>
+</li>
+                                </ul>
+                    </div>
+    </li>
+            </ul>
+    </div>
+
+            
+            <div id="title-heading" class="pagetitle with-breadcrumbs">
+                
+                                    <div id="breadcrumb-section">
+                        
+    
+    
+    <ol id="breadcrumbs">
+                                        
+                        
+        <li class="first" >
+                        
+                            <span class=""><a href="/confluence/collector/pages.action?key=c">Pages</a></span>
+                                                                    
+                        
+        <li>
+                        
+                            <span class=""><a href="/confluence/display/c/SEI+CERT+C+Coding+Standard">SEI CERT C Coding Standard</a></span>
+                                                                    
+                        
+        <li>
+                        
+                            <span class=""><a href="/confluence/display/c/4+Back+Matter">4 Back Matter</a></span>
+                                                    </ol>
+
+
+                    </div>
+                
+                
+        <a href="#page-banner-end" class="assistive">Skip to end of banner</a>
+<div id="page-banner-start" class="assistive"></div>
+
+                    
+            <div id="page-metadata-banner"><ul class="banner"><li id="system-content-items" class="noprint"><a href="" title="Restrictions apply" id="content-metadata-page-restrictions" class="hidden"><img class="page-banner-item-icon" src="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/_/download/resources/com.atlassian.confluence.plugins.confluence-page-banner:page-banner-resources/images/red_padlock.png" style="height: 16px; width: 16px;"/></a></li><li class="page-metadata-item noprint has-button"  id="content-metadata-jira-wrapper"><a href="" title="" id="content-metadata-jira" class="aui-button aui-button-subtle content-metadata-jira tipsy-disabled hidden"><img class="page-banner-item-icon" src="/confluence/s/en_GB/5993/fdcad23a2bb12e565e0f1d82cc2de4d7ca3297f0.55/_/download/resources/com.atlassian.confluence.plugins.confluence-jira-metadata:confluence-jira-metadata-resources/img/icon-jira-link.png" style="height: 16px; width: 16px;"/><span>JIRA links</span></a></li></ul></div>
+            
+
+<a href="#page-banner-start" class="assistive">Go to start of banner</a>
+<div id="page-banner-end" class="assistive"></div>
+    
+
+                <h1 id="title-text" class="with-breadcrumbs">
+                                                <a href="/confluence/display/c/EE.+Analyzers">EE. Analyzers</a>
+                                    </h1>
+            </div>
+        </div><!-- \#main-header -->
+        
+        
+
+        <div id="sidebar-container">
+                                                </div><!-- \#sidebar-container -->
+
+        
+    
+
+        
+
+
+
+
+        
+
+    
+    
+        
+    
+    
+                    
+    
+
+                        
+    
+    
+
+    
+
+
+
+
+<div id="content" class="page view">
+    
+
+
+<div id="action-messages">
+                        </div>
+
+
+
+        <script type="text/x-template" title="searchResultsGrid">
+    <table class="aui">
+        <thead>
+            <tr class="header">
+                <th class="search-result-title">Page Title</th>
+                <th class="search-result-space">Space</th>
+                <th class="search-result-date">Updated</th>
+            </tr>
+        </thead>
+    </table>
+</script>
+<script type="text/x-template" title="searchResultsGridCount">
+    <p class="search-result-count">{0}</p>
+</script>
+<script type="text/x-template" title="searchResultsGridRow">
+    <tr class="search-result">
+        <td class="search-result-title"><a href="{1}" class="content-type-{2}"><span>{0}</span></a></td>
+        <td class="search-result-space"><a class="space" href="/confluence/display/{4}/" title="{3}">{3}</a></td>
+        <td class="search-result-date"><span class="date" title="{6}">{5}</span></td>
+    </tr>
+</script>
+        
+    
+            
+
+        
+                            
+    
+
+                    
+
+        
+        <a href="#page-metadata-end" class="assistive">Skip to end of metadata</a>
+<div id="page-metadata-start" class="assistive"></div>
+
+    <div class="page-metadata">
+        <ul>
+            <li class="page-metadata-modification-info">
+                
+        
+    
+        
+    
+        
+            
+            Created by <span class='author'>     <a href="    /confluence/display/~bjw
+"
+                       class="url fn"
+                            >Barbara White</a></span> on <a class='last-modified' title='Show changes' href='/confluence/pages/viewpreviousversions.action?pageId=158237114'>Mar 03, 2015</a>
+                </li>
+        </ul>
+    </div>
+
+
+<a href="#page-metadata-start" class="assistive">Go to start of metadata</a>
+<div id="page-metadata-end" class="assistive"></div>
+
+        
+                                            
+        <div id="main-content" class="wiki-content">
+                           
+        <p>
+
+
+
+
+
+
+
+
+
+<ul class="content-by-label">
+        <li>
+        <div>
+                <span class="icon aui-icon aui-icon-small aui-iconfont-page-default" title="Page">Page:</span>        </div>
+
+        <div class="details">
+                        <a href="/confluence/display/c/Parasoft">Parasoft</a>
+                
+                        
+                    </div>
+    </li>
+        <li>
+        <div>
+                <span class="icon aui-icon aui-icon-small aui-iconfont-page-default" title="Page">Page:</span>        </div>
+
+        <div class="details">
+                        <a href="/confluence/display/c/Clang">Clang</a>
+                
+                        
+                    </div>
+    </li>
+        <li>
+        <div>
+                <span class="icon aui-icon aui-icon-small aui-iconfont-page-default" title="Page">Page:</span>        </div>
+
+        <div class="details">
+                        <a href="/confluence/display/c/CodeSonar">CodeSonar</a>
+                
+                        
+                    </div>
+    </li>
+        <li>
+        <div>
+                <span class="icon aui-icon aui-icon-small aui-iconfont-page-default" title="Page">Page:</span>        </div>
+
+        <div class="details">
+                        <a href="/confluence/display/c/PRQA+QA-C">PRQA QA-C</a>
+                
+                        
+                    </div>
+    </li>
+        <li>
+        <div>
+                <span class="icon aui-icon aui-icon-small aui-iconfont-page-default" title="Page">Page:</span>        </div>
+
+        <div class="details">
+                        <a href="/confluence/display/c/ECLAIR">ECLAIR</a>
+                
+                        
+                    </div>
+    </li>
+        <li>
+        <div>
+                <span class="icon aui-icon aui-icon-small aui-iconfont-page-default" title="Page">Page:</span>        </div>
+
+        <div class="details">
+                        <a href="/confluence/display/c/GCC">GCC</a>
+                
+                        
+                    </div>
+    </li>
+        <li>
+        <div>
+                <span class="icon aui-icon aui-icon-small aui-iconfont-page-default" title="Page">Page:</span>        </div>
+
+        <div class="details">
+                        <a href="/confluence/display/c/LDRA">LDRA</a>
+                
+                        
+                    </div>
+    </li>
+        <li>
+        <div>
+                <span class="icon aui-icon aui-icon-small aui-iconfont-page-default" title="Page">Page:</span>        </div>
+
+        <div class="details">
+                        <a href="/confluence/display/c/Fortify">Fortify</a>
+                
+                        
+                    </div>
+    </li>
+        <li>
+        <div>
+                <span class="icon aui-icon aui-icon-small aui-iconfont-page-default" title="Page">Page:</span>        </div>
+
+        <div class="details">
+                        <a href="/confluence/display/c/EDG">EDG</a>
+                
+                        
+                    </div>
+    </li>
+        <li>
+        <div>
+                <span class="icon aui-icon aui-icon-small aui-iconfont-page-default" title="Page">Page:</span>        </div>
+
+        <div class="details">
+                        <a href="/confluence/display/c/Rose">Rose</a>
+                
+                        
+                    </div>
+    </li>
+        <li>
+        <div>
+                <span class="icon aui-icon aui-icon-small aui-iconfont-page-default" title="Page">Page:</span>        </div>
+
+        <div class="details">
+                        <a href="/confluence/display/c/Splint">Splint</a>
+                
+                        
+                    </div>
+    </li>
+        <li>
+        <div>
+                <span class="icon aui-icon aui-icon-small aui-iconfont-page-default" title="Page">Page:</span>        </div>
+
+        <div class="details">
+                        <a href="/confluence/display/c/Klocwork">Klocwork</a>
+                
+                        
+                    </div>
+    </li>
+        <li>
+        <div>
+                <span class="icon aui-icon aui-icon-small aui-iconfont-page-default" title="Page">Page:</span>        </div>
+
+        <div class="details">
+                        <a href="/confluence/display/c/Coverity">Coverity</a>
+                
+                        
+                    </div>
+    </li>
+    </ul>
+</p>
+
+                
+        
+    
+        </div>
+
+        <!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+         <rdf:Description
+    rdf:about="https://www.securecoding.cert.org/confluence/display/c/EE.+Analyzers"
+    dc:identifier="https://www.securecoding.cert.org/confluence/display/c/EE.+Analyzers"
+    dc:title="EE. Analyzers"
+    trackback:ping="https://www.securecoding.cert.org/confluence/rpc/trackback/158237114"/>
+</rdf:RDF>
+-->
+
+                        
+    
+
+
+
+<div id="labels-section" class="pageSection group">
+    <div class="labels-section-content content-column" entityid="158237114" entitytype="page">
+	<div class="labels-content">
+		
+    <ul class="label-list label-list-right ">
+                    
+        <li class="aui-label " data-label-id="156663815"><a class="aui-label-split-main" href="/confluence/label/c/bm" rel="tag">bm</a></li>
+            </ul>
+
+    </div>
+</div>
+</div>
+        
+		
+            
+
+
+
+
+            
+    
+
+
+
+
+
+
+
+
+                        
+    
+<div id="comments-section" class="pageSection group">
+        
+    
+
+
+
+</div>
+
+
+                
+    
+            
+</div>
+
+
+    
+
+
+
+
+    
+    
+
+    
+    
+    
+
+
+    
+<div id="space-tools-web-items" class="hidden">
+                <div data-label="Overview" data-href="/confluence/spaces/viewspacesummary.action?key=c">Overview</div>
+            <div data-label="Content Tools" data-href="/confluence/pages/reorderpages.action?key=c">Content Tools</div>
+            <div data-label="Activity" data-href="/confluence/spaces/usage/report.action?key=c">Activity</div>
+    </div>
+
+
+
+
+    </div><!-- \#main -->
+        
+    
+        
+            
+            
+
+<div id="footer" role="contentinfo">
+    <section class="footer-body">
+
+                                                    
+        
+
+        <ul id="poweredby">
+            <li class="noprint">Powered by <a href="http://www.atlassian.com/software/confluence" class="hover-footer-link">Atlassian Confluence</a> <span id='footer-build-information'>5.8.13</span>, <a href="http://www.atlassian.com/software/confluence/overview/team-collaboration-software?utm_source=confluence-footer" class="hover-footer-link">Team Collaboration Software</a></li>
+            <li class="print-only">Printed by Atlassian Confluence 5.8.13, Team Collaboration Software.</li>
+            <li class="noprint"><a href="https://jira.atlassian.com/browse/CONF" class="hover-footer-link">Report a bug</a></li>
+            <li class="noprint"><a href="http://www.atlassian.com/about/connected.jsp?s_kwcid=Confluence-stayintouch" class="hover-footer-link">Atlassian News</a></li>
+        </ul>
+
+        
+
+        <div id="footer-logo"><a href="http://www.atlassian.com/">Atlassian</a></div>
+
+                    <!--BEGIN FOOTER-->
+
+<table border="0" width="100%" cellspacing="0" cellpadding="8" bgcolor="#666666">
+<tr>
+<td width="50%">
+<div style="text-align:right">
+<br>
+<img src="https://www.cert.org/images/sei_cmu_logo2.gif" alt="Software Engineering Institute | Carnegie Mellon University" border="0" usemap="#footermap"/>
+  <map name="footermap" id="footermap">
+     <area shape="rect" coords="2,2,233,19" href="http://www.sei.cmu.edu/"  alt="Software Engineering Institute"/>
+     <area shape="rect" coords="241,3,341,19" href="http://www.cmu.edu/" alt="Carnegie Mellon University" />
+  </map>
+</div>
+</td>
+<td width="50%" align="right">
+<br>
+<div style="text-align:right">
+  <span style="font-size:11px; color:#ffffff; font-family:Verdana">
+  <a style="color:#ffffff" href="https://www.cert.org/">Home</a> | 
+  <a style="color:#ffffff" href="https://www.cert.org/meet_cert/meetcertcc.html">About</a> | 
+  <a style="color:#ffffff" href="https://www.cert.org/contact_cert/">Contact</a> | 
+  <a style="color:#ffffff" href="https://www.cert.org/faq/cert_faq.html">FAQ</a> | 
+  <a style="color:#ffffff" href="https://www.cert.org/stats/">Statistics</a> | 
+  <a style="color:#ffffff" href="https://www.cert.org/jobs/">Jobs</a> | 
+  <a style="color:#ffffff" href="http://www.sei.cmu.edu/legal/index.cfm">Terms of Use</a>
+  <br/>
+  Copyright &copy; 1995-2014 Carnegie Mellon University 
+</div>
+</td>
+</tr>
+</table>
+
+<!--END FOOTER-->
+        
+    </section>
+</div>
+
+    
+</div>
+
+</div><!-- \#full-height-container -->
+</div><!-- \#page -->
+</body>
+</html>
