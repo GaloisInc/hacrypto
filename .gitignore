@@ -30,3 +30,37 @@
 
 # OS X
 .DS_Store
+
+# BON
+ANY-diagram.tex
+ARRAY-diagram.tex
+BOOLEAN-diagram.tex
+FILE-diagram.tex
+FLOAT-diagram.tex
+HASH-diagram.tex
+HASH.digest-postcondition1.tex
+INTEGER-diagram.tex
+LIST-diagram.tex
+NONE-diagram.tex
+NUMBER-diagram.tex
+SET-diagram.tex
+SHA_1-diagram.tex
+SHA_1-invariant1.tex
+SHA_1-invariant2.tex
+SHA_1.digest-precondition1.tex
+SHA_256-diagram.tex
+SHA_256-invariant1.tex
+SHA_256-invariant2.tex
+SHA_256.digest-precondition1.tex
+STRING-diagram.tex
+TABLE-diagram.tex
+TREE-diagram.tex
+TUPLE-diagram.tex
+VALUE-diagram.tex
+make-images.sh
+
+# Local source archives
+resources/FIPS/OpenSSL/www.openssl.org/source/
+
+# Build artifacts
+src/C/nacl/nacl-20110221/build/
