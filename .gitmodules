@@ -40,3 +40,27 @@
 [submodule "src/Ruby/rbnacl"]
 	path = src/Ruby/rbnacl
 	url = https://github.com/cryptosphere/rbnacl
+[submodule "src/Rust/sodiumoxide"]
+	path = src/Rust/sodiumoxide
+	url = https://github.com/dnaq/sodiumoxide.git
+[submodule "src/Rust/rust-openssl"]
+	path = src/Rust/rust-openssl
+	url = https://github.com/sfackler/rust-openssl.git
+[submodule "src/Rust/rust-crypto"]
+	path = src/Rust/rust-crypto
+	url = https://github.com/DaGenix/rust-crypto.git
+[submodule "src/Rust/tars"]
+	path = src/Rust/tars
+	url = https://github.com/seb-m/tars.git
+[submodule "src/Rust/nadeko"]
+	path = src/Rust/nadeko
+	url = https://github.com/klutzy/nadeko.git
+[submodule "src/Rust/suruga"]
+	path = src/Rust/suruga
+	url = https://github.com/klutzy/suruga.git
+[submodule "src/Rust/cyclometer"]
+	path = src/Rust/cyclometer
+	url = https://github.com/cryptosphere/cyclometer.git
+[submodule "src/Tools/time_trial"]
+	path = src/Tools/time_trial
+	url = https://github.com/dmayer/time_trial.git
