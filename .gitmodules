@@ -37,3 +37,6 @@
 [submodule "src/Java/ximix"]
         path = src/Java/ximix
         url = https://github.com/cwgit/ximix.git
+[submodule "src/Ruby/rbnacl"]
+	path = src/Ruby/rbnacl
+	url = https://github.com/cryptosphere/rbnacl
