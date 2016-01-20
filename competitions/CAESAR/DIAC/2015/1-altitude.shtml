@@ -1,0 +1,190 @@
+
+
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>DIAC 2015 - Directions in Authenticated Ciphers - Singapore</title>
+		<meta name="author" content="IACR" />
+		<meta name="description" content="5th Asian Workshop on Symmetric Key Cryptography organized between Sept 30 and Oct 3 in NTU, Singapore." />
+		<meta name="keywords" content="DIAC 2015, Directions in Authenticated Ciphers, Singapore, Cryptography" />
+		<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1" />
+		<meta http-equiv="Content-Script-Type" content="text/javascript" />
+		<meta http-equiv="Content-Style-Type" content="text/css" />
+		<link rel="stylesheet" type="text/css" href="lib/layout.css" />
+		<link rel="stylesheet" type="text/css" href="lib/makeup.css" />
+		<link rel="stylesheet" type="text/css" href="lib/print.css" media="print" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-58568110-1', 'auto');
+  ga('send', 'pageview');
+</script>
+	</head>
+<body>
+	<table id="container" border="0" cellpadding="0" cellspacing="0">
+
+			<tr id="headerrow">
+				<td id="leftheader">
+					<div id="leftheadertext">
+						DIAC 2015<br />27 - 29 Sept<br />Singapore
+					</div>
+				</td>
+				<td id="headerbar">
+					<div id="rightheadertext" > DIAC 2015: Directions in Authenticated Ciphers </div>
+					<hr id="headerrule" />
+				</td>
+			</tr>
+
+			<tr id="middlerow">
+				<td id="menubar" valign="top">
+					<div id="menu">
+
+						<!-- Home -->
+						<div class="submenu">
+							<div class="menuhead">
+								<a href="./">Home</a>
+							</div>
+						</div>
+
+						<!-- Event -->
+						<div class="submenu">
+
+							<div class="menuhead">
+								Event	
+							</div>
+							
+							<div class="menuitem"> 
+								<a href="program.shtml">Program &raquo;</a>
+							</div>
+							
+							<div class="menuitem"> 
+								<a href="accepted.shtml">Accepted talks &raquo;</a>
+							</div>
+							
+							<div class="menuitem"> 
+								<a href="cfp.shtml">Call for papers &raquo;</a>
+							</div>
+							
+							<div class="menuitem"> 
+								<a href="submission.shtml">Paper submission &raquo;</a>
+							</div>
+							
+							<div class="menuitem">
+								<a href="contact.shtml">Contact &raquo;</a>
+							</div>
+				  		</div>
+
+						<!-- Call for Participation -->
+						<div class="submenu">
+							<div class="menuhead">
+								<a href="registration.shtml">Registration &raquo;</a>
+							</div>
+						</div>
+
+						<!-- Practical info -->
+						<div class="submenu">
+
+							<div class="menuhead">
+								Practical info
+							</div>
+							
+							<div class="menuitem">
+								<a href="venue.shtml">Venue &raquo;</a>
+							</div>
+							
+							<div class="menuitem">
+								<a href="1-altitude.shtml">Drink @ 1-Altitude &raquo;</a>
+							</div>
+
+							<div class="menuitem">
+								<a href="accomodation.shtml">Accomodation &raquo;</a>
+							</div>
+
+							<div class="menuitem">
+								<a href="about_singapore.shtml">About Singapore &raquo;</a>
+							</div>
+
+							<div class="menuitem">
+								<a href="visa.shtml">VISA to Singapore &raquo;</a>
+							</div>
+
+						</div>
+
+						<!-- Sponsors -->
+						<div class="submenu">
+							<div class="menuhead">
+								<a href="sponsors.shtml">Sponsors &raquo;</a>
+							</div>
+						</div>
+
+					</div>
+				</td>
+			<td id="contentcell">
+				<!--<div id="iacrlogo"><a href="http://www.iacr.org"><img src="images/iacrlogo.100.gif" alt="IACR logo" /></a></div>-->
+				<div id="pagetitle">DIAC 2015</div>
+				<div id="content">
+				
+
+<!-- start content -->
+
+<h1>Drink coupon @ 1-Altitude</h1>
+
+<p>
+	On Monday night (Sept. 28), registered attendees of DIAC 2015 are invited to the <b>1-Altitude</b> in Singapore, located at the top floor of One Raffles Place.<br/>
+	<br/>
+	Upon registration, participants will receive <b>one coupon</b> including one entrance to the 1-Altitude, as well as one drink to be redeemed at the bar.<br/>
+	<br/>
+	Participants can choose to go <b>anytime between 6:30pm and 12am on Monday 28</b> to redeem their drink.<br/>
+	<br/>
+	Two tables are reserved for guests from DIAC 2015: <b>B24 and B25</b>.
+</p>
+
+<center>
+    <img src="images/1-altitude.jpg" width="600px" /><br/>
+    <small>Source: 1-altitude.com</small>
+</center>
+
+
+<!----------------------------------------------------------------------> 
+<h2>Location</h2>
+
+The 1-altitude (located at One Raffles Place) is a nice walk away from Novotel along the Singapore river.<br/>
+<br/>
+
+<center>
+	<img src="images/1-altitude-maps.png" width="600px" />
+</center>
+
+<!-- end content -->
+				</div>
+				</td>
+			</tr>
+			<tr id="footerrow">
+				<td id="leftfooter">
+
+				</td>
+				<td id="footerbar">
+					<hr id="footerrule" />
+					<div id="footertext">
+						Contact webmaster J&eacute;r&eacute;my Jean at <tt>diac2015singapore@gmail.com</tt><br />
+						Template designed by KU Leuven - COSIC // Photo by J&eacute;r&eacute;my Jean.<br/>
+						Last modification: 21 September 2015.
+					</div>
+				</td>
+			</tr>
+
+		</table>
+		<script type="text/javascript">
+			img = Math.floor((Math.random() * 3) + 1);
+			imageUrl = "images/SingaporeJeremy_"+img+".jpg";
+			document.getElementById("headerbar").style.backgroundImage = "url(" + imageUrl + ")";
+		</script>
+	</body>
+</html>

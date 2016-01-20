@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0044)http://hyperelliptic.org/DIAC/abstracts.html -->
+<html class=""><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>Abstracts for DIAC</title>
+
+<style type="text/css"></style><style type="text/css"></style><link rel="stylesheet" type="text/css" href="chrome-extension://pkehgijcmpdhfbdbbnkijodmdjhbjlgp/skin/socialwidgets.css"></head>
+<body text="black" bgcolor="#A9F5A9" link="#191970" vlink="#191970" class=" hasGoogleVoiceExt">
+<center><h4>Abstracts and slides of invited talks </h4></center>
+<ul>
+<a name="Daemen"></a> 
+<li><a target="top" href="https://en.wikipedia.org/wiki/Joan_Daemen" class="">Joan Daemen</a> (STMicroelectronics, Belgium)<br>
+<i>Permutation-based encryption, authentication and authenticated encryption</i><br>
+<a href="http://hyperelliptic.org/DIAC/slides/PermutationDIAC2012.pdf" class="">slides</a>.<br>
+In the last few years, Guido Bertoni, Michaël Peeters, Gilles Van Assche and I have proposed modes for encryption, MAC and authenticated encryption based on fixed-width permutations by means of the sponge and duplex constructions. Our permutation-based approach is scalable and suitable for high-end CPUs as well as resource-constrained platforms. The latter is illustrated by the small Keccak instances and the sponge functions Quark, Photon and Spongent, all addressing lightweight applications.<br>
+
+The sponge and duplex constructions split the width b of the permutation in a capacity c and a rate r: b = r + c. They process r bits per call to the permutation and their generic security strength level in unkeyed mode is c/2. A desired security strength level of k bits limits the rate to at most b - 2k. For keyed modes and bounded data complexity, a security strength level above c/2 can be proven. For MAC computation, encryption and even authenticated encryption with a passive adversary, it comes very close to c. This allows increasing the rate to almost b - k. Moreover, for most use cases the requirements on the underlying permutation can be relaxed, allowing to increase the efficiency even further.<br>
+
+Clearly permutation-based constructions are not new. Concrete examples that are older than the sponge construction include the hash functions Snefru, FFT-Hash and SMASH, the Even-Mansour block cipher construction, stream ciphers Salsa and ChaCha and even Pelican-MAC. In my talk I will present our permutation-based approach in this context and will try to convince you that it is quite competitive with block cipher based modes.
+<br><br>
+</li>
+
+<a name="McGrew"></a>
+<li><a target="top" href="http://www.mindspring.com/~dmcgrew/dam.htm" class="">David McGrew</a> (Cisco Systems, USA)<br>
+<i>Authenticated Encryption in Practice</i><br>
+<a href="http://hyperelliptic.org/DIAC/slides/DIAC-mcgrew.pdf" class="">slides.</a><br>
+Over the last decade, authenticated encryption has become accepted as
+the appropriate way to provide symmetric confidentiality services.  It
+has been adopted into many standards, though in many cases it is
+currently an option that is not typically exercised.  This talk
+reviews issues that have arisen in the use of authenticated encryption
+in practice, and considers the role of authenticated encryption in
+cryptographic architectures.
+<br>
+<br>
+</li>
+
+<a name="Rogaway"></a>
+<li>
+<a target="top" href="http://www.cs.ucdavis.edu/~rogaway/" class="">Phillip Rogaway</a> (University of California, Davis, USA)
+<br>
+<i>The Evolution of Authenticated Encryption</i><br>
+<a href="http://hyperelliptic.org/DIAC/slides/sweden-rogaway-ae-2012b.pdf" class="">slides</a><br>
+Nowhere has the promise of practice-oriented provable security
+been more successful than in the area of authenticated encryption.
+In this talk I will look back and and survey how the provable-security approach has led not just to high-assurance blockcipher-based AE schemes, but, also, how it has led to a blossoming of security notions, attacks, design goals, and designs.
+<br><br>
+</li>
+<a name="Sarkar">
+</a>
+<li><a target="top" href="http://www.isical.ac.in/~palash/" class="">Palash Sarkar</a>
+(Indian Statistical Institute, Kolkata, India)
+<br>
+On Some Constructions for Authenticated Encryption with Associated Data<br>
+<a href="http://hyperelliptic.org/DIAC/slides/palash-DIAC12-talk.pdf" class="">slides</a><br>
+
+Two approaches to achieving authenticated encryption with associated
+data (AEAD) will be considered. <br>
+
+The first approach is to use certain block cipher modes of operations
+which make a single pass over the message. For this approach, both
+tweakable block cipher based constructions and direct constructions
+will be described. Both types of constructions yield families of AEAD
+functionalities which offer high efficiency along with other desirable
+features such as easy reconfigurability.<br>
+
+In the second approach, a stream cipher supporing an initialisation
+vector is used in conjunction with a hash function with provably low
+differential probabilities.  Several possibilities will be outlined,
+both with and without the requirement of authenticating associated
+data. This approach gives efficient solutions for stream ciphers which
+are either very fast in software or have very low hardware
+footprint.<br>
+
+Security of the constructions are derived using the `provable
+security' methodology for the single-user setting. Issues related to
+security in the multi-user setting will be briefly mentioned.
+<br><br>
+</li>
+</ul>
+
+<center><h4>Panel discussion: Requirements for Authenticated Encryption</h4></center>
+Bart Preneel (moderator)<br>
+Panelists are
+<a href="http://hyperelliptic.org/DIAC/slides/DIAC-requirements-panel-mcgrew.pdf" class="">David McGrew</a>,
+Mats Näslund,
+<a href="http://hyperelliptic.org/DIAC/slides/nyberg-panel.pdf" class="">Kaisa Nyberg</a>,
+Phil Rogaway<br>
+The links go to their slides, if provided.<br>
+
+
+<center><h4>Abstracts and slides of contributed talks</h4></center>
+<ul>
+<a name="Degabriele"></a>
+<li>Title: Stronger Security Guarantees for Authenticated Encryption Schemes<br>
+<a href="http://hyperelliptic.org/DIAC/slides/diac_jpd.pdf" class="">slides</a><br>
+Authors: Alexandra Boldyreva, <u>Jean Paul Degabriele</u>, Kenneth G. Paterson, and Martijn Stam<br>
+Affiliations: Georgia Institute of Technology; Royal Holloway, University of London; University of Bristol<br>
+We here refer to recent and upcoming research that is relevant to
+Authenticated Encryption (AE) schemes
+as used in practice. This research leads directly to novel design
+criteria for authenticated encryption schemes.
+The first piece of research considers the security of symmetric
+encryption in the presence of ciphertext
+fragmentation, which is a setting that commonly arises in practice.
+Recent attacks have shown that provably
+secure AE schemes may become insecure when used in this setting. We
+propose a theoretical framework
+for the analysis of AE schemes in the presence of ciphertext
+fragmentation. This framework enables us to
+study the relationship between confidentiality, the ability to hide
+boundaries between ciphertexts, and the
+resistance of schemes to Denial of Service attacks. It also leads to
+new designs for AE schemes. The second
+piece of research relates to distinguishable decryption failures. Most
+security proofs implicitly assume that
+an adversary is unable to distinguish distinct failure events that
+occur during the decryption of a ciphertext.
+Practice has shown that this assumption is not well justified:
+implementations often leak information that
+allows an adversary to distinguish among decryption failures, either
+through error messages or timing, thereby
+opening up avenues of attack. Our upcoming work analyses the security
+of AE schemes in the setting where
+failure events are distinguishable, providing new models and security
+relations for this setting. From this work,
+we can extract design criteria which protect implementations against
+such error-based side channel attacks.<br><br>
+</li>
+<a name="Bogdanov"></a>
+<li>
+Title: Lightweight AES-Based Authenticated Encryption<br>
+Authors: <u>Andrey Bogdanov</u>, Florian Mendel, Francesco Regazzoni and Vincent Rijmen<br>
+Affiliations: KU Leuven, Belgium, ALaRI - USI, Switzerland, TU Graz, Austria<br>
+In this paper, we propose an Authenticated Lightweight Encryption algorithm coined ALE. The basic operation of ALE is the AES round transformation and the AES-128 key schedule. ALE is an on-line single-pass authenticated encryption algorithm that supports optional associated data. Its security relies on using nonces. 
+<br>
+We provide an optimized low-area implementation of ALE in ASIC hardware and demonstrate that its area is about 2.5 kGE which is almost two times smaller than that of the lightweight implementations for AES-OCB and ASC-1 using the same lightweight AES engine. At the same time, it is at least 2.5 times more performant than the alternatives by requiring only about 4 AES rounds to both encrypt and authenticate a 128-bit data block.
+<br><br>
+</li>
+<a name="Lucks"></a>
+<li>
+Title: Hash-CFB<br>
+<a href="http://hyperelliptic.org/DIAC/slides/hash-cfb-talk.pdf" class="">slides</a><br>
+Authors: Christian Forler and David McGrew and <u>Stefan Lucks</u> and Jakob Wenzel<br>
+Affiliations: Bauhaus-University Weimar and Cisco Systems, USA<br>
+This paper presents a mode of operation for authenticated encryption -- with
+  the very unusual property of employing a hash function as the underlying
+  primitive, rather than a block cipher, used in  so many authenticated
+  encryption modes. This research has been motivated by the challenge to fit
+  secure cryptography into constrained devices --~some of these devices have
+  to use a hash function, anyway, and the challenge is to avoid the usage of
+  an additional block cipher. Beyond that, our mode has some unique security
+  features, namely some form of resistance against side-channel attacks, and a
+  misuse-resistant and failure-friendly authentication.
+<br><br>
+</li>
+<a name="Gurkaynak"></a>
+<li>
+Title: Suggestions for Hardware Evaluation of Cryptographic Algorithms<br>
+<a href="http://hyperelliptic.org/DIAC/slides/frank-diac12.pdf" class="">slides</a><br>
+Authors: <u>Frank K. Gurkaynak</u><br>
+Affiliations: Microelectronics Design Center, ETH Zurich, Switzerland<br>
+Public competitions to determine new cryptographic standards such as the search for AES, SASC, SHA-3 have been very successful. Many researchers contribute to such competitions to evaluate different aspects of the candidates among others also the performance of hardware and software implementations. While significant effort has been put into hardware evaluations, somehow the result of these studies could not reliable be tabulated, at least not with the same efficiency as it was done for software evaluations. This paper investigates different shortcomings of current hardware evaluations and proposes changes to future calls, so that the results of hardware evaluators can be combined and compared more reliably.
+<br><br>
+</li>
+<a name="Wu"></a>
+<li>
+Title: AEGIS: A Fast Authenticated Encryption Algorithm<br>
+<a href="http://hyperelliptic.org/DIAC/slides/aegis_diac_presentation.pdf" class="">slides</a><br>
+Authors: <u>Hongjun Wu</u>, Bart Preneel<br>
+Affiliations: Nanyang Technological University, Katholieke Universiteit Leuven<br>
+This paper introduces a dedicated authenticated encryption algorithm AEGIS,
+which is efficient for protecting internet packets. AEGIS-128 uses five AES
+round functions to process a 16-byte message block (one step); AES-256 uses six
+AES round functions. On the Intel Sandy Bridge Core i5 processor, the speeds of
+AEGIS-128, AEGIS-256 are around 0.64 cycles/byte (cpb) and 0.71 cpb,
+respectively. Our analysis shows that AEGIS offers a very high security level.
+<br><br>
+</li>
+<a name="Aguilar"></a>
+<li>
+Title: Authenticated encryption in civilian space missions: context and requirements<br>
+<a href="http://hyperelliptic.org/DIAC/slides/ESA-Contribution-to-DIAC-2012.pdf" class="">slides</a><br>
+Authors: <u>Ignacio Aguilar Sanchez</u>, Daniel Fischer<br>
+Affiliations: European Space Agency<br>
+This white paper discusses issues, concerns, constraints and
+requirements for future authenticated encryption concepts in the context of
+space missions and spacecraft in particular. Following an introduction a
+brief description of the approach to securing space missions is given. The
+two fundamental security problems in protecting space mission operations
+affecting the end-to-end radio and data communications between spacecraft and
+ground systems are explained. Typical security function implementations in
+spacecraft are recalled. Finally, a brief discussion of each of the
+identified issues, concerns, constraints and requirements suggested to be
+considered for future authenticated encryption is provided.
+<br><br>
+</li>
+<a name="Aumasson"></a>
+<li>
+Title: SipHash: a fast short-input PRF<br>
+<a href="http://hyperelliptic.org/DIAC/slides/SipHash.pdf" class="">slides</a><br>
+Authors: <u>Jean-Philippe Aumasson</u> and Daniel J. Bernstein<br>
+Affiliations: NAGRA, Switzerland and University of Illinois at Chicago, IL, USA<br>
+SipHash is a family of pseudorandom functions optimized for short
+   inputs. Target applications include network traffic authentication
+   and hash-table lookups protected against hash-flooding
+   denial-of-service attacks. SipHash is simpler than MACs based on
+   universal hashing, and faster on short inputs. Compared to dedicated
+   designs for hash-table lookup, SipHash has well-defined security
+   goals and competitive performance. For example, SipHash processes a
+   16-byte input with a fresh key in 140 cycles on an AMD FX-8150
+   processor, which is much faster than state-of-the-art MACs. We
+   propose that hash tables switch to SipHash as a hash function.
+<br><br>
+</li>
+<a name="Quark"></a>
+<li>
+Title: Heavy Quark for secure AEAD<br>
+<a href="http://hyperelliptic.org/DIAC/slides/cQuark.pdf" class="">slides</a><br>
+Authors: <u>Jean-Philippe Aumasson</u> and Simon Knellwolf and Willi Meier<br>
+Affiliations: NAGRA, Switzerland and FHNW, Switzerland, and FHNW, Switzerland<br>
+Lightweight primitives are generally limited to 80- or 128-bit securit
+y, because lightweight applications seldom need more than
+this. However, non-lig htweight platforms like multimedia
+systems-on-chip would also greatly benefit fr om a smaller hardware
+footprint, as it reduces development and integration costs , and
+leaves more circuit area to another component, or to add another
+functiona lity. Such systems sometimes need up to 256-bit security,
+for example to ensure a consistent security level across
+primitives. This paper thus breaks with the t radition and proposes a
+256-bit authenticated encryption scheme with associated data (AEAD),
+based on the lightweight design Quark. We create a new Quark instan ce
+to use in a custom SpongeWrap mode, offering one-pass AEAD supporting
+arbitra ry interleaving of encrypted and associated data, as well as a
+range of trade-of fs between security and usage limit. More than a new
+primitive, this work provid es insights on the scalability of
+lightweight designs to higher security levels: our new design c-Quark
+has internal state of 384 bits, and allows the implement ation of
+256-bit AEAD with in the order of 4000 GE.<br><br>
+</li>
+<a name="Iwata"></a>
+<li>
+Title: Cryptanalysis of EAX-Prime<br>
+<a href="http://hyperelliptic.org/DIAC/slides/DIAC-eaxprime-03.pdf" class="">slides</a><br>
+Authors: Kazuhiko Minematsu, Stefan Lucks, Hiraku Morita, and <u>Tetsu Iwata</u><br>
+Affiliations: NEC corporation (Minematsu), Bauhaus-Universitat Weimar (Lucks), Nagoya University (Morita and Iwata)<br>
+EAX' (EAX-prime) is an authenticated encryption (AE) specified by ANSI
+C12.22 as a standard security function used for a smart grid. EAX' is
+based on EAX, a provably secure AE proposed by Bellare, Rogaway, and
+Wagner.<br>
+This paper presents simple and efficient forgery attacks, distinguishers,
+and message recovery attacks against EAX' using single-block cleartext
+and plaintext.
+<br><br>
+</li>
+<a name="Aoki"></a>
+<li>
+Title: How Fast Can a Two-Pass Mode Go?  A Parallel Deterministic Authenticated Encryption Mode for AES-NI (Extended Abstract of Work in Progress)<br>
+<a href="http://hyperelliptic.org/DIAC/slides/aoki.pdf" class="">slides</a><br>
+Authors: <u>Kazumaro Aoki</u>, Tetsu Iwata, Kan Yasuda<br>
+Affiliations: NTT, Nagoya University<br>
+We present a mode of operation for deterministic authenticated
+encryption. Our design is entirely blockcipher-based, like SIV
+from Eurocrypt 2006. Unlike SIV, however, our mode is fully parallelizable,
+both in its authentication and encryption parts. The basic idea is
+a combination of PMAC for authentication and the CTR mode for encryption.
+Our implementation yields 2.047 cpb for Intel's Sandy Bridge
+microarchitecture, which contrasts with 2.900 cpb of the GCM mode in
+OpenSSL 1.0.1c.
+<br><br>
+</li>
+<a name="Saarinen"></a>
+<li>
+Title: A Do-It-All-Cipher for RFID: Design Requirements (Extended Abstract)<br>
+Authors: <u>Markku-Juhani O. Saarinen</u> and Daniel Engels<br>
+Affiliations: Revere Security, United States of America<br>
+Recent years have seen significant progress in the development of
+	lightweight symmetric cryptoprimitives. The main concern of the 
+	designers of these primitives has been to minimize the number of 
+	gate equivalents (GEs) of the hardware implementation. However, 
+	there are numerous additional requirements that are present in 
+	real-life RFID systems. We give an overview of requirements 
+	emerging or already present in the widely deployed EPCGlobal Gen2 
+	and ISO / IEC 18000-63 passive UHF RFID air interface standards. 
+	Lightweight stateful authenticated encryption algorithms seem to 
+	offer the most complete set of features for this purpose. In this 
+	work we give a Gen2-focused "lessons learned" overview of the 
+	challenges and related developments in RFID cryptography and
+	propose what we see as appropriate design criteria for a cipher 
+	(dubbed "Do-It-All-Cipher" or DIAC) for the Internet of Things. 
+	We also comment on the applicability of NSA's new SIMON and 
+	SPECK proposals for this purpose.<br><br>
+</li>
+<a name="Mansouri"></a>
+<li>
+Title: An Improved Hardware Implementation of the Grain-128a Stream Cipher<br>
+<a href="http://hyperelliptic.org/DIAC/slides/DIACShohrehSharifPdf.pdf" class="">slides</a>. <br>
+The software 
+mentioned on the slides can be found at <a href="http://web.it.kth.se/~dubrova/fib2gal.html" class="">http://web.it.kth.se/~dubrova/fib2gal.html</a>.<br>
+Authors: <u>Shohreh Sharif Mansouri</u> and Elena Dubrova<br>
+Affiliations: KTH<br>
+In this paper we study efficient hardware implementations of the
+Grain-128a family of stream ciphers.  To achieve higher throughput compared to
+the standard design, we apply four different techniques in combination:
+isolation of the authentication section, Fibonacci-to-Galois transformation of
+the feedback shift registers, multi-frequency implementation and internal
+pipelining. The combined effects of all these techniques, when a two-level
+pipeline is used, enable an average 52% increase in throughput among all the
+ciphers. All techniques are standard cell techniques and are therefore easy to
+apply. They introduce an average 9% area penalty and an average 5% power
+overhead.<br><br>
+</li>
+</ul>
+
+
+
+
+<div id="directions_extension" style="display: none;"></div></body><style type="text/css">embed[type*="application/x-shockwave-flash"],embed[src*=".swf"],object[type*="application/x-shockwave-flash"],object[codetype*="application/x-shockwave-flash"],object[src*=".swf"],object[codebase*="swflash.cab"],object[classid*="D27CDB6E-AE6D-11cf-96B8-444553540000"],object[classid*="d27cdb6e-ae6d-11cf-96b8-444553540000"],object[classid*="D27CDB6E-AE6D-11cf-96B8-444553540000"]{	display: none !important;}</style></html>
