@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<!-- saved from url=(0047)https://cryptocoding.net/index.php/Coding_rules -->
+<html lang="en" dir="ltr" class="client-js"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Coding rules - Cryptography Coding Standard</title>
+<meta charset="UTF-8">
+<meta name="generator" content="MediaWiki 1.20.2">
+<link rel="shortcut icon" href="https://cryptocoding.net/favicon.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="https://cryptocoding.net/opensearch_desc.php" title="Cryptography Coding Standard (en)">
+<link rel="EditURI" type="application/rsd+xml" href="https://cryptocoding.net/api.php?action=rsd">
+<link rel="alternate" type="application/atom+xml" title="Cryptography Coding Standard Atom feed" href="https://cryptocoding.net/index.php?title=Special:RecentChanges&amp;feed=atom">
+<link rel="stylesheet" href="./Coding rules - Cryptography Coding Standard_files/load.php">
+<style>.mw-collapsible-toggle{float:right} li .mw-collapsible-toggle{float:none} .mw-collapsible-toggle-li{list-style:none}
+/* cache key: cryptocoding:resourceloader:filter:minify-css:7:4250852ed2349a0d4d0fc6509a3e7d4c */.suggestions{overflow:hidden;position:absolute;top:0;left:0;width:0;border:none;z-index:1099;padding:0;margin:-1px -1px 0 0} html > body .suggestions{margin:-1px 0 0 0}.suggestions-special{position:relative;background-color:white;cursor:pointer;border:solid 1px #aaaaaa;padding:0;margin:0;margin-top:-2px;display:none;padding:0.25em 0.25em;line-height:1.25em}.suggestions-results{background-color:white;cursor:pointer;border:solid 1px #aaaaaa;padding:0;margin:0}.suggestions-result{color:black;margin:0;line-height:1.5em;padding:0.01em 0.25em;text-align:left}.suggestions-result-current{background-color:#4C59A6;color:white}.suggestions-special .special-label{color:gray;text-align:left}.suggestions-special .special-query{color:black;font-style:italic;text-align:left}.suggestions-special .special-hover{background-color:silver}.suggestions-result-current .special-label,.suggestions-result-current .special-query{color:white}.autoellipsis-matched,.highlight{font-weight:bold}
+/* cache key: cryptocoding:resourceloader:filter:minify-css:7:9780324491b653a3780e2d029bdc140c */</style><meta name="ResourceLoaderDynamicStyles" content="">
+<style>a:lang(ar),a:lang(ckb),a:lang(fa),a:lang(kk-arab),a:lang(mzn),a:lang(ps),a:lang(ur){text-decoration:none}
+/* cache key: cryptocoding:resourceloader:filter:minify-css:7:f50a7b60c8af6c73a20ffe422829bd05 */</style>
+
+<script src="./Coding rules - Cryptography Coding Standard_files/load(1).php"></script><style type="text/css"></style><style type="text/css"></style><script src="./Coding rules - Cryptography Coding Standard_files/load(2).php"></script>
+<script>if(window.mw){
+mw.config.set({"wgCanonicalNamespace":"","wgCanonicalSpecialPageName":false,"wgNamespaceNumber":0,"wgPageName":"Coding_rules","wgTitle":"Coding rules","wgCurRevisionId":163,"wgArticleId":9,"wgIsArticle":true,"wgAction":"view","wgUserName":null,"wgUserGroups":["*"],"wgCategories":[],"wgBreakFrames":false,"wgPageContentLanguage":"en","wgSeparatorTransformTable":["",""],"wgDigitTransformTable":["",""],"wgDefaultDateFormat":"dmy","wgMonthNames":["","January","February","March","April","May","June","July","August","September","October","November","December"],"wgMonthNamesShort":["","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"wgRelevantPageName":"Coding_rules","wgRestrictionEdit":[],"wgRestrictionMove":[]});
+}</script><script>if(window.mw){
+mw.loader.implement("user.options",function(){mw.user.options.set({"ccmeonemails":0,"cols":80,"date":"default","diffonly":0,"disablemail":0,"disablesuggest":0,"editfont":"default","editondblclick":0,"editsection":1,"editsectiononrightclick":0,"enotifminoredits":0,"enotifrevealaddr":0,"enotifusertalkpages":1,"enotifwatchlistpages":0,"extendwatchlist":0,"externaldiff":0,"externaleditor":0,"fancysig":0,"forceeditsummary":0,"gender":"unknown","hideminor":0,"hidepatrolled":0,"imagesize":2,"justify":0,"math":1,"minordefault":0,"newpageshidepatrolled":0,"nocache":0,"noconvertlink":0,"norollbackdiff":0,"numberheadings":0,"previewonfirst":0,"previewontop":1,"quickbar":5,"rcdays":7,"rclimit":50,"rememberpassword":0,"rows":25,"searchlimit":20,"showhiddencats":0,"showjumplinks":1,"shownumberswatching":1,"showtoc":1,"showtoolbar":1,"skin":"vector","stubthreshold":0,"thumbsize":2,"underline":2,"uselivepreview":0,"usenewrc":0,"watchcreations":0,"watchdefault":0,"watchdeletion":0,"watchlistdays":3,
+"watchlisthideanons":0,"watchlisthidebots":0,"watchlisthideliu":0,"watchlisthideminor":0,"watchlisthideown":0,"watchlisthidepatrolled":0,"watchmoves":0,"wllimit":250,"variant":"en","language":"en","searchNs0":true,"searchNs1":false,"searchNs2":false,"searchNs3":false,"searchNs4":false,"searchNs5":false,"searchNs6":false,"searchNs7":false,"searchNs8":false,"searchNs9":false,"searchNs10":false,"searchNs11":false,"searchNs12":false,"searchNs13":false,"searchNs14":false,"searchNs15":false});;},{},{});mw.loader.implement("user.tokens",function(){mw.user.tokens.set({"editToken":"+\\","watchToken":false});;},{},{});
+/* cache key: cryptocoding:resourceloader:filter:minify-js:7:7330ebaa3a8da3f7992caf476ddb8efd */
+}</script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.page.startup","mediawiki.legacy.wikibits","mediawiki.legacy.ajax"]);
+}</script><script type="text/javascript" src="./Coding rules - Cryptography Coding Standard_files/load(3).php"></script>
+<style type="text/css">/*<![CDATA[*/
+.source-c {line-height: normal;}
+.source-c li, .source-c pre {
+	line-height: normal; border: 0px none white;
+}
+/**
+ * GeSHi Dynamically Generated Stylesheet
+ * --------------------------------------
+ * Dynamically generated stylesheet for c
+ * CSS class: source-c, CSS id: 
+ * GeSHi (C) 2004 - 2007 Nigel McNie, 2007 - 2008 Benny Baumann
+ * (http://qbnz.com/highlighter/ and http://geshi.org/)
+ * --------------------------------------
+ */
+.c.source-c .de1, .c.source-c .de2 {font: normal normal 1em/1.2em monospace; margin:0; padding:0; background:none; vertical-align:top;}
+.c.source-c  {font-family:monospace;}
+.c.source-c .imp {font-weight: bold; color: red;}
+.c.source-c li, .c.source-c .li1 {font-weight: normal; vertical-align:top;}
+.c.source-c .ln {width:1px;text-align:right;margin:0;padding:0 2px;vertical-align:top;}
+.c.source-c .li2 {font-weight: bold; vertical-align:top;}
+.c.source-c .kw1 {color: #b1b100;}
+.c.source-c .kw2 {color: #000000; font-weight: bold;}
+.c.source-c .kw3 {color: #000066;}
+.c.source-c .kw4 {color: #993333;}
+.c.source-c .co1 {color: #666666; font-style: italic;}
+.c.source-c .co2 {color: #339933;}
+.c.source-c .coMULTI {color: #808080; font-style: italic;}
+.c.source-c .es0 {color: #000099; font-weight: bold;}
+.c.source-c .es1 {color: #000099; font-weight: bold;}
+.c.source-c .es2 {color: #660099; font-weight: bold;}
+.c.source-c .es3 {color: #660099; font-weight: bold;}
+.c.source-c .es4 {color: #660099; font-weight: bold;}
+.c.source-c .es5 {color: #006699; font-weight: bold;}
+.c.source-c .br0 {color: #009900;}
+.c.source-c .sy0 {color: #339933;}
+.c.source-c .st0 {color: #ff0000;}
+.c.source-c .nu0 {color: #0000dd;}
+.c.source-c .nu6 {color: #208080;}
+.c.source-c .nu8 {color: #208080;}
+.c.source-c .nu12 {color: #208080;}
+.c.source-c .nu16 {color:#800080;}
+.c.source-c .nu17 {color:#800080;}
+.c.source-c .nu18 {color:#800080;}
+.c.source-c .nu19 {color:#800080;}
+.c.source-c .me1 {color: #202020;}
+.c.source-c .me2 {color: #202020;}
+.c.source-c .ln-xtra, .c.source-c li.ln-xtra, .c.source-c div.ln-xtra {background-color: #ffc;}
+.c.source-c span.xtra { display:block; }
+
+/*]]>*/
+</style><style type="text/css">/*<![CDATA[*/
+.source-asm {line-height: normal;}
+.source-asm li, .source-asm pre {
+	line-height: normal; border: 0px none white;
+}
+/**
+ * GeSHi Dynamically Generated Stylesheet
+ * --------------------------------------
+ * Dynamically generated stylesheet for asm
+ * CSS class: source-asm, CSS id: 
+ * GeSHi (C) 2004 - 2007 Nigel McNie, 2007 - 2008 Benny Baumann
+ * (http://qbnz.com/highlighter/ and http://geshi.org/)
+ * --------------------------------------
+ */
+.asm.source-asm .de1, .asm.source-asm .de2 {font: normal normal 1em/1.2em monospace; margin:0; padding:0; background:none; vertical-align:top;}
+.asm.source-asm  {font-family:monospace;}
+.asm.source-asm .imp {font-weight: bold; color: red;}
+.asm.source-asm li, .asm.source-asm .li1 {font-weight: normal; vertical-align:top;}
+.asm.source-asm .ln {width:1px;text-align:right;margin:0;padding:0 2px;vertical-align:top;}
+.asm.source-asm .li2 {font-weight: bold; vertical-align:top;}
+.asm.source-asm .kw1 {color: #00007f; font-weight: bold;}
+.asm.source-asm .kw2 {color: #0000ff;}
+.asm.source-asm .kw3 {color: #b00040;}
+.asm.source-asm .kw4 {color: #46aa03; font-weight: bold;}
+.asm.source-asm .kw5 {color: #0000ff; font-weight: bold;}
+.asm.source-asm .kw6 {color: #0000ff; font-weight: bold;}
+.asm.source-asm .co1 {color: #666666; font-style: italic;}
+.asm.source-asm .co2 {color: #adadad; font-style: italic;}
+.asm.source-asm .es0 {color: #000099; font-weight: bold;}
+.asm.source-asm .br0 {color: #009900; font-weight: bold;}
+.asm.source-asm .sy1 {color: #339933;}
+.asm.source-asm .sy2 {color: #0000ff; font-weight: bold;}
+.asm.source-asm .st0 {color: #7f007f;}
+.asm.source-asm .nu0 {color: #ff0000;}
+.asm.source-asm .ln-xtra, .asm.source-asm li.ln-xtra, .asm.source-asm div.ln-xtra {background-color: #ffc;}
+.asm.source-asm span.xtra { display:block; }
+
+/*]]>*/
+</style><!--[if lt IE 7]><style type="text/css">body{behavior:url("/skins/vector/csshover.min.htc")}</style><![endif]--><link rel="stylesheet" type="text/css" href="chrome-extension://pkehgijcmpdhfbdbbnkijodmdjhbjlgp/skin/socialwidgets.css"></head><style type="text/css">embed[type*="application/x-shockwave-flash"],embed[src*=".swf"],object[type*="application/x-shockwave-flash"],object[codetype*="application/x-shockwave-flash"],object[src*=".swf"],object[codebase*="swflash.cab"],object[classid*="D27CDB6E-AE6D-11cf-96B8-444553540000"],object[classid*="d27cdb6e-ae6d-11cf-96b8-444553540000"],object[classid*="D27CDB6E-AE6D-11cf-96B8-444553540000"]{	display: none !important;}</style>
+<body class="mediawiki ltr sitedir-ltr ns-0 ns-subject page-Coding_rules skin-vector action-view vector-animateLayout hasGoogleVoiceExt">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content" class="mw-body">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading"><span dir="auto">Coding rules</span></h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+								<!-- tagline -->
+				<div id="siteSub">From Cryptography Coding Standard</div>
+				<!-- /tagline -->
+								<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav" class="mw-jump">
+					Jump to:					<a href="https://cryptocoding.net/index.php/Coding_rules#mw-head">navigation</a>, 					<a href="https://cryptocoding.net/index.php/Coding_rules#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodycontent -->
+				<div id="mw-content-text" lang="en" dir="ltr" class="mw-content-ltr"><p><br>
+This page lists coding rules with for each a description of the problem addressed (with a concrete example of failure), and then one or more solutions (with example code snippets).
+</p><p><br>
+</p>
+<table id="toc" class="toc"><tbody><tr><td><div id="toctitle"><h2>Contents</h2><span class="toctoggle">&nbsp;[<a href="https://cryptocoding.net/index.php/Coding_rules#" class="internal" id="togglelink">hide</a>]&nbsp;</span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="https://cryptocoding.net/index.php/Coding_rules#Compare_secret_strings_in_constant_time"><span class="tocnumber">1</span> <span class="toctext">Compare secret strings in constant time</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="https://cryptocoding.net/index.php/Coding_rules#Problem"><span class="tocnumber">1.1</span> <span class="toctext">Problem</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="https://cryptocoding.net/index.php/Coding_rules#Solution"><span class="tocnumber">1.2</span> <span class="toctext">Solution</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-4"><a href="https://cryptocoding.net/index.php/Coding_rules#Avoid_branchings_controlled_by_secret_data"><span class="tocnumber">2</span> <span class="toctext">Avoid branchings controlled by secret data</span></a>
+<ul>
+<li class="toclevel-2 tocsection-5"><a href="https://cryptocoding.net/index.php/Coding_rules#Problem_2"><span class="tocnumber">2.1</span> <span class="toctext">Problem</span></a></li>
+<li class="toclevel-2 tocsection-6"><a href="https://cryptocoding.net/index.php/Coding_rules#Solution_2"><span class="tocnumber">2.2</span> <span class="toctext">Solution</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-7"><a href="https://cryptocoding.net/index.php/Coding_rules#Avoid_table_look-ups_indexed_by_secret_data"><span class="tocnumber">3</span> <span class="toctext">Avoid table look-ups indexed by secret data</span></a>
+<ul>
+<li class="toclevel-2 tocsection-8"><a href="https://cryptocoding.net/index.php/Coding_rules#Problem_3"><span class="tocnumber">3.1</span> <span class="toctext">Problem</span></a></li>
+<li class="toclevel-2 tocsection-9"><a href="https://cryptocoding.net/index.php/Coding_rules#Solution_3"><span class="tocnumber">3.2</span> <span class="toctext">Solution</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-10"><a href="https://cryptocoding.net/index.php/Coding_rules#Avoid_secret-dependent_loop_bounds"><span class="tocnumber">4</span> <span class="toctext">Avoid secret-dependent loop bounds</span></a>
+<ul>
+<li class="toclevel-2 tocsection-11"><a href="https://cryptocoding.net/index.php/Coding_rules#Problem_4"><span class="tocnumber">4.1</span> <span class="toctext">Problem</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="https://cryptocoding.net/index.php/Coding_rules#Solution_4"><span class="tocnumber">4.2</span> <span class="toctext">Solution</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-13"><a href="https://cryptocoding.net/index.php/Coding_rules#Prevent_compiler_interference_with_security-critical_operations"><span class="tocnumber">5</span> <span class="toctext">Prevent compiler interference with security-critical operations</span></a>
+<ul>
+<li class="toclevel-2 tocsection-14"><a href="https://cryptocoding.net/index.php/Coding_rules#Problem_5"><span class="tocnumber">5.1</span> <span class="toctext">Problem</span></a></li>
+<li class="toclevel-2 tocsection-15"><a href="https://cryptocoding.net/index.php/Coding_rules#Solution_5"><span class="tocnumber">5.2</span> <span class="toctext">Solution</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-16"><a href="https://cryptocoding.net/index.php/Coding_rules#Prevent_confusion_between_secure_and_insecure_APIs"><span class="tocnumber">6</span> <span class="toctext">Prevent confusion between secure and insecure APIs</span></a>
+<ul>
+<li class="toclevel-2 tocsection-17"><a href="https://cryptocoding.net/index.php/Coding_rules#Problem_6"><span class="tocnumber">6.1</span> <span class="toctext">Problem</span></a></li>
+<li class="toclevel-2 tocsection-18"><a href="https://cryptocoding.net/index.php/Coding_rules#Bad_Solutions"><span class="tocnumber">6.2</span> <span class="toctext">Bad Solutions</span></a></li>
+<li class="toclevel-2 tocsection-19"><a href="https://cryptocoding.net/index.php/Coding_rules#Solution_6"><span class="tocnumber">6.3</span> <span class="toctext">Solution</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-20"><a href="https://cryptocoding.net/index.php/Coding_rules#Avoid_mixing_security_and_abstraction_levels_of_cryptographic_primitives_in_the_same_API_layer"><span class="tocnumber">7</span> <span class="toctext">Avoid mixing security and abstraction levels of cryptographic primitives in the same API layer</span></a>
+<ul>
+<li class="toclevel-2 tocsection-21"><a href="https://cryptocoding.net/index.php/Coding_rules#Problem_7"><span class="tocnumber">7.1</span> <span class="toctext">Problem</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="https://cryptocoding.net/index.php/Coding_rules#Solution_7"><span class="tocnumber">7.2</span> <span class="toctext">Solution</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-23"><a href="https://cryptocoding.net/index.php/Coding_rules#Use_unsigned_bytes_to_represent_binary_data"><span class="tocnumber">8</span> <span class="toctext">Use unsigned bytes to represent binary data</span></a>
+<ul>
+<li class="toclevel-2 tocsection-24"><a href="https://cryptocoding.net/index.php/Coding_rules#Problem_8"><span class="tocnumber">8.1</span> <span class="toctext">Problem</span></a></li>
+<li class="toclevel-2 tocsection-25"><a href="https://cryptocoding.net/index.php/Coding_rules#Solution_8"><span class="tocnumber">8.2</span> <span class="toctext">Solution</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-26"><a href="https://cryptocoding.net/index.php/Coding_rules#Use_separate_types_for_secret_and_non-secret_information"><span class="tocnumber">9</span> <span class="toctext">Use separate types for secret and non-secret information</span></a>
+<ul>
+<li class="toclevel-2 tocsection-27"><a href="https://cryptocoding.net/index.php/Coding_rules#Problem_9"><span class="tocnumber">9.1</span> <span class="toctext">Problem</span></a></li>
+<li class="toclevel-2 tocsection-28"><a href="https://cryptocoding.net/index.php/Coding_rules#Solution_9"><span class="tocnumber">9.2</span> <span class="toctext">Solution</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-29"><a href="https://cryptocoding.net/index.php/Coding_rules#Use_separate_types_for_different_types_of_information"><span class="tocnumber">10</span> <span class="toctext">Use separate types for different types of information</span></a>
+<ul>
+<li class="toclevel-2 tocsection-30"><a href="https://cryptocoding.net/index.php/Coding_rules#Problem_10"><span class="tocnumber">10.1</span> <span class="toctext">Problem</span></a></li>
+<li class="toclevel-2 tocsection-31"><a href="https://cryptocoding.net/index.php/Coding_rules#Solution_10"><span class="tocnumber">10.2</span> <span class="toctext">Solution</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-32"><a href="https://cryptocoding.net/index.php/Coding_rules#Clean_memory_of_secret_data"><span class="tocnumber">11</span> <span class="toctext">Clean memory of secret data</span></a>
+<ul>
+<li class="toclevel-2 tocsection-33"><a href="https://cryptocoding.net/index.php/Coding_rules#Problem_11"><span class="tocnumber">11.1</span> <span class="toctext">Problem</span></a></li>
+<li class="toclevel-2 tocsection-34"><a href="https://cryptocoding.net/index.php/Coding_rules#Solution_11"><span class="tocnumber">11.2</span> <span class="toctext">Solution</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-35"><a href="https://cryptocoding.net/index.php/Coding_rules#Use_strong_randomness"><span class="tocnumber">12</span> <span class="toctext">Use strong randomness</span></a>
+<ul>
+<li class="toclevel-2 tocsection-36"><a href="https://cryptocoding.net/index.php/Coding_rules#Problem_12"><span class="tocnumber">12.1</span> <span class="toctext">Problem</span></a></li>
+<li class="toclevel-2 tocsection-37"><a href="https://cryptocoding.net/index.php/Coding_rules#Bad_solutions_2"><span class="tocnumber">12.2</span> <span class="toctext">Bad solutions</span></a></li>
+<li class="toclevel-2 tocsection-38"><a href="https://cryptocoding.net/index.php/Coding_rules#Solution_12"><span class="tocnumber">12.3</span> <span class="toctext">Solution</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></tbody></table>
+<h4> <span class="mw-headline" id="Compare_secret_strings_in_constant_time">Compare secret strings in constant time</span></h4>
+<h5> <span class="mw-headline" id="Problem">Problem</span></h5>
+<p>String comparisons performed byte-per-byte may be exploited in timing attacks, for example in order to forge MACs (see <a rel="nofollow" class="external text" href="http://rdist.root.org/2009/05/28/timing-attack-in-google-keyczar-library/">this</a> <a rel="nofollow" class="external text" href="http://codahale.com/a-lesson-in-timing-attacks/">vulnerability</a> in Google's <a rel="nofollow" class="external text" href="https://code.google.com/p/keyczar/">Keyczar</a> crypto library).
+</p><p>Built-in comparison functions such as C's <code>memcmp</code>, Java's <code>Arrays.equals</code>, or Python's <code>==</code> test typically do not execute in constant time.
+For example, this is <a rel="nofollow" class="external text" href="http://research.microsoft.com/en-us/um/redmond/projects/invisible/src/crt/memcmp.c.htm">Microsoft CRT</a>'s implementation of <code>memcmp</code>:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1">EXTERN_C <span class="kw4">int</span> __cdecl <span class="kw3">memcmp</span><span class="br0">(</span><span class="kw4">const</span> <span class="kw4">void</span> <span class="sy0">*</span>Ptr1<span class="sy0">,</span> <span class="kw4">const</span> <span class="kw4">void</span> <span class="sy0">*</span>Ptr2<span class="sy0">,</span> <span class="kw4">size_t</span> Count<span class="br0">)</span>
+<span class="br0">{</span>
+    INT v <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+    BYTE <span class="sy0">*</span>p1 <span class="sy0">=</span> <span class="br0">(</span>BYTE <span class="sy0">*</span><span class="br0">)</span>Ptr1<span class="sy0">;</span>
+    BYTE <span class="sy0">*</span>p2 <span class="sy0">=</span> <span class="br0">(</span>BYTE <span class="sy0">*</span><span class="br0">)</span>Ptr2<span class="sy0">;</span>
+&nbsp;
+    <span class="kw1">while</span><span class="br0">(</span>Count<span class="sy0">--</span> <span class="sy0">&gt;</span> <span class="nu0">0</span> <span class="sy0">&amp;&amp;</span> v <span class="sy0">==</span> <span class="nu0">0</span><span class="br0">)</span> <span class="br0">{</span>
+        v <span class="sy0">=</span> <span class="sy0">*</span><span class="br0">(</span>p1<span class="sy0">++</span><span class="br0">)</span> <span class="sy0">-</span> <span class="sy0">*</span><span class="br0">(</span>p2<span class="sy0">++</span><span class="br0">)</span><span class="sy0">;</span>
+    <span class="br0">}</span>
+&nbsp;
+    <span class="kw1">return</span> v<span class="sy0">;</span>
+<span class="br0">}</span></pre></div></div>
+<h5> <span class="mw-headline" id="Solution">Solution</span></h5>
+<p>Use a constant-time comparison function, as used for example by NaCl: (example of <code>crypto_verify/16/ref/verify.c</code>)
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1"><span class="kw4">int</span> crypto_verify<span class="br0">(</span><span class="kw4">const</span> <span class="kw4">unsigned</span> <span class="kw4">char</span> <span class="sy0">*</span>x<span class="sy0">,</span><span class="kw4">const</span> <span class="kw4">unsigned</span> <span class="kw4">char</span> <span class="sy0">*</span>y<span class="br0">)</span>
+<span class="br0">{</span>
+  <span class="kw4">unsigned</span> <span class="kw4">int</span> differentbits <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+<span class="co2">#define F(i) differentbits |= x[i] ^ y[i];</span>
+  F<span class="br0">(</span><span class="nu0">0</span><span class="br0">)</span>
+  F<span class="br0">(</span><span class="nu0">1</span><span class="br0">)</span>
+  F<span class="br0">(</span><span class="nu0">2</span><span class="br0">)</span>
+  F<span class="br0">(</span><span class="nu0">3</span><span class="br0">)</span>
+  F<span class="br0">(</span><span class="nu0">4</span><span class="br0">)</span>
+  F<span class="br0">(</span><span class="nu0">5</span><span class="br0">)</span>
+  F<span class="br0">(</span><span class="nu0">6</span><span class="br0">)</span>
+  F<span class="br0">(</span><span class="nu0">7</span><span class="br0">)</span>
+  F<span class="br0">(</span><span class="nu0">8</span><span class="br0">)</span>
+  F<span class="br0">(</span><span class="nu0">9</span><span class="br0">)</span>
+  F<span class="br0">(</span><span class="nu0">10</span><span class="br0">)</span>
+  F<span class="br0">(</span><span class="nu0">11</span><span class="br0">)</span>
+  F<span class="br0">(</span><span class="nu0">12</span><span class="br0">)</span>
+  F<span class="br0">(</span><span class="nu0">13</span><span class="br0">)</span>
+  F<span class="br0">(</span><span class="nu0">14</span><span class="br0">)</span>
+  F<span class="br0">(</span><span class="nu0">15</span><span class="br0">)</span>
+  <span class="kw1">return</span> <span class="br0">(</span><span class="nu0">1</span> <span class="sy0">&amp;</span> <span class="br0">(</span><span class="br0">(</span>differentbits <span class="sy0">-</span> <span class="nu0">1</span><span class="br0">)</span> <span class="sy0">&gt;&gt;</span> <span class="nu0">8</span><span class="br0">)</span><span class="br0">)</span> <span class="sy0">-</span> <span class="nu0">1</span><span class="sy0">;</span> <span class="coMULTI">/* returns 0 if equal, 0xFF..FF otherwise */</span>
+<span class="br0">}</span></pre></div></div>
+<p>A more general version of the same technique can be found below:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1"><span class="kw4">int</span> util_cmp_const<span class="br0">(</span><span class="kw4">const</span> <span class="kw4">void</span> <span class="sy0">*</span> a<span class="sy0">,</span> <span class="kw4">const</span> <span class="kw4">void</span> <span class="sy0">*</span>b<span class="sy0">,</span> <span class="kw4">const</span> <span class="kw4">size_t</span> size<span class="br0">)</span> 
+<span class="br0">{</span>
+  <span class="kw4">const</span> <span class="kw4">unsigned</span> <span class="kw4">char</span> <span class="sy0">*</span>_a <span class="sy0">=</span> <span class="br0">(</span><span class="kw4">const</span> <span class="kw4">unsigned</span> <span class="kw4">char</span> <span class="sy0">*</span><span class="br0">)</span> a<span class="sy0">;</span>
+  <span class="kw4">const</span> <span class="kw4">unsigned</span> <span class="kw4">char</span> <span class="sy0">*</span>_b <span class="sy0">=</span> <span class="br0">(</span><span class="kw4">const</span> <span class="kw4">unsigned</span> <span class="kw4">char</span> <span class="sy0">*</span><span class="br0">)</span> b<span class="sy0">;</span>
+  <span class="kw4">unsigned</span> <span class="kw4">char</span> result <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+  <span class="kw4">size_t</span> i<span class="sy0">;</span>
+&nbsp;
+  <span class="kw1">for</span> <span class="br0">(</span>i <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> i <span class="sy0">&lt;</span> size<span class="sy0">;</span> i<span class="sy0">++</span><span class="br0">)</span> <span class="br0">{</span>
+    result <span class="sy0">|=</span> _a<span class="br0">[</span>i<span class="br0">]</span> <span class="sy0">^</span> _b<span class="br0">[</span>i<span class="br0">]</span><span class="sy0">;</span>
+  <span class="br0">}</span>
+&nbsp;
+  <span class="kw1">return</span> result<span class="sy0">;</span> <span class="coMULTI">/* returns 0 if equal, nonzero otherwise */</span>
+<span class="br0">}</span></pre></div></div>
+<p>Examples of constant-time tests and comparisons for 32-bit values:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1"><span class="co2">#include &lt;stdint.h&gt;</span>
+&nbsp;
+<span class="coMULTI">/* Unsigned comparisons */</span>
+<span class="coMULTI">/* Return 1 if condition is true, 0 otherwise */</span>
+<span class="kw4">int</span> ct_isnonzero_u32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw1">return</span> <span class="br0">(</span>x<span class="sy0">|-</span>x<span class="br0">)</span><span class="sy0">&gt;&gt;</span><span class="nu0">31</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="kw4">int</span> ct_iszero_u32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw1">return</span> <span class="nu0">1</span> <span class="sy0">^</span> ct_isnonzero_u32<span class="br0">(</span>x<span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="kw4">int</span> ct_neq_u32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="sy0">,</span> <span class="kw4">uint32_t</span> y<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw1">return</span> <span class="br0">(</span><span class="br0">(</span>x<span class="sy0">-</span>y<span class="br0">)</span><span class="sy0">|</span><span class="br0">(</span>y<span class="sy0">-</span>x<span class="br0">)</span><span class="br0">)</span><span class="sy0">&gt;&gt;</span><span class="nu0">31</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="kw4">int</span> ct_eq_u32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="sy0">,</span> <span class="kw4">uint32_t</span> y<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw1">return</span> <span class="nu0">1</span> <span class="sy0">^</span> ct_neq_u32<span class="br0">(</span>x<span class="sy0">,</span> y<span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="kw4">int</span> ct_lt_u32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="sy0">,</span> <span class="kw4">uint32_t</span> y<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw1">return</span> <span class="br0">(</span>x<span class="sy0">^</span><span class="br0">(</span><span class="br0">(</span>x<span class="sy0">^</span>y<span class="br0">)</span><span class="sy0">|</span><span class="br0">(</span><span class="br0">(</span>x<span class="sy0">-</span>y<span class="br0">)</span><span class="sy0">^</span>y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">&gt;&gt;</span><span class="nu0">31</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="kw4">int</span> ct_gt_u32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="sy0">,</span> <span class="kw4">uint32_t</span> y<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw1">return</span> ct_lt_u32<span class="br0">(</span>y<span class="sy0">,</span> x<span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="kw4">int</span> ct_le_u32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="sy0">,</span> <span class="kw4">uint32_t</span> y<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw1">return</span> <span class="nu0">1</span> <span class="sy0">^</span> ct_gt_u32<span class="br0">(</span>x<span class="sy0">,</span> y<span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="kw4">int</span> ct_ge_u32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="sy0">,</span> <span class="kw4">uint32_t</span> y<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw1">return</span> <span class="nu0">1</span> <span class="sy0">^</span> ct_lt_u32<span class="br0">(</span>x<span class="sy0">,</span> y<span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="coMULTI">/* Signed comparisons */</span>
+<span class="coMULTI">/* Return 1 if condition is true, 0 otherwise */</span>
+<span class="kw4">int</span> ct_isnonzero_s32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw1">return</span> <span class="br0">(</span>x<span class="sy0">|-</span>x<span class="br0">)</span><span class="sy0">&gt;&gt;</span><span class="nu0">31</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="kw4">int</span> ct_iszero_s32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw1">return</span> <span class="nu0">1</span> <span class="sy0">^</span> ct_isnonzero_s32<span class="br0">(</span>x<span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="kw4">int</span> ct_neq_s32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="sy0">,</span> <span class="kw4">uint32_t</span> y<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw1">return</span> <span class="br0">(</span><span class="br0">(</span>x<span class="sy0">-</span>y<span class="br0">)</span><span class="sy0">|</span><span class="br0">(</span>y<span class="sy0">-</span>x<span class="br0">)</span><span class="br0">)</span><span class="sy0">&gt;&gt;</span><span class="nu0">31</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="kw4">int</span> ct_eq_s32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="sy0">,</span> <span class="kw4">uint32_t</span> y<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw1">return</span> <span class="nu0">1</span> <span class="sy0">^</span> ct_neq_s32<span class="br0">(</span>x<span class="sy0">,</span> y<span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="kw4">int</span> ct_lt_s32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="sy0">,</span> <span class="kw4">uint32_t</span> y<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw1">return</span> <span class="br0">(</span>x<span class="sy0">^</span><span class="br0">(</span><span class="br0">(</span>x<span class="sy0">^</span><span class="br0">(</span>x<span class="sy0">-</span>y<span class="br0">)</span><span class="br0">)</span><span class="sy0">&amp;</span><span class="br0">(</span>y<span class="sy0">^</span><span class="br0">(</span>x<span class="sy0">-</span>y<span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="br0">)</span><span class="sy0">&gt;&gt;</span><span class="nu0">31</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="kw4">int</span> ct_gt_s32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="sy0">,</span> <span class="kw4">uint32_t</span> y<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw1">return</span> ct_lt_s32<span class="br0">(</span>y<span class="sy0">,</span> x<span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="kw4">int</span> ct_le_s32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="sy0">,</span> <span class="kw4">uint32_t</span> y<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw1">return</span> <span class="nu0">1</span> <span class="sy0">^</span> ct_gt_s32<span class="br0">(</span>x<span class="sy0">,</span> y<span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="kw4">int</span> ct_ge_s32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="sy0">,</span> <span class="kw4">uint32_t</span> y<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw1">return</span> <span class="nu0">1</span> <span class="sy0">^</span> ct_lt_s32<span class="br0">(</span>x<span class="sy0">,</span> y<span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="coMULTI">/* Generate a mask: 0xFFFFFFFF if bit&nbsp;!= 0, 0 otherwise */</span>
+<span class="kw4">uint32_t</span> ct_mask_u32<span class="br0">(</span><span class="kw4">uint32_t</span> bit<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw1">return</span> <span class="sy0">-</span><span class="br0">(</span><span class="kw4">uint32_t</span><span class="br0">)</span>ct_isnonzero_u32<span class="br0">(</span>bit<span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span>
+&nbsp;
+<span class="coMULTI">/* Conditionally return x or y depending on whether bit is set */</span>
+<span class="coMULTI">/* Equivalent to: return bit&nbsp;? x&nbsp;: y */</span>
+<span class="kw4">uint32_t</span> ct_select_u32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="sy0">,</span> <span class="kw4">uint32_t</span> y<span class="sy0">,</span> <span class="kw4">uint32_t</span> bit<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw4">uint32_t</span> m <span class="sy0">=</span> ct_mask_u32<span class="br0">(</span>bit<span class="br0">)</span><span class="sy0">;</span>
+    <span class="kw1">return</span> <span class="br0">(</span>x<span class="sy0">&amp;</span>m<span class="br0">)</span> <span class="sy0">|</span> <span class="br0">(</span>y<span class="sy0">&amp;</span>~m<span class="br0">)</span><span class="sy0">;</span>
+    <span class="coMULTI">/* return ((x^y)&amp;m)^y; */</span>
+<span class="br0">}</span></pre></div></div>
+<p><b>Note</b> The above measures are best effort: C and C++ have the <a rel="nofollow" class="external text" href="http://en.cppreference.com/w/cpp/language/as_if">as-if rule</a>, which gives the compiler freedom to implement operations in any arbitrary manner, provided the observable behavior (timing is not considered observable behavior in such languages) remains unchanged. Other languages such as <a rel="nofollow" class="external text" href="https://github.com/klutzy/nadeko#why">Rust</a> have similar semantics, and thus similar caveats apply. For example, consider the following variant of the above ct_select_u32:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1"><span class="kw4">uint32_t</span> ct_select_u32<span class="br0">(</span><span class="kw4">uint32_t</span> x<span class="sy0">,</span> <span class="kw4">uint32_t</span> y<span class="sy0">,</span> _Bool bit<span class="br0">)</span>
+<span class="br0">{</span>
+    <span class="kw4">uint32_t</span> m <span class="sy0">=</span> ct_mask_u32<span class="br0">(</span>bit<span class="br0">)</span><span class="sy0">;</span>
+    <span class="kw1">return</span> <span class="br0">(</span>x<span class="sy0">&amp;</span>m<span class="br0">)</span> <span class="sy0">|</span> <span class="br0">(</span>y<span class="sy0">&amp;</span>~m<span class="br0">)</span><span class="sy0">;</span>
+<span class="br0">}</span></pre></div></div>
+<p>When compiled with `clang-3.5 -O2 -m32 -march=i386, the result is 
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="asm source-asm"><pre class="de1">ct_select_u32<span class="sy1">:</span>                          
+	<span class="kw1">mov</span>	<span class="kw4">al</span><span class="sy1">,</span> <span class="kw6">byte</span> ptr <span class="br0">[</span><span class="kw4">esp</span> <span class="sy1">+</span> <span class="nu0">12</span><span class="br0">]</span>
+	<span class="kw1">test</span>	<span class="kw4">al</span><span class="sy1">,</span> <span class="kw4">al</span>
+	<span class="kw1">jne</span>	<span class="sy1">.</span>LBB0_1
+	<span class="kw1">lea</span>	<span class="kw4">eax</span><span class="sy1">,</span> <span class="kw6">dword</span> ptr <span class="br0">[</span><span class="kw4">esp</span> <span class="sy1">+</span> <span class="nu0">8</span><span class="br0">]</span>
+	<span class="kw1">mov</span>	<span class="kw4">eax</span><span class="sy1">,</span> <span class="kw6">dword</span> ptr <span class="br0">[</span><span class="kw4">eax</span><span class="br0">]</span>
+	<span class="kw1">ret</span>
+<span class="sy1">.</span>LBB0_1<span class="sy1">:</span>
+	<span class="kw1">lea</span>	<span class="kw4">eax</span><span class="sy1">,</span> <span class="kw6">dword</span> ptr <span class="br0">[</span><span class="kw4">esp</span> <span class="sy1">+</span> <span class="nu0">4</span><span class="br0">]</span>
+	<span class="kw1">mov</span>	<span class="kw4">eax</span><span class="sy1">,</span> <span class="kw6">dword</span> ptr <span class="br0">[</span><span class="kw4">eax</span><span class="br0">]</span>
+	<span class="kw1">ret</span></pre></div></div>
+<p>Due to branch predictor stalls, this potentially reveals the chosen value via a timing side-channel. Since compilers have essentially unlimited freedom to generate variable-time code, it is important to check the output assembly to verify that it is, indeed, constant-time.
+</p>
+<h4> <span class="mw-headline" id="Avoid_branchings_controlled_by_secret_data">Avoid branchings controlled by secret data</span></h4>
+<h5> <span class="mw-headline" id="Problem_2">Problem</span></h5>
+<p>If a conditional branching (<code>if</code>, <code>switch</code>, <code>while</code>, <code>for</code>) depends on secret data then the code executed as well as its execution time depend on the secret data as well.
+</p><p>A classical example is the <a rel="nofollow" class="external text" href="http://users.belgacom.net/dhem/papers/CG1998_1.pdf">timing attack on square-and-multiply</a> exponentiation algorithms (or double-and-add for multiplication in elliptic curve-based cryptosystems).
+</p><p><a href="https://cryptocoding.net/index.php/Coding_rules#Avoid_secret-dependent_loop_bounds" title="Coding rules">Secret-dependent loop bounds</a> are a special case of this problem.
+</p>
+<h5> <span class="mw-headline" id="Solution_2">Solution</span></h5>
+<p>Timing leaks may be mitigated by introducing dummy operations in branches of the program in order to ensure a constant execution time. It is however more reliable to avoid branchings altogether, for example by implementing the conditional operation as a straight-line program. To select between two inputs <code>a</code> and <code>b</code> depending on a selection bit <code>bit</code>, this can be achieved with the following code:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1"><span class="kw4">unsigned</span> select <span class="br0">(</span><span class="kw4">unsigned</span> a<span class="sy0">,</span> <span class="kw4">unsigned</span> b<span class="sy0">,</span> <span class="kw4">unsigned</span> bit<span class="br0">)</span> 
+<span class="br0">{</span>
+    <span class="coMULTI">/* -0 = 0, -1 = 0xff....ff */</span>
+    <span class="kw4">unsigned</span> mask <span class="sy0">=</span> <span class="sy0">-</span> bit<span class="sy0">;</span>
+    <span class="kw4">unsigned</span> ret <span class="sy0">=</span> mask <span class="sy0">&amp;</span> <span class="br0">(</span>a<span class="sy0">^</span>b<span class="br0">)</span><span class="sy0">;</span>
+    ret <span class="sy0">=</span> ret <span class="sy0">^</span> a<span class="sy0">;</span>
+    <span class="kw1">return</span> ret<span class="sy0">;</span>
+<span class="br0">}</span></pre></div></div>
+<p>A possibly faster solution on Intel processors involves the <a rel="nofollow" class="external text" href="http://www.jaist.ac.jp/iscenter-new/mpc/altix/altixdata/opt/intel/vtune/doc/users_guide/mergedProjects/analyzer_ec/mergedProjects/reference_olh/mergedProjects/instructions/instruct32_hh/vc35.htm">CMOV</a> conditional move instructions.
+</p>
+<h4> <span class="mw-headline" id="Avoid_table_look-ups_indexed_by_secret_data">Avoid table look-ups indexed by secret data</span></h4>
+<h5> <span class="mw-headline" id="Problem_3">Problem</span></h5>
+<p>The access time of a table element can vary with its index (depending for example on whether a cache-miss has occured). This has for example been exploited in a series of <a href="https://cryptocoding.net/index.php/References#AES_cache-timing_attacks_and_defenses" title="References">cache-timing attacks</a> on AES.
+</p>
+<h5> <span class="mw-headline" id="Solution_3">Solution</span></h5>
+<p>Replace table look-up with sequences of constant-time logical operations, for example by bitslicing look-ups (as used in <a rel="nofollow" class="external text" href="http://nacl.cr.yp.to/">NaCl's</a> <a rel="nofollow" class="external text" href="http://eprint.iacr.org/2009/129.pdf">implementation</a> of AES-CTR, or in <a rel="nofollow" class="external text" href="https://www.ii.uib.no/~osvik/serpent/">Serpent</a>).
+For AES, constant-time non-bitsliced implementations are also <a rel="nofollow" class="external text" href="http://crypto.stackexchange.com/questions/55/known-methods-for-constant-time-table-free-aes-implementation-using-standard/92#92">possible</a>, but are much slower. 
+</p><p><br>
+</p>
+<h4> <span class="mw-headline" id="Avoid_secret-dependent_loop_bounds">Avoid secret-dependent loop bounds</span></h4>
+<h5> <span class="mw-headline" id="Problem_4">Problem</span></h5>
+<p>Loops with a bound derived from a secret value directly expose a program to timing attacks. For example, a Montgomery ladder implementation in OpenSSL 0.9.8o leaked the logarithm of the (secret) ECDSA nonce, which could be used to <a rel="nofollow" class="external text" href="https://eprint.iacr.org/2011/232.pdf">steal the private key</a> of a TLS server. The relevant code is copied below, where <code>scalar</code> is the secret nonce, and <code>scalar-&gt;d</code> a pointer to an array of its bits:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1"><span class="coMULTI">/* find top most bit and go one past it */</span>
+i <span class="sy0">=</span> scalar <span class="sy0">-&gt;</span> top <span class="sy0">-</span> <span class="nu0">1</span><span class="sy0">;</span> j <span class="sy0">=</span> BN_BITS2 <span class="sy0">-</span> <span class="nu0">1</span><span class="sy0">;</span>
+mask <span class="sy0">=</span> BN_TBIT <span class="sy0">;</span>
+<span class="kw1">while</span> <span class="br0">(</span><span class="sy0">!</span><span class="br0">(</span> scalar <span class="sy0">-&gt;</span> d<span class="br0">[</span>i<span class="br0">]</span> <span class="sy0">&amp;</span> mask <span class="br0">)</span><span class="br0">)</span> <span class="br0">{</span> mask <span class="sy0">&gt;&gt;=</span> <span class="nu0">1</span><span class="sy0">;</span> j <span class="sy0">--;</span> <span class="br0">}</span>
+mask <span class="sy0">&gt;&gt;=</span> <span class="nu0">1</span><span class="sy0">;</span> j <span class="sy0">-</span> <span class="sy0">-;</span>
+<span class="coMULTI">/* if top most bit was at word break , go to next word */</span>
+<span class="kw1">if</span> <span class="br0">(</span><span class="sy0">!</span> mask <span class="br0">)</span>
+<span class="br0">{</span>
+  i <span class="sy0">-</span> <span class="sy0">-;</span> j <span class="sy0">=</span> BN_BITS2 <span class="sy0">-</span> <span class="nu0">1</span><span class="sy0">;</span>
+  mask <span class="sy0">=</span> BN_TBIT <span class="sy0">;</span>
+<span class="br0">}</span>
+<span class="kw1">for</span> <span class="br0">(</span><span class="sy0">;</span> i <span class="sy0">&gt;=</span> <span class="nu0">0</span><span class="sy0">;</span> i <span class="sy0">-</span> <span class="sy0">-</span><span class="br0">)</span>
+<span class="br0">{</span>
+  <span class="kw1">for</span> <span class="br0">(</span><span class="sy0">;</span> j <span class="sy0">&gt;=</span> <span class="nu0">0</span><span class="sy0">;</span> j <span class="sy0">-</span> <span class="sy0">-</span><span class="br0">)</span>
+  <span class="br0">{</span>
+    <span class="kw1">if</span> <span class="br0">(</span> scalar <span class="sy0">-&gt;</span>d<span class="br0">[</span> i<span class="br0">]</span> <span class="sy0">&amp;</span> mask <span class="br0">)</span>
+    <span class="br0">{</span>
+      <span class="kw1">if</span> <span class="br0">(</span><span class="sy0">!</span> gf2m_Madd <span class="br0">(</span> group <span class="sy0">,</span> <span class="sy0">&amp;</span> point <span class="sy0">-&gt;</span>X <span class="sy0">,</span> x1 <span class="sy0">,</span> z1 <span class="sy0">,</span> x2 <span class="sy0">,</span> z2 <span class="sy0">,</span> ctx <span class="br0">)</span><span class="br0">)</span> <span class="kw1">goto</span> err <span class="sy0">;</span>
+      <span class="kw1">if</span> <span class="br0">(</span><span class="sy0">!</span> gf2m_Mdouble <span class="br0">(</span> group <span class="sy0">,</span> x2 <span class="sy0">,</span> z2 <span class="sy0">,</span> ctx <span class="br0">)</span><span class="br0">)</span> <span class="kw1">goto</span> err <span class="sy0">;</span>
+    <span class="br0">}</span>
+    <span class="kw1">else</span>
+    <span class="br0">{</span>
+      <span class="kw1">if</span> <span class="br0">(</span><span class="sy0">!</span> gf2m_Madd <span class="br0">(</span> group <span class="sy0">,</span> <span class="sy0">&amp;</span> point <span class="sy0">-&gt;</span>X <span class="sy0">,</span> x2 <span class="sy0">,</span> z2 <span class="sy0">,</span> x1 <span class="sy0">,</span> z1 <span class="sy0">,</span> ctx <span class="br0">)</span><span class="br0">)</span> <span class="kw1">goto</span> err <span class="sy0">;</span>
+      <span class="kw1">if</span> <span class="br0">(</span><span class="sy0">!</span> gf2m_Mdouble <span class="br0">(</span> group <span class="sy0">,</span> x1 <span class="sy0">,</span> z1 <span class="sy0">,</span> ctx <span class="br0">)</span><span class="br0">)</span> <span class="kw1">goto</span> err <span class="sy0">;</span>
+    <span class="br0">}</span>
+    mask <span class="sy0">&gt;&gt;=</span> <span class="nu0">1</span><span class="sy0">;</span>
+  <span class="br0">}</span>
+  j <span class="sy0">=</span> BN_BITS2 <span class="sy0">-</span> <span class="nu0">1</span><span class="sy0">;</span>
+  mask <span class="sy0">=</span> BN_TBIT<span class="sy0">;</span>
+<span class="br0">}</span></pre></div></div>
+<h5> <span class="mw-headline" id="Solution_4">Solution</span></h5>
+<p>Make sure that all loops are bounded by a constant (or at least a non-secret variable).
+</p><p>In particular, make sure, as far as possible, that loop bounds and their potential underflow or overflow are independent of user-controlled input (you may have heard of the <a rel="nofollow" class="external text" href="http://heartbleed.com/">Heartbleed bug</a>).
+</p>
+<h4> <span class="mw-headline" id="Prevent_compiler_interference_with_security-critical_operations">Prevent compiler interference with security-critical operations</span></h4>
+<h5> <span class="mw-headline" id="Problem_5">Problem</span></h5>
+<p>Some compilers will optimize out operations they deem useless. For example, MS Visual C++ 2010 suppressed the <code>memset</code> in the following code fragment from the <a rel="nofollow" class="external text" href="https://www.torproject.org/">Tor</a> anonymity network:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1"><span class="kw4">int</span>
+crypto_pk_private_sign_digest<span class="br0">(</span>...<span class="br0">)</span>
+<span class="br0">{</span>
+  <span class="kw4">char</span> digest<span class="br0">[</span>DIGEST_LEN<span class="br0">]</span><span class="sy0">;</span>
+  <span class="br0">(</span>...<span class="br0">)</span>
+  <span class="kw3">memset</span><span class="br0">(</span>digest<span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="kw4">sizeof</span><span class="br0">(</span>digest<span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span>
+  <span class="kw1">return</span> r<span class="sy0">;</span>
+<span class="br0">}</span></pre></div></div>
+<p>However the role of this <code>memset</code> is to clear the buffer <code>digest</code> off of <a rel="nofollow" class="external text" href="http://www.viva64.com/en/b/0178/">secret data</a> so that any subsequent (erroneous, undefined!) reads of uninitialized stack will learn no secret information.
+</p><p>Some compilers infer that they can eliminate checks based on erroneous code elsewhere in the program.  For example, when encountering
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1">  call_fn<span class="br0">(</span>ptr<span class="br0">)</span><span class="sy0">;</span> <span class="co1">// always derereferences ptr.</span>
+&nbsp;
+  <span class="co1">// many lines here</span>
+&nbsp;
+  <span class="kw1">if</span> <span class="br0">(</span>ptr <span class="sy0">==</span> NULL<span class="br0">)</span> <span class="br0">{</span> error<span class="br0">(</span><span class="st0">"ptr must not be NULL"</span><span class="br0">)</span><span class="sy0">;</span> <span class="br0">}</span></pre></div></div>
+<p>some compilers will decide that <code>ptr == NULL</code> must always be false, since otherwise it would be incorrect to dereference it in <code>call_fn()</code>.
+</p>
+<h5> <span class="mw-headline" id="Solution_5">Solution</span></h5>
+<p>Look at the assembly code produced and check that all instructions are there.  (This will not be possible for typical application sizes, but should be considered for security-sensitive code.)
+</p><p>Know what optimizations your compiler can do, and carefully consider the effect of each one on security programming patterns.  In particular, be careful of optimizations that can remove code or branches, and code that prevents errors which "should be impossible" if the rest of the program is correct.
+</p><p>When possible, consider disabling compiler optimizations that can eliminate or weaken security checks.
+</p><p>To prevent the compiler from "optimizing out" instructions by eliminating them, a function may be redefined as a volatile pointer to force the function pointer dereference. This is for example used in <a rel="nofollow" class="external text" href="https://github.com/nmathewson/libottery/">libottery</a> by redefining <code>memset</code> to
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1"><span class="kw4">void</span> <span class="sy0">*</span> <span class="br0">(</span><span class="sy0">*</span><span class="kw4">volatile</span> memset_volatile<span class="br0">)</span><span class="br0">(</span><span class="kw4">void</span> <span class="sy0">*,</span> <span class="kw4">int</span><span class="sy0">,</span> <span class="kw4">size_t</span><span class="br0">)</span> <span class="sy0">=</span> <span class="kw3">memset</span><span class="sy0">;</span></pre></div></div>
+<p>C11 introduced memset_s with a requirement that it is not optimized out. It's an optional feature that can be requested when including string.h.
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1"><span class="co2">#define __STDC_WANT_LIB_EXT1__ 1</span>
+<span class="co2">#include &lt;string.h&gt;</span>
+...
+<span class="me1">memset_s</span><span class="br0">(</span>secret<span class="sy0">,</span> <span class="kw4">sizeof</span><span class="br0">(</span>secret<span class="br0">)</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="kw4">sizeof</span><span class="br0">(</span>secret<span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<h4> <span class="mw-headline" id="Prevent_confusion_between_secure_and_insecure_APIs">Prevent confusion between secure and insecure APIs</span></h4>
+<h5> <span class="mw-headline" id="Problem_6">Problem</span></h5>
+<p>Many programming environments provide multiple implementations of the same API whose functionality is superficially similar, but whose security properties are radically different.
+</p><p>Pseudorandom number generators frequently have this problem: OpenSSL has <code>RAND_bytes()</code> and <code>RAND_pseudo_bytes()</code>; many BSD C libraries have <code>random()</code> and <code>arc4random()</code>; Java has <code>Random</code> and <code>SecureRandom</code>.
+</p><p>For another example, even on systems that provide a constant-time function to compare two byte strings of a given length, there invariably exist fast-exit variants.
+</p>
+<h5> <span class="mw-headline" id="Bad_Solutions">Bad Solutions</span></h5>
+<p>Sometimes a function is safe on some platforms but dangerous on others.  In these cases, some programmers use the function, believing that their code will only run on platforms where it is safe.  This is a bad idea, since when the code is ported to a different platform, it may become insecure without anyone realizing.
+</p><p>On systems that permit applications to override platform-provided functions, some programmers override insecure functions with secure ones, and then write their programs to use the API that would ordinarily be insecure.  This is a questionable idea on its own, since it results in the programmer writing insecure-looking code.  Further, if the overriding method ever fails (or is itself re-overridden), the program will become insecure without the new insecurity being detected.  Finally, it can result in programs whose pieces become insecure if they are ever copied into another program.
+</p>
+<h5> <span class="mw-headline" id="Solution_6">Solution</span></h5>
+<p>When possible, do not include insecure variants of secure functions.  For example, a PRNG based on a well-seeded secure stream cipher is generally fast enough for most applications.  A data-independent memcmp replacement is fast enough to replace nearly all uses of <code>memcmp</code>.
+</p><p>If you can't remove an insecure function, override it with a variant that produces a compile-time error, or use a code-scanning tool to detect and warn about its use.  If you can override a insecure function with a secure variant, you may do so, but for safety in depth, never call the insecure API, and make sure that you can detect its use.
+</p><p>If you must retain both a secure and an insecure version of a given function, make sure that the names of the functions are distinctive in a way that makes it hard to accidentally use an insecure variant.  For example, if you must have a secure and an insecure PRNG, don't name the insecure one "Random" or "FastRandom" or "MersenneTwister" or "LCGRand" -- instead, name it something like "InsecureRandom." The spelling for "Insecure" should never be ""; design your APIs so that using an insecure function is always a bit scary.
+</p><p>When your platform provides an insecure function variant without a name that implies it is insecure, and you can't remove the function, give it a wrapper with a safe name, then use a code-scanning tool to detect and warn about all calls to the unsafe name.
+</p><p>When a function is secure on some platforms but insecure on others, do not use the function directly: instead, provide a wrapper that is secure everywhere, and use that wrapper instead.
+</p><p><br>
+</p>
+<h4> <span class="mw-headline" id="Avoid_mixing_security_and_abstraction_levels_of_cryptographic_primitives_in_the_same_API_layer">Avoid mixing security and abstraction levels of cryptographic primitives in the same API layer</span></h4>
+<h5> <span class="mw-headline" id="Problem_7">Problem</span></h5>
+<p>When it's not clear which parts of an API require how much expertise, it's easy for a programmer to make mistakes about which functionality is safe for them to use.
+</p><p>Consider the following (invented, but not unusual) RSA API:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1"><span class="kw2">enum</span> rsa_padding_t <span class="br0">{</span> no_padding<span class="sy0">,</span> pkcs1v15_padding<span class="sy0">,</span> oaep_sha1_padding<span class="sy0">,</span> pss_padding <span class="br0">}</span><span class="sy0">;</span>
+<span class="kw4">int</span> do_rsa<span class="br0">(</span><span class="kw4">struct</span> rsa_key <span class="sy0">*</span>key<span class="sy0">,</span> <span class="kw4">int</span> encrypt<span class="sy0">,</span> <span class="kw4">int</span> public<span class="sy0">,</span> <span class="kw2">enum</span> rsa_padding_t padding_type<span class="sy0">,</span> <span class="kw4">uint8_t</span> <span class="sy0">*</span>input<span class="sy0">,</span> <span class="kw4">uint8_t</span> <span class="sy0">*</span>output<span class="br0">)</span><span class="sy0">;</span></pre></div></div>
+<p>Assuming that "key" contains the requisite components, this function can be invoked in 16 ways, many of them nonsensical, and several insecure.
+</p>
+<table>
+<tbody><tr>
+<th>encrypt
+</th>
+<th>public
+</th>
+<th>padding_type
+</th>
+<th>notes
+</th></tr>
+<tr>
+<td>0
+</td>
+<td>0
+</td>
+<td>none
+</td>
+<td style="background-color: red;">Unpadded decryption. Malleable.
+</td></tr>
+<tr>
+<td>0
+</td>
+<td>0
+</td>
+<td>pkcs1v15
+</td>
+<td style="background-color: red;">PKCS1 v1.5 decryption. Probably falls to Bleichenbacher’s attack.
+</td></tr>
+<tr>
+<td>0
+</td>
+<td>0
+</td>
+<td>oaep
+</td>
+<td style="background-color: green;">OAEP decryption. Just fine.
+</td></tr>
+<tr>
+<td>0
+</td>
+<td>0
+</td>
+<td>pss
+</td>
+<td style="background-color: yellow;">PSS decryption. Eccentric; probably accidental. (secure?)
+</td></tr>
+<tr>
+<td>0
+</td>
+<td>1
+</td>
+<td>none
+</td>
+<td style="background-color: red;">Unpadded signature.  Malleable.
+</td></tr>
+<tr>
+<td>0
+</td>
+<td>1
+</td>
+<td>pkcs1v15
+</td>
+<td style="background-color: yellow;">PKCS1 v1.5 signature. Okay for some applications, but should use PSS instead.
+</td></tr>
+<tr>
+<td>0
+</td>
+<td>1
+</td>
+<td>oaep
+</td>
+<td style="background-color: yellow;">OAEP signature.  Okay for some applications, but should use PSS instead.
+</td></tr>
+<tr>
+<td>0
+</td>
+<td>1
+</td>
+<td>pss
+</td>
+<td style="background-color: green;">PSS signature. Great.
+</td></tr>
+<tr>
+<td>...
+</td>
+<td>...
+</td>
+<td>...
+</td>
+<td>as above, but encryption or signature checking.
+</td></tr>
+</tbody></table>
+<p>Note that only 4 of the 16 ways to call this function are a good idea, 6 of the 16 ways are downright insecure, and the remaining 6 are in some way problematic.  This API is only suitable for use by implementors who understand the ramifications of different RSA padding modes.
+</p><p>Now imagine that we add APIs for block cipher encryption in various modes, for random key generation, and for a wide variety of digest functions and MACs.  Any programmer attempting to construct a correct hybrid authenticate-and-encrypt-this-data function from these will have his or her options grow exponentially, as the safe portion of the decision space dwindles.
+</p>
+<h5> <span class="mw-headline" id="Solution_7">Solution</span></h5>
+<p><b>Provide high-level APIs.</b> For example, provide a set of hybrid-encrypt-and-authenticate functions that use only safe algorithms, safely.  If writing a function that allows multiple combinations of public-key and secret-key algorithms and modes, ensure that it rejects insecure algorithms and insecure combinations of algorithms.
+</p><p><b>When possible, avoid low-level APIs.</b> For nearly all users, there is no need to ever use unpadded RSA, or to use a block cipher in ECB mode, or to perform a DSA signature with a user-selected nonce.  These functions <i>can</i> be used as building-blocks to make something secure -- for example, by doing OAEP padding before calling  unpadded RSA, or doing ECB on the sequence of blocks [1, 2, 3] in order to produce a counter mode stream, or by using a random or unpredictable byte-sequence to produce the DSA nonce -- but experience suggest that they will be misused more frequently than they are used correctly.
+</p><p>Some other primitives are necessary for implementing certain protocols, but unlikely to be a good first choice for implementing new protocols.  For example, you can't implement browser-compatible TLS nowadays without CBC, PKCS1 v1.5, and RC4, but none of these would be a great .
+</p><p>If you are providing a crypto implementation for use by inexperienced programmers, it may be best to omit these functions entirely, and choose only functions that implement well-specified, high-level, secure operations.  But if you must provide an implementation for use by experienced and inexperienced programmers alike...
+</p><p><b>Clearly distinguish high-level APIs and low-level APIs.</b> "Encrypt securely" should not be the same function as "encrypt incorrectly" with slightly different arguments.  In languages that divide functions and types into packages or headers, safe and unsafe crypto should not occupy the same packages/headers.  In languages with subtyping, there should be a separate type for safe crypto.
+</p><p><br>
+</p>
+<h4> <span class="mw-headline" id="Use_unsigned_bytes_to_represent_binary_data">Use unsigned bytes to represent binary data</span></h4>
+<h5> <span class="mw-headline" id="Problem_8">Problem</span></h5>
+<p>Some languages in the C family have separate signed and unsigned integer types.  For C in particular, the signedness of the type <code>char</code> is implementation-defined.  This can lead to problematic code such as:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1"><span class="kw4">int</span> decrypt_data<span class="br0">(</span><span class="kw4">const</span> <span class="kw4">char</span> <span class="sy0">*</span>key<span class="sy0">,</span> <span class="kw4">char</span> <span class="sy0">*</span>bytes<span class="sy0">,</span> <span class="kw4">size_t</span> len<span class="br0">)</span><span class="sy0">;</span>
+&nbsp;
+<span class="kw4">void</span> fn<span class="br0">(</span>...<span class="br0">)</span> <span class="br0">{</span>
+    <span class="co1">//...</span>
+    <span class="kw4">char</span> <span class="sy0">*</span>name<span class="sy0">;</span>
+    <span class="kw4">char</span> buf<span class="br0">[</span><span class="nu0">257</span><span class="br0">]</span><span class="sy0">;</span>
+    decrypt_data<span class="br0">(</span>key<span class="sy0">,</span> buf<span class="sy0">,</span> <span class="nu0">257</span><span class="br0">)</span><span class="sy0">;</span>
+&nbsp;
+    <span class="kw4">int</span> name_len <span class="sy0">=</span> buf<span class="br0">[</span><span class="nu0">0</span><span class="br0">]</span><span class="sy0">;</span>
+    name <span class="sy0">=</span> <span class="kw3">malloc</span><span class="br0">(</span>name_len <span class="sy0">+</span> <span class="nu0">1</span><span class="br0">)</span><span class="sy0">;</span>
+    <span class="kw3">memcpy</span><span class="br0">(</span>name<span class="sy0">,</span> buf<span class="sy0">+</span><span class="nu0">1</span><span class="sy0">,</span> name_len<span class="br0">)</span><span class="sy0">;</span>
+    name<span class="br0">[</span>name_len<span class="br0">]</span> <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+    <span class="co1">//...</span>
+<span class="br0">}</span></pre></div></div>
+<p>If the <code>char</code> type is unsigned, this code behaves as expected.  But when <code>char</code> is signed, <code>buf[0]</code> may be negative, leading to a very large argument for <code>malloc</code> and <code>memcpy</code>, and a heap corruption opportunity when we try to set the last character of name to 0.  Worse, if <code>buf[0]</code> is 255, then name_len will be -1.  So we will allocate a 0-byte buffer, but then perform a <code>(size_t)-1 memcpy</code> into that buffer, thus stomping the heap.
+</p>
+<h5> <span class="mw-headline" id="Solution_8">Solution</span></h5>
+<p>In languages with signed and unsigned byte types, implementations should always use the unsigned byte type to represent bytestrings in their APIs.
+</p><p><br>
+</p>
+<h4> <span class="mw-headline" id="Use_separate_types_for_secret_and_non-secret_information">Use separate types for secret and non-secret information</span></h4>
+<h5> <span class="mw-headline" id="Problem_9">Problem</span></h5>
+<p>todo: "keypair" and "public key" shouldn't be the same type.
+</p><p>todo: in dynamically typed languages (python, ruby, etc), "encode public key to string" and "encode private key to string" shouldn't have the same method name.
+</p>
+<h5> <span class="mw-headline" id="Solution_9">Solution</span></h5>
+<h4> <span class="mw-headline" id="Use_separate_types_for_different_types_of_information">Use separate types for different types of information</span></h4>
+<h5> <span class="mw-headline" id="Problem_10">Problem</span></h5>
+<p>todo: "16-byte key" and "16-byte IV" shouldn't be the same type.
+</p>
+<h5> <span class="mw-headline" id="Solution_10">Solution</span></h5>
+<h4> <span class="mw-headline" id="Clean_memory_of_secret_data">Clean memory of secret data</span></h4>
+<h5> <span class="mw-headline" id="Problem_11">Problem</span></h5>
+<p>On most operating systems memory owned by one process can be reused by another without being cleared, either because the first process terminates or it gives back the memory to the system. If the memory
+contains secret keys these will be available to the second process, which increases the exposure of the key. On multiuser systems this can make it possible to sniff keys from other users.  Even within a single
+system the increased exposure can cause previously harmless vulnerabilities to expose secret material.
+</p>
+<h5> <span class="mw-headline" id="Solution_11">Solution</span></h5>
+<p>Clear all variables containing secret data before they go out of scope. Worry about <code>mmap()</code>: executing <code>munmap()</code> causes memory to go out of scope immediately, while erasing while the mapping exists will destroy the file.
+</p><p>For clearing memory or destroying objects that are about to go out of scope, use a platform-specific memory-wipe function where available, such as <code>SecureZeroMemory()</code> on win32, or <code>OPENSSL_cleanse()</code> on OpenSSL.
+</p><p>A portable C solution, for non-buggy compilers, follows:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1"><span class="kw4">void</span> burn<span class="br0">(</span> <span class="kw4">void</span> <span class="sy0">*</span>v<span class="sy0">,</span> <span class="kw4">size_t</span> n <span class="br0">)</span>
+<span class="br0">{</span>
+  <span class="kw4">volatile</span> <span class="kw4">unsigned</span> <span class="kw4">char</span> <span class="sy0">*</span>p <span class="sy0">=</span> <span class="br0">(</span> <span class="kw4">volatile</span> <span class="kw4">unsigned</span> <span class="kw4">char</span> <span class="sy0">*</span> <span class="br0">)</span>v<span class="sy0">;</span>
+  <span class="kw1">while</span><span class="br0">(</span> n<span class="sy0">--</span> <span class="br0">)</span> <span class="sy0">*</span>p<span class="sy0">++</span> <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span>
+<span class="br0">}</span></pre></div></div>
+<p><br>
+</p>
+<h4> <span class="mw-headline" id="Use_strong_randomness">Use strong randomness</span></h4>
+<h5> <span class="mw-headline" id="Problem_12">Problem</span></h5>
+<p>Many cryptographic systems require sources of random numbers, and fail with even slight deviations from randomness. For example, leaking just one bit of each random number in the DSA will reveal a private key astonishingly quickly. Lack of randomness can be surprisingly hard to diagnose: the Debian random number generator <a rel="nofollow" class="external text" href="http://www.debian.org/security/2008/dsa-1571">failure</a> in OpenSSL went unnoticed for 2 years, compromising a vast number of keys. The requirements on random numbers for cryptographic purposes are very stringent: most pseudorandom number generators (PRNG) fail to meet them.
+</p>
+<h5> <span class="mw-headline" id="Bad_solutions_2">Bad solutions</span></h5>
+<p>For cryptographic applications,
+</p>
+<ul><li> Do not rely only on predictable entropy source like timestamps, PIDs, temperature sensors, etc.
+</li><li> Do not rely only on general-purpose pseudorandom functions like <code>stdlib</code>'s <code>rand()</code>, <code>srand()</code>, <code>random()</code>, or Python's <code>random</code> module.
+</li><li> Do not use <a rel="nofollow" class="external text" href="http://crypto.di.uoa.gr/CRYPTO.SEC/Randomness_Attacks.html">Mersenne Twister</a>.
+</li><li> Do not use things like <a rel="nofollow" class="external free" href="http://www.random.org/">http://www.random.org/</a> (the random data may be shared with and available to other parties).
+</li><li> Do not design your own PRNG, even if it's based on a secure cryptographic primitive (unless you know what you're doing).
+</li><li> Do not reuse the same randomness accross applications to "save" random numbers.
+</li><li> Do not conclude that a PRNG is secure just because it passes the <a rel="nofollow" class="external text" href="http://www.stat.fsu.edu/pub/diehard/">Diehard</a> tests or <a rel="nofollow" class="external text" href="http://csrc.nist.gov/groups/ST/toolkit/rng/stats_tests.html">NIST's</a> tests.
+</li><li> Do not assume that a cryptographically secure PRNG necessarily provides forward or backward secrecy (aka <a rel="nofollow" class="external text" href="http://csrc.nist.gov/publications/nistpubs/800-90A/SP800-90A.pdf">backtracking resistance and prediction resistance</a>), would the internal state leak to an attacker.
+</li><li> Do not directly use "entropy" as pseudorandom data (entropy from analog sources is often biased, that is, N bits from an entropy pool often provide less than N bits of entropy).
+</li></ul>
+<h5> <span class="mw-headline" id="Solution_12">Solution</span></h5>
+<p>Minimize the need for randomness through design and choice of primitives (for example <a rel="nofollow" class="external text" href="http://ed25519.cr.yp.to/">Ed25519</a> produces signatures deterministically).
+When generating random bytes use operating-system provided sources guaranteed to meet cryptographic requirements like <code>/dev/random</code>. On constrained platforms consider adding analog sources of noise and mixing them well.
+</p><p>Do <a rel="nofollow" class="external text" href="http://jbp.io/2014/01/16/openssl-rand-api/">check the return values</a> of your RNG, to make sure that the random bytes are as strong as they should be, and they have been written successfully.
+</p><p>Follow the recommendations from Nadia Heninger et al. in Section 7 of their <a rel="nofollow" class="external text" href="https://factorable.net/weakkeys12.extended.pdf">Mining Your Ps and Qs</a> paper.
+</p><p>On Intel CPUs based on the Ivy Bridge microarchitecture (and future generations), the <a rel="nofollow" class="external text" href="http://software.intel.com/en-us/articles/intel-digital-random-number-generator-drng-software-implementation-guide">built-in PRNG</a> guarantees high entropy and throughput.
+</p><p>On Unix systems, you should generally use <code>/dev/random</code> or <code>/dev/urandom</code>. However the former is "blocking", meaning that it won't return any data when it deems that its entropy pool contains insufficient entropy. This feature limits its usability, and is the reason why <code>/dev/urandom</code> is more often used. Extracting a random number from <code>/dev/urandom</code> can be as simple as
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1"><span class="co2">#include &lt;sys/types.h&gt;</span>
+<span class="co2">#include &lt;sys/stat.h&gt;</span>
+<span class="co2">#include &lt;fcntl.h&gt;</span>
+<span class="co2">#include &lt;unistd.h&gt;</span>
+<span class="co2">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span class="kw4">int</span> main<span class="br0">(</span><span class="br0">)</span> <span class="br0">{</span>
+  <span class="kw4">int</span> randint<span class="sy0">;</span>
+  <span class="kw4">int</span> bytes_read<span class="sy0">;</span>
+  <span class="kw4">int</span> fd <span class="sy0">=</span> open<span class="br0">(</span><span class="st0">"/dev/urandom"</span><span class="sy0">,</span> O_RDONLY<span class="br0">)</span><span class="sy0">;</span>
+  <span class="kw1">if</span> <span class="br0">(</span>fd <span class="sy0">!=</span> <span class="sy0">-</span><span class="nu0">1</span><span class="br0">)</span> <span class="br0">{</span>
+    bytes_read <span class="sy0">=</span> read<span class="br0">(</span>fd<span class="sy0">,</span> <span class="sy0">&amp;</span>randint<span class="sy0">,</span> <span class="kw4">sizeof</span><span class="br0">(</span>randint<span class="br0">)</span><span class="br0">)</span><span class="sy0">;</span>
+    <span class="kw1">if</span> <span class="br0">(</span>bytes_read <span class="sy0">!=</span> <span class="kw4">sizeof</span><span class="br0">(</span>randint<span class="br0">)</span><span class="br0">)</span> <span class="br0">{</span>
+      <span class="kw3">fprintf</span><span class="br0">(</span>stderr<span class="sy0">,</span> <span class="st0">"read() failed (%d bytes read)<span class="es1">\n</span>"</span><span class="sy0">,</span> bytes_read<span class="br0">)</span><span class="sy0">;</span>
+      <span class="kw1">return</span> <span class="sy0">-</span><span class="nu0">1</span><span class="sy0">;</span>
+    <span class="br0">}</span>
+  <span class="br0">}</span>
+  <span class="kw1">else</span> <span class="br0">{</span>
+    <span class="kw3">fprintf</span><span class="br0">(</span>stderr<span class="sy0">,</span> <span class="st0">"open() failed<span class="es1">\n</span>"</span><span class="br0">)</span><span class="sy0">;</span>
+    <span class="kw1">return</span> <span class="sy0">-</span><span class="nu0">2</span><span class="sy0">;</span>
+  <span class="br0">}</span>
+  <span class="kw3">printf</span><span class="br0">(</span><span class="st0">"%08x<span class="es1">\n</span>"</span><span class="sy0">,</span> randint<span class="br0">)</span><span class="sy0">;</span> <span class="coMULTI">/* assumes sizeof(int) &lt;= 4 */</span>
+  close<span class="br0">(</span>fd<span class="br0">)</span><span class="sy0">;</span>
+  <span class="kw1">return</span> <span class="nu0">0</span><span class="sy0">;</span>
+<span class="br0">}</span></pre></div></div>
+<p>However, this simple program may not be sufficient for secure randomness generation in your environment: it is safer to perform additional error checks, as found in <a rel="nofollow" class="external text" href="http://libressl.org/">LibreSSL</a>'s <code>getentropy_urandom</code> function:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1"><span class="kw4">static</span> <span class="kw4">int</span>
+getentropy_urandom<span class="br0">(</span><span class="kw4">void</span> <span class="sy0">*</span>buf<span class="sy0">,</span> <span class="kw4">size_t</span> len<span class="br0">)</span>
+<span class="br0">{</span>
+	<span class="kw4">struct</span> stat st<span class="sy0">;</span>
+	<span class="kw4">size_t</span> i<span class="sy0">;</span>
+	<span class="kw4">int</span> fd<span class="sy0">,</span> cnt<span class="sy0">,</span> flags<span class="sy0">;</span>
+	<span class="kw4">int</span> save_errno <span class="sy0">=</span> errno<span class="sy0">;</span>
+&nbsp;
+start<span class="sy0">:</span>
+&nbsp;
+	flags <span class="sy0">=</span> O_RDONLY<span class="sy0">;</span>
+<span class="co2">#ifdef O_NOFOLLOW</span>
+	flags <span class="sy0">|=</span> O_NOFOLLOW<span class="sy0">;</span>
+<span class="co2">#endif</span>
+<span class="co2">#ifdef O_CLOEXEC</span>
+	flags <span class="sy0">|=</span> O_CLOEXEC<span class="sy0">;</span>
+<span class="co2">#endif</span>
+	fd <span class="sy0">=</span> open<span class="br0">(</span><span class="st0">"/dev/urandom"</span><span class="sy0">,</span> flags<span class="sy0">,</span> <span class="nu0">0</span><span class="br0">)</span><span class="sy0">;</span>
+	<span class="kw1">if</span> <span class="br0">(</span>fd <span class="sy0">==</span> <span class="sy0">-</span><span class="nu0">1</span><span class="br0">)</span> <span class="br0">{</span>
+		<span class="kw1">if</span> <span class="br0">(</span>errno <span class="sy0">==</span> EINTR<span class="br0">)</span>
+			<span class="kw1">goto</span> start<span class="sy0">;</span>
+		<span class="kw1">goto</span> nodevrandom<span class="sy0">;</span>
+	<span class="br0">}</span>
+<span class="co2">#ifndef O_CLOEXEC</span>
+	fcntl<span class="br0">(</span>fd<span class="sy0">,</span> F_SETFD<span class="sy0">,</span> fcntl<span class="br0">(</span>fd<span class="sy0">,</span> F_GETFD<span class="br0">)</span> <span class="sy0">|</span> FD_CLOEXEC<span class="br0">)</span><span class="sy0">;</span>
+<span class="co2">#endif</span>
+&nbsp;
+	<span class="coMULTI">/* Lightly verify that the device node looks sane */</span>
+	<span class="kw1">if</span> <span class="br0">(</span>fstat<span class="br0">(</span>fd<span class="sy0">,</span> <span class="sy0">&amp;</span>st<span class="br0">)</span> <span class="sy0">==</span> <span class="sy0">-</span><span class="nu0">1</span> <span class="sy0">||</span> <span class="sy0">!</span>S_ISCHR<span class="br0">(</span>st.<span class="me1">st_mode</span><span class="br0">)</span><span class="br0">)</span> <span class="br0">{</span>
+		close<span class="br0">(</span>fd<span class="br0">)</span><span class="sy0">;</span>
+		<span class="kw1">goto</span> nodevrandom<span class="sy0">;</span>
+	<span class="br0">}</span>
+	<span class="kw1">if</span> <span class="br0">(</span>ioctl<span class="br0">(</span>fd<span class="sy0">,</span> RNDGETENTCNT<span class="sy0">,</span> <span class="sy0">&amp;</span>cnt<span class="br0">)</span> <span class="sy0">==</span> <span class="sy0">-</span><span class="nu0">1</span><span class="br0">)</span> <span class="br0">{</span>
+		close<span class="br0">(</span>fd<span class="br0">)</span><span class="sy0">;</span>
+		<span class="kw1">goto</span> nodevrandom<span class="sy0">;</span>
+	<span class="br0">}</span>
+	<span class="kw1">for</span> <span class="br0">(</span>i <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> i <span class="sy0">&lt;</span> len<span class="sy0">;</span> <span class="br0">)</span> <span class="br0">{</span>
+		<span class="kw4">size_t</span> wanted <span class="sy0">=</span> len <span class="sy0">-</span> i<span class="sy0">;</span>
+		ssize_t ret <span class="sy0">=</span> read<span class="br0">(</span>fd<span class="sy0">,</span> <span class="br0">(</span><span class="kw4">char</span> <span class="sy0">*</span><span class="br0">)</span>buf <span class="sy0">+</span> i<span class="sy0">,</span> wanted<span class="br0">)</span><span class="sy0">;</span>
+&nbsp;
+		<span class="kw1">if</span> <span class="br0">(</span>ret <span class="sy0">==</span> <span class="sy0">-</span><span class="nu0">1</span><span class="br0">)</span> <span class="br0">{</span>
+			<span class="kw1">if</span> <span class="br0">(</span>errno <span class="sy0">==</span> EAGAIN <span class="sy0">||</span> errno <span class="sy0">==</span> EINTR<span class="br0">)</span>
+				<span class="kw1">continue</span><span class="sy0">;</span>
+			close<span class="br0">(</span>fd<span class="br0">)</span><span class="sy0">;</span>
+			<span class="kw1">goto</span> nodevrandom<span class="sy0">;</span>
+		<span class="br0">}</span>
+		i <span class="sy0">+=</span> ret<span class="sy0">;</span>
+	<span class="br0">}</span>
+	close<span class="br0">(</span>fd<span class="br0">)</span><span class="sy0">;</span>
+	<span class="kw1">if</span> <span class="br0">(</span>gotdata<span class="br0">(</span>buf<span class="sy0">,</span> len<span class="br0">)</span> <span class="sy0">==</span> <span class="nu0">0</span><span class="br0">)</span> <span class="br0">{</span>
+		errno <span class="sy0">=</span> save_errno<span class="sy0">;</span>
+		<span class="kw1">return</span> <span class="nu0">0</span><span class="sy0">;</span>		<span class="coMULTI">/* satisfied */</span>
+	<span class="br0">}</span>
+nodevrandom<span class="sy0">:</span>
+	errno <span class="sy0">=</span> EIO<span class="sy0">;</span>
+	<span class="kw1">return</span> <span class="sy0">-</span><span class="nu0">1</span><span class="sy0">;</span>
+<span class="br0">}</span></pre></div></div>
+<p>On Windows systems, <a rel="nofollow" class="external text" href="http://msdn.microsoft.com/en-us/library/aa379942.aspx"><code>CryptGenRandom</code></a> from the Win32 API provides cryptographically secure pseudorandom bytes. Microsoft provides the following usage example:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1"><span class="co2">#include &lt;stddef.h&gt;</span>
+<span class="co2">#include &lt;stdint.h&gt;</span>
+<span class="co2">#include &lt;windows.h&gt;</span>
+&nbsp;
+<span class="co2">#pragma comment(lib, "advapi32.lib")</span>
+&nbsp;
+<span class="kw4">int</span> randombytes<span class="br0">(</span><span class="kw4">unsigned</span> <span class="kw4">char</span> <span class="sy0">*</span>out<span class="sy0">,</span> <span class="kw4">size_t</span> outlen<span class="br0">)</span>
+<span class="br0">{</span>
+  <span class="kw4">static</span> HCRYPTPROV handle <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> <span class="coMULTI">/* only freed when program ends */</span>
+  <span class="kw1">if</span><span class="br0">(</span><span class="sy0">!</span>handle<span class="br0">)</span> <span class="br0">{</span>
+    <span class="kw1">if</span><span class="br0">(</span><span class="sy0">!</span>CryptAcquireContext<span class="br0">(</span><span class="sy0">&amp;</span>handle<span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> <span class="nu0">0</span><span class="sy0">,</span> PROV_RSA_FULL<span class="sy0">,</span>
+                            CRYPT_VERIFYCONTEXT <span class="sy0">|</span> CRYPT_SILENT<span class="br0">)</span><span class="br0">)</span> <span class="br0">{</span>
+      <span class="kw1">return</span> <span class="sy0">-</span><span class="nu0">1</span><span class="sy0">;</span>
+    <span class="br0">}</span>
+  <span class="br0">}</span>
+  <span class="kw1">while</span><span class="br0">(</span>outlen <span class="sy0">&gt;</span> <span class="nu0">0</span><span class="br0">)</span> <span class="br0">{</span>
+    <span class="kw4">const</span> DWORD len <span class="sy0">=</span> outlen <span class="sy0">&gt;</span> 1048576UL <span class="sy0">?</span> 1048576UL <span class="sy0">:</span> outlen<span class="sy0">;</span>
+    <span class="kw1">if</span><span class="br0">(</span><span class="sy0">!</span>CryptGenRandom<span class="br0">(</span>handle<span class="sy0">,</span> len<span class="sy0">,</span> out<span class="br0">)</span><span class="br0">)</span> <span class="br0">{</span>
+      <span class="kw1">return</span> <span class="sy0">-</span><span class="nu0">2</span><span class="sy0">;</span>
+    <span class="br0">}</span>
+    out    <span class="sy0">+=</span> len<span class="sy0">;</span>
+    outlen <span class="sy0">-=</span> len<span class="sy0">;</span>
+  <span class="br0">}</span>
+  <span class="kw1">return</span> <span class="nu0">0</span><span class="sy0">;</span>
+<span class="br0">}</span></pre></div></div>
+<p>When targeting Windows XP or above, the CryptoAPI above can be bypassed in favor of <a rel="nofollow" class="external text" href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa387694%28v=vs.85%29.aspx"><code>RtlGenRandom</code></a>:
+</p>
+<div dir="ltr" class="mw-geshi mw-code mw-content-ltr"><div class="c source-c"><pre class="de1"><span class="co2">#include &lt;stdint.h&gt;</span>
+<span class="co2">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span class="co2">#include &lt;Windows.h&gt;</span>
+&nbsp;
+<span class="co2">#define RtlGenRandom SystemFunction036</span>
+<span class="co2">#if defined(__cplusplus)</span>
+<span class="kw2">extern</span> <span class="st0">"C"</span>
+<span class="co2">#endif</span>
+BOOLEAN NTAPI RtlGenRandom<span class="br0">(</span>PVOID RandomBuffer<span class="sy0">,</span> ULONG RandomBufferLength<span class="br0">)</span><span class="sy0">;</span>
+&nbsp;
+<span class="co2">#pragma comment(lib, "advapi32.lib")</span>
+&nbsp;
+<span class="kw4">int</span> main<span class="br0">(</span><span class="br0">)</span>
+<span class="br0">{</span>
+	<span class="kw4">uint8_t</span> buffer<span class="br0">[</span><span class="nu0">32</span><span class="br0">]</span> <span class="sy0">=</span> <span class="br0">{</span> <span class="nu0">0</span> <span class="br0">}</span><span class="sy0">;</span>
+&nbsp;
+	<span class="kw1">if</span> <span class="br0">(</span>FALSE <span class="sy0">==</span> RtlGenRandom<span class="br0">(</span>buffer<span class="sy0">,</span> <span class="kw4">sizeof</span> buffer<span class="br0">)</span><span class="br0">)</span>
+		<span class="kw1">return</span> <span class="sy0">-</span><span class="nu0">1</span><span class="sy0">;</span>
+&nbsp;
+	<span class="kw1">for</span> <span class="br0">(</span><span class="kw4">size_t</span> i <span class="sy0">=</span> <span class="nu0">0</span><span class="sy0">;</span> i <span class="sy0">&lt;</span> <span class="kw4">sizeof</span> buffer<span class="sy0">;</span> <span class="sy0">++</span>i<span class="br0">)</span>
+		<span class="kw3">printf</span><span class="br0">(</span><span class="st0">"%02X "</span><span class="sy0">,</span> buffer<span class="br0">[</span>i<span class="br0">]</span><span class="br0">)</span><span class="sy0">;</span>
+	<span class="kw3">printf</span><span class="br0">(</span><span class="st0">"<span class="es1">\n</span>"</span><span class="br0">)</span><span class="sy0">;</span>
+&nbsp;
+	<span class="kw1">return</span> <span class="nu0">0</span><span class="sy0">;</span>
+<span class="br0">}</span></pre></div></div>
+
+<!-- 
+NewPP limit report
+Preprocessor visited node count: 303/1000000
+Preprocessor generated node count: 552/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Highest expansion depth: 2/40
+Expensive parser function count: 0/100
+-->
+
+<!-- Saved in parser cache with key cryptocoding:pcache:idhash:9-0!*!0!!en!*!* and timestamp 20160119074614 -->
+</div>				<!-- /bodycontent -->
+								<!-- printfooter -->
+				<div class="printfooter">
+				Retrieved from "<a href="https://cryptocoding.net/index.php?title=Coding_rules&amp;oldid=163">https://cryptocoding.net/index.php?title=Coding_rules&amp;oldid=163</a>"				</div>
+				<!-- /printfooter -->
+												<!-- catlinks -->
+				<div id="catlinks" class="catlinks catlinks-allhidden"></div>				<!-- /catlinks -->
+												<div class="visualClear"></div>
+				<!-- debughtml -->
+								<!-- /debughtml -->
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+		<li id="pt-login"><a href="https://cryptocoding.net/index.php?title=Special:UserLogin&amp;returnto=Coding+rules" title="You are encouraged to log in; however, it is not mandatory [ctrl-option-o]" accesskey="o">Log in / create account</a></li>
+	</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li id="ca-nstab-main" class="selected"><span><a href="./Coding rules - Cryptography Coding Standard_files/Coding rules - Cryptography Coding Standard.html" title="View the content page [ctrl-option-c]" accesskey="c">Page</a></span></li>
+					<li id="ca-talk"><span><a href="https://cryptocoding.net/index.php/Talk:Coding_rules" title="Discussion about the content page [ctrl-option-t]" accesskey="t">Discussion</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+	<h4>
+		</h4>
+	<h5><span>Variants</span><a href="https://cryptocoding.net/index.php/Coding_rules#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><span><a href="./Coding rules - Cryptography Coding Standard_files/Coding rules - Cryptography Coding Standard.html">Read</a></span></li>
+					<li id="ca-viewsource"><span><a href="https://cryptocoding.net/index.php?title=Coding_rules&amp;action=edit" title="This page is protected.
+You can view its source [ctrl-option-e]" accesskey="e">View source</a></span></li>
+					<li id="ca-history" class="collapsible"><span><a href="https://cryptocoding.net/index.php?title=Coding_rules&amp;action=history" title="Past revisions of this page [ctrl-option-h]" accesskey="h">View history</a></span></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="https://cryptocoding.net/index.php/Coding_rules#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="https://cryptocoding.net/index.php" id="searchform">
+				<div>
+			<input type="search" name="search" title="Search Cryptography Coding Standard [ctrl-option-f]" accesskey="f" id="searchInput" autocomplete="off" placeholder="Search">			<input type="submit" name="go" value="Go" title="Go to a page with this exact name if exists" id="searchGoButton" class="searchButton">			<input type="submit" name="fulltext" value="Search" title="Search the pages for this text" id="mw-searchButton" class="searchButton">					<input type="hidden" name="title" value="Special:Search">
+		</div>
+	</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(/ccs_black.gif);" href="https://cryptocoding.net/index.php/Cryptography_Coding_Standard" title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id="p-navigation">
+	<h5>Navigation</h5>
+	<div class="body">
+		<ul>
+			<li id="n-mainpage-description"><a href="https://cryptocoding.net/index.php/Cryptography_Coding_Standard" title="Visit the main page [ctrl-option-z]" accesskey="z">Main page</a></li>
+			<li id="n-Coding-rules"><a href="./Coding rules - Cryptography Coding Standard_files/Coding rules - Cryptography Coding Standard.html">Coding rules</a></li>
+			<li id="n-References"><a href="https://cryptocoding.net/index.php/References">References</a></li>
+			<li id="n-FAQ"><a href="https://cryptocoding.net/index.php/FAQ">FAQ</a></li>
+		</ul>
+	</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+			<li id="t-whatlinkshere"><a href="https://cryptocoding.net/index.php/Special:WhatLinksHere/Coding_rules" title="A list of all wiki pages that link here [ctrl-option-j]" accesskey="j">What links here</a></li>
+			<li id="t-recentchangeslinked"><a href="https://cryptocoding.net/index.php/Special:RecentChangesLinked/Coding_rules" title="Recent changes in pages linked from this page [ctrl-option-k]" accesskey="k">Related changes</a></li>
+			<li id="t-specialpages"><a href="https://cryptocoding.net/index.php/Special:SpecialPages" title="A list of all special pages [ctrl-option-q]" accesskey="q">Special pages</a></li>
+			<li id="t-print"><a href="https://cryptocoding.net/index.php?title=Coding_rules&amp;printable=yes" rel="alternate" title="Printable version of this page [ctrl-option-p]" accesskey="p">Printable version</a></li>
+			<li id="t-permalink"><a href="https://cryptocoding.net/index.php?title=Coding_rules&amp;oldid=163" title="Permanent link to this revision of the page">Permanent link</a></li>
+		</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+							<ul id="footer-info">
+											<li id="footer-info-lastmod"> This page was last modified on 17 December 2014, at 23:49.</li>
+											<li id="footer-info-viewcount">This page has been accessed 54,229 times.</li>
+									</ul>
+							<ul id="footer-places">
+											<li id="footer-places-privacy"><a href="https://cryptocoding.net/index.php/Cryptography_Coding_Standard:Privacy_policy" title="Cryptography Coding Standard:Privacy policy">Privacy policy</a></li>
+											<li id="footer-places-about"><a href="https://cryptocoding.net/index.php/Cryptography_Coding_Standard:About" title="Cryptography Coding Standard:About">About Cryptography Coding Standard</a></li>
+											<li id="footer-places-disclaimer"><a href="https://cryptocoding.net/index.php/Cryptography_Coding_Standard:General_disclaimer" title="Cryptography Coding Standard:General disclaimer">Disclaimers</a></li>
+									</ul>
+										<ul id="footer-icons" class="noprint">
+					<li id="footer-poweredbyico">
+						<a href="https://www.mediawiki.org/"><img src="./Coding rules - Cryptography Coding Standard_files/poweredby_mediawiki_88x31.png" alt="Powered by MediaWiki" width="88" height="31"></a>
+					</li>
+				</ul>
+						<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		<script>if(window.mw){
+mw.loader.state({"site":"loading","user":"missing","user.groups":"ready"});
+}</script>
+<script src="./Coding rules - Cryptography Coding Standard_files/load(4).php"></script>
+<script>if(window.mw){
+mw.loader.load(["mediawiki.user","mediawiki.page.ready","mediawiki.searchSuggest"], null, true);
+}</script><script src="./Coding rules - Cryptography Coding Standard_files/load(5).php" type="text/javascript"></script>
+<script>if(window.mw){
+mw.loader.state({"site":"ready"});
+}</script>
+<!-- Served in 0.089 secs. -->
+	
+
+<div class="suggestions" style="display: none; font-size: 11px;"><div class="suggestions-results"></div><div class="suggestions-special"></div></div></body></html>
