@@ -1,0 +1,39 @@
+Subject: SCREAM/iSCREAM: padding/tweak issue, proposed fix and clarification of the recommended parameters.
+From: Francois-Xavier Standaert <fstandae@uclouvain.be>
+Date: Mon, 31 Mar 2014 13:21:27 -0700 (PDT)
+To: crypto-competitions@googlegroups.com
+Message-Id: <a08acbb0-1c6d-4984-a0bf-d3d77732db99@googlegroups.com>
+
+Dear all,
+
+First, we would like to thank Wang Lei and Sim Siang Meng for pointing out a
+mistake in the padding rule of SCREAM/iSCREAM (see their post “Forgery Attack
+on SCREAM and iSCREAM”).
+
+We also found another simple forgery attack for any message M||P, where P is
+the final block (full or partial). Given the authenticated encryption of the
+message M||[0]||P, one can build a valid encryption of M||P by removing the
+ciphertext corresponding to the zero block, and copying the tag.
+
+In both cases, the weaknesses come from modificactions of TAE that were aimed
+to allow longer messages. We have revised our mode to address this problem.
+SCREAMv2 and iSCREAMv2 are now based on the original TAE mode. If possible, we
+would like these versions to be considered in the future.
+
+An update from SCREAMv1/iSCREAMv1 to SCREAMv2/iSCREAMv2 is available here:
+http://perso.uclouvain.be/fstandae/SCREAM/SCREAM_update1.pdf
+and the full description of SCREAMv2/iSCREAMv2 is available there:
+http://perso.uclouvain.be/fstandae/SCREAM/SCREAM_v2.pdf
+
+In addition, we would like to take this opportunity to specify an ordering of
+the recommended parameters, as required by the CAESAR secretary.  We suggest
+the following order:
+1. SCREAM with 10 steps (aiming for single-key security)
+2. iSCREAM with 12 steps (aiming for single-key security)
+3. SCREAM with 12 steps (aiming for related-key security)
+4. iSCREAM with 14 steps, (aiming for related-key security)
+
+Best regards,
+
+--
+The SCREAM team.

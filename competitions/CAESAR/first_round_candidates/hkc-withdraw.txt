@@ -1,0 +1,17 @@
+Subject: Withdraw Re: HKC v1.1 Re: HKC Authentication
+From: Shinsaku Kiyomoto <kiyomoto@kddilabs.jp>
+Date: Tue, 8 Apr 2014 22:48:56 +0900
+To: crypto-competitions@googlegroups.com
+Cc: mhenricksen@i2r.a-star.edu.sg
+Message-Id: <20140408224856.c0b88f1a3d478015a27fe653@kddilabs.jp>
+X-Mailer: Sylpheed 3.4.1 (GTK+ 2.10.14; i686-pc-mingw32)
+
+Dear All,
+
+We just withdraw HKC from the competition in order to re-consider the MAC generation part.
+
+Thank you.
+
+Best regards,
+
+Shinsaku

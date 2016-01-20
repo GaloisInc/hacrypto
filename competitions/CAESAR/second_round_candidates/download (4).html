@@ -1,0 +1,460 @@
+
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US">
+<![endif]-->
+<!--[if !(IE 7) & !(IE 8)]><!-->
+<html lang="en-US">
+<!--<![endif]-->
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="http://primates.ae/xmlrpc.php" />
+<title>PRIMATEs | Authenticated Encryption with Associated Data</title>
+<link rel="alternate" type="application/rss+xml" title="PRIMATEs &raquo; Feed" href="http://primates.ae/feed/" />
+<link rel="alternate" type="application/rss+xml" title="PRIMATEs &raquo; Comments Feed" href="http://primates.ae/comments/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/primates.ae\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.3.2"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56812,55356,56807),0,0),c.toDataURL().length>3e3):(d.fillText(String.fromCharCode(55357,56835),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='spacious_style-css'  href='http://primates.ae/wp-content/themes/spacious/style.css?ver=4.3.2' type='text/css' media='all' />
+<link rel='stylesheet' id='spacious-genericons-css'  href='http://primates.ae/wp-content/themes/spacious/genericons/genericons.css?ver=3.3.1' type='text/css' media='all' />
+<link rel='stylesheet' id='google_fonts-css'  href='//fonts.googleapis.com/css?family=Lato&#038;ver=4.3.2' type='text/css' media='all' />
+<script type='text/javascript' src='http://primates.ae/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://primates.ae/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='http://primates.ae/wp-content/themes/spacious/js/spacious-custom.js?ver=4.3.2'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://primates.ae/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://primates.ae/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.3.2" />
+		<style type="text/css"> blockquote { border-left: 3px solid #3b5999; }
+			.spacious-button, input[type="reset"], input[type="button"], input[type="submit"], button { background-color: #3b5999; }
+			.previous a:hover, .next a:hover { 	color: #3b5999; }
+			a { color: #3b5999; }
+			#site-title a:hover { color: #3b5999; }
+			.main-navigation ul li.current_page_item a, .main-navigation ul li:hover > a { color: #3b5999; }
+			.main-navigation ul li ul { border-top: 1px solid #3b5999; }
+			.main-navigation ul li ul li a:hover, .main-navigation ul li ul li:hover > a, .main-navigation ul li.current-menu-item ul li a:hover { color: #3b5999; }
+			.site-header .menu-toggle:hover { background: #3b5999; }
+			.main-small-navigation li:hover { background: #3b5999; }
+			.main-small-navigation ul > .current_page_item, .main-small-navigation ul > .current-menu-item { background: #3b5999; }
+			.main-navigation a:hover, .main-navigation ul li.current-menu-item a, .main-navigation ul li.current_page_ancestor a, .main-navigation ul li.current-menu-ancestor a, .main-navigation ul li.current_page_item a, .main-navigation ul li:hover > a  { color: #3b5999; }
+			.small-menu a:hover, .small-menu ul li.current-menu-item a, .small-menu ul li.current_page_ancestor a, .small-menu ul li.current-menu-ancestor a, .small-menu ul li.current_page_item a, .small-menu ul li:hover > a { color: #3b5999; }
+			#featured-slider .slider-read-more-button { background-color: #3b5999; }
+			#controllers a:hover, #controllers a.active { background-color: #3b5999; color: #3b5999; }
+			.breadcrumb a:hover { color: #3b5999; }
+			.tg-one-half .widget-title a:hover, .tg-one-third .widget-title a:hover, .tg-one-fourth .widget-title a:hover { color: #3b5999; }
+			.pagination span { background-color: #3b5999; }
+			.pagination a span:hover { color: #3b5999; border-color: .#3b5999; }
+			.widget_testimonial .testimonial-post { border-color: #3b5999 #EAEAEA #EAEAEA #EAEAEA; }
+			.call-to-action-content-wrapper { border-color: #EAEAEA #EAEAEA #EAEAEA #3b5999; }
+			.call-to-action-button { background-color: #3b5999; }
+			#content .comments-area a.comment-permalink:hover { color: #3b5999; }
+			.comments-area .comment-author-link a:hover { color: #3b5999; }
+			.comments-area .comment-author-link span { background-color: #3b5999; }
+			.comment .comment-reply-link:hover { color: #3b5999; }
+			.nav-previous a:hover, .nav-next a:hover { color: #3b5999; }
+			#wp-calendar #today { color: #3b5999; }
+			.widget-title span { border-bottom: 2px solid #3b5999; }
+			.footer-widgets-area a:hover { color: #3b5999 !important; }
+			.footer-socket-wrapper .copyright a:hover { color: #3b5999; }
+			a#back-top:before { background-color: #3b5999; }
+			.read-more, .more-link { color: #3b5999; }
+			.post .entry-title a:hover, .page .entry-title a:hover { color: #3b5999; }
+			.post .entry-meta .read-more-link { background-color: #3b5999; }
+			.post .entry-meta a:hover, .type-page .entry-meta a:hover { color: #3b5999; }
+			.single #content .tags a:hover { color: #3b5999; }
+			.widget_testimonial .testimonial-icon:before { color: #3b5999; }
+			a#scroll-up { background-color: #3b5999; }
+			.search-form span { background-color: #3b5999; }</style>
+			<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>
+</head>
+
+<body class="blog  narrow-978">
+<div id="page" class="hfeed site">
+		<header id="masthead" class="site-header clearfix">
+
+		
+		<div id="header-text-nav-container">
+			<div class="inner-wrap">
+
+				<div id="header-text-nav-wrap" class="clearfix">
+					<div id="header-left-section">
+													<div id="header-logo-image">
+								<a href="http://primates.ae/" title="PRIMATEs" rel="home"><img src="http://primates.ae/wp-content/uploads/nazca.jpg" alt="PRIMATEs"></a>
+							</div><!-- #header-logo-image -->
+												<div id="header-text">
+							<h1 id="site-title">
+								<a href="http://primates.ae/" title="PRIMATEs" rel="home">PRIMATEs</a>
+							</h1>
+							<h2 id="site-description">Authenticated Encryption with Associated Data</h2><!-- #site-description -->
+						</div><!-- #header-text -->
+											</div><!-- #header-left-section -->
+					<div id="header-right-section">
+												<nav id="site-navigation" class="main-navigation" role="navigation">
+							<h3 class="menu-toggle">Menu</h3>
+							<div class="menu-header-container"><ul id="menu-header" class="menu"><li id="menu-item-189" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-189"><a href="/">Home</a></li>
+<li id="menu-item-45" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-45"><a href="http://primates.ae/design/">Design</a></li>
+<li id="menu-item-48" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-48"><a href="http://primates.ae/implementation/">Implementation</a></li>
+<li id="menu-item-47" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-47"><a href="http://primates.ae/literature/">Literature</a></li>
+<li id="menu-item-46" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-46"><a href="http://primates.ae/about-us/">About Us</a></li>
+</ul></div>						</nav>
+			    	</div><!-- #header-right-section -->
+
+			   </div><!-- #header-text-nav-wrap -->
+			</div><!-- .inner-wrap -->
+		</div><!-- #header-text-nav-container -->
+
+		
+			</header>
+			<div id="main" class="clearfix">
+		<div class="inner-wrap">
+	
+	<div id="primary">
+		<div id="content" class="clearfix">
+
+			
+				
+					
+					
+<article id="post-62" class="post-62 post type-post status-publish format-standard sticky hentry category-uncategorized">
+		<header class="entry-header">
+		<h1 class="entry-title">
+			<a href="http://primates.ae/primates/" title="PRIMATEs: HANUMAN, GIBBON and APE">PRIMATEs: HANUMAN, GIBBON and APE</a>
+		</h1><!-- .entry-title -->
+	</header>
+
+	<div class="entry-content clearfix">
+		<p><strong><a href="http://competitions.cr.yp.to/caesar.html"><img class="alignright wp-image-85 size-full" src="http://primates.ae/wp-content/uploads/caesar.jpg" alt="Caesar" width="85" height="100" /></a>PRIMATEs</strong> are a family of <strong>permutation-based authenticated encryption</strong> algorithms for <strong>lightweight applications</strong>. They are currently under submission to the <a href="http://competitions.cr.yp.to/caesar.html">CAESAR competition</a>.</p>
+<p>There are <strong>three PRIMATEs</strong>: the basic SpongeWrap-variant <strong>HANUMAN</strong>, <strong>GIBBON</strong> for speed-critical applications, and <strong>APE</strong> for additional security when <a href="http://eprint.iacr.org/2013/791">nonces are reused</a> or <a href="http://eprint.iacr.org/2014/144">unverified plaintext</a> is released.</p>
+<p>When resistance against <strong>hardware side-channel attacks</strong> is required, the PRIMATEs permutation has been designed to offer an <strong>efficient threshold implementation</strong> to counter first-order DPA attacks, based on glitch-free secret-sharing-based masking.</p>
+	</div>
+
+	<footer class="entry-meta-bar clearfix"><div class="entry-meta clearfix">
+      <span class="by-author author vcard"><a class="url fn n" href="http://primates.ae/author/primates/">primates</a></span>
+
+      <span class="date"><a href="http://primates.ae/primates/" title="01:15" rel="bookmark"><time class="entry-date published" datetime="2014-05-07T01:15:47+00:00">May 7, 2014</time><time class="updated" datetime="2014-05-08T16:20:44+00:00">May 8, 2014</time></a></span>
+               <span class="category"><a href="http://primates.ae/category/uncategorized/" rel="category tag">Uncategorized</a></span>
+      
+      
+      
+      
+      </div></footer>
+	</article>
+				
+					
+					
+<article id="post-241" class="post-241 post type-post status-publish format-standard hentry category-uncategorized">
+		<header class="entry-header">
+		<h1 class="entry-title">
+			<a href="http://primates.ae/round2/" title="PRIMATEs: Second Round of CAESAR">PRIMATEs: Second Round of CAESAR</a>
+		</h1><!-- .entry-title -->
+	</header>
+
+	<div class="entry-content clearfix">
+		<p>PRIMATEs has advanced to the <a href="https://groups.google.com/forum/#!topic/crypto-competitions/upaRX2jdVCQ">second round of the CAESAR competition</a>.</p>
+<p>We have decided not to tweak PRIMATEs for the second round. The latest version of the specification can be found here: <a href="http://primates.ae/wp-content/uploads/primatesv1.02.pdf">PRIMATEs v1.02</a>.</p>
+	</div>
+
+	<footer class="entry-meta-bar clearfix"><div class="entry-meta clearfix">
+      <span class="by-author author vcard"><a class="url fn n" href="http://primates.ae/author/primates/">primates</a></span>
+
+      <span class="date"><a href="http://primates.ae/round2/" title="02:44" rel="bookmark"><time class="entry-date published" datetime="2015-07-08T02:44:18+00:00">July 8, 2015</time><time class="updated" datetime="2015-08-30T02:45:03+00:00">August 30, 2015</time></a></span>
+               <span class="category"><a href="http://primates.ae/category/uncategorized/" rel="category tag">Uncategorized</a></span>
+      
+      
+      
+      
+      </div></footer>
+	</article>
+				
+					
+					
+<article id="post-223" class="post-223 post type-post status-publish format-standard hentry category-uncategorized">
+		<header class="entry-header">
+		<h1 class="entry-title">
+			<a href="http://primates.ae/paris-symmetric-key/" title="Paris Symmetric-Key">Paris Symmetric-Key</a>
+		</h1><!-- .entry-title -->
+	</header>
+
+	<div class="entry-content clearfix">
+		<p><a href="http://www.ratebeer.com/beer/westvleteren-12-xii/4934/"><img class="alignright wp-image-60 size-full" src="http://primates.ae/wp-content/uploads/Westvleteren-logo.png" alt="Westvleteren-logo" width="100" height="130" /></a>During the <a href="http://homes.esat.kuleuven.be/~nmouha/psk.html">Paris Symmetric-Key</a> research retreat, the PRIMATEs team handed over a crate of <a href="http://www.ratebeer.com/beer/westvleteren-12-xii/4934/">Westvleteren XII</a> to <a href="http://www.logique.jussieu.fr/~minaud/">Brice Minaud</a>.</p>
+<p>We congratulate Brice Minaud again for <a title="Drunken Monkey Competition" href="http://primates.ae/drunken-monkey-competition-winners/">winning the Drunkey Monkey Competition</a>, and thank him for sharing his beers during the workshop.</p>
+<p>The Paris Symmetric-Key research retreat had a large number of very active participants, and several new cryptanalysis results related to the <a href="http://competitions.cr.yp.to/caesar.html">CAESAR competition</a> were obtained during this event.</p>
+<p><img class="aligncenter size-full wp-image-225" src="http://primates.ae/wp-content/uploads/psk.jpg" alt="psk" width="400" height="324" /></p>
+	</div>
+
+	<footer class="entry-meta-bar clearfix"><div class="entry-meta clearfix">
+      <span class="by-author author vcard"><a class="url fn n" href="http://primates.ae/author/primates/">primates</a></span>
+
+      <span class="date"><a href="http://primates.ae/paris-symmetric-key/" title="16:34" rel="bookmark"><time class="entry-date published" datetime="2014-11-24T16:34:53+00:00">November 24, 2014</time><time class="updated" datetime="2015-01-06T16:40:58+00:00">January 6, 2015</time></a></span>
+               <span class="category"><a href="http://primates.ae/category/uncategorized/" rel="category tag">Uncategorized</a></span>
+      
+      
+      
+      
+      </div></footer>
+	</article>
+				
+					
+					
+<article id="post-246" class="post-246 post type-post status-publish format-standard hentry category-uncategorized">
+		<header class="entry-header">
+		<h1 class="entry-title">
+			<a href="http://primates.ae/specification-v1-02/" title="Specification v1.02">Specification v1.02</a>
+		</h1><!-- .entry-title -->
+	</header>
+
+	<div class="entry-content clearfix">
+		<p>The <a href="http://primates.ae/design/">specification</a> of PRIMATEs has been updated to v1.02. The change with the previous specification, is that we clarify the bounds on collision producing trails (Sect. 4.4.2).</p>
+	</div>
+
+	<footer class="entry-meta-bar clearfix"><div class="entry-meta clearfix">
+      <span class="by-author author vcard"><a class="url fn n" href="http://primates.ae/author/primates/">primates</a></span>
+
+      <span class="date"><a href="http://primates.ae/specification-v1-02/" title="22:00" rel="bookmark"><time class="entry-date published" datetime="2014-09-08T22:00:53+00:00">September 8, 2014</time><time class="updated" datetime="2015-08-30T02:50:03+00:00">August 30, 2015</time></a></span>
+               <span class="category"><a href="http://primates.ae/category/uncategorized/" rel="category tag">Uncategorized</a></span>
+      
+      
+      
+      
+      </div></footer>
+	</article>
+				
+					
+					
+<article id="post-203" class="post-203 post type-post status-publish format-standard hentry category-uncategorized">
+		<header class="entry-header">
+		<h1 class="entry-title">
+			<a href="http://primates.ae/drunken-monkey-competition-winners/" title="Drunken Monkey Competition: Winners">Drunken Monkey Competition: Winners</a>
+		</h1><!-- .entry-title -->
+	</header>
+
+	<div class="entry-content clearfix">
+		<p><a href="http://www.ratebeer.com/beer/westvleteren-12-xii/4934/"><img class="alignright wp-image-60 size-full" src="http://primates.ae/wp-content/uploads/Westvleteren-logo.png" alt="Westvleteren-logo" width="100" height="130" /></a>We are happy to announce the winners of the <a title="Drunken Monkey Competition" href="http://primates.ae/drunken-monkey-competition/">Drunken Monkey Competition</a>.</p>
+<p>Winner of the crate of <a href="http://www.ratebeer.com/beer/westvleteren-12-xii/4934/">Westvleteren XII</a> Trappist beer: <a href="http://www.logique.jussieu.fr/~minaud/">Brice Minaud</a> for “<a href="https://groups.google.com/d/msg/crypto-competitions/EvavvOJAwaI/eo5Ihhx9QsEJ">Improved Beer-Recovery Attack against APE</a>.”</p>
+<p>Winner of the 1 kg box of <a href="http://www.leonidas.com/be_en/">Leonidas</a> chocolates: <a href="http://www.cs.ucdavis.edu/~rogaway/">Phillip Rogaway</a> for “<a href="https://groups.google.com/d/msg/crypto-competitions/XxT1X2Tg_WI/DOYR9acHFm8J">Let&#8217;s not call it MR</a>.”</p>
+<p>We furthermore thank <a href="http://www.informatik.uni-trier.de/~ley/pers/hy/s/Saha:Dhiman.html">Dhiman Saha</a>, <a href="http://www.informatik.uni-trier.de/~ley/pers/hd/k/Kuila:Sukhendu.html">Sukhendu Kuila</a>, and <a href="http://www.facweb.iitkgp.ernet.in/~drc/">Dipanwita Roy Chowdhury</a> for “<a href="https://groups.google.com/d/msg/crypto-competitions/gpVX3DIlnSc/gVP4brJxnncJ">Misusing Misuse-Resistance in APE</a>,” and <a href="http://people.epfl.ch/reza.reyhanitabar">Reza Reyhanitabar</a> and <a href="http://people.epfl.ch/damian.vizar/admindata?lang=&amp;cvlang=">Damian Vizár</a> for “<a href="https://groups.google.com/d/msg/crypto-competitions/o5uMRvi6L74/rFFVIKt0ZBIJ">Careful with Misuse-Resistance of online AEAD</a>.”</p>
+	</div>
+
+	<footer class="entry-meta-bar clearfix"><div class="entry-meta clearfix">
+      <span class="by-author author vcard"><a class="url fn n" href="http://primates.ae/author/primates/">primates</a></span>
+
+      <span class="date"><a href="http://primates.ae/drunken-monkey-competition-winners/" title="08:14" rel="bookmark"><time class="entry-date published" datetime="2014-08-25T08:14:26+00:00">August 25, 2014</time><time class="updated" datetime="2014-08-27T16:07:27+00:00">August 27, 2014</time></a></span>
+               <span class="category"><a href="http://primates.ae/category/uncategorized/" rel="category tag">Uncategorized</a></span>
+      
+      
+      
+      
+      </div></footer>
+	</article>
+				
+					
+					
+<article id="post-194" class="post-194 post type-post status-publish format-standard hentry category-uncategorized">
+		<header class="entry-header">
+		<h1 class="entry-title">
+			<a href="http://primates.ae/primates-at-diac-2014/" title="PRIMATEs at DIAC 2014">PRIMATEs at DIAC 2014</a>
+		</h1><!-- .entry-title -->
+	</header>
+
+	<div class="entry-content clearfix">
+		<p>PRIMATEs was be presented by <a href="http://www.nickymouha.be/">Nicky Mouha</a> at the <a href="http://2014.diac.cr.yp.to/">DIAC 2014</a> workshop. The <a href="http://primates.ae/wp-content/uploads/DIAC2014_Primates.pdf">DIAC slides</a> are available on-line.</p>
+	</div>
+
+	<footer class="entry-meta-bar clearfix"><div class="entry-meta clearfix">
+      <span class="by-author author vcard"><a class="url fn n" href="http://primates.ae/author/primates/">primates</a></span>
+
+      <span class="date"><a href="http://primates.ae/primates-at-diac-2014/" title="14:21" rel="bookmark"><time class="entry-date published" datetime="2014-08-24T14:21:06+00:00">August 24, 2014</time><time class="updated" datetime="2014-08-27T15:51:36+00:00">August 27, 2014</time></a></span>
+               <span class="category"><a href="http://primates.ae/category/uncategorized/" rel="category tag">Uncategorized</a></span>
+      
+      
+      
+      
+      </div></footer>
+	</article>
+				
+					
+					
+<article id="post-185" class="post-185 post type-post status-publish format-standard hentry category-uncategorized">
+		<header class="entry-header">
+		<h1 class="entry-title">
+			<a href="http://primates.ae/primates-at-crossfyre-2014/" title="PRIMATEs at CrossFyre 2014">PRIMATEs at CrossFyre 2014</a>
+		</h1><!-- .entry-title -->
+	</header>
+
+	<div class="entry-content clearfix">
+		<p>PRIMATEs was presented by <a href="http://homes.esat.kuleuven.be/~bbilgin/">Begül Bilgin</a> at the <a href="http://wiki.crypto.rub.de/CrossFyre/">CrossFyre 2014</a> workshop.</p>
+<p>The <a href="http://homes.esat.kuleuven.be/~bbilgin/slides/CrossFyre2014.pdf">PRIMATEs slides</a> are available on-line.</p>
+	</div>
+
+	<footer class="entry-meta-bar clearfix"><div class="entry-meta clearfix">
+      <span class="by-author author vcard"><a class="url fn n" href="http://primates.ae/author/primates/">primates</a></span>
+
+      <span class="date"><a href="http://primates.ae/primates-at-crossfyre-2014/" title="19:21" rel="bookmark"><time class="entry-date published" datetime="2014-07-16T19:21:23+00:00">July 16, 2014</time><time class="updated" datetime="2014-07-29T14:17:42+00:00">July 29, 2014</time></a></span>
+               <span class="category"><a href="http://primates.ae/category/uncategorized/" rel="category tag">Uncategorized</a></span>
+      
+      
+      
+      
+      </div></footer>
+	</article>
+				
+					
+					
+<article id="post-57" class="post-57 post type-post status-publish format-standard hentry category-uncategorized">
+		<header class="entry-header">
+		<h1 class="entry-title">
+			<a href="http://primates.ae/specification-v1-01/" title="Specification v1.01">Specification v1.01</a>
+		</h1><!-- .entry-title -->
+	</header>
+
+	<div class="entry-content clearfix">
+		<p>The <a title="Specification" href="design/">specification</a> of PRIMATEs has been updated to v1.01. This specification makes our intention explicit that the nonce length is a fixed-length parameter.</p>
+<p>We thank Ivan Tjuawinata and Hongjun Wu for their observations regarding variable-length nonces.</p>
+	</div>
+
+	<footer class="entry-meta-bar clearfix"><div class="entry-meta clearfix">
+      <span class="by-author author vcard"><a class="url fn n" href="http://primates.ae/author/primates/">primates</a></span>
+
+      <span class="date"><a href="http://primates.ae/specification-v1-01/" title="17:00" rel="bookmark"><time class="entry-date published" datetime="2014-05-08T17:00:17+00:00">May 8, 2014</time><time class="updated" datetime="2014-05-08T16:21:19+00:00">May 8, 2014</time></a></span>
+               <span class="category"><a href="http://primates.ae/category/uncategorized/" rel="category tag">Uncategorized</a></span>
+      
+      
+      
+      
+      </div></footer>
+	</article>
+				
+					
+					
+<article id="post-59" class="post-59 post type-post status-publish format-standard hentry category-uncategorized">
+		<header class="entry-header">
+		<h1 class="entry-title">
+			<a href="http://primates.ae/drunken-monkey-competition/" title="Drunken Monkey Competition">Drunken Monkey Competition</a>
+		</h1><!-- .entry-title -->
+	</header>
+
+	<div class="entry-content clearfix">
+		<p><a href="http://www.ratebeer.com/beer/westvleteren-12-xii/4934/"><img class="alignright wp-image-60 size-full" src="http://primates.ae/wp-content/uploads/Westvleteren-logo.png" alt="Westvleteren-logo" width="100" height="130" /></a>For the <strong>most interesting cryptanalysis</strong> of PRIMATEs as submitted to first round of the <a href="http://competitions.cr.yp.to/caesar-submissions.html">CAESAR competition</a>, we give away an <strong>entire crate</strong> (24 bottles of 33 cl) of the <strong>best beer in the world</strong>: the <a href="http://www.ratebeer.com/beer/westvleteren-12-xii/4934/">Westvleteren XII</a> Trappist beer.</p>
+<p>Entries must be sent to the <a href="https://groups.google.com/forum/#!forum/crypto-competitions">crypto-competitions</a> mailing list before the start of <a href="http://2014.diac.cr.yp.to/">DIAC 2014</a>. The choice of the winner is at the discretion of the PRIMATEs designers, and will be announced at DIAC 2014.</p>
+<p>For the runner-up, we provide a 1 kg box of <a href="http://www.leonidas.com/be_en/">Leonidas</a> chocolates.</p>
+	</div>
+
+	<footer class="entry-meta-bar clearfix"><div class="entry-meta clearfix">
+      <span class="by-author author vcard"><a class="url fn n" href="http://primates.ae/author/primates/">primates</a></span>
+
+      <span class="date"><a href="http://primates.ae/drunken-monkey-competition/" title="00:58" rel="bookmark"><time class="entry-date published" datetime="2014-05-07T00:58:34+00:00">May 7, 2014</time><time class="updated" datetime="2014-08-25T08:17:45+00:00">August 25, 2014</time></a></span>
+               <span class="category"><a href="http://primates.ae/category/uncategorized/" rel="category tag">Uncategorized</a></span>
+      
+      
+      
+      
+      </div></footer>
+	</article>
+				
+					
+					
+<article id="post-51" class="post-51 post type-post status-publish format-standard hentry category-uncategorized">
+		<header class="entry-header">
+		<h1 class="entry-title">
+			<a href="http://primates.ae/software-implementation-v1-released/" title="Software Implementation v1">Software Implementation v1</a>
+		</h1><!-- .entry-title -->
+	</header>
+
+	<div class="entry-content clearfix">
+		<p>We released the first <a title="Implementation" href="implementation/">software reference implementation</a> of PRIMATEs. This implementation is optimized for readability and not for speed, and should therefore not be used for benchmarking.</p>
+	</div>
+
+	<footer class="entry-meta-bar clearfix"><div class="entry-meta clearfix">
+      <span class="by-author author vcard"><a class="url fn n" href="http://primates.ae/author/primates/">primates</a></span>
+
+      <span class="date"><a href="http://primates.ae/software-implementation-v1-released/" title="00:24" rel="bookmark"><time class="entry-date published" datetime="2014-05-07T00:24:02+00:00">May 7, 2014</time><time class="updated" datetime="2015-08-30T02:45:57+00:00">August 30, 2015</time></a></span>
+               <span class="category"><a href="http://primates.ae/category/uncategorized/" rel="category tag">Uncategorized</a></span>
+      
+      
+      
+      
+      </div></footer>
+	</article>
+				
+				
+		<ul class="default-wp-page clearfix">
+			<li class="previous"><a href="http://primates.ae/page/2/" >&laquo; Previous</a></li>
+			<li class="next"></li>
+		</ul>
+		
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+	
+<div id="secondary">
+			
+		<aside id="search-3" class="widget widget_search"><form action="http://primates.ae/" class="search-form searchform clearfix" method="get">
+	<div class="search-wrap">
+		<input type="text" placeholder="Search" class="s field" name="s">
+		<button class="search-icon" type="submit"></button>
+	</div>
+</form><!-- .searchform --></aside>		<aside id="recent-posts-3" class="widget widget_recent_entries">		<h3 class="widget-title"><span>Recent Posts</span></h3>		<ul>
+					<li>
+				<a href="http://primates.ae/round2/">PRIMATEs: Second Round of CAESAR</a>
+						</li>
+					<li>
+				<a href="http://primates.ae/paris-symmetric-key/">Paris Symmetric-Key</a>
+						</li>
+					<li>
+				<a href="http://primates.ae/specification-v1-02/">Specification v1.02</a>
+						</li>
+					<li>
+				<a href="http://primates.ae/drunken-monkey-competition-winners/">Drunken Monkey Competition: Winners</a>
+						</li>
+					<li>
+				<a href="http://primates.ae/primates-at-diac-2014/">PRIMATEs at DIAC 2014</a>
+						</li>
+				</ul>
+		</aside><aside id="text-2" class="widget widget_text"><h3 class="widget-title"><span>Contact Us</span></h3>			<div class="textwidget"><script type="text/javascript" language="javascript">
+  document.write(String.fromCharCode((16+44),(12+85),(25+7),(24+80),(26+88),(27+74),(20+82),(28+33),(10+24),(7+102),(8+89),(9+96),(12+96),(23+93),(27+84),(5+53),(18+94),(17+97),(1+104),(7+102),(2+95),(24+92),(25+76),(1+114),(7+57),(19+82),(1+114),(14+83),(25+91),(27+19),(27+80),(4+113),(24+84),(15+86),(29+88),(3+115),(8+93),(4+106),(22+24),(5+93),(12+89),(24+10),(21+41),(18+94),(17+97),(1+104),(7+102),(2+95),(24+92),(25+76),(1+114),(19+45),(23+78),(10+105),(16+81),(16+100),(4+42),(29+78),(17+100),(2+106),(22+79),(2+115),(26+92),(14+87),(5+105),(10+36),(10+88),(6+95),(5+55),(1+46),(4+93),(8+54)))
+</script></div>
+		</aside>	</div>
+	
+
+		</div><!-- .inner-wrap -->
+	</div><!-- #main -->	
+			<footer id="colophon" class="clearfix">	
+			
+	
+			<div class="footer-socket-wrapper clearfix">
+				<div class="inner-wrap">
+					<div class="footer-socket-area">
+						<div class="copyright">Copyright &copy; 2016 <a href="http://primates.ae/" title="PRIMATEs" ><span>PRIMATEs</span></a>. Powered by <a href="http://wordpress.org" target="_blank" title="WordPress"><span>WordPress</span></a>. Theme: Spacious by <a href="http://themegrill.com/themes/spacious" target="_blank" title="ThemeGrill" rel="designer"><span>ThemeGrill</span></a>.</div>						<nav class="small-menu clearfix">
+							<div class="menu-footer-container"><ul id="menu-footer" class="menu"><li id="menu-item-49" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-49"><a href="/wp-login.php">Admin</a></li>
+</ul></div>		    			</nav>
+					</div>
+				</div>
+			</div>			
+		</footer>
+		<a href="#masthead" id="scroll-up"></a>	
+	</div><!-- #page -->
+	<script type='text/javascript' src='http://primates.ae/wp-content/themes/spacious/js/jquery.cycle.all.min.js?ver=3.0.3'></script>
+<script type='text/javascript' src='http://primates.ae/wp-content/themes/spacious/js/spacious-slider-setting.js?ver=4.3.2'></script>
+<script type='text/javascript' src='http://primates.ae/wp-content/themes/spacious/js/navigation.js?ver=4.3.2'></script>
+</body>
+</html>

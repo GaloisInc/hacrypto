@@ -1,0 +1,29 @@
+Subject: CBEAM Withdrawn as of today!
+From: Markku-Juhani Olavi Saarinen <mjos@iki.fi>
+Date: Thu, 3 Apr 2014 15:17:59 +0200
+To: "crypto-competitions@googlegroups.com" <crypto-competitions@googlegroups.com>
+Message-ID: <CA+iU_qmKe71LCWQd3UoMEaPtF=LrH78hQZf4zM9hSz1ka5UT0A@mail.gmail.com>
+
+Hi,
+
+Brice Minaud reports that the CBEAM Pi permutation is vulnerable to a
+very simple attack, which I believe to be valid. I can't believe that
+I missed that -- this is the flipside of running a one-man team, being
+blind to the obvious..
+
+However I am leaving more detailed reporting to Brice, just in case he
+wants to keep some details back and prepare a publication based on
+this (CBEAM Pi was published in CT-RSA this year, after all).
+
+I thank Brice for his effort and I hereby withdraw CBEAM from the
+CAESAR competition. The cbeam.mx site has been updated to reflect
+this.
+
+STRIBOB is still in there, though! the attack has nothing to do with
+the BLNK mode, which is the only thing that these two submissions
+share.
+
+Cheers,
+- markku
+
+Dr. Markku-Juhani O. Saarinen <mjos@iki.fi>  US +1 (424) 666 2713

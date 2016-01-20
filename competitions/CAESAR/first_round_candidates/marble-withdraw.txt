@@ -1,0 +1,24 @@
+Subject: Re: Attacking Marble
+From: Jian Guo <ntu.guo@gmail.com>
+Date: Fri, 23 Jan 2015 18:05:18 +0800
+To: Jiqiang Lu <jiqiang@gmail.com>
+Cc: crypto-competitions@googlegroups.com
+Message-Id: <DFFBCF61-EAE4-41A5-8A78-A7ABCCEC0A09@gmail.com>
+X-Mailer: Apple Mail (2.1993)
+
+Dear CEASAR community,
+
+Thanks Jiqiang ! Indeed Thomas, Gaëtan, and Valentin contacted me few days ago
+that a slightly modified attack would still work.
+
+Although birthday bound security, i.e., 2^n/2 time and data/query is still
+among the highest security level under the nonce reuse and decryption-misuse
+scenarios, and further (simple) tweak is still possible to resist this attack,
+Marble failed its design goals here as an attempt to achieve the security level
+of 2^n time and data .
+
+To be fair with other CEASAR designers, I would withdraw Marble from the
+competition.
+
+Regards,
+Jian.

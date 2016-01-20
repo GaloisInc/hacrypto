@@ -1,0 +1,50 @@
+Subject: POET: request from the CAESAR secretary, revised paper and web site
+From: Stefan.Lucks@uni-weimar.de
+Date: Fri, 28 Mar 2014 14:45:31 +0100 (CET)
+To: crypto-competitions@googlegroups.com
+Message-ID: <alpine.DEB.2.10.1403281330570.24777@debian>
+User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
+
+Dear all,
+
+as requested by the CAESAR secretary, we have clarified the ordering
+of the POET variants, and we revised the consent (in the original
+submission, we had written "we" where we should have written "the
+submitters"). With some additional modifications (see the changelog at
+page iii), the revised paper can be downloaded from the POET web site:
+
+  <http://www.uni-weimar.de/de/medien/professuren/mediensicherheit/research/poet/>
+
+
+Ordering:
+
+  1. POET with 4-round AES
+  2. POET with Galois-Field multiplications in $GF(2^{128})$
+  3. POET with full-round AES
+
+Consent
+
+The submitters hereby consent to all decisions of the CAESAR selection
+committee regarding the selection or non-selection of this submission
+as a second-round candidate, a third-round candidate, a finalist, a
+member of the final portfolio, or any other designation provided by
+the committee. The submitters understand that the committee will not
+comment on the algorithms, except that for each selected algorithm the
+committee will simply cite the previously published analyses that led
+to the selection of the algorithm. The submitters understand that the
+selection of some algorithms is not a negative comment regarding other
+algorithms, and that an excellent algorithm might fail to be selected
+simply because not enough analysis was available at the time of the
+committee decision. The submitters acknowledge that the committee
+decisions reflect the collective expert judgments of the committee
+members and are not subject to appeal. The submitters understand that
+if they disagree with published analyses then they are expected to
+promptly and publicly respond to those analyses, not to wait for
+subsequent committee decisions. The submitters understand that this
+statement is required as a condition of consideration of this
+submission by the CAESAR selection committee.
+
+
+------  I  love  the  taste  of  Cryptanalysis  in  the morning!  ------
+    <http://www.uni-weimar.de/cms/medien/mediensicherheit/home.html>
+--Stefan.Lucks (at) uni-weimar.de, Bauhaus-Universität Weimar, Germany--

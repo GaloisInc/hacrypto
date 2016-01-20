@@ -1,0 +1,51 @@
+Subject: Artemia: Updated sections
+From: nasoor bagheri <na.bagheri@gmail.com>
+Date: Tue, 1 Apr 2014 00:27:26 +0430
+To: crypto-competitions@googlegroups.com, "D. J. Bernstein"
+        <caesar-secretary@competitions.cr.yp.to>
+Cc: Javad Alizadeh <alizadja@gmail.com>, Aref@sharif.edu
+Message-ID: <CAENxr8Xc_ZeN9ws9EqLnSLoP=6skYY0aJ7fq+5yzwx6nwdxTHA@mail.gmail.com>
+
+Dear All,
+  As commented by the secretary of CEASAR, we updated the following sections of
+the Artemia  document:
+
+1) Security Goals: we clarify the maximum length of a queried message or
+associated data to be $2^64-1$ and $2^24-1$ respectively.
+
+2)Features: where we compare Artemia and GCM-AES as follows:
+AES-GCM is a block cipher based design while Artemia is a dedicated design.
+AES-GCM is a two-pass AE but Artemia is a single-pass one. Artemia does not
+contain  key schedule and it  does not use field multiplication. Artemia uses 
+MDS recursive layers that can be easily implemented in both  software and
+hardware. Hence we expect that Artemia provides a good performance in software
+and hardware.  
+Artemia-512 provides 128-bit integrity of the plaintext, associated data and
+nonce which is greater than the bounds provided by AES-GCM. The main
+disadvantage of Artemia is that it is serial.
+
+3)Design Rationale: partially updated as follows :
+Artemia has two main components: the JHAE mode and the permutation $Artemia$.
+In order to design each component, we use the publicly known elements to avoid
+any hidden weaknesses inside those components. In addition, the designers state
+that they have not hidden any weaknesses in this scheme.
+
+4)Intellectual Property: It has been updated as follows:
+Artemia itself is not covered by any patent and it is freely-available. On the
+other hand, as a building block, it uses the JH hash mode which is not covered
+by any patent as far as the designers of Artemia know but if there is any
+patent for JH then it would be applicable to the mode which is used in Artemia.
+If any of this information changes, the submitter will promptly (and within at
+most one month) announce these changes on the crypto-competitions mailing list.
+
+PS
+1
+: the revised version is attached to this email for more clarification which is
+named Artemia v.1.1 .
+
+PS2: we also updated the padding approach, as we were announced in this mailing
+list already (section 1.4.1: Encryption and Authentication).
+
+
+Thanks and regards,
+Artemia-Team (Javad, Mohammad Reza, Nasour)

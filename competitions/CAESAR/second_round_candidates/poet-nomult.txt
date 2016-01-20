@@ -1,0 +1,39 @@
+Subject: POETic update
+From: Stefan.Lucks@uni-weimar.de
+Date: Wed, 16 Apr 2014 14:32:02 +0200 (CEST)
+To: CAESAR mailing list <crypto-competitions@googlegroups.com>
+Message-ID: <alpine.DEB.2.10.1404161417120.17502@debian>
+User-Agent: Alpine 2.10 (DEB 1266 2009-07-14)
+
+Dear all,
+
+thanks to Mohamed Ahmed Abdelraheem, Andrey Bogdanov and Elmar
+Tischhauser, who applied the observations of Cid and Procter to POET
+and thus, concretized the risk of weak keys when using a
+multiplication in GF(2^{128}) for hashing. Thanks also for the
+comments by Markku Saarinen on the mailing list.
+
+When we designed POET, we started with two variants using 4-round AES
+and full-AES as a universal hash function. We considered it
+interesting to amend these two with a third variant using Galois-Field
+multiplication for the same purpose, but we failed to properly
+research the risk of weak keys for that case. As it turned out, the
+weak key probability is too high to use that variant of POET with any
+comfort.
+
+Therefore, we withdraw the POET variant with Galois-Field
+multiplications. We maintain our support for the variants with 4-round
+AES and full AES.
+
+An updated version of POET (1.2) can be found at
++<http://www.uni-weimar.de/en/medien/professuren/mediensicherheit/research/poet/>
+
+Best Regards,
+
+The POET Team
+
+
+
+------  I  love  the  taste  of  Cryptanalysis  in  the morning!  ------
+    <http://www.uni-weimar.de/cms/medien/mediensicherheit/home.html>
+--Stefan.Lucks (at) uni-weimar.de, Bauhaus-Universität Weimar, Germany--

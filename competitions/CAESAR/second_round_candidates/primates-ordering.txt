@@ -1,0 +1,25 @@
+Subject: PRIMATEs: recommended parameter sets
+From: PRIMATEs <primates@esat.kuleuven.be>
+Date: Fri, 28 Mar 2014 09:27:02 +0100
+To: crypto-competitions@googlegroups.com
+Message-ID: <e710074ce18ec70bca75541ebdbe85c7@esat.kuleuven.be>
+User-Agent: ESAT webmail service, powered by Roundcube
+
+Dear all,
+
+As requested by the CAESAR secretary, by this e-mail we clarify the
+ordering of PRIMATEs:
+1. APE-15
+2. HANUMAN-15
+3. GIBBON-15
+4. APE-10
+5. HANUMAN-10
+6. GIBBON-10
+We note, though, that the different primates serve different security
+goals (e.g., APE is robust even when the nonce is misused, whereas
+HANUMAN and GIBBON require uniqueness of the nonce). In an upcoming
+new version of the submission document, we will elaborate further on
+this choice.
+
+Best regards,
+The PRIMATEs team.

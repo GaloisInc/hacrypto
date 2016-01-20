@@ -1,0 +1,17 @@
+Subject: Re: Progress on ++æ v2.0
+From: Francisco Recacha <frecacha@gmail.com>
+Date: Sat, 20 Sep 2014 17:53:19 -0700 (PDT)
+To: crypto-competitions@googlegroups.com
+Message-Id: <b6355577-24fb-4ae7-b9ce-694f5e9ad8d5@googlegroups.com>
+
+Dear all
+
+as  required by CAESAR rules, hereby I notify that I have formally withdrawn
+all the patent claims covering all the ++æ variants so far published either
+offically as CAESAR candidates (i.e. versions 1.1 and 1.2) or in my blog as
+v2.0 candidates (http://inputoutputblockchaining.blogspot.com). Moreover, to
+the knowledge of the author, no one of them is covered by any other IPR
+restriction. Thus, anyone willing to further develop any of them, or to use, is
+free to do so (and welcome).
+
+Cheers!

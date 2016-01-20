@@ -1,0 +1,11 @@
+Subject: Re: A realtime key recovery attack on the authenticated cipher FASER128
+From: "McDonald, Cameron" <cameronm@qti.qualcomm.com>
+Date: Fri, 11 Apr 2014 15:55:46 +0000
+To: "X. Feng" <fengxt@amss.ac.cn>
+CC: "<crypto-competitions@googlegroups.com>" <crypto-competitions@googlegroups.com>
+Message-ID: <1979624D-1004-4910-BB56-F17418058354@qti.qualcomm.com>
+
+Whoops.. that was a bit silly.
+Thanks Xiutao for the analysis. Thanks Dan for organising.
+Please remove FASER from the competition, drag it out the back, and shoot it in
+the head.

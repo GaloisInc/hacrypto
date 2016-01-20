@@ -1,0 +1,18 @@
+Subject: Re: Forging Attack on COBRA
+From: COBRA <cobra@esat.kuleuven.be>
+Date: Fri, 28 Mar 2014 13:21:45 +0100
+To: crypto-competitions@googlegroups.com
+Message-ID: <58597a3b62148de3bddad7f9b06d1353@esat.kuleuven.be>
+User-Agent: ESAT webmail service, powered by Roundcube
+
+Dear all,
+
+Many thanks to Mridul Nandi for looking into COBRA and for finding this clever
+attack.
+
+In the meantime, we found a solution, at the cost of efficiency, to this subtle
+oversight in COBRA and its proof. Nevertheless, we think it is fair to withdraw
+COBRA from the competition.
+
+Best regards,
+The COBRA team.

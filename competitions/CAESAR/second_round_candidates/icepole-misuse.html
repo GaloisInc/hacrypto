@@ -1,0 +1,26 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<pre>
+Subject: Nonce reuse in ICEPOLE
+From: Paweł Morawiecki &lt;pawel.morawiecki@gmail.com&gt;
+Date: Tue, 29 Jul 2014 11:28:58 +0200
+
+Very recently Huang, Wu, and Tjuawinata published an analysis on ICEPOLE in the
+scenario where all nonce-like mechanisms are violated, namely nonce itself is
+reused, secret message number is reused (or not present), associated data are
+the same (for chosen messages). In such special case, as shown in their
+analysis, ICEPOLE can not offer "intermediate robustness" as stated in
+the documentaton. 
+
+Since it is not clear whether a user should respect SMN, or in what way the
+claims refer to the SMN, we want to give the following clarification. In the
+case of nonce misuse, the intermediate level of robustness (specified in the
+documentation) holds only when the SMN is present and respected, namely each
+message has the corresponding, unique secret message number. 
+</pre>
+</body>
+</html>

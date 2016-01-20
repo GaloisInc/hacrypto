@@ -1,0 +1,389 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale = 1.0, user-scalable = no">
+	<title>NORX: A Parallel and Scalable Authenticated Encryption Algorithm</title>
+	<link rel="stylesheet" href="css/pure/base-min.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/pure/grids-min.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/pure/tables-min.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/fonts.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/style.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="css/icons.css" type="text/css" media="screen">
+</head>
+
+<body>
+
+  <nav>
+    <div class="container">
+      <div class="pure-g-r">
+
+        <div class="pure-u-1-5">
+          <div class="l-box">
+            <div id="slogo">[<span class="fs85p">NORX</span>]</div>
+          </div>
+        </div>
+
+        <div class="pure-u-4-5">
+          <div class="l-box">
+            <ul>
+              <li data-slide="1">RESOURCES</li>
+              <li data-slide="2">FEATURES</li>
+              <li data-slide="3">CONTACT</li>
+            </ul>
+          </div>
+        </div>
+
+     </div> <!-- end of grid -->
+    </div> <!-- end of container -->
+  </nav>
+
+
+  <section class="slide" id="slide-header" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="000">
+    <div class="container">
+
+      <div class="pure-g-r">
+        <div class="pure-u-1">
+          <div class="l-box">
+          <div class="is-center">
+            <h1>NORX</h1>
+            <br>
+            <h2 class="bold">A Parallel and Scalable Authenticated Encryption Algorithm<br>
+              and Second Round Candidate in
+                <a href="http://competitions.cr.yp.to/caesar.html">CAESAR</a></h2>
+              <p class="bold">by</p>
+            <div><a class="bold author" href="https://131002.net/" target="_blank">Jean-Philippe Aumasson</a></div>
+            <div><a class="bold author" href="https://zerobyte.io/" target="_blank">Philipp Jovanovic</a></div>
+            <div><a class="bold author" href="http://eden.dei.uc.pt/~sneves/" target="_blank">Samuel Neves</a></div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      </div> <!-- end of grid -->
+    </div> <!-- end of container -->
+  </section> <!-- end of header section -->
+
+
+
+  <!-- About Slide -->
+  <section class="slide" data-slide="1" data-stellar-background-ratio="0.5">
+    <div class="container">
+      <div class="pure-g-r">
+
+        <div class="pure-u-1">
+          <div class="l-box">
+
+            <h1 class="is-center content-head">[<span class="fs85p">RESOURCES</span>]</h1>
+
+            <br>
+
+            <p> NORX is not patented and freely available for
+            all applications. Its source code is available under the
+            <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0 licence</a>.
+            </p>
+
+            <div class="dl-button-container is-center">
+              <a class="dl-button icon-file" href="data/norx.pdf"> Specification</a>
+              <a class="dl-button icon-code" href="https://github.com/norx/NORX/archive/master.zip"> Source Code</a>
+              <a class="dl-button icon-github" href="https://github.com/norx/NORX"> GitHub</a>
+            </div>
+
+            <h4 class="is-center content-head"><span>Old Specifications</span></h4>
+            <div class="is-center">
+              <a href="data/norxv11.pdf">v1.1</a><br>
+              <a href="data/norxv10.pdf">v1.0</a>
+            </div>
+
+            <br><br>
+
+            <!--<p>A list of <span class="bold">3rd party implementations</span> and <span class="bold">results on cryptanalysis</span> can be found <a href="lists.html">here</a>.</p> -->
+
+          </div>
+        </div>
+
+
+
+        <div class="pure-u-1">
+          <div class="l-box">
+
+            <h2 class="is-center content-head"><span class="fs85p">Implementations</span></h2>
+
+            <br>
+
+            <table class="pure-table pure-table-bordered">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Author(s)</th>
+                        <th>Language</th>
+                        <th>Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr> <td>2015-06-01</td> <td>Joseph Birr-Pixton (<a href="https://twitter.com/jpixton">@jpixton</a>) </td> <td>C</td> <td> <a href="https://github.com/ctz/cifra">cifra</a> </td> </tr>
+                <tr> <td>2015-03-13</td> <td>Leon Botros </td> <td>C/AVR-Assembly</td> <td> <a href="https://github.com/leonbotros/norxavr">norxavr</a> </td> </tr>
+                <tr> <td>2015-01-05</td> <td>Olan ÖK (<a href="https://twitter.com/olanoek">@olanoek</a>)</td> <td>Dart</td> <td> <a href="https://github.com/olanoek/norx-dart">norx-dart</a> </td> </tr>
+                <tr> <td>2015-01-05</td> <td>Nadim Kobeissi (<a href="https://twitter.com/kaepora">@kaepora</a>)</td> <td>JavaScript</td> <td> <a href="https://github.com/kaepora/norx.js">norx.js</a> </td> </tr>
+                <tr> <td>2014-12-04</td> <td>Philipp Jovanovic (<a href="https://twitter.com/Daeinar">@Daeinar</a>)</td> <td>Python2</td> <td> <a href="https://github.com/Daeinar/norx-py">norx-py</a> </td> </tr>
+                <tr> <td>2014-07-07</td> <td>Samuel Neves (<a href="https://twitter.com/sevenps">@sevenps</a>)</td> <td>Rust</td> <td> <a href="https://github.com/sneves/norx-rust">norx-rust</a> </td> </tr>
+                <tr> <td>2014-05-29</td> <td>Philipp Jovanovic (<a href="https://twitter.com/Daeinar">@Daeinar</a>)</td> <td>Go</td> <td> <a href="https://github.com/Daeinar/norx-go">norx-go</a> </td> </tr>
+                <tr> <td>2014-03-27</td> <td>Sebastian Gesemann (<a href="https://twitter.com/esgeh">@EsGeh</a>)</td> <td>C++</td> <td> <a href="https://code.google.com/p/norxx/">norxx</a> </td> </tr>
+                <tr> <td>2014-03-19</td> <td>Michael Samuel (<a href="https://twitter.com/mik235">@mik235</a>)</td> <td>Python/Numpy</td> <td> <a href="https://github.com/therealmik/norxpy">norxpy</a> </td> </tr>
+                </tbody>
+            </table>
+
+            <br>
+
+          </div>
+        </div> <!-- end of implementations -->
+
+
+        <div class="pure-u-1">
+          <div class="l-box">
+
+            <h2 class="is-center content-head"><span class="fs85p">Projects Using NORX</span></h2>
+
+            <br>
+
+            <table class="pure-table pure-table-bordered">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Project</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr> <td>Jan. 2015</td> <td><a href="https://github.com/DeDiS/crypto">DeDiS Advanced Crypto Library for Go</a></td></tr>
+                </tbody>
+            </table>
+
+            <br>
+
+          </div>
+        </div> <!-- end of software -->
+
+
+
+
+        <div class="pure-u-1">
+          <div class="l-box">
+
+            <h2 class="is-center content-head"><span class="fs85p">Publications</span></h2>
+
+            <br>
+
+            <table class="pure-table pure-table-bordered">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Author(s)</th>
+                        <th>Publication</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr> <td>Mar. 2015</td> <td>Jean-Philippe Aumasson,<br> Philipp Jovanovic,<br> Samuel Neves </td> <td> <a href="https://zerobyte.io/files/papers/2015-AJN-norx8-and-norx16.pdf">NORX8 and NORX16: Authenticated Encryption for Low-End Systems</a><br>TRUDEVICE workshop 2015<br></td> </tr>
+                </tbody>
+                <tbody>
+                  <tr> <td>Mar. 2015</td> <td>Sourav Das,<br> Subhamoy Maitra,<br> Willi Meier</td> <td> Higher Order Differential Analysis of NORX <br> <a href="https://eprint.iacr.org/2015/186">IACR ePrint archive report 2015/186</a></td> </tr>
+                </tbody>
+                <tbody>
+                  <tr> <td>Dec. 2014</td> <td>Philipp Jovanovic,<br> Atul Luykx,<br> Bart Mennink</td> <td> <a href=" http://link.springer.com/chapter/10.1007/978-3-662-45611-8_5">Beyond 2^{c/2} Security in Sponge-Based Authenticated Encryption Modes</a> <br>ASIACRYPT 2014<br><a href="https://eprint.iacr.org/2014/373">IACR ePrint archive report 2014/373</a></td> </tr>
+                </tbody>
+                <tbody>
+                  <tr> <td>Sept. 2014</td> <td>Jean-Philippe Aumasson,<br> Philipp Jovanovic,<br> Samuel Neves </td> <td> <a href="https://dl.dropboxusercontent.com/u/9851020/latincrypt-2014/latincrypt2014-preproceedings.pdf">Analysis of NORX</a> (pre-proceedings) <br>Latincrypt 2014<br><a href="https://eprint.iacr.org/2014/317">IACR ePrint archive report 2014/317</a></td> </tr>
+                </tbody>
+                <tbody>
+                  <tr> <td>Sept. 2014</td> <td>Jean-Philippe Aumasson,<br> Philipp Jovanovic,<br> Samuel Neves </td> <td> <a href="http://link.springer.com/chapter/10.1007/978-3-319-11212-1_2">NORX: Parallel and Scalable AEAD</a> <br>ESORICS 2014 </td> </tr>
+                </tbody>
+            </table>
+
+          </div>
+        </div> <!-- end of publications -->
+
+
+        <div class="pure-u-1">
+          <div class="l-box">
+
+            <h2 class="is-center content-head"><span class="fs85p">Misc</span></h2>
+
+            <br>
+
+            <table class="pure-table pure-table-bordered">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Author(s)</th>
+                        <th>Resource</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr> <td>Jun. 2015</td> <td>Joseph Birr-Pixton</td> <td><a href="http://jbp.io/2015/06/01/modern-authenticated-encryption-for-1-euro/">Benchmarking Modern Authenticated Encryption on 1€ Devices</a>.<br>NORX among fastest ciphers on small processors. Benchmarked using <a href="https://github.com/ctz/cifra">cifra</a> platform.</td></tr>
+                </tbody>
+            </table>
+
+          </div>
+        </div> <!-- end of misc -->
+
+
+      </div> <!-- end of grid -->
+    </div> <!-- end of container -->
+  </section> <!-- end of overview section -->
+
+
+  <!-- Features Slide -->
+  <section class="slide" id="slide-features" data-slide="2" data-stellar-background-ratio="0.5">
+    <div class="container">
+      <div class="pure-g-r">
+
+        <div class="pure-u-1">
+          <div class="l-box">
+            <h1 class="is-center content-head light">[<span class="fs85p">Features</span>]</h1>
+          </div>
+        </div>
+
+        <div class="pure-u-1-3">
+          <div class="l-box feature is-center">
+            <div class="icon-feature icon-lock"></div>
+            <h3>High Security</h3>
+            <p>NORX supports secret key and authentication tag sizes of 128- and 256-bits, respectively.</p>
+          </div>
+        </div>
+
+        <div class="pure-u-1-3">
+          <div class="l-box feature is-center">
+            <div class="icon-feature icon-chip"></div>
+            <h3>Cross-Platform</h3>
+            <p>NORX was designed for 32- and 64-bit CPUs, but also with hardware friendliness in mind.</p>
+          </div>
+        </div>
+
+        <div class="pure-u-1-3">
+          <div class="l-box feature is-center">
+            <div class="icon-feature icon-speed"></div>
+            <h3>Efficiency</h3>
+            <p>Tunable parallelism, SIMD and hardware friendliness enable high speeds across platforms.</p>
+          </div>
+        </div>
+
+        <div class="pure-u-1-3">
+          <div class="l-box feature is-center">
+            <div class="icon-feature icon-circle"></div>
+            <h3>Simplicity</h3>
+            <p>Clean design principles allow a straightforward implementation of the NORX cipher.</p>
+          </div>
+        </div>
+
+        <div class="pure-u-1-3">
+          <div class="l-box feature is-center">
+            <div class="icon-feature icon-flexible"></div>
+            <h3>Flexibility</h3>
+            <p>Different tunable parameters make NORX highly adaptable to various use cases.</p>
+          </div>
+        </div>
+
+        <div class="pure-u-1-3">
+          <div class="l-box feature is-center">
+            <div class="icon-feature icon-platform"></div>
+            <h3>Simple Integration</h3>
+            <p>Flexible datagram processing enables an easy integration into arbitrary protocol stacks.</p>
+          </div>
+        </div>
+
+        <div class="pure-u-1-3">
+          <div class="l-box feature is-center">
+            <div class="icon-feature icon-down"></div>
+            <h3>Minimal Overhead</h3>
+            <p>The length of the ciphertext is the sum of the lengths of plaintext and authentication tag.</p>
+          </div>
+        </div>
+
+        <div class="pure-u-1-3">
+          <div class="l-box feature is-center">
+            <div class="icon-feature icon-network"></div>
+            <h3>Interoperability</span></h3>
+            <p>Datagrams encode parameters of NORX and encapsulate protected data to improve interoperability.</p>
+          </div>
+        </div>
+
+        <div class="pure-u-1-3">
+          <div class="l-box feature is-center">
+            <div class="icon-feature icon-shield"></div>
+            <h3>Side-Channel Robustness</h3>
+            <p>Well-considered components facilitate the hardening of NORX against timing attacks.</p>
+          </div>
+        </div>
+
+      </div> <!-- end of grid -->
+    </div> <!-- end of container -->
+  </section> <!-- end of features section -->
+
+
+
+  <!-- Contact Slide -->
+  <section class="slide" data-slide="3" data-stellar-background-ratio="0.5">
+    <div class="container">
+      <div class="pure-g-r">
+
+        <div class="pure-u-1">
+          <div class="l-box">
+            <h1 class="is-center content-head">[<span class="fs85p">Contact</span>]</h1>
+            <p>Should you have any questions or feedback, please do not hesitate
+            to contact us.  The e-mail address below forwards to the three
+            designers. If 140 characters are sufficient, you can find us also
+            on twitter. </p>
+          </div>
+        </div>
+
+        <div class="pure-u-1-2">
+          <div class="l-box is-center">
+            <h3>Mail</h3>
+            <a href="mailto:contact@norx.io">contact@norx.io</a>
+          </div>
+        </div>
+
+        <div class="pure-u-1-2">
+          <div class="l-box is-center">
+            <h3>Twitter</h3>
+            <a href="https://twitter.com/daeinar" target="_blank">@daeinar</a>
+            <a href="https://twitter.com/sevenps" target="_blank">@sevenps</a>
+            <a href="https://twitter.com/veorq" target="_blank">@veorq</a>
+          </div>
+        </div>
+
+      </div> <!-- end of grid -->
+    </div> <!-- end of container -->
+  </section> <!-- end of contact section -->
+
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="l-box is-center">
+        Hosted on <a href="https://uberspace.de">uberspace</a>.
+        Created by <a href="https://www.zerobyte.io">Philipp Jovanovic</a>.
+        Licensed under <a href="https://creativecommons.org/licenses/by/3.0/">CC-BY</a>.
+      </div>
+    </div>
+  </footer>
+
+  <!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+  <!--<script type="text/javascript" src="js/jquery.stellar.min.js"></script>-->
+  <script type="text/javascript" src="js/jquery.stellar.js"></script>
+  <script type="text/javascript" src="js/waypoints.min.js"></script>
+  <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
+  <script type="text/javascript" src="js/scripts.js"></script>
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-49025637-1', 'norx.io');
+    ga('send', 'pageview');
+  </script>
+
+</body>
+</html>

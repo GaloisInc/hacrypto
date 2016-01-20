@@ -1,0 +1,18 @@
+Subject: Withdrawing Calico
+From: Christopher Taylor <mrcatid@gmail.com>
+Date: Sat, 13 Sep 2014 21:56:33 -0700
+To: caesar-submissions@competitions.cr.yp.to
+Message-ID: <CACHDeFSu9oUWs-qwLuuEOsj83pO0wpnBkbA3baFy1Oey7jG16g@mail.gmail.com>
+
+I would like to withdraw Calico from the competition.
+
+The new job is pretty demanding, and it turns out that I don't have the time to
+work on a good implementation for Calico anymore.  I haven't had a chance to
+commit any code to any github projects since I started at Oculus.  12 hour day,
+weekends, etc etc.  To get any hobby projects done, it seems prudent to prune a
+few..
+
+Thanks for giving me the opportunity to work on this software! :)
+
+Best,
+Chris

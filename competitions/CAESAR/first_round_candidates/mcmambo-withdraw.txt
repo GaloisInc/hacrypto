@@ -1,0 +1,17 @@
+Subject: Withdrawing McMambo
+From: Watson Ladd <watsonbladd@gmail.com>
+Date: Fri, 16 May 2014 18:31:20 -0700 (PDT)
+To: crypto-competitions@googlegroups.com
+Message-Id: <f7632382-1e1e-4c29-8850-63a26c648741@googlegroups.com>
+
+Dear all,
+I'm withdrawing McMambo formally: apparently saying "it's dead" isn't enough.
+The reason is a large differential probability that produces a forgery. This
+got noticed virtually immediately, but my reply seems to have got lost in the
+shuffle.
+
+Don't use McMambo. Don't make McMambo part of the CAESER portfolio. If anyone
+mentions McMambo as a good idea, point them at this post.
+
+Sincerely,
+Watson Ladd

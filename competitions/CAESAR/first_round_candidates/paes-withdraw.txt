@@ -1,0 +1,21 @@
+Subject: Withdraw PAES & PANDA
+From: Peng Wang <wp@is.ac.cn>
+Date: Tue, 13 May 2014 13:58:48 +0800
+To: "crypto-competitions@googlegroup" <crypto-competitions@googlegroups.com>
+Cc: "D. J. Bernstein" <djb@cr.yp.to>
+Message-ID: <tencent_33997A6B0D554AA85920A992@qq.com>
+X-Mailer: QQMail 2.x
+
+Dear all,
+
+We withdraw two schemes PAES & PANDA submitted to the CAESAR competition.
+
+PAES & PANDA have deviated far from our original vision of design due to their
+fragile structures. Many thanks to J ́er ́emy Jean, Ivica Nikoli ́c, Yu Sasaki,
+Lei Wang, Xiutao Feng, Fan Zhang, Hui Wang and Han Sui for their insightful
+observations and ingenious attacks, and all who were ever concerned about our
+schemes.
+
+Best regards,
+
+The PAES & PANDA team
