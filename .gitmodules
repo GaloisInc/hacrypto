@@ -64,3 +64,6 @@
 [submodule "src/Tools/time_trial"]
 	path = src/Tools/time_trial
 	url = https://github.com/dmayer/time_trial.git
+[submodule "src/Multi-lang/keyczar"]
+	path = src/Multi-lang/keyczar
+	url = https://github.com/google/keyczar.git

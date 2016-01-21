@@ -1,0 +1,635 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style type=text/css>
+body{font-family:sans-serif;font-size:1em}
+h1{font-size:1.7em;}
+h2{font-size:1.4em;}
+h3{font-size:1.1em;}
+p{font-size:0.8em;line-height:1.5em;}
+blockquote{font-size:0.8em;line-height:1.5em;}
+ul{font-size:0.8em;line-height:1.5em;}
+ul ul{font-size:1em;line-height:1.5em;}
+ol{font-size:0.8em;line-height:1.5em;}
+pre{font-family:monospace,monospace;font-size:0.8em;}
+tt{font-family:monospace,monospace;font-size:1em;}
+</style>
+<title>
+Crypto competitions:
+Features of various secret-key primitives
+</title>
+</head>
+<body>
+<table width="100%">
+  <tr valign=top>
+    <td align=left><h1>Cryptographic competitions</h1></td>
+  </tr>
+</table>
+<hr>
+<table width="100%"><tr>
+<td width="15%" align=left valign=top><table border width="100%" bgcolor="#e0e0e0"><tr><td width="100%"><table width="100%">
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="index.html" style="text-decoration:none"><font size=2 color="#000080">Introduction</font></a></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="secret.html" style="text-decoration:none"><font size=2 color="#000080">Secret-key cryptography</font></a></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="disasters.html" style="text-decoration:none"><font size=2 color="#000080">Disasters</font></a></td></tr>
+<tr><td width="100%" bgcolor="#ffff00"><font size=2 color="#000000">Features</font></td></tr>
+</table></td></tr><tr><td width="100%"><table width="100%">
+<tr><td width="100%" bgcolor="#e0e0e0"><font size=2 color="#000000"><b>Focused competitions:</b></font></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="aes.html" style="text-decoration:none"><font size=2 color="#000080">AES</font></a></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="estream.html" style="text-decoration:none"><font size=2 color="#000080">eSTREAM</font></a></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="sha3.html" style="text-decoration:none"><font size=2 color="#000080">SHA-3</font></a></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="phc.html" style="text-decoration:none"><font size=2 color="#000080">PHC</font></a></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="caesar.html" style="text-decoration:none"><font size=2 color="#000080">CAESAR</font></a></td></tr>
+</table></td></tr><tr><td width="100%"><table width="100%">
+<tr><td width="100%" bgcolor="#e0e0e0"><font size=2 color="#000000"><b>Broader evaluations:</b></font></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="cryptrec.html" style="text-decoration:none"><font size=2 color="#000080">CRYPTREC</font></a></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="nessie.html" style="text-decoration:none"><font size=2 color="#000080">NESSIE</font></a></td></tr>
+</table></td></tr><tr><td width="100%"><table width="100%">
+<tr><td width="100%" bgcolor="#e0e0e0"><font size=2 color="#000000"><b>CAESAR details:</b></font></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="caesar-submissions.html" style="text-decoration:none"><font size=2 color="#000080">Submissions</font></a></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="caesar-call.html" style="text-decoration:none"><font size=2 color="#000080">Call for submissions</font></a></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="caesar-call-5.html" style="text-decoration:none"><font size=2 color="#000080">Call draft 5</font></a></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="caesar-call-4.html" style="text-decoration:none"><font size=2 color="#000080">Call draft 4</font></a></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="caesar-call-3.html" style="text-decoration:none"><font size=2 color="#000080">Call draft 3</font></a></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="caesar-call-2.html" style="text-decoration:none"><font size=2 color="#000080">Call draft 2</font></a></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="caesar-call-1.html" style="text-decoration:none"><font size=2 color="#000080">Call draft 1</font></a></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="caesar-committee.html" style="text-decoration:none"><font size=2 color="#000080">Committee</font></a></td></tr>
+<tr><td width="100%" bgcolor="#e0e0e0"><a href="faq.html" style="text-decoration:none"><font size=2 color="#000080">Frequently asked questions</font></a></td></tr>
+</table></td></tr></table>
+</td><td align=left valign=top>
+<h2>Features of various secret-key primitives</h2>
+<p>
+This web page is a list of various features
+that have been advertised by, or requested from,
+designers of various primitives for
+<a href="secret.html">secret-key cryptography</a>.
+The features are described in five categories:
+<ul>
+<li>Protection against a variety of attack goals.
+Simple example:
+a MAC protects against corruption but does not protect against espionage.
+Advanced example:
+every short MAC allows a noticeable <i>probability</i> of a successful forgery,
+but WMAC (2009 Black&ndash;Cochran) advertises
+a large reduction in the <i>number of forgeries</i> created by this success.
+<li>Protection against various dimensions of attacker resources.
+Simple example:
+some ciphers are safe against an attacker carrying out 2^64 bit operations
+but are not safe against an attacker carrying out 2^128 bit operations.
+Advanced example:
+many ciphers degrade rapidly in security as they handle more and more messages,
+in some cases becoming easily breakable around 2^40 messages,
+while other ciphers advertise safety for many more messages.
+<li>High performance in various metrics.
+Simple example:
+AES-128 runs in under 20 cycles/byte on an ARM Cortex A8.
+Advanced example:
+PRINCE encrypts 1Gbps using 3286 GEs with the UMC 90nm low-leakage Faraday library.
+<li>High performance in various dimensions of usage.
+Simple example:
+many authenticated ciphers reject forgeries more quickly
+than they verify and decrypt valid ciphertexts.
+Advanced example:
+some ciphers perform well even for extremely short inputs.
+<li>Support for cryptanalysis.
+</ul>
+<p>
+Designers setting goals for new primitives,
+and in particular for authenticated ciphers for the
+<a href="caesar.html">CAESAR</a> competition,
+should keep in mind
+that the entries in this list vary widely in importance.
+<b>There is no guarantee
+that the CAESAR selection committee
+will place any value upon any particular features;</b>
+some features may even be controversial and viewed <i>negatively</i>.
+The list is organized thematically,
+not as any attempt to indicate importance.
+<p>
+It seems unlikely that a single design can simultaneously provide every feature
+(i.e., every qualitative feature and excellent results for every quantitative feature).
+Each designer is therefore expected to select <i>some</i> features as goals,
+and should be prepared to explain the merits of this selection.
+Of course, a design that sets its goals too narrowly
+might turn out to be of less interest to the community
+than a more ambitious design!
+<p>
+The following documents provide more perspective
+on the features of interest to various applications:
+<ul>
+<li>David McGrew's
+<a href="http://hyperelliptic.org/DIAC/slides/DIAC-requirements-panel-mcgrew.pdf">slides</a>
+and
+<a href="http://hyperelliptic.org/DIAC/slides/DIAC-mcgrew.pdf">longer slides</a>
+at
+<a href="http://hyperelliptic.org/DIAC">DIAC 2012</a>.
+<li>Kaisa Nyberg's
+<a href="http://hyperelliptic.org/DIAC/slides/nyberg-panel.pdf">slides</a>
+at DIAC 2012.
+<li>Ignacio Aguilar Sanchez's
+<a href="http://hyperelliptic.org/DIAC/slides/ESA-Contribution-to-DIAC-2012.pdf">slides</a>
+at DIAC 2012.
+</ul>
+<h3>Attack goals</h3>
+<p>
+Each attack goal here corresponds to a potential feature of a secret-key primitive;
+the feature is that the primitive stops the attacker from reaching this goal.
+<p>
+<b>Plaintext corruption, associated-data corruption, message-number corruption.</b>
+An authenticated cipher produces as output an authenticated ciphertext.
+This ciphertext encrypts and authenticates a plaintext;
+it also authenticates, without encrypting or communicating, some associated data;
+it also authenticates a message number.
+The attacker's goal here is to forge a combination of plaintext, associated data, and message number
+that the receiver accepts
+but that the legitimate sender never encrypted.
+"INT-PTXT" (integrity of plaintexts) means protection against such attacks.
+<p>
+The attacker's chance of successfully forging <i>at least one message</i>
+(out of many forgery attempts)
+does not dictate the <i>number of messages</i> that the attacker successfully forges.
+One can separately consider,
+for each <i>n</i>,
+the probability
+that the attacker successfully forges at least <i>n</i> messages.
+<p>
+<b>Ciphertext corruption.</b>
+The attacker's goal here is to forge an authenticated ciphertext
+that the receiver accepts
+but that the legitimate sender never produced.
+"INT-CTXT" (integrity of ciphertexts) means protection against such attacks.
+<p>
+Integrity of plaintexts does not imply integrity of ciphertexts.
+Consider, for example, an authenticated cipher that pads a 112-bit MAC randomly to 128 bits.
+The extra 16 bits are malleable:
+an attacker can modify them to produce another ciphertext that will be accepted.
+This modification violates integrity of ciphertexts
+but does not violate integrity of plaintexts.
+<p>
+Integrity of plaintexts implies integrity of ciphertexts
+for any cipher that allows a <i>unique</i> ciphertext
+for each combination of plaintext, associated data, and message number.
+Integrity of ciphertexts implies integrity of plaintexts.
+<p>
+<b>Ciphertext prediction.</b>
+The attacker's goal here is to distinguish authenticated ciphertexts
+from uniform random strings.
+Note that strong MACs are not necessarily hard to predict
+(i.e., strong MAC does not imply strong PRF);
+for example, zero-padding a 127-bit MAC to 128 bits
+preserves MAC strength but allows trivial predictability.
+<p>
+<b>Replay and reordering.</b>
+Replay means convincing a receiver to accept a plaintext more times
+than the number of times that the plaintext was generated by the sender.
+Reordering means convincing a receiver to accept plaintexts in an order
+different from the order in which the plaintexts were generated by the sender.
+<p>
+The standard defense against both replay and reordering
+is for the sender to use strictly increasing message numbers,
+and for the receiver to refuse any message whose message number
+is no larger than the largest number of any verified message.
+This requires both the sender and receiver to keep state.
+The receiver can tolerate some accidental network reordering of ciphertexts,
+for example by remembering the largest 5 verified message numbers.
+<p>
+Perhaps there are better ways to integrate replay protection and reordering protection
+into an authenticated cipher.
+<p>
+<b>Sabotage.</b>
+The attacker's goal here is denial of service, a violation of availability:
+preventing the sender's legitimate data from arriving at the receiver.
+Typical sabotage techniques include
+flooding a radio link with noise at the hardware level,
+flooding a network with useless packets at the software level,
+or flooding a CPU with expensive computations.
+<p>
+The standard defense against sabotaged ciphertexts
+is to acknowledge valid ciphertexts and retransmit unacknowledged ciphertexts.
+The only traditional availability evaluation for secret-key primitives
+is the performance of discarding forgeries.
+But perhaps there is more that secret-key cryptography can do to protect availability.
+<p>
+<b>Plaintext espionage.</b>
+The attacker's goal here is to figure out the user's secret message.
+Of course, the attacker can simply guess the message,
+and this guess has a good chance of succeeding if the space of messages,
+or of likely messages, is small;
+but perhaps the attacker can do significantly better by inspecting the user's ciphertext.
+<p>
+<b>Message-number espionage.</b>
+The attacker's goal here is to figure out a secret message number.
+<p>
+The traditional view is that message numbers are <i>not</i> secret.
+An authenticated cipher uses the message number as input,
+and authenticates the message number,
+but does not encrypt or communicate the message number.
+Adding secrecy to message numbers requires changing this data flow:
+the authenticated ciphertext expands to include (and perhaps to generate) the message number.
+<p>
+In many applications, message numbers actually have two parts:
+a session identifier that needs to be communicated only once,
+and an identifier for a message within a session.
+An authenticated cipher that includes message numbers in ciphertexts
+can save bandwidth by not repeating the session number.
+<h3>Attack resources</h3>
+<p>
+Attackers vary in several different dimensions of resources.
+Each resource or combination of resources here corresponds to a potential cipher feature;
+the feature is that the cipher stops an attacker who has those resources.
+<p>
+Some of these resources are, at least in theory,
+controllable by the legitimate cryptographic users.
+Designers often simplify and accelerate designs
+by requiring users to control these resources
+(e.g., "switch keys after 2^20 messages"; "never reuse a message number under the same key").
+Other designers argue that eliminating those requirements adds robustness.
+<p>
+<b>Extensive computation.</b>
+The key sizes that currently attract the most interest are 80 bits, 128 bits, and 256 bits.
+The most common questions are
+(1) whether 80-bit keys are adequate
+and
+(2) whether 128-bit keys are adequate.
+<p>
+The main arguments for smaller keys,
+such as 80-bit or even 64-bit keys,
+are that
+<ul>
+<li>the attack cost outweighs the economic benefit of breaking a key,
+so no sensible attacker will carry out the attack,
+so there is no actual loss of security;
+and
+<li>smaller keys provide better performance.
+</ul>
+<p>
+The main arguments for larger keys
+are that
+<ul>
+<li>the attacker's cost-benefit ratio is lowered by
+multiple-user attacks, multiple forgeries, etc.;
+<li>some attackers carry out feasible attacks even when those attacks
+are not economically rational;
+and
+<li>larger keys provide adequate performance.
+</ul>
+<p>
+Designers evaluating feasibility may find the following rough figures useful.
+The Earth's atmosphere receives 2^57 watts from the Sun.
+Current world power usage is 1/2^13 of this total.
+One computer center costing 2^30 dollars
+consumes 1/2^18 of current world power usage.
+Readily available chips (GPUs) perform
+2^68 bit operations per year per watt,
+if the bit operations are collected into floating-point operations
+and are sufficiently parallelizable.
+<p>
+<b>Quantum computers.</b>
+A scalable quantum computer running Grover's algorithm
+will be able to find a 128-bit key in only 2^64 simple quantum operations.
+A few ciphers
+(e.g., the Blum&ndash;Micali family
+of "provably secure" ciphers using modular exponentiation) 
+will be much more heavily affected by quantum computation.
+<p>
+<b>Many messages.</b>
+Ciphers vary in how their security degrades
+as the number of legitimate messages increases.
+<p>
+<b>Chosen plaintexts, chosen ciphertexts, chosen message numbers.</b>
+Some ciphers degrade in security against active attackers
+who forge ciphertexts or who have some influence over plaintexts or message numbers.
+The standard view is that it is unacceptable to ask users to control this:
+all ciphers must be safe against chosen-plaintext attacks and against chosen-ciphertext attacks.
+<p>
+<b>Many users.</b>
+Ciphers vary in how their security degrades
+as the number of active keys increases.
+<p>
+<b>Repeated message numbers.</b>
+Many ciphers require the message numbers for each key to be <b>nonces</b>,
+and lose all security if the user ever repeats a message number
+(i.e., if the user uses an <b>ntwice</b> in place of a nonce;
+often an ntwice is called a "repeated nonce", which is a contradiction in terms).
+Some ciphers advertise higher security in this situation.
+<p>
+The standard argument for requiring nonces
+is that there is no way to hide repeated plaintexts that have repeated message numbers;
+users have to expect that a repeated plaintext with a repeated message number
+will produce a repeated ciphertext, leaking the plaintext repetition to the attacker.
+However,
+for many ciphers the consequences of an ntwice are much more severe,
+not just leaking whether the plaintexts are the same
+but (for example) allowing any number of selective forgeries;
+users are often surprised by this,
+even if it is documented.
+<p>
+There are several different suggestions for security targets when message numbers are repeated.
+The highest target is maintaining full security,
+as if message numbers had been nonces,
+<i>except</i> that each ntwice leaks whether the two plaintexts are the same.
+Reaching this target is often perceived to be a performance problem
+(for example, it requires the entire plaintext to be buffered),
+so some ciphers aim for lower security levels.
+For example,
+some authenticated ciphers leak the number of shared initial blocks of plaintext,
+and perhaps also the xor of the first non-shared block,
+but still do not allow forgeries;
+some authenticated ciphers allow forgeries under the repeated message number,
+but still do not allow forgeries under any subsequent message number.
+<p>
+<b>Software side channels.</b>
+Many implementations leak secret data
+through their own timing
+(typically via secret branches, secret memory addresses,
+or, on some CPUs, secret multiplication inputs)
+or through indirect effects on the timing of other software
+(typically via cache state or branch state).
+Every primitive can be implemented in a way that prevents these leaks on all common CPUs,
+but often this defense produces a drastic loss in performance,
+especially for ciphers that rely heavily on table access.
+<p>
+<b>Hardware side channels.</b>
+Power consumption, electromagnetic radiation, etc.
+are typically hard to see from far away
+(unlike timing information, which is often easily visible from remote networks),
+but for a nearby attacker they are tremendously informative.
+Hundreds of papers have explored the cost of hardware side-channel attacks
+and the cost and effectiveness of various defenses for various ciphers.
+<p>
+<b>Faults.</b>
+Sometimes attackers can flip bits in a computation
+(for example, by firing a laser at a target chip),
+and deduce secret data from the resulting cipher output.
+<p>
+<b>Thefts and monitors.</b>
+Sometimes attackers steal a copy of a secret key,
+or plant a monitor inside a cryptographic device to watch the device's computations.
+There is no hope of protecting the confidentiality or integrity
+of future communication against a monitor that sees all of the user's secrets,
+but one can ask for a cipher to protect the confidentiality of <i>past</i> communication.
+<p>
+Systems that protect earlier messages against espionage,
+despite subsequent thefts, monitors, etc.,
+often advertise <b>forward secrecy</b>.
+Forward secrecy requires that the cipher frequently switch keys (in a non-invertible way);
+this, in turn, requires key generation and key updates
+to be integrated into the cipher, rather than having the key as an external input.
+<h3>Performance metrics</h3>
+<p>
+Each metric here corresponds to a potential cipher feature;
+the feature is that the cipher performs well in the metric.
+<p>
+ASIC performance is typically measured in several ways:
+<ul>
+<li><b>Low energy (joules) per byte.</b>
+Energy use is a continuing user-visible cost:
+it drains the battery, appears as a charge on the power bill, etc.
+<li><b>Low power (watts).</b>
+The power used for cryptography,
+together with the power used for other operations carried out at the same time,
+must fit within the power supply.
+This limits the number of operations that can be carried out in parallel.
+<li><b>Low area (square micrometers; loosely predicted by gate equivalents).</b>
+The circuit area used for cryptography,
+together with the area used for other operations,
+must fit within the chip space available.
+This also limits the number of operations that can be carried out in parallel.
+<li><b>High throughput (bytes per second).</b>
+Applications vary in their throughput requirements.
+<li><b>Low latency (seconds; very loosely predicted by cycles).</b>
+Often an application imposes upper limits on the total time
+between obtaining input and providing output.
+</ul>
+<p>
+If there are no limits on power or area
+then implementors can achieve arbitrarily high throughputs
+by parallelizing across blocks (for, e.g., counter-mode ciphers)
+or by parallelizing across independent messages
+(for applications that have many messages to handle in parallel).
+It is therefore standard to compute the ratio of area and throughput,
+i.e., the product of area and time per byte (AT/byte).
+Simple forms of parallelization have negligible effect on this ratio.
+<p>
+The same measurements make sense for FPGAs.
+The physical FPGA area is consumed by several types of resources:
+<b>slices</b> (and, at a smaller scale, <b>LUTs</b>);
+<b>block RAMs</b>;
+and, on some FPGAs, <b>multipliers</b>.
+It is standard to count these resources instead of counting gates or actual area.
+<p>
+For software running on CPUs it is standard to simply count <b>cycles per byte</b>.
+The heuristic here is that an active CPU runs at a constant frequency
+(its maximum number of cycles per second)
+and consumes a constant amount of power,
+so the number of cycles predicts the number of seconds,
+the energy consumption, and the latency.
+Modern CPU-design trends have, however,
+produced an increasing dependence of frequency upon the computation being run
+(see, e.g., Turbo Boost and Turbo Core)
+and an even larger dependence of power upon the computation being run
+(e.g., memory access typically consumes more power than arithmetic).
+Presumably it will become increasingly common
+to measure actual energy consumption and throughput of software.
+<p>
+The metrics listed above are often highly platform-dependent:
+there are many different ASIC manufacturing technologies,
+many different FPGAs, and many different CPUs.
+Platforms should be expected to evolve over time
+as manufacturers continue improving the efficiency of their chips.
+Designs heavily optimized for today's platforms
+might turn out to be of less interest in a few years
+than designs that plan ahead for platforms of the future.
+<p>
+See
+<a href="http://bench.cr.yp.to">eBACS</a>,
+<a href="http://xbx.das-labor.org/">XBX</a>,
+and
+<a href="http://cryptography.gmu.edu/athena/">ATHENa</a>
+for much more information
+regarding performance of cryptography in software and hardware.
+<p>
+Another performance measurement for MACs and authenticated ciphers is <b>bandwidth</b>:
+an authenticator is transmitted as part of each message,
+and sometimes keys are transmitted.
+Of course,
+security puts a lower bound on authenticator length and key length.
+<h3>Performance settings</h3>
+<p>
+There are several dimensions of user activity
+that affect the performance of a cipher under the metrics discussed above.
+Each combination corresponds to a potential cipher feature;
+the feature is that the cipher performs well when users are in that situation.
+<p>
+<b>Authenticate only, or encrypt and authenticate?</b>
+An authenticated cipher authenticates both plaintext and associated data,
+while it encrypts only the plaintext.
+The cost per byte of associated data
+is often significantly lower than the cost per byte of plaintext.
+<p>
+<b>Send valid data, receive valid data, or receive invalid data?</b>
+The cost to send data is not necessarily the same as the cost to receive data.
+The cost to receive a forgery is not necessarily the same as the cost to receive a valid message.
+There are some MACs and many authenticated ciphers
+for which a receiver can handle (and discard) a forgery
+more efficiently than handling (and accepting) a valid message.
+For example, any "encrypt-then-MAC" authenticated cipher
+skips the cost of decryption for forgeries.
+<p>
+For area measurements it is important to distinguish three different targets:
+an encryption/authentication circuit;
+a verification/decryption circuit;
+and a circuit that can dynamically select
+either encryption/authentication or verification/decryption.
+<p>
+<b>Plaintext length and associated-data length.</b>
+Performance depends, often heavily, on the plaintext length.
+Sometimes a cipher performs well for long plaintexts
+but poorly for short plaintexts,
+because it incurs heavy per-message overheads that are unnoticeable for long plaintexts.
+Similar comments apply to the associated-data length.
+<p>
+Beware that comparing overheads between two ciphers can be misleading.
+What the user wants to know is which cipher has better performance
+for the input length of interest;
+this has no logical connection to the question
+of which cipher has smaller performance differences
+between one input length and another input length.
+<b>
+<p>Number of inputs.</b>
+A cipher may be able to merge the processing of several independent inputs
+(if the application has several inputs to handle at once),
+handling them more efficiently than handling each one separately.
+Often this type of gain is limited by
+various requirements of relationships among the inputs:
+for example, having the same input length.
+<p>
+<b>Number of times a key is used.</b>
+Many ciphers can improve performance by storing precomputed "expanded keys".
+This incurs a cost in area,
+and it does not help for the first use of the key,
+but it reduces computation in subsequent uses of the key.
+<p>
+Ciphers with fast key expansion often advertise "key agility".
+Beware that comparing key agility
+between two ciphers, like comparing overhead, can be misleading;
+what the user wants to know is which cipher has better performance for the first use of the key.
+<p>
+<b>General input scheduling.</b>
+Some ciphers can reduce latency by performing computations
+that depend only on the key and nonce
+before associated data is available;
+and computations that depend only on the key, nonce, and associated data
+before plaintext is available.
+Another permutation has been suggested:
+computations that depend only on the key, nonce, and plaintext
+before associated data is available.
+<p>
+<b>Scheduling within the plaintext, and scheduling within the ciphertext.</b>
+In many applications,
+plaintext is received gradually, from left to right.
+Many ciphers can reduce latency by performing computations
+on earlier parts of the plaintext before later parts are available.
+Similar comments apply to ciphertext.
+<p>
+A related, more flexible, feature is "incrementality":
+some ciphers allow the output to be efficiently updated
+when any small part of the input is updated.
+<p>
+The latency benefit here should not be confused with an <i>area</i> benefit
+for ciphers that can handle a long plaintext in one pass without using a large buffer.
+Beware that security questions are raised by any authenticated cipher
+that handles a long <i>ciphertext</i> in one pass without using a large buffer:
+releasing unverified plaintext to applications
+often means releasing it to attackers
+and also requires an analysis of how the applications will react.
+<p>
+<b>Intermediate tags.</b>
+If a long plaintext is split into separate packets,
+each of which is separately authenticated (and encrypted),
+then a long forgery need not be buffered before it is rejected.
+Applying this split to any MAC (or authenticated cipher)
+produces a new MAC (or authenticated cipher)
+with different performance properties;
+perhaps the same type of fast rejection can be better achieved in another way.
+<p>
+<b>Other operations.</b>
+Sometimes a cipher can share area with other primitives on the same chip.
+For example, an integrated primitive for authenticated encryption and hashing
+might consume considerably less area
+than separate primitives for the same two tasks;
+this is a benefit for an application that needs both tasks (at different times).
+Ciphers that easily provide extra features such as hashing
+often advertise "flexibility".
+<p>
+A smaller and more common type of "flexibility"
+is having a family of several ciphers aimed at different applications.
+One can again ask how much area is consumed by multiple members of the same family.
+For example,
+AES is actually one cipher for 128-bit keys,
+another cipher for 192-bit keys,
+and another cipher for 256-bit keys;
+a circuit that can dynamically choose between AES-128, AES-192, and AES-256
+is not much larger than a circuit supporting only AES-256.
+<p>
+<b>DRAM, L2 cache, or L1 cache?</b>
+Software often becomes much slower because the input, or the software itself,
+does not fit into L1 cache.
+Even when cryptographic operations fit into cache,
+a complete system consisting of networking, cryptography, etc. rarely fits into cache.
+The extra costs of cache misses are somewhat predictable
+from the total input size (independent of the cipher)
+and the total software size (dependent upon the cipher).
+<h3>Support for cryptanalysis</h3>
+<p>
+Cryptanalysis is by far the most important tool
+for evaluating the security of secret-key cryptography.
+Designers have advertised several features
+as providing assistance to cryptanalysts.
+These features are generally difficult to evaluate objectively
+but are nevertheless of interest.
+<p>
+<b>Simplicity.</b>
+Ciphers that are simple and easy to understand
+are often better suited for cryptanalysis than complex ciphers.
+<p>
+<b>Scalability.</b>
+A typical cipher is structured as a series of similar rounds,
+naturally providing reduced-round targets for cryptanalysis.
+Some ciphers also provide reduced-word targets and other simplified versions.
+<p>
+<b>Proofs.</b>
+Some ciphers offer proofs that attacks meeting certain constraints
+are difficult, or as difficult as an easier-to-analyze problem.
+This suggests a division of cryptanalytic work into three parts:
+(1) study the easier-to-analyze problem;
+(2) find attacks that violate the constraints;
+(3) find errors in the proof.
+Sometimes this is useful guidance.
+Beware that these proofs are sometimes
+falsely advertised to users as "proofs of security",
+even though what they actually prove is something more limited.
+<p>
+<h3>Acknowledgments</h3>
+<p>
+This web page draws on discussions
+at the Symmetric Cryptography workshop in Dagstuhl in January 2012,
+the Directions in Authenticated Ciphers (DIAC) workshop in Stockholm in July 2012,
+and the Early Symmetric Cryptography (ESC) workshop in Mondorf in January 2013.
+The CAESAR secretary gratefully acknowledges suggestions
+from
+Jean-Philippe Aumasson,
+Eli Biham,
+Joan Daemen,
+Orr Dunkelman,
+Lars Knudsen,
+Kaisa Nyberg,
+David McGrew,
+Bart Preneel,
+and
+Greg Rose.
+<hr><font size=1><b>Version:</b>
+This is version 2014.01.27 of the features.html web page.
+</td></tr></table>
+</body>
+</html>
