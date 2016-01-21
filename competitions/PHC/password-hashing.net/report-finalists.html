@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Password Hashing Competition</title>
+<link href="style.css" rel="stylesheet" type="text/css" media="screen">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+
+<section>
+<h2>
+PHC status report
+</h2>
+
+<p><i>First published on February 3, 2015, by the PHC panel</i></p>
+
+<p>
+The Password Hashing Competition (PHC) is a project aiming to identify new password hashing schemes in order to improve on the state-of-the-art and to encourage the use of strong password protection.  In March 2014, PHC received 24 complete submissions. Based on the discussions on the public and private mailing lists, finalists of the competition are announced on December 8, 2014.
+</p>
+
+<p>
+This report provides rationale on the selection of the nine PHC finalists, which are Argon, battcrypt, Catena, Lyra2, Makwa, Parallel, POMELO, Pufferfish, yescrypt.
+</p>
+
+<p>
+<p>Selection criteria including, in no particular order:</p>
+<ul>
+<li> 
+Defense against GPU/FPGA/ASIC attackers
+</li>
+<li> 
+Defense against time-memory tradeoffs
+</li>
+<li> 
+Defense against side-channel leaks
+</li>
+<li> 
+Defense against cryptanalytic attacks
+</li>
+<li> 
+Elegance and simplicity of design
+</li>
+<li> 
+Quality of the documentation
+</li>
+<li> 
+Quality of the reference implementation
+</li>
+<li> 
+General soundness and simplicity of the algorithm
+</li>
+<li> 
+Originality and innovation
+</li>
+</ul>
+</p>
+
+<p>
+We attempted to include algorithms relevant for most applications of a password hashing scheme, from web service authentication to client login or key derivation. We also believed that having diversity in the finalists is beneficial, therefore selected algorithms of different types and suitable for different applications.
+</p>
+
+<p>
+Below we provide comments about each of the 24 submissions, to help understand our decisions. Due to limited time and resources, we succinctly report the main reasons that motivated our selection or non-selection as a finalist.
+</p>
+
+<p>
+We thank all submitters for their contribution. Comments and questions may be sent to the public PHC mailing list or to <a
+href="/cdn-cgi/l/email-protection#92e2f3fcf7fed2e2f3e1e1e5fde0f6bffaf3e1fafbfcf5bcfcf7e6"><span class="__cf_email__" data-cfemail="80f0e1eee5ecc0f0e1f3f3f7eff2e4ade8e1f3e8e9eee7aeeee5f4">[email&#160;protected]</span><script data-cfhash='f9e31' type="text/javascript">
+/* <![CDATA[ */!function(){try{var t="currentScript"in document?document.currentScript:function(){for(var t=document.getElementsByTagName("script"),e=t.length;e--;)if(t[e].getAttribute("data-cfhash"))return t[e]}();if(t&&t.previousSibling){var e,r,n,i,c=t.previousSibling,a=c.getAttribute("data-cfemail");if(a){for(e="",r=parseInt(a.substr(0,2),16),n=2;a.length-n;n+=2)i=parseInt(a.substr(n,2),16)^r,e+=String.fromCharCode(i);e=document.createTextNode(e),c.parentNode.replaceChild(e,c)}t.parentNode.removeChild(t);}}catch(u){}}()/* ]]> */</script></a>.
+</p>
+
+
+
+<p>
+It is planned that the PHC winner(s) be announced in Q2 2015.
+</p>
+
+
+
+<h3>
+Finalists
+</h3>
+
+<p>
+Below we list specific properties that motivated our selection of the finalists. This is not to say the finalists are free of drawbacks (we are aware of many) or defects. It's just that in this brief report we list some of what motivated our choice in favor of the finalists, rather than against.
+</p>
+
+<h4>
+Argon
+</h4>
+
+<ul>
+<li>Thorough security analysis, especially against TMTO</li>
+<li>Uses only AES as external primitive, often available as CPU instructions</li>
+</ul>
+<h4>
+battcrypt
+</h4>
+
+<ul>
+<li>Simple and minimalistic design and implementation</li>
+<li>Optimized for PHP, as it includes a Blowfish implementation</li>
+</ul>
+<h4>
+Catena
+</h4>
+
+<ul>
+<li>Well-motivated design, convincing theoretical framework</li>
+<li>Well-understood side-channel and TMTO resistance</li>
+</ul>
+<h4>
+Lyra2
+</h4>
+
+<ul>
+<li>Elegant sponge-based design, with a single external primitive</li>
+<li>Good security analysis</li>
+</ul>
+<h4>
+Makwa
+</h4>
+
+<ul>
+<li>Unique design supporting delegation, suited only for specific applications</li>
+<li>Thorough analysis and documentation, good quality code</li>
+</ul>
+<h4>
+Parallel
+</h4>
+
+<ul>
+<li>Minimalistic and compact design, addressing low-memory applications</li>
+<li>Original distinction of sequential vs. parallel cost</li>
+</ul>
+<h4>
+POMELO
+</h4>
+
+<ul>
+<li>No external primitive required, partial cache-timing mitigation</li>
+<li>Polished documentation and (succinct) code</li>
+</ul>
+<h4>
+Pufferfish
+</h4>
+
+<ul>
+<li>Leverages bcrypt's understanding and GPU resistance</li>
+<li>Enhanced bcrypt with 64-bit optimization and support for higher memory</li>
+</ul>
+<h4>
+yescrypt
+</h4>
+
+<ul>
+<li>Leverages scrypt's understanding and modularity</li>
+<li>Well-understood performance ratio, simplification potential</li>
+</ul>
+<h3>
+Non-finalists
+</h3>
+
+<p>
+Given that diversity was among our criteria for selection of finalists,
+non-selection of a submission does not necessarily imply that we found
+the submission less suitable than all of those we selected as
+finalists&mdash;in some cases, the non-finalist submission merely received considerably less support by the panel than other submissions that we felt were competing in the same category (targeting the same use cases and/or offering the same kind of defenses). Without what we deemed a more suitable submission in a (loosely defined) category, some of these non-finalist submissions could have been selected. Besides, a number of non-finalists contributed original or interesting ideas, and this contributed to our understanding of what constitutes a password hashing scheme suited for practical applications. That said, we actually found many non-finalists less mature, less analyzed, and generally less understood than most of the finalists. 
+</p>
+
+<p>
+Below we point out specific properties or defects that motivated our choice. This is not to say the non-finalists lack advantages (we are aware of many). It's just that in this brief report we list some of what motivated our choice against the non-finalists, rather than in favor.
+</p>
+
+<h4>
+AntCrypt
+</h4>
+
+<ul>
+<li>Data-dependent branching is a controversial area not sufficiently explored in time for this competition, hence current design was deemed unlikely to maximize benefits vs. risks</li>
+<li>Floating-point arithmetic complicates reproducibility and
+portability</li>
+</ul>
+<h4>
+Catfish
+</h4>
+<ul>
+<li>Withdrawn</li>
+</ul>
+<h4>
+Centrifuge
+</h4>
+
+<ul>
+<li>Too slow for its memory usage (byte-grained random memory accesses)</li>
+</ul>
+<h4>
+EARWORM
+</h4>
+
+<ul>
+<li>Relies solely on ROM-hardness whereas better understood defenses are also affordable by its target applications</li>
+<li>Uses multiple external primitives, not second-preimage resistant</li>
+</ul>
+<h4>
+Gambit
+</h4>
+
+<ul>
+<li>Similar to Catena, but a less mature design and potentially worse ASIC resistance (due to the use of Keccak)</li>
+</ul>
+<h4>
+Lanarea
+</h4>
+
+<ul>
+<li>Too slow for its memory usage</li>
+</ul>
+<h4>
+M3lcrypt
+</h4>
+
+<ul>
+<li>Withdrawn</li>
+</ul>
+<h4>
+MCS_PHS
+</h4>
+
+<ul>
+<li>Similar to PBKDF2, without significant improvement</li>
+<li>Unclear security of the underlying hash, from earlier versions' breaks</li>
+</ul>
+<h4>
+OmegaCrypt
+</h4>
+
+<ul>
+<li>Same concern about data-dependent branching as with AntCrypt, and partially predictable branches and memory addresses (unlike claimed)</li>
+<li>Lack of convincing security or performance analysis</li>
+</ul>
+<h4>
+PolyPassHash
+</h4>
+
+<ul>
+<li>A protocol to recover a symmetric key used to encrypt passwords, not a password hashing scheme, too far from what PHC is expecting</li>
+</ul>
+<h4>
+RIG
+</h4>
+
+<ul>
+<li>Similar to Catena, but received less attention (cf. bugs found in
+the v1 specification and code)</li>
+</ul>
+<h4>
+Schvrch
+</h4>
+
+<ul>
+<li>Cryptographically weak</li>
+<li>ASIC-friendly, total cost = time + memory</li>
+</ul>
+<h4>
+Tortuga
+</h4>
+
+<ul>
+<li>Fails basic statistical tests</li>
+</ul>
+<h4>
+TwoCats
+</h4>
+
+<ul>
+<li>Interesting mix of ideas, but less understood design than other candidates in the same space</li>
+</ul>
+<h4>
+Yarn
+</h4>
+
+<ul>
+<li>Not as mature and finely-tuned design as other candidates in its category</li>
+</ul>
+</section>
+<footer>
+<hr />
+<i><small>Modified: 2015-03-25</small></i>
+</footer>
+<script type="text/javascript">
+/* <![CDATA[ */
+(function(){try{var s,a,i,j,r,c,l=document.getElementsByTagName("a"),t=document.createElement("textarea");for(i=0;l.length-i;i++){try{a=l[i].getAttribute("href");if(a&&a.indexOf("/cdn-cgi/l/email-protection") > -1  && (a.length > 28)){s='';j=27+ 1 + a.indexOf("/cdn-cgi/l/email-protection");if (a.length > j) {r=parseInt(a.substr(j,2),16);for(j+=2;a.length>j&&a.substr(j,1)!='X';j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}j+=1;s+=a.substr(j,a.length-j);}t.innerHTML=s.replace(/</g,"&lt;").replace(/>/g,"&gt;");l[i].setAttribute("href","mailto:"+t.value);}}catch(e){}}}catch(e){}})();
+/* ]]> */
+</script>
+</body>
+</html>

@@ -1,0 +1,197 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<title>Password Hashing Competition</title>
+<link href="style.css" rel="stylesheet" type="text/css" media="screen">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+
+<header>
+<h1>Password Hashing Competition</h1>
+<h2>and our recommendation for hashing passwords: Argon2</h2>
+</header>
+
+<nav>
+<a href="#argon2">ARGON2</a>
+&nbsp;|&nbsp;
+<a href="#phc">PHC</a>
+&nbsp;|&nbsp;
+<a href="#contact">CONTACT</a>
+</nav>
+
+<br/>
+
+<section>
+Password hashing is everywhere, from web services' credentials storage
+to mobile and desktop authentication or disk encryption systems.
+Yet there wasn't an established standard to fulfill the needs of
+modern applications and to best protect against attackers.
+We started the <a href="#phc">Password Hashing Competition (PHC)</a> to
+solve this problem.
+<br/>
+<br/>
+PHC ran from 2013 to 2015 as an open competition&mdash;the same kind of
+process as NIST's AES and SHA-3 competitions, and the most effective way
+to develop a crypto standard.  We received 24 candidates,
+including many excellent designs, and selected one winner,
+<a href="#argon2">Argon2</a>, an algorithm designed by Alex Biryukov,
+Daniel Dinu, and Dmitry Khovratovich from University of Luxembourg.
+<br/>
+<br/> 
+We recommend that use you use Argon2 rather than legacy algorithms.
+You'll find the specifications and reference code just below.  <br/>
+<br/>
+</section>
+
+<section>
+<h2 id="argon2">Argon2</h2>
+<ul>
+<li>
+<a href="https://github.com/p-h-c/phc-winner-argon2">GitHub repo</a> containing the specs and code
+(<a
+href="https://github.com/P-H-C/phc-winner-argon2/releases/latest">latest
+release</a>)
+</li>
+<li> 
+<a href="argon2-specs.pdf">Specifications PDF</a>, including rationale
+and analysis
+</li>
+</ul>
+The reference code is C89-compliant C, licensed under <a
+href="https://creativecommons.org/about/cc0">CC0</a>, a.k.a. public
+domain.
+It should compile on x86 and x86_64 architectures, as well as most ARM
+architectures (except for the code optimized for x86 and x86_64). It
+should compile on Linux, OS X, and Windows OS', as well as MinGW
+environments.  
+<br/>
+<br/>
+There are two main versions of Argon2, Argon2i and Argon2d. Argon2i is
+the safest against side-channel attacks, while Argon2d provides the
+highest resistance against GPU cracking attacks.
+<br/>
+<br/>
+Argon2i and Argon2d are parametrized by
+<ul>
+<li>
+A <b>time</b> cost, which defines the execution time
+</li>
+<li>
+A <b>memory</b> cost, which defines the memory usage 
+</li>
+<li>
+A <b>parallelism</b> degree, which defines the number of threads
+</li>
+</ul>
+See the <a
+href="https://github.com/P-H-C/phc-winner-argon2/blob/master/README.md">README</a>
+for detailed instructions.
+<br/><br/>
+Bindings for other languages will be listed here, let us know if you created
+ones.
+
+</section>
+
+<section>
+<h2 id="phc">PHC</h2>
+
+The Password Hashing Competition (PHC) was initiated by Jean-Philippe
+Aumasson in fall 2012, and organized thanks to a panel joined by
+Tony Arcieri (@bascule, Square)
+Dmitry Chestnykh (@dchest, Coding Robots),
+Jeremi Gosney (@jmgosney, Stricture Consulting Group),
+Russell Graves (@bitweasil, Cryptohaze),
+Matthew Green (@matthew_d_green, Johns Hopkins University),
+Peter Gutmann (University of Auckland),
+Pascal Junod (@cryptopathe, HEIG-VD),
+Poul-Henning Kamp (FreeBSD),
+Stefan Lucks (Bauhaus-Universit&auml;t Weimar),
+Samuel Neves (@sevenps, University of Coimbra),
+Colin Percival (@cperciva, Tarsnap),
+Alexander Peslyak (@solardiz, Openwall),
+Marsh Ray (@marshray, Microsoft),
+Jens Steube (@hashcat, Hashcat project),
+Steve Thomas (@Sc00bzT, TobTu),
+Meltem Sonmez Turan (NIST),
+Zooko Wilcox-O'Hearn (@zooko, Least Authority Enterprises),
+Christian Winnerlein (@codesinchaos, Pactas),
+Elias Yarrkov (@yarrkov).
+<br />
+<br />
+In Q1 2013 we published the <a href="cfh.html">call for
+submissions</a>, and by the deadline on March 31, 2014 we had received
+<a href="submissions.html">24 submissions</a>. In December 2014 we
+shortlisted 9 finalists and published a <a
+href="report-finalists.html">short report</a>. In July 2015 we announced
+Argon2 as a winner and gave special recognition to four of the
+finalists:
+<ul>
+<li>
+<a
+href="https://www.uni-weimar.de/de/medien/professuren/mediensicherheit/research/catena/">Catena</a>, for its agile
+framework approach and side-channel resistance
+(<a href="submissions/Catena-v5.tar.gz">Catena-v5.tar.gz</a>)
+</li> 
+<li>
+<a href="http://lyra2.net">Lyra2</a>, for its elegant
+sponge-based design, and alternative approach to side-channel resistance
+(<a href="submissions/Lyra2-v3.tar.gz">Lyra2-v3.tar.gz</a>)
+</li>
+<li>
+<a href="http://www.bolet.org/makwa/">Makwa</a>, for its unique
+delegation feature and its factoring-based security
+(<a href="submissions/Makwa-v1.tar.gz">Makwa-v1.tar.gz</a>)
+</li>
+<li>
+<a href="http://www.openwall.com/presentations/PHDays2014-Yescrypt/">yescrypt</a>, for its rich feature set and
+easy upgrade path from scrypt 
+(<a href="submissions/yescrypt-v2.tar.gz">yescrypt-v2.tar.gz</a>)
+</li>
+</ul>
+
+</section>
+
+<section>
+<h2 id="contact">Contact</h2>
+
+Questions about Argon2 or PHC can be addressed to the public mailing
+list <a
+href="/cdn-cgi/l/email-protection#ef8b869c8c9a9c9c8680819caf9f8e9c9c98809d8bc2878e9c87868188c1818a9b"><span class="__cf_email__" data-cfemail="46222f35253335352f2928350636273535312934226b2e27352e2f282168282332">[email&#160;protected]</span><script data-cfhash='f9e31' type="text/javascript">
+/* <![CDATA[ */!function(){try{var t="currentScript"in document?document.currentScript:function(){for(var t=document.getElementsByTagName("script"),e=t.length;e--;)if(t[e].getAttribute("data-cfhash"))return t[e]}();if(t&&t.previousSibling){var e,r,n,i,c=t.previousSibling,a=c.getAttribute("data-cfemail");if(a){for(e="",r=parseInt(a.substr(0,2),16),n=2;a.length-n;n+=2)i=parseInt(a.substr(n,2),16)^r,e+=String.fromCharCode(i);e=document.createTextNode(e),c.parentNode.replaceChild(e,c)}t.parentNode.removeChild(t);}}catch(u){}}()/* ]]> */</script></a>
+(you need to register first by sending an empty message to <a href=
+"/cdn-cgi/l/email-protection#dabeb3a9b9afa9a9b3b5b4a9f7a9afb8a9b9a8b3b8bf9aaabba9a9adb5a8bef7b2bba9b2b3b4bdf4b4bfae"><span class="__cf_email__" data-cfemail="7e1a170d1d0b0d0d1711100d530d0b1c0d1d0c171c1b3e0e1f0d0d09110c1a53161f0d1617101950101b0a">[email&#160;protected]</span><script data-cfhash='f9e31' type="text/javascript">
+/* <![CDATA[ */!function(){try{var t="currentScript"in document?document.currentScript:function(){for(var t=document.getElementsByTagName("script"),e=t.length;e--;)if(t[e].getAttribute("data-cfhash"))return t[e]}();if(t&&t.previousSibling){var e,r,n,i,c=t.previousSibling,a=c.getAttribute("data-cfemail");if(a){for(e="",r=parseInt(a.substr(0,2),16),n=2;a.length-n;n+=2)i=parseInt(a.substr(n,2),16)^r,e+=String.fromCharCode(i);e=document.createTextNode(e),c.parentNode.replaceChild(e,c)}t.parentNode.removeChild(t);}}catch(u){}}()/* ]]> */</script></a>).
+<a href="http://dir.gmane.org/gmane.comp.security.phc">Public
+archives</a> of this mailing list are available thanks to <a
+href="http://gmane.org">Gmane</a>.
+<br/>
+<br/>
+Issues with the Argon2 code should preferably be reported in the <a
+href="https://github.com/P-H-C/phc-winner-argon2/issues">GitHub issues
+space</a>.
+For private contact related to Argon2, please email <a
+href="/cdn-cgi/l/email-protection#c0aba8afb6b2a1b4afb6a9a3a880a7ada1a9aceea3afad"><span class="__cf_email__" data-cfemail="5c3734332a2e3d28332a353f341c3b313d3530723f3331">[email&#160;protected]</span><script data-cfhash='f9e31' type="text/javascript">
+/* <![CDATA[ */!function(){try{var t="currentScript"in document?document.currentScript:function(){for(var t=document.getElementsByTagName("script"),e=t.length;e--;)if(t[e].getAttribute("data-cfhash"))return t[e]}();if(t&&t.previousSibling){var e,r,n,i,c=t.previousSibling,a=c.getAttribute("data-cfemail");if(a){for(e="",r=parseInt(a.substr(0,2),16),n=2;a.length-n;n+=2)i=parseInt(a.substr(n,2),16)^r,e+=String.fromCharCode(i);e=document.createTextNode(e),c.parentNode.replaceChild(e,c)}t.parentNode.removeChild(t);}}catch(u){}}()/* ]]> */</script></a>.
+For any other issue, please email 
+<a
+href="/cdn-cgi/l/email-protection#e9838c8887998180858099998cc7889c84889a9a8687a98e84888085c78a8684"><span class="__cf_email__" data-cfemail="5e343b3f302e363732372e2e3b703f2b333f2d2d31301e39333f3732703d3133">[email&#160;protected]</span><script data-cfhash='f9e31' type="text/javascript">
+/* <![CDATA[ */!function(){try{var t="currentScript"in document?document.currentScript:function(){for(var t=document.getElementsByTagName("script"),e=t.length;e--;)if(t[e].getAttribute("data-cfhash"))return t[e]}();if(t&&t.previousSibling){var e,r,n,i,c=t.previousSibling,a=c.getAttribute("data-cfemail");if(a){for(e="",r=parseInt(a.substr(0,2),16),n=2;a.length-n;n+=2)i=parseInt(a.substr(n,2),16)^r,e+=String.fromCharCode(i);e=document.createTextNode(e),c.parentNode.replaceChild(e,c)}t.parentNode.removeChild(t);}}catch(u){}}()/* ]]> */</script></a>.
+
+</section>
+
+
+<footer>
+<br />
+<hr />
+<i><small>Modified: 2015-12-06</small></i>
+</footer>
+<script type="text/javascript">
+/* <![CDATA[ */
+(function(){try{var s,a,i,j,r,c,l=document.getElementsByTagName("a"),t=document.createElement("textarea");for(i=0;l.length-i;i++){try{a=l[i].getAttribute("href");if(a&&a.indexOf("/cdn-cgi/l/email-protection") > -1  && (a.length > 28)){s='';j=27+ 1 + a.indexOf("/cdn-cgi/l/email-protection");if (a.length > j) {r=parseInt(a.substr(j,2),16);for(j+=2;a.length>j&&a.substr(j,1)!='X';j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}j+=1;s+=a.substr(j,a.length-j);}t.innerHTML=s.replace(/</g,"&lt;").replace(/>/g,"&gt;");l[i].setAttribute("href","mailto:"+t.value);}}catch(e){}}}catch(e){}})();
+/* ]]> */
+</script>
+</body>
+</html>

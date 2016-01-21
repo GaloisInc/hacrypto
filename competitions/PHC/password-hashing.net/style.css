@@ -1,0 +1,31 @@
+html,body
+{
+color:#333333;
+background-color:#ffffff;
+font-family: sans-serif;
+line-height:1.5em;
+}
+
+body {
+        margin: 1em 15% 1em 15%;
+        max-width: 70em;
+}
+
+h1
+{
+        color:#000000;
+        font-size:250%;
+        line-height: 1em;
+}
+
+h2,h3,h4
+{
+        color:#000000;
+        line-height: 1em;
+
+}
+
+
+a:link {color:#0000dd; text-decoration:none;}
+a:visited {color:#0000dd; text-decoration:none;}
+a:hover {color:#0000ff; text-decoration:underline}
