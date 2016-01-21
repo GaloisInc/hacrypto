@@ -1,0 +1,14 @@
+Mustafa Coban, 2009-01-14
+-------------------------
+
+According to security requirements (part 4.A iii) of the hash functions NIST
+expects the SHA-3 algorithm should be resistent to length-extension attacks.
+
+Definition of length-extension attack: Given h(m) and length(m) but not m, the
+attacker easily creates m' (with correct padding) and calculates h(m || m')
+simply from h(m) and m'.
+
+In the specification document of CRUNCH (Page 9), you stated that the last
+chaining value is the message digest. Since there is no final output
+transformation and the last chaining value is the message digest, CRUNCH is
+trivially vulnerable to length-extension attacks.

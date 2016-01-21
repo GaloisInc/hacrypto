@@ -1,0 +1,2294 @@
+Higher-order Dierential Properties for Keak and Lua
+Christina Boura1,2
+
+Anne Canteaut1
+
+Christophe De Cannière3
+
+1 SECRET Projet-Team, INRIA, Frane
+2 Gemalto, Frane
+3 Katholieke Universiteit Leuven,Belgium
+
+February 15, 2011
+
+1 / 28
+
+Outline
+
+1
+
+Introdution
+
+2
+
+New bound on the degree of iterated permutations
+
+3
+
+Appliation to two SHA-3 andidates
+Keak
+Lua
+
+4
+
+Conlusions
+
+2 / 28
+
+Introdution
+
+Outline
+
+1
+
+Introdution
+
+2
+
+New bound on the degree of iterated permutations
+
+3
+
+Appliation to two SHA-3 andidates
+Keak
+Lua
+
+4
+
+Conlusions
+
+3 / 28
+
+Introdution
+
+Objetive of this paper
+Study the algebrai degree of some hash funtion proposals and of
+their inner primitives.
+Use these results to onstrut higher-order dierential distinguishers
+and zero-sum strutures.
+
+Previous work (related with the SHA-3 ompetition)
+Zero-sum Distinguishers for Keak, Lua and Hamsi.
+[Aumasson-Meier 09, Aumasson et al. 09, Boura-Canteaut 10℄
+Higher-order dierential attak on Lua v1. [Watanabe et al. 10℄
+
+4 / 28
+
+Introdution
+
+Bound on the degree of iterated permutations
+Question
+How to estimate the algebrai degree of an iterated permutation
+after
+
+r
+
+rounds?
+
+5 / 28
+
+Introdution
+
+Bound on the degree of iterated permutations
+Question
+How to estimate the algebrai degree of an iterated permutation
+after
+
+r
+
+rounds?
+
+Trivial Bound
+deg(G ◦ F ) ≤ deg G deg F
+
+5 / 28
+
+Introdution
+
+Bound on the degree of iterated permutations
+Question
+How to estimate the algebrai degree of an iterated permutation
+after
+
+r
+
+rounds?
+
+Trivial Bound
+deg(G ◦ F ) ≤ deg G deg F
+
+[Canteaut-Videau 02℄:
+
+F
+
+Improvement
+
+is divisible by a high power of
+
+when the Walsh spetrum of
+
+2.
+
+5 / 28
+
+New bound on the degree of iterated permutations
+
+Outline
+
+1
+
+Introdution
+
+2
+
+New bound on the degree of iterated permutations
+
+3
+
+Appliation to two SHA-3 andidates
+Keak
+Lua
+
+4
+
+Conlusions
+
+6 / 28
+
+New bound on the degree of iterated permutations
+
+Towards a new bound on the degree (deg F = 3)
+1600
+1400
+1200
+
+deg(F)
+
+1000
+800
+600
+400
+200
+0
+0
+
+2
+
+4
+
+6
+
+8
+Rounds
+
+10
+
+12
+
+14
+
+16
+
+7 / 28
+
+New bound on the degree of iterated permutations
+
+Towards a new bound on the degree (deg F = 3)
+1600
+1400
+1200
+
+deg(F)
+
+1000
+800
+600
+400
+200
+0
+0
+
+2
+
+4
+
+6
+
+8
+Rounds
+
+10
+
+12
+
+14
+
+16
+
+7 / 28
+
+New bound on the degree of iterated permutations
+
+Question
+If S is balaned, what is the degree
+x0 x1 x2 x3
+
+of the produt of
+
+k
+
+oordinates of
+
+S?
+
+S-Box
+
+y0 y1 y2 y3
+
+8 / 28
+
+New bound on the degree of iterated permutations
+
+Question
+If S is balaned, what is the degree
+x0 x1 x2 x3
+
+of the produt of
+
+k
+
+oordinates of
+
+S?
+
+Denition
+δk
+
+: maximum degree of the produt
+of
+
+k
+
+oordinates of
+
+S
+
+S-Box
+
+y0 y1 y2 y3
+
+8 / 28
+
+New bound on the degree of iterated permutations
+
+Question
+If S is balaned, what is the degree
+x0 x1 x2 x3
+
+of the produt of
+
+k
+
+oordinates of
+
+S?
+
+Denition
+δk
+
+: maximum degree of the produt
+of
+
+S-Box
+
+k
+
+oordinates of
+
+k
+
+δk
+
+1
+
+3
+
+S
+
+y0 y1 y2 y3
+
+8 / 28
+
+New bound on the degree of iterated permutations
+
+Question
+If S is balaned, what is the degree
+x0 x1 x2 x3
+
+of the produt of
+
+k
+
+oordinates of
+
+S?
+
+Denition
+δk
+
+: maximum degree of the produt
+of
+
+S-Box
+
+k
+
+oordinates of
+
+k
+
+δk
+
+1
+
+3
+
+2
+
+3
+
+3
+
+3
+
+S
+
+y0 y1 y2 y3
+
+8 / 28
+
+New bound on the degree of iterated permutations
+
+Question
+If S is balaned, what is the degree
+x0 x1 x2 x3
+
+of the produt of
+
+k
+
+oordinates of
+
+S?
+
+Denition
+δk
+
+: maximum degree of the produt
+of
+
+S-Box
+
+k
+
+oordinates of
+
+k
+
+δk
+
+1
+
+3
+
+2
+
+3
+
+3
+
+3
+
+4
+
+4
+
+S
+
+y0 y1 y2 y3
+F permutation of Fn2 :
+δk = n i k = n.
+8 / 28
+
+New bound on the degree of iterated permutations
+
+The new bound
+Theorem.
+
+Let
+
+F
+
+onatenation of
+for any funtion
+
+Fn2 into Fn2 orresponding to
+S1 , . . . , Sm , dened over Fn2 0 .
+
+be a funtion from
+
+m smaller Sboxes,
+G from Fn2 into Fℓ2 ,
+
+Then,
+
+we have
+
+deg(G ◦ F ) ≤ n −
+where
+
+γ=
+
+the
+
+max
+
+1≤i≤n0 −1
+
+n − deg(G)
+,
+γ
+n0 − i
+n0 − δi
+
+.
+
+Most notably, if all Sboxes are balaned, we have
+
+deg(G ◦ F ) ≤ n −
+
+n − deg(G)
+n0 − 1
+
+.
+
+9 / 28
+
+New bound on the degree of iterated permutations
+
+S1
+
+S2
+
+S3
+
+S4
+
+Problem
+Multiply
+
+d
+
+output bits from
+
+S1 , S2 , S3 , S4 in suh a way that
+π , deg(π) is maximized.
+
+the
+
+degree of their produt
+
+10 / 28
+
+New bound on the degree of iterated permutations
+
+S1
+
+S2
+
+S3
+
+S4
+
+Problem
+Multiply
+
+d
+
+output bits from
+
+S1 , S2 , S3 , S4 in suh a way that
+π , deg(π) is maximized.
+
+the
+
+degree of their produt
+
+Denition
+xi = #
+
+Sboxes for whih exatly
+
+i
+
+oordinates are involved in
+
+π.
+
+10 / 28
+
+New bound on the degree of iterated permutations
+
+S1
+
+S2
+
+S3
+
+S4
+
+Problem
+Multiply
+
+d
+
+output bits from
+
+S1 , S2 , S3 , S4 in suh a way that
+π , deg(π) is maximized.
+
+the
+
+degree of their produt
+
+Denition
+xi = #
+
+Sboxes for whih exatly
+
+deg(π) ≤
+with
+
+max
+
+i
+
+oordinates are involved in
+
+π.
+
+(δ1 x1 + δ2 x2 + δ3 x3 + δ4 x4 )
+
+(x1 ,x2 ,x3 ,x4 )
+
+x1 + 2x2 + 3x3 + 4x4 = d.
+10 / 28
+
+New bound on the degree of iterated permutations
+
+S1
+
+S2
+
+S3
+
+S4
+
+d
+16
+15
+14
+13
+12
+11
+10
+9
+
+x4
+
+x3
+
+x2
+
+x1
+
+deg(π)
+
+4
+
+-
+
+-
+
+-
+
+16
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+11 / 28
+
+New bound on the degree of iterated permutations
+
+S1
+
+S2
+
+S3
+
+S4
+
+d
+16
+15
+14
+13
+12
+11
+10
+9
+
+x4
+
+x3
+
+x2
+
+x1
+
+deg(π)
+
+4
+
+-
+
+-
+
+-
+
+16
+
+3
+
+1
+
+-
+
+-
+
+15
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+11 / 28
+
+New bound on the degree of iterated permutations
+
+S1
+
+S2
+
+S3
+
+S4
+
+d
+16
+15
+14
+13
+12
+11
+10
+9
+
+x4
+
+x3
+
+x2
+
+x1
+
+deg(π)
+
+4
+
+-
+
+-
+
+-
+
+16
+
+3
+
+1
+
+-
+
+-
+
+15
+
+3
+
+-
+
+1
+
+-
+
+15
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+11 / 28
+
+New bound on the degree of iterated permutations
+
+S1
+
+S2
+
+S3
+
+S4
+
+d
+16
+15
+14
+13
+12
+11
+10
+9
+
+x4
+
+x3
+
+x2
+
+x1
+
+deg(π)
+
+4
+
+-
+
+-
+
+-
+
+16
+
+3
+
+1
+
+-
+
+-
+
+15
+
+3
+
+-
+
+1
+
+-
+
+15
+
+3
+
+-
+
+-
+
+1
+
+15
+
+2
+
+1
+
+-
+
+1
+
+14
+
+2
+
+-
+
+1
+
+1
+
+14
+
+2
+
+-
+
+-
+
+2
+
+14
+
+1
+
+1
+
+-
+
+2
+
+13
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+11 / 28
+
+New bound on the degree of iterated permutations
+
+S1
+
+S2
+
+S3
+
+S4
+
+d
+16
+15
+14
+13
+12
+11
+10
+9
+
+x4
+
+x3
+
+x2
+
+x1
+
+deg(π)
+
+4
+
+-
+
+-
+
+-
+
+16
+
+3
+
+1
+
+-
+
+-
+
+15
+
+3
+
+-
+
+1
+
+-
+
+15
+
+3
+
+-
+
+-
+
+1
+
+15
+
+2
+
+1
+
+-
+
+1
+
+14
+
+2
+
+-
+
+1
+
+1
+
+14
+
+2
+
+-
+
+-
+
+2
+
+14
+
+1
+
+1
+
+-
+
+2
+
+13
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+16 − deg(π) ≥
+
+16 − d
+3
+11 / 28
+
+New bound on the degree of iterated permutations
+
+S1
+
+S2
+
+S3
+
+S4
+
+d
+16
+15
+14
+13
+12
+11
+10
+9
+
+x4
+
+x3
+
+x2
+
+x1
+
+deg(π)
+
+4
+
+-
+
+-
+
+-
+
+16
+
+3
+
+1
+
+-
+
+-
+
+15
+
+3
+
+-
+
+1
+
+-
+
+15
+
+3
+
+-
+
+-
+
+1
+
+15
+
+2
+
+1
+
+-
+
+1
+
+14
+
+2
+
+-
+
+1
+
+1
+
+14
+
+2
+
+-
+
+-
+
+2
+
+14
+
+1
+
+1
+
+-
+
+2
+
+13
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+deg(π) ≤ 16 −
+
+16 − d
+3
+11 / 28
+
+Appliation to two SHA-3 andidates
+
+Outline
+
+1
+
+Introdution
+
+2
+
+New bound on the degree of iterated permutations
+
+3
+
+Appliation to two SHA-3 andidates
+Keak
+Lua
+
+4
+
+Conlusions
+
+12 / 28
+
+Appliation to two SHA-3 andidates
+
+Keak
+
+Keak [Bertoni-Daemen-Peeters-Van Asshe 08℄
+3rd round SHA-3 andidate
+Sponge onstrution
+
+Keak-f Permutation
+1600-bit state, seen
+5 × 5 × 64 matrix
+24
+
+rounds
+
+5×5
+
+3-dimensional
+
+R
+
+Nonlinear layer:
+of a
+
+as a
+
+S-box
+
+320
+χ
+
+parallel appliations
+
+deg χ = 2, deg χ−1 = 3
+
+13 / 28
+
+Appliation to two SHA-3 andidates
+
+Keak
+
+Zero-Sums and Zero-sum Partitions
+blok iphers (known-key attak) [Knudsen - Rijmen 07℄
+For hash funtions [Aumasson - Meier 09, Boura - Canteaut 10℄
+For
+
+Denition[Zero-Sum℄
+
+F : Fn2 → Fn2 .
+A zero-sum for F of size K
+Let
+
+K
+X
+i=1
+
+is a subset
+
+xi =
+
+K
+X
+
+{x1 , . . . , xK } ⊂ Fn2
+
+suh that
+
+F (xi ) = 0.
+
+i=1
+
+14 / 28
+
+Appliation to two SHA-3 andidates
+
+Keak
+
+Zero-Sums and Zero-sum Partitions
+blok iphers (known-key attak) [Knudsen - Rijmen 07℄
+For hash funtions [Aumasson - Meier 09, Boura - Canteaut 10℄
+For
+
+Denition[Zero-Sum℄
+
+F : Fn2 → Fn2 .
+A zero-sum for F of size K
+Let
+
+K
+X
+
+is a subset
+
+xi =
+
+i=1
+
+K
+X
+
+{x1 , . . . , xK } ⊂ Fn2
+
+suh that
+
+F (xi ) = 0.
+
+i=1
+
+Denition[Zero-sum Partition℄
+Let
+
+P
+
+P
+
+Fn2 into Fn2 . A zero-sum partition for
+k
+2 is a olletion of 2n−k disjoint zero-sums.
+
+be a permutation from
+
+of size
+
+K=
+
+14 / 28
+
+Appliation to two SHA-3 andidates
+
+Keak
+
+The new bound applied on Keak-f
+Let
+
+R
+
+be the round funtion of Keak-f and
+
+For any
+
+R−1
+
+its inverse.
+
+F,
+deg(F ◦ R) ≤ 1600 −
+
+1600 − deg(F )
+
+3
+1600
+−
+deg(F )
+deg(F ◦ R−1 ) ≤ 1600 −
+3
+
+Observation [Duan-Lai 11℄ For χ−1 : δ2 = 3
+Then,
+
+deg(F ◦ R−1 ) ≤ 1600 −
+
+1600 − deg(F )
+2
+
+15 / 28
+
+Appliation to two SHA-3 andidates
+
+Keak
+
+r
+
+deg(Rr )
+
+deg(R−r )
+
+1
+
+2
+
+3
+
+2
+
+4
+
+9
+
+3
+
+8
+
+27
+
+4
+
+16
+
+81
+
+5
+
+32
+
+243
+
+6
+
+64
+
+729
+
+7
+
+128
+
+8
+
+256
+
+9
+
+512
+
+10
+
+1024
+
+11
+12
+13
+14
+15
+16
+
+1408
+1536
+1578
+1592
+1597
+1599
+
+1164
+1382
+1491
+1545
+1572
+1586
+1593
+1596
+1598
+1599
+16 / 28
+
+Appliation to two SHA-3 andidates
+
+Keak
+
+Zero-Sum Partitions for the full Keak-f (24 rounds)
+
+Starting with any olletion of
+
+315
+
+rows after the linear layer in the
+
+12-th
+
+round, we get
+
+zero-sum partitions of size 21575
+for the full Keak-f permutation.
+
+17 / 28
+
+Appliation to two SHA-3 andidates
+
+Lua
+
+Lua [De Cannière, Sato and Watanabe 08℄
+
+Sponge-like onstrution;
+Linear message injetion
+funtion MI;
+
+P , splitted
+w parallel 256-bit
+
+Permutation
+into
+
+permutations
+
+Q0 , . . . , Qw−1 ;
+Qj : 8-round
+
+permutation.
+
+Every round alled
+
+Step;
+
+18 / 28
+
+Appliation to two SHA-3 andidates
+The
+
+Lua
+
+Step funtion:
+SubCrumb: 64 parallel 4 × 4 Sboxes of degree 3;
+MixWord: Linear layer mixing the 32-bit words two
+
+Figure: The
+
+by two.
+
+Step funtion
+
+19 / 28
+
+Appliation to two SHA-3 andidates
+The
+
+Lua
+
+Step funtion:
+SubCrumb: 64 parallel 4 × 4 Sboxes of degree 3;
+MixWord: Linear layer mixing the 32-bit words two
+
+Figure: The
+
+by two.
+
+Step funtion
+
+Dierent Sbox for Lua v1 and Lua v2!
+19 / 28
+
+Appliation to two SHA-3 andidates
+
+Lua
+
+Bound on the degree of Qj for Lua v1
+For
+
+r ≤ 5,
+
+bound by Watanabe et al.
+
+r
+
+deg xr
+
+1
+
+3
+
+2
+
+8
+
+3
+
+20
+
+4
+
+51
+
+5
+
+130
+
+20 / 28
+
+Appliation to two SHA-3 andidates
+
+Lua
+
+Bound on the degree of Qj for Lua v1
+For
+
+For
+
+r ≤ 5,
+
+r ≥ 6,
+
+bound by Watanabe et al.
+
+r
+
+deg xr
+
+1
+
+3
+
+2
+
+8
+
+3
+
+20
+
+4
+
+51
+
+5
+
+130
+
+6
+
+214
+
+7
+
+242
+
+8
+
+251
+
+we apply,
+
+deg(Stepr+1 ) ≤
+
+512 + deg(Stepr )
+3
+20 / 28
+
+Appliation to two SHA-3 andidates
+
+Lua
+
+Higher-order dierentials for the Lua v1 hash funtion
+
+Degree of Lua v1 hash funtion, applied to
+most
+
+256-bit
+
+messages is at
+
+251.
+
+Distinguisher for
+
+full Lua v1 with 2240 1-blok messages.
+
+Improvement of the previous attak applied to Lua v1 redued to
+7
+
+steps out of
+
+8.
+
+[Watanabe et al. 10℄
+
+21 / 28
+
+Appliation to two SHA-3 andidates
+
+Lua
+
+An observation on the Sbox of Lua v2
+
+y 0 = 1 + x0 + x1 + x1 x2 + x0 x3 + x1 x3 + x0 x1 x3 + x0 x2 x3
+y 1 = x0 + x3 + x0 x1 + x1 x2 + x0 x3 + x1 x3 + x0 x1 x3 + x0 x2 x3
+y 2 = 1 + x1 + x3 + x0 x2 + x1 x2 + x1 x3 + x2 x3 + x0 x1 x2 + x0 x1 x3
+y 3 = 1 + x1 + x2 + x0 x3 + x0 x2 + x1 x2 + x1 x3 + x2 x3 + x0 x1 x2
++ x0 x1 x3
+
+22 / 28
+
+Appliation to two SHA-3 andidates
+
+Lua
+
+An observation on the Sbox of Lua v2
+
+y 0 = 1 + x0 + x1 + x1 x2 + x0 x3 + x1 x3 + x0 x1 x3 + x0 x2 x3
+y 1 = x0 + x3 + x0 x1 + x1 x2 + x0 x3 + x1 x3 + x0 x1 x3 + x0 x2 x3
+y 2 = 1 + x1 + x3 + x0 x2 + x1 x2 + x1 x3 + x2 x3 + x0 x1 x2 + x0 x1 x3
+y 3 = 1 + x1 + x2 + x0 x3 + x0 x2 + x1 x2 + x1 x3 + x2 x3 + x0 x1 x2
++ x0 x1 x3
+d = y0 +y1 +y2 +y3 = 1+x1 +x2 +x0 x1 +x0 x3
+
+22 / 28
+
+Appliation to two SHA-3 andidates
+
+Lua
+
+An observation on the Sbox of Lua v2
+
+y 0 = 1 + x0 + x1 + x1 x2 + x0 x3 + x1 x3 + x0 x1 x3 + x0 x2 x3
+y 1 = x0 + x3 + x0 x1 + x1 x2 + x0 x3 + x1 x3 + x0 x1 x3 + x0 x2 x3
+y 2 = 1 + x1 + x3 + x0 x2 + x1 x2 + x1 x3 + x2 x3 + x0 x1 x2 + x0 x1 x3
+y 3 = 1 + x1 + x2 + x0 x3 + x0 x2 + x1 x2 + x1 x3 + x2 x3 + x0 x1 x2
++ x0 x1 x3
+d = y0 +y1 +y2 +y3 = 1+x1 +x2 +x0 x1 +x0 x3
+
+The sum of the four oordinates is of degree 2!
+
+22 / 28
+
+Appliation to two SHA-3 andidates
+
+Lua
+
+Algebrai degree of the Qj permutation
+Sum of 2 distint monomials of
+d = xi + xj + xk + xl :
+
+degree
+
+3
+
+in
+
+4
+
+variables,
+
+xi , xj , xk , xℓ ,
+
+where
+
+xi xj xk + xi xj xℓ = xi xj xk + xi xj (xi + xj + xk + d)
+
+23 / 28
+
+Appliation to two SHA-3 andidates
+
+Lua
+
+Algebrai degree of the Qj permutation
+Sum of 2 distint monomials of
+d = xi + xj + xk + xl :
+
+degree
+
+3
+
+in
+
+4
+
+variables,
+
+xi , xj , xk , xℓ ,
+
+where
+
+xi xj xk + xi xj xℓ = xi xj xk + xi xj (xi + xj + xk + d)
+= xi xj xk + xi xj + xi xj + xi xj xk + xi xj d
+
+23 / 28
+
+Appliation to two SHA-3 andidates
+
+Lua
+
+Algebrai degree of the Qj permutation
+Sum of 2 distint monomials of
+d = xi + xj + xk + xl :
+
+degree
+
+3
+
+in
+
+4
+
+variables,
+
+xi , xj , xk , xℓ ,
+
+where
+
+xi xj xk + xi xj xℓ = xi xj xk + xi xj (xi + xj + xk + d)
+= xi xj xk + xi xj + xi xj + xi xj xk + xi xj d
+
+23 / 28
+
+Appliation to two SHA-3 andidates
+
+Lua
+
+Algebrai degree of the Qj permutation
+Sum of 2 distint monomials of
+d = xi + xj + xk + xl :
+
+degree
+
+3
+
+in
+
+4
+
+variables,
+
+xi , xj , xk , xℓ ,
+
+where
+
+xi xj xk + xi xj xℓ = xi xj xk + xi xj (xi + xj + xk + d)
+= xi xj d
+
+23 / 28
+
+Appliation to two SHA-3 andidates
+
+Lua
+
+Algebrai degree of the Qj permutation
+Sum of 2 distint monomials of
+d = xi + xj + xk + xl :
+
+degree
+
+3
+
+in
+
+4
+
+variables,
+
+xi , xj , xk , xℓ ,
+
+where
+
+xi xj xk + xi xj xℓ = xi xj xk + xi xj (xi + xj + xk + d)
+= xi xj d
+
+xr0 , xr1 , xr2 , xr3
+
+output words of
+
+r
+
+rounds of
+
+Step.
+
+dr = xr0 + xr1 + xr2 + xr3 .
+
+23 / 28
+
+Appliation to two SHA-3 andidates
+
+Lua
+
+Algebrai degree of the Qj permutation
+Sum of 2 distint monomials of
+d = xi + xj + xk + xl :
+
+degree
+
+3
+
+in
+
+4
+
+variables,
+
+xi , xj , xk , xℓ ,
+
+where
+
+xi xj xk + xi xj xℓ = xi xj xk + xi xj (xi + xj + xk + d)
+= xi xj d
+
+xr0 , xr1 , xr2 , xr3
+
+output words of
+
+r
+
+rounds of
+
+Step.
+
+dr = xr0 + xr1 + xr2 + xr3 .
+Then,
+
+deg xr+1
+≤ 2 max deg xrj + deg dr
+i
+j
+
+23 / 28
+
+Appliation to two SHA-3 andidates
+
+Lua
+
+Algebrai degree of the Qj permutation
+Sum of 2 distint monomials of
+d = xi + xj + xk + xl :
+
+degree
+
+3
+
+in
+
+4
+
+variables,
+
+xi , xj , xk , xℓ ,
+
+where
+
+xi xj xk + xi xj xℓ = xi xj xk + xi xj (xi + xj + xk + d)
+= xi xj d
+
+xr0 , xr1 , xr2 , xr3
+
+output words of
+
+r
+
+rounds of
+
+Step.
+
+dr = xr0 + xr1 + xr2 + xr3 .
+Then,
+
+deg xr+1
+≤ 2 max deg xrj + deg dr
+i
+j
+
+deg dr+1 ≤ 2 max deg xrj
+j
+
+23 / 28
+
+Appliation to two SHA-3 andidates
+
+Lua
+
+Upper bounds on the algebrai degree of Qj in Lua v2
+r
+
+deg xr
+
+deg dr
+
+1
+
+3
+
+2
+
+2
+
+8
+
+6
+
+3
+
+22
+
+16
+
+4
+
+60
+
+44
+
+5
+
+164
+
+120
+
+24 / 28
+
+Appliation to two SHA-3 andidates
+
+Lua
+
+Upper bounds on the algebrai degree of Qj in Lua v2
+
+For
+
+r ≥ 6,
+
+r
+
+deg xr
+
+deg dr
+
+1
+
+3
+
+2
+
+2
+
+8
+
+6
+
+3
+
+22
+
+16
+
+4
+
+60
+
+44
+
+5
+
+164
+
+120
+
+6
+
+225
+
+210
+
+7
+
+245
+
+240
+
+8
+
+252
+
+250
+
+we apply,
+
+deg(Stepr+1 ) ≤
+
+512 + deg(Stepr )
+3
+24 / 28
+
+Appliation to two SHA-3 andidates
+
+Lua
+
+Higher-order dierential distinguishers for Lua v2
+
+Results
+Degree of the ompression funtion at most
+
+252.
+
+All-zero higher-order dierentials for the full ompression funtion.
+
+Not
+
+extendable to the hash funtion, beause of the addition of a
+
+blank round for all the messages.
+
+25 / 28
+
+Conlusions
+
+Outline
+
+1
+
+Introdution
+
+2
+
+New bound on the degree of iterated permutations
+
+3
+
+Appliation to two SHA-3 andidates
+Keak
+Lua
+
+4
+
+Conlusions
+
+26 / 28
+
+Conlusions
+
+Appliation to Grøstl-256
+
+Permutation P
+512-bit state,
+8 × 8 matrix.
+10
+
+seen as an
+
+rounds of AES-like
+
+transformations.
+AES Sbox of degree
+
+7.
+
+27 / 28
+
+Conlusions
+
+Appliation to Grøstl-256
+
+Round deg(Rr )
+
+Permutation P
+512-bit state,
+8 × 8 matrix.
+10
+
+seen as an
+
+7
+
+2
+
+49
+
+3
+4
+
+rounds of AES-like
+
+transformations.
+AES Sbox of degree
+
+1
+
+5
+6
+
+343
+
+487
+508
+511
+
+7.
+
+27 / 28
+
+Conlusions
+
+Appliation to Grøstl-256
+
+Round deg(Rr )
+
+Permutation P
+512-bit state,
+8 × 8 matrix.
+10
+
+seen as an
+
+7
+
+2
+
+49
+
+3
+4
+
+rounds of AES-like
+
+transformations.
+AES Sbox of degree
+
+1
+
+5
+6
+
+343
+
+487
+508
+511
+
+7.
+
+Zero-sum partitions of size 2509 .
+
+27 / 28
+
+Conlusions
+
+Conlusions
+New bound on the degree of iterated permutations.
+Zero-sum distinguishers for the full Keak-f permutation.
+(Contradition of the so-alled hermeti sponge strategy)
+All-zero higher-order dierentials for the Lua hash family.
+Appliation to AES-based andidates.
+
+28 / 28
+
+Conlusions
+
+Conlusions
+New bound on the degree of iterated permutations.
+Zero-sum distinguishers for the full Keak-f permutation.
+(Contradition of the so-alled hermeti sponge strategy)
+All-zero higher-order dierentials for the Lua hash family.
+Appliation to AES-based andidates.
+
+Thank you for your attention!
+28 / 28
+
+

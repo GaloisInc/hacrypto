@@ -1,0 +1,22 @@
+Vlastimil Klima, OFFICIAL COMMENT 2008-12-14
+--------------------------------------------
+
+Dynamic SHA2 is vulnerable to generic attacks.
+
+According to security requirements (part 4.A iii) of the hash functions
+NIST expects the SHA-3 algorithm should be resistent to length-extension
+attacks.
+
+Length-extension attack is not correctly understood and described in
+paragraph 6.1 of submitted Dynamic SHA2 documentations.
+
+As a consequence, Dynamic SHA2 (with 256-bit and 512-bit outputs) function
+(h) is trivially vulnerable to length-extension attacks. Given h(m)
+and len(m) but not m, the attacker easily creates m' (with correct padding)
+and calculates h (m || m') simply from h(m) and m'.
+
+Moreover, in the function's design there are no precautions against other
+generic attacks (multi-collisions etc.).
+
+Best regards,
+Vlastimil Klima

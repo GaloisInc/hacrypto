@@ -1,0 +1,32 @@
+Dear all,
+
+We (myself, Jean-Philippe Aumasson, Willi Meier and Florian Mendel) have made an interesting observation on the PRE-MIXING step of CHI-256 and CHI-224.
+
+Our observation can be used to obtain pseudo-second preimages and pseudo-collisions for CHI-256/224 with negligible effort. It applies to arbitrary chaining values and messages, and for an arbitrary number of rounds of the step function. However, we have not been able to extend our findings to attack the full hash function - this is an attack on the compression function only.
+
+
+In CHI-256/224, the state of the round function consists of six 64-bit words, (A, B, C, D, E, F). The compression function is an unbalanced Feistel network which is clocked for 20 rounds; in each round, the words A, B, D and E are combined nonlinearly with two expanded message words to produce new values AA and DD, which are then xored with C and F. After one step, the updated state becomes (F ^ AA, A, B, C ^ DD, D, E), and so on.
+
+Our observation is quite simple: in the first part of the step function (PRE-MIXING), the state words A, B, D and E are used to compute four temporary values preR, preS, preT and preU. The values A, B, D, E are not used again after this. Each of the temporary values depend on shuffled and rotated versions of exactly TWO state words. Thus, if we flip all the bits of every state word (d = 0xFFFF FFFF FFFF FFFF), the differences in preR, preS, preT and preU are all 0. All the subsequent (nonlinear) parts of the step function will remain inactive.
+
+Hence, (d, d, d, d, d, d) is an iterative characteristic for the step function, and holds with probability 1. If this difference occurs in the chaining variable, it will persist for any number of rounds, and finally be cancelled by the (modified) Davies-Meyer feedforward. Hence, given some arbitrary chaining value C and any message M, we have that CHI256-Compress(C, M) = CHI256-Compress(C', M), with C' being the bitwise complement of C.
+
+
+We emphasise that this weakness does not occur in CHI-512/384, because the PRE-MIXING step is computed differently. Furthermore, it does not say anything about the merits of the remaining parts of the CHI-256/224 step function, since these are never activated. Finally, we have not been able to extend our result to attack the full hash, because the size of the chaining variable (384 bits) is sufficiently greater than the digest size.
+
+Regardless, we believe that our result raises concerns about the security of the underlying "CHI-256/224 block cipher" implied by the specification, as well as the Merkle-Damgård security proof for the domain extender of CHI-256/224.
+
+
+The CHI team has been notified, and has confirmed our findings.
+
+
+Best regards,
+
+Tor E. Bjørstad
+
+-- 
+Tor E. Bjørstad * PhD student, Dept. of Informatics, UiB, Norway
+Email: tor.bjorstad@ii.uib.no (work) / torebj@gmail.com (private)
+Phone: (+47) 97 08 77 22 (mobile) / (+47) 55 58 41 81 (office)
+Web: http://www.ii.uib.no/~tor/ * Skype: tor.erling.bjorstad
+

@@ -1,0 +1,316 @@
+Date: Sat, 27 Nov 2010 19:22:07 -0500
+From: "D. J. Bernstein" <djb@cr.yp.to>
+To: Multiple recipients of list <hash-forum@nist.gov>
+Subject: Second preimages for 6 (7? (8??)) rounds of Keccak?
+
+
+At the Crypto 2010 rump session, Dinur and Shamir announced an algebraic
+attack on Hamsi-256. They've now posted their paper:
+
+   http://eprint.iacr.org/2010/602
+
+It turns out that Dinur and Shamir are looking through 2^256 possible
+second preimages, but they argue that this still qualifies as an attack
+because they've reduced the number of bit operations in the inner loop.
+
+The simplest form of the attack is as follows. Split a possible preimage
+into a 224-bit prefix and a 32-bit suffix. The structure of Hamsi allows
+(e.g.) output bits 5,156,214,221,249 to be written as polynomials of
+degree at most 6 in the suffix bits, where the polynomial coefficients
+are particular functions of the prefix. Compute these polynomials, and
+then evaluate these polynomials on all 2^32 suffixes; only about 2^27
+suffixes will match the target in the selected 5 output bits.
+
+Standard fast algorithms for multipoint evaluation take only about
+5*32*2^31 bit operations, for a total of 80*2^256 bit operations. 
+Computing the polynomials in the first place is not a bottleneck, since
+the polynomials have low degree. The number of compression-function
+evaluations is reduced by a factor of almost 2^5.
+
+Now let's think about what this means for Keccak. Out of the five SHA-3
+candidates specified in the Keccak submission, let's focus on the
+maximum-security candidate keccakc1024: Keccak[r=576,c=1024,nr=24] with
+512-bit output. Each 576-bit input block is fed through 24 rounds; let's
+weaken Keccak by reducing the 24 rounds to 6 rounds.
+
+Because the block size is already above 512 bits, we can expect to find
+a single-block second preimage. Here's how we'll do that:
+
+   Choose 64 bits (b[1],...,b[64]) not matching the first preimage.
+   For each pattern of 128 bits (c[1],...,c[128]):
+     Compute a polynomial representation of the function f 
+       that maps (x[1],...,x[384]) to the first 10 bits
+       of Keccak6(b[1],...,b[64],c[1],...,c[128],x[1],...,x[384]).
+     Use fast multipoint evaluation to compute f
+       for all (x[1],...,x[384]).
+     For each (x[1],...,x[384]) where f matches the target:
+       Compute Keccak6(b[1],...,b[64],c[1],...,c[128],x[1],...,x[384]).
+
+This procedure searches through 2^128*2^384 = 2^512 Keccak inputs, so it
+has an excellent chance of finding a second preimage, and adding early
+termination with a restart effectively increases this chance to 1. So
+the only question is how long the procedure takes.
+
+Each Keccak round is quadratic in the input bits, so Keccak6 has degree
+at most 64, so each bit of f has degree at most 64 in x[1],...,x[384];
+i.e., f can be written as
+
+   sum_S c_S prod_{i in S} x_i
+   
+where S ranges over subsets of {1,2,...,384} having size at most 64, and
+each c_S is a 10-bit string. We'll compute c_S using a standard
+identity, namely higher-order differentiation modulo 2:
+
+   c_S = sum_{T subset S} f(T).
+
+There are sum(j=0,64,binomial(384,j)) < 2^246 choices of T, so the
+initial computation of each f(T) uses only 2^246 evaluations of Keccak6.
+Across the whole attack that's just 2^128*2^246 = 2^374 evaluations of
+Keccak6.
+
+Separate computation of c_S = sum_{T subset S} f(T) for each S now uses
+sum(j=0,64,2^j*binomial(384,j)) < 2^310 additions of 10-bit strings.
+Across the whole attack that's a total of 10*2^438 bit operations. This
+is clearly highly suboptimal---standard optimizations (CSE, Paar, etc.)
+make a huge difference in the number of additions, and this becomes
+important as the degree increases---but I'll stick to it for simplicity.
+
+Fast multipoint evaluation now takes just 384*2^383 additions of 10-bit
+strings. Across the whole attack that's a total of 1920*2^512 bit
+operations. This is again suboptimal, but it's already much faster than
+2^512 evaluations of Keccak6.
+
+This initial filter eliminates most of the 2^384 input strings, leaving
+just 2^374 input strings that require Keccak6 evaluations. Across the
+whole attack that's just 2^128*2^374 = 2^502 Keccak6 evaluations.
+
+Overall the attack involves 2^502 Keccak6 evaluations plus 1920*2^512
+bit operations plus negligible extra work. Can someone double-check the
+details and see whether I've calculated all this correctly?
+
+For comparison, there are several papers using Keccak degree bounds to
+"distinguish" more rounds of Keccak from a random oracle, but nobody has
+managed to give a proper definition of a hash-function "distinguisher"
+(a definition that's mathematically clear and that doesn't allow every
+function to be trivially distinguished), and it's certainly not possible
+to turn these "distinguishers" into attacks against accepted security
+notions such as preimage resistance. The SHA-3 Zoo doesn't list any
+preimage attacks against reduced-round Keccak, and the only occurrences
+of "preimage" on the Keccak cryptanalysis page are pointing to
+
+   * Lathrop finding partial preimages in 4 rounds of Keccak and
+     speculating that the attacks could be pushed to more rounds, and
+
+   * Morawiecki and Srebrny finding more restricted partial preimages in
+     3 rounds of Keccak.
+
+I think that this very simple 6-round Keccak attack can be pushed to 7
+rounds (possibly even 8?), if CSE is used to accelerate the computation
+of c_S; if that's correct then Keccak will need at least 8 (or even 9?)
+rounds to meet its preimage-resistance goals. Full 24-round Keccak
+therefore has <=200% extra computation as a security margin.
+
+For people who evaluate attack cost by counting compression-function
+evaluations, this 2^10 reduction in the cost of second preimages can be
+easily improved to a reduction factor of 2^100 or more. Of course, this
+would actually make the attack much slower; to me this is yet another
+clear demonstration of how silly it is to evaluate attack cost by
+counting compression-function evaluations.
+
+In the opposite direction, for people who have even the slightest
+understanding of the physical reality of attack cost, this attack makes
+no sense: it's inherently memory-intensive and communication-intensive,
+and for the same machine size it's clearly much slower than parallel
+exhaustive search, even though it has somewhat fewer bit operations. The
+same is true for the Dinur--Shamir attack on Hamsi-256.
+
+One can also reasonably ask why anyone should care about the difference
+between 2^520 bit operations and 2^525 bit operations, or between 2^260
+bit operations and 2^270 bit operations. If we're really trying to
+maximize the epsilon in 2^(512+epsilon), shouldn't we be selecting the
+SHA-3 candidate with the largest number of bit operations in its
+compression function and with no known inner-loop optimizations? Is
+there any evidence that this type of superficial "security" metric has
+any value in predicting real-world security?
+
+---D. J. Bernstein
+   Research Professor, Computer Science, University of Illinois at Chicago
+
+P.S. I'm also curious whether anyone has tried message modification
+against Keccak. I wouldn't expect anything to get past 12 rounds, but
+the lack of reduced-round collision examples is a bit embarrassing!
+
+
+===========================================================================
+
+
+Date: Thu, 2 Dec 2010 09:48:49 -0500
+From: "D. J. Bernstein" <djb@cr.yp.to>
+To: Multiple recipients of list <hash-forum@nist.gov>
+Subject: Re: Second preimages for 6 (7? (8??)) rounds of Keccak?
+
+
+Here's an improved analysis of the bit-operation count for the attack,
+including one way to use CSE. For 7 rounds of Keccak, the number of bit
+operations here is under 1/30 compared to brute force. For 8 rounds of
+Keccak, the number of bit operations here is under 1/1.4 compared to
+brute force. The technique breaks down at 9 rounds.
+
+The general setup is that we have a function f mapping F_2^n to F_2^b,
+and we know that f has degree at most d, i.e., each output bit of f can
+be written as a sum of monomials of degree at most d in the input bits
+x[1],x[2],...,x[n]. In other words,
+
+   f(x[1],x[2],...,x[n]) = sum_S c_S prod_{i in S} x[i]
+   
+where S ranges over subsets of {1,2,...,n} having size at most d, and
+each c_S is in F_2^b. This formula uses only monomials that are reduced
+modulo x[i]^2-x[i], but allowing x[i]^2 etc. does not add any generality.
+
+We aren't given these coefficients c_S; we're given an algorithm that
+computes f by computing a longer string and extracting b bits from it.
+Our main goal is to compute f on all 2^n inputs without simply applying
+the algorithm 2^n times.
+
+Step 1: Use the specified f algorithm to compute f(T) for each subset T
+of {1,2,...,n} having size at most d. The number of T's is exactly
+
+   sum_{j in {0,1,...,d}} {n choose j}.
+
+This number is 2^n if d=n, but drops below 2^n as d decreases, and
+begins dropping rapidly as d decreases below n/2.
+
+Step 2: For each subset S of {1,2,...,n} having size at most d,
+interpolate c_S from these known f(T) values using the higher-order
+differentiation formula
+
+   c_S = sum_{T subset S} f(T).
+
+A separate computation of each c_S (as in Dinur-Shamir) would take
+sum_{j in {0,1,...,d}} (2^j-1){n choose j} additions of b-bit vectors,
+but at the bottom of this message I'll explain an application of CSE
+that reduces this cost to
+
+   sum_{j in {0,1,...,d}} j{n choose j}
+
+additions of b-bit vectors. This makes a huge difference in complexity,
+for example reducing 2^476 down to 2^356 for n=384, d=128.
+
+Step 3: Put c_S = 0 for all other subsets S of {1,2,...,n}. This
+produces an array of 2^n coefficients c_S. For each i in {n,...,2,1}
+successively, add all x[i]^0 entries in the array to all x[i]^1 entries
+in the array; this takes a total of n 2^(n-1) additions of b-bit
+vectors, and produces the desired values of f. This is a standard fast
+multipoint evaluation technique, which Dinur and Shamir call a "fast
+Moebius transform." For example, for n=2, this process replaces
+
+   c0 + c1 x + c2 y + c3 xy         with
+   c0 + c1 x, (c0+c2) + (c1+c3) x   and then
+   c0, c0+c1, c0+c2, c0+c1+c2+c3.
+
+The first step replaced the polynomials in y by their values at y=0,y=1,
+and the second step did the same with x.
+
+Step 4: For each output that matches the target b-bit string, apply the
+specified f algorithm again to compute the longer string, and see
+whether that matches the longer target. The b-bit match will happen
+about 2^(n-b) times (unless f is horrifyingly nonrandom).
+
+If f takes T bit operations then this whole procedure takes
+
+   T sum_{j in {0,1,...,d}} {n choose j}
+   + b sum_{j in {0,1,...,d}} j{n choose j}
+   + bn 2^(n-1)
+   + T 2^(n-b)
+
+bit operations. Here are some Keccak examples:
+
+   * 6 rounds of Keccak have T=48384 (if I've counted correctly), d=64.
+     Then b=9 and n=173 use just 892*2^n bit operations, more than 50
+     times faster than the T*2^n bit operations used by brute force.
+     Note that this applies to 256-bit Keccak outputs.
+
+   * 7 rounds of Keccak have T=56448, d=128. Then b=8 and n=317 use just
+     1510*2^n bit operations, 37 times faster than brute force. Note
+     that this also applies to Keccak[] with >=384-bit output, and can
+     marginally break 256-bit output.
+
+   * 8 rounds of Keccak have T=64512, d=256. Then b=7 and n=505 use just
+     44599*2^n bit operations, still a significant speedup. I've limited
+     n here so that there's only about a 1% overhead from wasted
+     computations in a search for 512-bit second preimages.
+
+Finally, here's the CSE application. For each j from 0 through d in
+turn, for each set S of size j, we'll compute c_S using exactly j
+additions of recorded subexpressions. This is trivial for j=0, so assume
+j>=1. Write S = {s1,s2,...,sj} with s1<s2<...<sj. Compute c_S as
+follows:
+
+   * Start with f({s1,s2,s3,s4,...,sj}).
+   * Add f({s2,s3,s4,...,sj}), and record the sum.
+   * Add the quantity f({s1,s3,s4,...,sj})+f({s3,s4,...,sj}), and record
+     the sum. Note that this quantity was recorded earlier: it is the
+     first sum used in computing c_{s1,s3,s4,...,sj}.
+   * Add the quantity f({s1,s2,s4,...,sj})+f({s1,s4,...,sj})+
+     f({s2,s4,...,sj})+f({s4,...,sj}), and record the sum. Note that
+     this quantity was recorded earlier: it is the second sum used in
+     computing c_{s1,s2,s4,...,sj}.
+   * Same, using the third sum recorded from c_{s1,s2,s3,s5,...,sj}.
+   * Et cetera.
+
+For example, c_{1,2,3,4} is computed as follows:
+
+   * Start with f({1,2,3,4}).
+   * Add f({2,3,4}). Record f({1,2,3,4})+f({2,3,4}).
+   * Add f({1,3,4})+f({3,4}); this was recorded from c_{1,3,4}. Record
+     f({1,2,3,4})+f({2,3,4})+f({1,3,4})+f({3,4}).
+   * Add f({1,2,4})+f({1,4})+f({2,4})+f({4}); this was recorded from
+     c_{1,2,4}. Record the current sum.
+   * Add f({1,2,3})+f({1,3})+f({2,3})+f({3})+f({1,2})+f({1})+f({2})+f({});
+     this is exactly c_{1,2,3}.
+
+This takes just 4 additions. I assume that this algorithm has appeared
+before somewhere; I don't know whether it's optimal.
+
+---D. J. Bernstein
+   Research Professor, Computer Science, University of Illinois at Chicago
+
+
+==========================================================================
+
+
+Date: Mon, 6 Dec 2010 04:07:10 -0500
+From: Joan DAEMEN <joan.daemen@st.com>
+To: Multiple recipients of list <hash-forum@nist.gov>
+Subject: RE: Second preimages for 6 (7? (8??)) rounds of Keccak?
+
+
+Dear Dan,
+
+we have studied the attack in your original message and the generalization in your follow-up message with great interest. Despite its theoretical nature (due to the memory requirements a.o.), we think it is interesting because it exploits the small algebraic degree of the Keccak-f round function for attacking Keccak rather than building a distinguisher of Keccak-f.
+
+Reading your follow-up message, we noticed that most of it is not Keccak-specific. We tried to summarize it and make explicit the conditions a hash function must satisfy for this attack to be applicable. This is what we came up with. Can you comment?
+
+Consider a hash function with an m-bit digest and consider messages of a certain fixed length L. 
+Let there be:
+- a subset A (with |A| = n) of the message bit positions and
+- a subset B (with |B| = b) of the digest bit positions, such that for any fixed value of the message bits not in A, the bits in B have algebraic degree d < n as functions of bits in A. 
+If this degree d is sufficiently small, the computation effort of finding (second) pre-images can be reduced. 
+
+This attack can be applied to any hash function (possibly round-reduced) where a subset B of the digest bits have a low algebraic degree in a subset A of the message bits of the last block. The bits in B are only separated from the bits in A by a single compression function (or output transformation) call.
+
+The downside of the attack is that this workload reduction comes at the cost of memory. For it to be a reduction, one considers the computational effort not including the cost of memory access (which apparently becomes important as the amount of memory grows).
+
+The memory required for the attack as described in your follow-up message is b*2^n bits, required for doing Step 3. This may be reduced somewhat by some clever programming techniques (at the cost of increasing the computational effort) but the required memory is in any case lower bounded by the storage required for the c_S values in between Step 2 and Step 3: b*sum_{j in {0,1,...,d}} {n choose j} bits.
+
+For Keccak with Keccak-f reduced to 6, 7 or 8 rounds, the value of L is free. The active bits must all be in the last block, so n is limited by the rate (minus the padding). One can tune b and n resulting in different memory-time trade-offs, but the ones reported are:
+- 6 rounds: 2^176 bits of memory give a workload reduction by a factor 50 (~6 bits)
+- 7 rounds: 2^320 bits of memory give a workload reduction by a factor 37 (~5 bits)
+- 8 rounds: 2^508 bits of memory give a workload reduction by a factor 1.4 (half a bit)
+
+Kind regards,
+
+the Keccak team
+
+
+

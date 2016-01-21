@@ -1,0 +1,33 @@
+Jean-Philippe Aumasson, NIST mailing list 2009-02-02
+----------------------------------------------------
+
+This is to report an observation on Hamsi-224 and Hamsi-256, whose
+compression function maps a 256-bit chaining value and a 32-bit
+message to a new 256-bit chain value. When hashing a message, it makes
+3 rounds, except at the last call where it makes 6 rounds.
+
+One can observe that Hamsi's compression function with up to 5 rounds
+does not act as a pseudorandom function:
+
+Following the documentation's notation, fix the message and the
+chaining value words c0, c1, c2, and c3 to some arbitrary value, and
+consider the 128 remaining input bits as variable. If the compression
+function were pseudorandom, the algebraic normal form corresponding to
+each output bit would be a polynomial of degree about 127. However,
+one observes that
+
+1/ after the first round, the variable bits only interact linearly,
+thus the degree doesn't grow
+
+2/ after each subsequent round, the nonlinearity comes just from the
+Serpent S-boxes, of degree at most 3
+
+After 5 rounds the degree of the output is thus at most 3^4=81,
+whereas it should be greater than 127.
+
+Alternatively, one can just fix the message and consider the 256
+chaining value bits as variable: the degree of the output is then
+3^5=243 < 256.
+
+This observation doesn't seem to contradict any security claim of
+Hamsi.

@@ -1,0 +1,46 @@
+Tor E. Bjørstad, NIST mailing list 2008-11-27
+---------------------------------------------
+
+Hi again,
+
+Bad form to quote oneself, but it seems I fired off the previous message a bit too quickly.
+
+Quoting Tor.Bjorstad@ii.uib.no:
+> Suffice to say, shash does not appear to handle very long strings of
+> 0-bits very well. When hashing long sequences of zeroed data blocks,
+> the well-being of the internal state suffers. This led me, somewhat by
+> chance, to a new class of even closer near-collisions (albeit for
+> rather long messages).
+
+Can somebody please verify that, after one processes either 3360 or 6720 512-bit data blocks, all equal to 0, the entire contents of both sPrism and hPrism becomes 0?
+
+This leads to the following collision (as well as a preimage of 0), for all variants of shash:
+
+// m1 is a character array consisting of 430080 zero-bytes
+Hash (512, m1, 430080 << 3, h1);
+h1=
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+// m2 is a character array consisting of 215040 zero-bytes
+Hash (512, m2, 215040 << 3, h2);
+h2=
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+
+(Using the reference implementation from
+http://www.cs.ucsb.edu/~koc/shash/sHash-reference.zip)
+
+If this can be verified and reproduced, I'd say that shash is dead. (Though I'm pretty confident that my test code checked and double-checked and is correct, there's always a danger that one's somehow done something very silly instead.)
+
+Cheers, Tor
+
+-- 
+Tor E. Bjørstad - PhD student, Dept. of Informatics, UiB, Norway
+Mail: tor.bjorstad@ii.uib.no - Web: http://www.ii.uib.no/~tor/
+
+

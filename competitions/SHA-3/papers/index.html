@@ -1,0 +1,34 @@
+<html><head><title>David A. Wilson's SHA-3 page</title></head><body bgcolor="lightgrey">
+
+<h1>Introduction</h1>
+This is the SHA-3 page of David A. Wilson.<p>
+For information about the NIST SHA-3 competition, go <a href="http://www.nist.gov/hash-competition">here</a>.<p>
+For an unofficial list of entries and analyses, go <a href="http://ehash.iaik.tugraz.at/index.php/The_SHA-3_Zoo">here</a>.
+
+<h1>DCH</h1>
+I submitted a hash function called DCH.  It is a block-cipher-based algorithm that alternates a nonlinear substitution, a Fourier-like linear transform, and a round key addition.  You can find the submission package <a href="dch/">here</a>.  If you have any questions, comments, or analyses of DCH, please contact me at dwilson at alum dot mit dot edu.  <b>Note</b>:  There is an error in the reference implementation (see third bullet point below).
+<h2>Analysis</h2>
+<ul><li>
+Christian Rechberger has kindly pointed out that while the dithering scheme used renders DCH invulnerable to the second-preimage attacks of Kelsey and Schneier, it does not protect against the variant of those attacks by Andreeva et al. published earlier this year.  Since DCH uses a 512-bit chaining value for all digest lengths, this appears to be a valid attack for DCH-512 (requiring slightly more than 2^{450} computations), although for shorter digest lengths brute force is stil faster.
+<ul><li>There are several defenses against such an attack, some of which would involve changing the algorithm (e.g. to include a block number instead of just a small dither value, following the HAIFA approach).  One option within the bounds of the submitted entry, however, is to increase the block size, which is explicitly listed as a tunable parameter.  This will result in a larger chaining value; a block size of 576 bits should be large enough to make the attack of Andreeva et al. worse than brute force against 512-bit DCH.
+</li></ul>
+</li>
+<li>Dmitry Khovratovich and Ivica Nikolic of the University of Luxembourg have pointed out that DCH contains an incorrect implementation of the Miyaguchi-Preneel iteration method, and thus is susceptible to collision and preimage attack via Wagner's generalized birthday algorithm.  Their writeup is available <a href="http://lj.streamclub.ru/papers/hash/dch.pdf">here</a>.
+<ul><li>
+This is correct; DCH as submitted is broken.  This attack capitalizes on an error in implementation of the iteration method; it does not attack the compression function itself.  Thus, correcting the error in the iteration method would defend against this attack, although for the purposes of the SHA-3 competition it appears that DCH is out.
+</li></ul>
+</li>
+<li>Mario Lamberger and Florian Mendel of IAIK, Graz University of Technology, have pointed out that the above results in relatively trivial collision and preimage attacks, since once a dither input is repeated, if the same message block is used in both positions then the resulting contributions to the end hash value will cancel out.</li>
+</ul>
+
+<h1>Other Algorithms</h1>
+My analyses of other SHA-3 entries:
+<ul>
+<li> WAMM:  see <a href="wamm.html">Constructing Second Preimages in the WaMM Hash Algorithm</a>
+</li>
+<li> Abacus:  A second-preimage and collision attack.  Writeup is <a href="abacus_attack.pdf">here</a> (PDF).  Sample code for generating random second-preimage candidates is <a href="abacus_attack.c">here</a>.
+</li>  
+</ul>
+
+</body>
+</html>

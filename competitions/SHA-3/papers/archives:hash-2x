@@ -1,0 +1,790 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+    <title>HASH 2X - TI-Basic Developer</title>
+    
+    
+    
+    <script type='text/javascript'>
+var googletag = googletag || {};
+googletag.cmd = googletag.cmd || [];
+(function() {
+var gads = document.createElement('script');
+gads.async = true;
+gads.type = 'text/javascript';
+var useSSL = 'https:' == document.location.protocol;
+gads.src = (useSSL ? 'https:' : 'http:') + 
+'//www.googletagservices.com/tag/js/gpt.js';
+var node = document.getElementsByTagName('script')[0];
+node.parentNode.insertBefore(gads, node);
+})();
+</script>
+
+<script type='text/javascript'>
+googletag.cmd.push(function() {
+    // DEFINE DFP SLOTS
+googletag.defineSlot('/1030917/wikidot_free_sites_top_728x90', [728, 90], 'div-gpt-ad-1410946564449-1').addService(googletag.pubads());
+googletag.defineSlot('/1030917/wikidot_free_sites_bottom_300x250', [300, 250], 'div-gpt-ad-1410946564449-0').addService(googletag.pubads());
+googletag.defineOutOfPageSlot('/1030917/out_of_page', 'div-gpt-ad-1411637977813-0-oop').addService(googletag.pubads());
+
+// googletag.pubads().enableSingleRequest();
+googletag.pubads().collapseEmptyDivs(true, true);
+googletag.pubads().setTargeting("w_name", "tibasicdev");
+googletag.pubads().setTargeting("w_domain", "com.wikidot.tibasicdev");
+googletag.pubads().setTargeting("w_verified", "true");
+if(["software","hardware"]){googletag.pubads().setTargeting("w_cats", ["software","hardware"]);}
+if(true){googletag.pubads().setTargeting("w_mn", "true");}
+googletag.enableServices();
+});
+</script>
+<script type="text/javascript" src="http://d3g0gp89917ko0.cloudfront.net/v--da1d47709a7f/common--javascript/init.combined.js"></script>
+    <script  type="text/javascript">
+        var URL_HOST = 'www.wikidot.com';
+        var URL_DOMAIN = 'wikidot.com';
+        var USE_SSL =  true ;
+        var URL_STATIC = 'http://d3g0gp89917ko0.cloudfront.net/v--da1d47709a7f';
+        // global request information
+        
+        var WIKIREQUEST = {};
+        WIKIREQUEST.info = {};
+        
+        WIKIREQUEST.info.domain = "tibasicdev.wikidot.com";
+        WIKIREQUEST.info.siteId = 405;
+        WIKIREQUEST.info.siteUnixName = "tibasicdev";
+        WIKIREQUEST.info.categoryId = 348824;
+        WIKIREQUEST.info.themeId = 109979;
+        WIKIREQUEST.info.requestPageName = "archives:hash-2x";
+        OZONE.request.timestamp = 1453161254;
+        OZONE.request.date = new Date();
+        WIKIREQUEST.info.lang = 'en';
+                WIKIREQUEST.info.pageUnixName = "archives:hash-2x";
+        WIKIREQUEST.info.pageId = 2186361;
+                        WIKIREQUEST.info.lang = "en";
+        OZONE.lang = "en";
+        var isUAMobile = !!/Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    </script>
+    
+    
+
+<script type="text/javascript">
+if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    document.write('<sc'+'ript id="mNCC" language="javascript">  medianet_width=\'316\';  medianet_height= \'150\';  medianet_crid=\'364881751\';  </s'+'cript>  <scr'+'ipt id="mNSC" src="http://contextual.media.net/nmedianet.js?cid=8CU478JZ7" language="javascript"></scr'+'ipt> ');
+} else if( /iPad/i.test(navigator.userAgent) ) {
+    document.write('<scr'+'ipt id="mNCC" language="javascript">  medianet_width=\'316\';  medianet_height= \'50\';  medianet_crid=\'679132599\';  </sc'+'ript>  <sc'+'ript id="mNSC" src="http://contextual.media.net/nmedianet.js?cid=8CU478JZ7" language="javascript"></sc'+'ript> ');
+}
+</script>                  
+
+    
+        <script  type="text/javascript">
+    
+        require.config({
+            baseUrl: URL_STATIC + '/common--javascript',
+            paths: {
+                'jquery.ui': 'jquery-ui.min',
+                'jquery.form': 'jquery.form'
+            }
+        });
+    
+    </script>
+    
+    <meta http-equiv="content-type" content="text/html;charset=UTF-8"/>
+            
+    
+    
+    
+    
+    <meta http-equiv="content-language" content="en"/>
+    <script type="text/javascript" src="http://d3g0gp89917ko0.cloudfront.net/v--da1d47709a7f/common--javascript/WIKIDOT.combined.js"></script>
+        
+    
+    <style type="text/css" id="internal-style">
+        
+        /* modules */
+@import url(http://d3g0gp89917ko0.cloudfront.net/v--da1d47709a7f/common--modules/css/pagerate/PageRateWidgetModule.css);
+
+
+        
+                
+        /* theme */
+                    @import url(http://d3g0gp89917ko0.cloudfront.net/v--da1d47709a7f/common--theme/base/css/style.css);
+                    @import url(http://d3g0gp89917ko0.cloudfront.net/v--da1d47709a7f/common--theme/co/css/style.css);
+                    @import url(http://tibasicdev.wdfiles.com/local--theme/new-default-2013/style.css);
+            </style>
+    
+        
+        
+        
+    <link rel="shortcut icon" href="/local--favicon/favicon.gif"/>
+    <link rel="icon" type="image/gif" href="/local--favicon/favicon.gif"/>
+    
+            <link rel="apple-touch-icon" href="/common--images/apple-touch-icon-57x57.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/common--images/apple-touch-icon-72x72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="/common--images/apple-touch-icon-114x114.png" />
+        
+        
+            <link rel="alternate" type="application/wiki" title="Edit this page" href="javascript:WIKIDOT.page.listeners.editClick()"/>
+    
+        <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-18234656-1']);
+        _gaq.push(['_setDomainName', 'none']);
+        _gaq.push(['_setAllowLinker', true]);
+        _gaq.push(['_trackPageview']);
+
+        _gaq.push(['old._setAccount', 'UA-68540-5']);
+        _gaq.push(['old._setDomainName', 'none']);
+        _gaq.push(['old._setAllowLinker', true]);
+        _gaq.push(['old._trackPageview']);
+
+                _gaq.push(['userTracker._setAccount', 'UA-5568715-1']);
+        _gaq.push(['userTracker._trackPageview']);
+            </script>
+    
+    <script type="text/javascript">
+        window.google_analytics_uacct = 'UA-18234656-1';
+        window.google_analytics_domain_name = 'none';
+    </script>
+    
+    <link rel="alternate" type="application/rss+xml" title="Comments for the page &quot;HASH 2X&quot;" href="/feed/page/comments-2186361.xml"/><script type="text/javascript" src="http://d3g0gp89917ko0.cloudfront.net/v--da1d47709a7f/common--modules/js/list/ListPagesModule.js"></script>
+<script type="text/javascript" src="http://d3g0gp89917ko0.cloudfront.net/v--da1d47709a7f/common--modules/js/pagerate/PageRateWidgetModule.js"></script>
+<script type="text/javascript" src="http://d3g0gp89917ko0.cloudfront.net/v--da1d47709a7f/common--modules/js/forum/ForumCommentsModule.js"></script>
+<script type="text/javascript" src="http://d3g0gp89917ko0.cloudfront.net/v--da1d47709a7f/common--modules/js/forum/ForumViewThreadModule.js"></script>
+<script type="text/javascript" src="http://d3g0gp89917ko0.cloudfront.net/v--da1d47709a7f/common--modules/js/forum/ForumViewThreadPostsModule.js"></script>
+<script type="text/javascript" src="http://d3g0gp89917ko0.cloudfront.net/v--da1d47709a7f/common--modules/js/forum/sub/ForumNewPostFormModule.js"></script>
+</head>
+<body id="html-body">
+<div id="skrollr-body">
+<a name="page-top"></a>
+
+<div id="container-wrap-wrap">
+    <div id="container-wrap">
+        <div id="container">
+            <div id="header">
+              <h1><a href="/"><span>TI-Basic Developer</span></a></h1>
+                
+                    <h2><span>The TI-Basic Information Repository</span></h2>
+                
+                
+                <!-- google_ad_section_start(weight=ignore) -->
+                
+                <div id="search-top-box" class="form-search">
+    <form id="search-top-box-form" action="dummy" class="input-append">
+        <input id="search-top-box-input" class="text empty search-query" type="text" size="15" name="query" value="Search this site" onfocus="if(YAHOO.util.Dom.hasClass(this, 'empty')){YAHOO.util.Dom.removeClass(this,'empty'); this.value='';}"/><input class="button btn" type="submit" name="search" value="Search"/>
+    </form>
+</div>
+                
+                
+                    <div id="top-bar">
+                        
+
+<ul>
+<li>Membership
+<ul>
+<li><a href="/conduct">Code of Conduct</a></li>
+<li><a href="/system:members">Site Members</a></li>
+<li><a href="/system:join">Become a Member</a></li>
+<li><a href="/system:invite">Invite a Friend</a></li>
+</ul>
+</li>
+<li>Editing Pages
+<ul>
+<li><a href="/guide-to-editing">Guide to Editing</a></li>
+<li><a href="/conventions">Wiki Conventions</a></li>
+<li><a href="http://www.wikidot.com/doc:wiki-syntax">Wiki Syntax</a></li>
+<li><a href="/to-do">To-Do List</a></li>
+<li><a class="wiki-standalone-button" href="javascript:;" onclick="WIKIDOT.page.listeners.viewSourceClick(event)">View Page Source</a></li>
+<li><a href="/system:recent-changes">Recent Changes</a></li>
+<li><a href="/admin:manage">Site Manager</a></li>
+</ul>
+</li>
+<li>Site Information
+<ul>
+<li><a href="/history">Site History</a></li>
+<li><a href="/logo">Site Logo</a></li>
+<li><a href="/all-news">News Archive</a></li>
+<li><a href="/news">83 News</a></li>
+<li><a href="/68k:news">68k News</a></li>
+<li><a href="/announcements">Announcements</a></li>
+</ul>
+</li>
+<li>Related Sites
+<ul>
+<li><a href="http://www.omnimaga.org" target="_blank">Omnimaga</a></li>
+<li><a href="http://codewalr.us" target="_blank">CodeWalrus</a></li>
+<li><a href="http://www.cemetech.net" target="_blank">Cemetech</a></li>
+<li><a href="http://tiplanet.org" target="_blank">TI-Planet</a></li>
+<li><a href="http://tistory.wikidot.com" target="_blank">TI Story</a></li>
+<li><a href="http://www.ticalc.org" target="_blank">ticalc.org</a></li>
+</ul>
+</li>
+</ul>
+
+                    </div>
+                
+                <div id="login-status"><a href="javascript:;" onclick="WIKIDOT.page.listeners.createAccount(event)" class="login-status-create-account btn">Create account</a> <span>or</span> <a href="javascript:;" onclick="WIKIDOT.page.listeners.loginClick(event)" class="login-status-sign-in btn btn-primary">Sign in</a> </div>
+                <div id="header-extra-div-1"><span></span></div><div id="header-extra-div-2"><span></span></div><div id="header-extra-div-3"><span></span></div>
+            </div>
+            
+            <div id="content-wrap">
+                
+                    <div id="side-bar">
+                        
+
+
+                        
+
+<div class="top">
+<ul>
+<li><strong><a href="/home">TI-83 Basic Home</a></strong></li>
+<li><a href="/68k:home">68k TI-Basic Home</a></li>
+<li><a href="/nspire">TI-Nspire Basic Page</a></li>
+<li><a href="/archives">Program Archives</a></li>
+<li><a href="/forum:home">Discussion Forums</a></li>
+</ul>
+</div>
+<p><span style="font-size:large;">Preparation</span></p>
+<ul>
+<li><a href="/thecalcs">The Calculators</a></li>
+<li><a href="/whytibasic">Why TI-Basic?</a></li>
+<li><a href="/using-this-guide">Using This Guide</a></li>
+<li><a href="/starter-kit">TI-Basic Starter Kit</a></li>
+<li><a href="/faq">TI-Basic FAQ</a></li>
+</ul>
+<p><span style="font-size:large;">Main Content</span></p>
+<div class="special-collapsible">
+<div class="collapsible-block">
+<div class="collapsible-block-folded"><a class="collapsible-block-link" href="javascript:;">Commands</a></div>
+<div class="collapsible-block-unfolded" style="display:none">
+<div class="collapsible-block-unfolded-link"><a class="collapsible-block-link" href="javascript:;">Commands</a></div>
+<div class="collapsible-block-content"><div class="list-pages-box">    
+
+<ul>
+<li><a href="/commands">Overview</a></li>
+<li><a href="/command-index">Command Index</a></li>
+<li><a href="http://tibasicdev.wikidot.com/zsquare">Random command!</a></li>
+</ul>
+
+    
+    
+    
+    </div>
+<ul>
+<li><a href="/homescreen">Home Screen</a></li>
+<li><a href="/graphscreen">Graph Screen</a></li>
+<li><a href="/math">Math Functions</a></li>
+<li><a href="/variables">Variables</a></li>
+<li><a href="/userinput">User Input</a></li>
+<li><a href="/operators">Operators</a></li>
+<li><a href="/linking">Calculator Linking</a></li>
+<li><a href="/controlflow">Controlling Flow</a></li>
+<li><a href="/settings">User Settings</a></li>
+<li><a href="/memory-management">Memory Management</a></li>
+<li><a href="/time-and-date">Time and Date</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="collapsible-block">
+<div class="collapsible-block-folded"><a class="collapsible-block-link" href="javascript:;">Development</a></div>
+<div class="collapsible-block-unfolded" style="display:none">
+<div class="collapsible-block-unfolded-link"><a class="collapsible-block-link" href="javascript:;">Development</a></div>
+<div class="collapsible-block-content">
+<ul>
+<li><a href="/development">Overview</a></li>
+<li><a href="/plan">Planning</a></li>
+<li><a href="/portability">Portability</a></li>
+<li><a href="/usability">Usability</a></li>
+<li><a href="/setup">Program Setup</a></li>
+<li><a href="/code-conventions">Code Conventions</a></li>
+<li><a href="/techniques">Techniques</a></li>
+<li><a href="/comments">Commenting Code</a></li>
+<li><a href="/subprograms">Subprograms</a></li>
+<li><a href="/cleanup">Program Cleanup</a></li>
+<li><a href="/debug">Debugging</a></li>
+<li><a href="/optimize">Optimization</a></li>
+<li><a href="/timings">Code Timings</a></li>
+<li><a href="/documentation">Writing Program Documentation</a></li>
+<li><a href="/marketing">Marketing</a></li>
+<li><a href="/releasing-your-program">Releasing Programs</a></li>
+<li><a href="/creating-new-program-versions">Creating New Program Versions</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="collapsible-block">
+<div class="collapsible-block-folded"><a class="collapsible-block-link" href="javascript:;">Techniques</a></div>
+<div class="collapsible-block-unfolded" style="display:none">
+<div class="collapsible-block-unfolded-link"><a class="collapsible-block-link" href="javascript:;">Techniques</a></div>
+<div class="collapsible-block-content">
+<ul>
+<li><a href="/techniques">Overview</a></li>
+<li><a href="/animation">Animation</a></li>
+<li><a href="/assembly">Assembly</a></li>
+<li><a href="/compression">Compression Techniques</a></li>
+<li><a href="/cryptography">Cryptography</a></li>
+<li><a href="/custommenus">Custom Menus</a></li>
+<li><a href="/custominput">Custom Text Input</a></li>
+<li><a href="/easy-map-making">Easy Map Making</a></li>
+<li><a href="/friendly-window">Friendly Graphing Window</a></li>
+<li><a href="/graphics">Graphics</a></li>
+<li><a href="/grouping">Grouping A Program</a></li>
+<li><a href="/highscores">Highscores</a></li>
+<li><a href="/lookuptables">Look-Up Tables</a></li>
+<li><a href="/maps">Making Maps</a></li>
+<li><a href="/movement">Movement in Maps</a></li>
+<li><a href="/multiplayer">Multiplayer</a></li>
+<li><a href="/piecewise-expressions">Piecewise Expressions</a></li>
+<li><a href="/protection">Program Protection</a></li>
+<li><a href="/recursion">Recursion</a></li>
+<li><a href="/saving">Saving</a></li>
+<li><a href="/selfmodify">Self-Modifying Code (SMC)</a></li>
+<li><a href="/subprograms">Subprograms</a></li>
+<li><a href="/validation">Validation of User Input</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="collapsible-block">
+<div class="collapsible-block-folded"><a class="collapsible-block-link" href="javascript:;">Miscellaneous</a></div>
+<div class="collapsible-block-unfolded" style="display:none">
+<div class="collapsible-block-unfolded-link"><a class="collapsible-block-link" href="javascript:;">Miscellaneous</a></div>
+<div class="collapsible-block-content">
+<ul>
+<li><a href="/experiment">Experiment</a></li>
+<li><a href="/programs-h">Programs</a></li>
+<li><a href="/sitemap">Sitemap</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div style="height: 5px;"></div>
+<p><span style="font-size:large;">References</span></p>
+<ul>
+<li><a href="/resources">Resources</a></li>
+<li><a href="/downloads">Downloads</a></li>
+<li><a href="/showcases">Showcases</a></li>
+<li><a href="/sidebar">Sidebar</a></li>
+<li><a href="/tokens">Token Size</a></li>
+<li><a href="/textsprites">Text Sprites</a></li>
+<li><a href="/binandhex">Binary &amp; Hex</a></li>
+<li><a href="/83lgfont">TI-83+ Font</a></li>
+<li><a href="/errors">Error Conditions</a></li>
+<li><a href="/file-extensions">File Extensions</a></li>
+<li><a href="/key-codes">Key Codes</a></li>
+<li><a href="/abbreviations">Abbreviations</a></li>
+<li><a href="/glossary">Glossary</a></li>
+</ul>
+<div style="text-align:center;">
+<p><script type="text/javascript">
+//<![CDATA[
+var sc_project=2373092; 
+var sc_invisible=0; 
+var sc_partition=22; 
+var sc_security="d8087415"; 
+//]]>
+</script> <script type="text/javascript" src="http://www.statcounter.com/counter/counter_xhtml.js">
+</script><noscript>
+<div class="statcounter"><a class="statcounter" href="http://www.statcounter.com/"><img class="statcounter" src="http://c23.statcounter.com/2373092/0/d8087415/0/" alt="counter free hit unique web" /></a></div>
+</noscript></p>
+</div>
+
+                        
+
+
+                    </div>
+                
+                
+                <!-- google_ad_section_end -->
+                
+                <div id="main-content">
+                    <div id="action-area-top"></div>
+                    
+                    
+                        <div id="page-title">
+                            HASH 2X
+                        </div>
+                    
+
+                    
+                        <div id="breadcrumbs">
+                            <a href="/archives">Program Archives</a> &raquo; <a href="/archives:_84p">TI-84/+/SE</a> &raquo; HASH 2X
+                        </div>
+                    
+
+                                    <!-- wikidot_top_728x90 -->
+<div id="div-gpt-ad-1410946564449-1" style="display: none" class="wd-adunit wd-adunit-dfp wd-adunit-above_content">
+
+<script type='text/javascript'>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1410946564449-1'); });
+</script>
+</div>
+
+            
+<script type="text/javascript">
+if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    document.write('<sc'+'ript id="mNCC" language="javascript">  medianet_width=\'316\';  medianet_height= \'150\';  medianet_crid=\'364881751\';  </s'+'cript>  <scr'+'ipt id="mNSC" src="http://contextual.media.net/nmedianet.js?cid=8CU478JZ7" language="javascript"></scr'+'ipt> ');
+} else if( /iPad/i.test(navigator.userAgent) ) {
+    document.write('<scr'+'ipt id="mNCC" language="javascript">  medianet_width=\'316\';  medianet_height= \'50\';  medianet_crid=\'679132599\';  </sc'+'ript>  <sc'+'ript id="mNSC" src="http://contextual.media.net/nmedianet.js?cid=8CU478JZ7" language="javascript"></sc'+'ript> ');
+}
+</script>                  
+
+
+                    <div id="page-content">
+                        
+
+<table>
+<tr>
+<td class="hidden" style="width: 225px;"><a href="http://tibasicdev.wikidot.com/local--files/archives:hash-2x/HASH2X.zip"><img src="http://tibasicdev.wikidot.com/local--files/home/no_image_2.png" title="Click to download" style="border: 1px solid #666;" width="190px" alt="no_image_2.png" class="image" /></a></td>
+<td style="width: 225px;"><strong>Name:</strong> Hash 2X<br />
+<strong>Author:</strong> <a href="http://www.calccrypto.wikidot.com">Bxsciencer</a> (aka Jason Lee)<br />
+<strong>Download:</strong> <a href="http://tibasicdev.wikidot.com/local--files/archives:hash-2x/HASH2X.zip">Hash2x.zip</a><br />
+<strong>Compatibility:</strong> <em>Parent page not set</em><br />
+<strong>File Size:</strong> 1356 bytes</td>
+<td>
+<p>This is a multivariable hash function that I created. Its pretty fast (especially on a computer), and can have outputs of any size greater than 8 (any less is ridiculously insecure, although a simple edit to the program will allow for any output size greater than 0). However, due to the limitations of the 83/84, 256 is the max inputs and outputs for the moment. The outputs are stored in Str1, so they can be recalled.</p>
+<p>There has been no editing of anything except for the files included in this download.</p>
+<p>PS. Any help in analyzing this algorithm is most welcome and greatly appreciated.</p>
+</td>
+</tr>
+</table>
+<div style="text-align: center;"><div class="page-rate-widget"><div class="page-rate-widget-start" data-rating="0"></div></div></div>
+<div class="comments-box">
+	<h1>What the community thinks:</h1>	
+	<div class="options" id="comments-options-hidden" style="display: none">
+		<a href="javascript:;" onclick="WIKIDOT.modules.ForumCommentsModule.listeners.showComments(event)">Show Comments</a> 
+	</div>
+		
+	<div id="thread-container" class="thread-container" style="margin-top: 1em">
+					
+
+
+<script type="text/javascript">
+	WIKIDOT.forumThreadId = 103070;
+</script>
+
+
+	<div class="options" id="comments-options-shown">
+		<a href="javascript:;" onclick="WIKIDOT.modules.ForumCommentsModule.listeners.hideComments(event)" class="btn btn-default btn-small btn-sm">Hide All Comments</a> 
+		<a href="javascript:;" onclick="WIKIDOT.modules.ForumViewThreadModule.listeners.unfoldAll(event)" class="btn btn-default btn-small btn-sm">Unfold All</a> 
+		<a href="javascript:;" onclick="WIKIDOT.modules.ForumViewThreadModule.listeners.foldAll(event)" class="btn btn-default btn-small btn-sm">Fold All</a>
+	</div>
+
+<div id="thread-container-posts" style="display: none">
+    
+
+
+
+	
+					
+      
+    <div class="post-container" id="fpc-302617">
+                      
+		<div class="post" id="post-302617">
+		<div class="long">
+			<div class="head">
+									<div class="options">
+						<a href="javascript:;" onclick="togglePostFold(event,302617)" class="btn btn-default btn-small btn-sm">Fold</a>
+					</div>
+								<div class="title" id="post-title-302617">
+																		Second preimage attack
+															</div>
+				<div class="info">
+					<span class="printuser avatarhover"><a href="http://www.wikidot.com/user:info/aumasson" onclick="WIKIDOT.page.listeners.userInfo(234225); return false;"  ><img class="small" src="http://www.wikidot.com/avatar.php?userid=234225&amp;amp;size=small&amp;amp;timestamp=1453161254" alt="Aumasson" style="background-image:url(http://www.wikidot.com/userkarma.php?u=234225)"/></a><a href="http://www.wikidot.com/user:info/aumasson" onclick="WIKIDOT.page.listeners.userInfo(234225); return false;" >Aumasson</a></span> <span class="odate time_1226061245 format_%25e%20%25b%20%25Y%2C%20%25H%3A%25M%7Cagohover">07 Nov 2008 12:34</span>
+														</div>
+			</div>
+			<div class="content" id="post-content-302617">
+									
+
+<p>Dear Jason,</p>
+<p>Have found a method to find second preimages for HASH 2X. It exploits the fact that two digits with the same integer value modulo 154 will produce the same value of "password" after the loop</p>
+<div class="code">
+<pre>
+<code>for x in range(3):
+        password[0] += password[len(password) - 1]
+        temp_num = 0
+        for i in range(len(password)):
+            password[i] += temp_num
+            temp_num = password[i]
+        password = [(j % mod_list[x]) for j in password]</code>
+</pre></div>
+<p>The code below, if put in the main program of the Python program in Hash2x.zip, can be used to find second preimages instantaneously, for any digest length.</p>
+<div class="code">
+<pre>
+<code># second preimage attack
+
+    length = int(raw_input("Digest bitsize: "))                
+    m1 = raw_input("First message: ")    
+    m2 = [unichr( ord(i)+154 ) for i in m1]
+
+    hash1 = candidate(m1, length)
+    hash2 = candidate(m2, length)
+
+    print "\nhash(",m1,")="
+    print hash1
+
+    print "\nhash( ",
+    for i in m2: print "\b%s" % (i),
+    print ")="
+    print hash2,"\n"
+
+    if ( hash1 == hash2 ):
+        print "Collision"
+    else:
+        print "No collision"</code>
+</pre></div>
+<p>Best,<br />
+JP</p>
+
+							</div>
+
+								
+							<div class="changes">
+					Last edited on <span class="odate time_1226061502 format_%25e%20%25b%20%25Y%2C%20%25H%3A%25M%7Cagohover">07 Nov 2008 12:38</span>
+					by <span class="printuser"><a href="http://www.wikidot.com/user:info/aumasson" onclick="WIKIDOT.page.listeners.userInfo(234225); return false;" >Aumasson</a></span>
+					<a href="javascript:;" onclick="WIKIDOT.modules.ForumViewThreadModule.listeners.showHistory(event,302617)"><i class="icon-plus"></i> Show more</a>
+				</div>
+				<div class="revisions" style="display: none"></div>
+					
+						<div class="options">
+				
+													<strong><a href="javascript:;" onclick="postReply(event,302617)" class="btn btn-primary btn-small btn-sm">Reply</a></strong> 
+																	<a href="javascript:;" onclick="togglePostOptions(event,302617)" class="btn btn-default btn-small btn-sm">Options</a>
+							</div>
+									
+			<div id="post-options-302617" class="options" style="display: none">
+			</div>
+		</div>
+		<div class="short">
+							<a class="options btn btn-default btn-mini btn-xs" href="javascript:;" onclick="togglePostFold(event,302617)" c>Unfold</a>
+						<a class="title" href="javascript:;" onclick="togglePostFold(event,302617)">Second preimage attack</a> by <span class="printuser avatarhover"><a href="http://www.wikidot.com/user:info/aumasson" onclick="WIKIDOT.page.listeners.userInfo(234225); return false;"  ><img class="small" src="http://www.wikidot.com/avatar.php?userid=234225&amp;amp;size=small&amp;amp;timestamp=1453161254" alt="Aumasson" style="background-image:url(http://www.wikidot.com/userkarma.php?u=234225)"/></a><a href="http://www.wikidot.com/user:info/aumasson" onclick="WIKIDOT.page.listeners.userInfo(234225); return false;" >Aumasson</a></span>, <span class="odate time_1226061245 format_%25e%20%25b%20%25Y%2C%20%25H%3A%25M%7Cagohover">07 Nov 2008 12:34</span>
+		</div>
+	</div>
+ 
+                
+        
+            </div>
+ 
+
+
+
+</div>
+
+        <a href="javascript:;" id="new-post-button" onclick="WIKIDOT.modules.ForumViewThreadModule.listeners.newPost(event,null)"
+      style="display:  block ; margin-bottom:1em"
+    >Add a New Comment</a>
+
+ 
+
+<div style="display:none" id="post-options-template">
+	<a href="javascript:;" onclick="WIKIDOT.modules.ForumViewThreadModule.listeners.showPermalink(event,'%POST_ID%')" class="btn btn-default btn-small btn-sm">Permanent Link</a>
+			<a href="javascript:;" onclick="WIKIDOT.modules.ForumViewThreadModule.listeners.editPost(event,'%POST_ID%')" class="btn btn-default btn-small btn-sm">Edit</a>
+			<a href="javascript:;" onclick="WIKIDOT.modules.ForumViewThreadModule.listeners.deletePost(event,'%POST_ID%')" class="btn btn-danger btn-small btn-sm">Delete</a>
+</div>
+	
+			</div>
+	
+	
+	
+</div>
+<div style="clear:both; height: 0px; font-size: 1px"></div>
+<blockquote>
+<p><span style="font-size: 200%; color: green;">Want to update this page?</span></p>
+<ul>
+<li><span style="font-size: 200%; color: green;"><strong><a class="wiki-standalone-button" href="javascript:;" onclick="WIKIDOT.page.listeners.filesClick(event)">Upload new files</a></strong> to provide up-to-date versions of your program;</span></li>
+<li><span style="font-size: 200%; color: green;"><strong><a class="wiki-standalone-button" href="javascript:;" onclick="WIKIDOT.page.listeners.editClick(event)">or Edit the content</a></strong> of this page to provide up-to-date information about your program.</span></li>
+</ul>
+<p><span style="font-size: 200%; color: green;">A moderator will only process these changes if you add the word <strong><em>update</em></strong> to the <strong><a class="wiki-standalone-button" href="javascript:;" onclick="WIKIDOT.page.listeners.editTags(event)">list of tags</a></strong></span></p>
+</blockquote>
+
+                    </div>
+
+                                    <!-- wikidot_bottom_300x250 -->
+<div id="div-gpt-ad-1410946564449-0" style="display: none" class="wd-adunit wd-adunit-dfp wd-adunit-below_content">
+
+<script type='text/javascript'>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1410946564449-0'); });
+</script>
+</div>
+
+            
+<script type="text/javascript">
+if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    document.write('<sc'+'ript id="mNCC" language="javascript">  medianet_width=\'316\';  medianet_height= \'150\';  medianet_crid=\'364881751\';  </s'+'cript>  <scr'+'ipt id="mNSC" src="http://contextual.media.net/nmedianet.js?cid=8CU478JZ7" language="javascript"></scr'+'ipt> ');
+} else if( /iPad/i.test(navigator.userAgent) ) {
+    document.write('<scr'+'ipt id="mNCC" language="javascript">  medianet_width=\'316\';  medianet_height= \'50\';  medianet_crid=\'679132599\';  </sc'+'ript>  <sc'+'ript id="mNSC" src="http://contextual.media.net/nmedianet.js?cid=8CU478JZ7" language="javascript"></sc'+'ript> ');
+}
+</script>                  
+
+
+                    
+                        <div class="page-tags">
+                            <span>
+                                <a href="/system:page-tags/tag/utility#pages">utility</a>
+                            </span>
+                        </div>
+                    
+
+                    <div id="page-info-break"></div>
+                    
+                        <div id="page-options-container">
+                            
+                        </div>
+                    
+                    <div id="action-area" style="display: none;"></div>
+                </div>
+            </div>
+            
+            
+            
+            <div id="footer" style="display: block; visibility: visible;">
+                <div class="options" style="display: block; visibility: visible;">
+    <a href="http://www.wikidot.com/doc" id="wikidot-help-button">Help</a>
+    &nbsp;|
+    <a href="http://www.wikidot.com/legal:terms-of-service" id="wikidot-tos-button">Terms of Service</a>
+    &nbsp;|
+    <a href="http://www.wikidot.com/legal:privacy-policy" id="wikidot-privacy-button">Privacy</a>
+    &nbsp;|
+    <a href="javascript:;" id="bug-report-button" onclick="WIKIDOT.page.listeners.pageBugReport(event)">Report a bug</a>
+    &nbsp;|
+    <a href="javascript:;" id="abuse-report-button" onclick="WIKIDOT.page.listeners.flagPageObjectionable(event)">Flag as objectionable</a>
+</div>
+Powered by <a href="http://www.wikidot.com">Wikidot.com</a> 
+            </div>
+            
+                <div id="license-area" class="license-area">
+                    Unless otherwise stated, the content of this page is licensed under <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 License</a>
+                </div>
+            
+            
+            
+
+
+
+            <div id="extrac-div-1"><span></span></div><div id="extrac-div-2"><span></span></div><div id="extrac-div-3"><span></span></div>
+            
+            
+            
+            
+                
+            
+        </div>
+        
+    </div>
+<!-- These extra divs/spans may be used as catch-alls to add extra imagery. -->
+<div id="extra-div-1"><span></span></div><div id="extra-div-2"><span></span></div><div id="extra-div-3"><span></span></div>
+<div id="extra-div-4"><span></span></div><div id="extra-div-5"><span></span></div><div id="extra-div-6"><span></span></div>
+</div>
+                <!-- out_of_page -->
+
+<div id="div-gpt-ad-1411637977813-0-oop">
+<script type='text/javascript'>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1411637977813-0-oop'); });
+</script>
+</div>
+
+            
+<script type="text/javascript">
+if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    document.write('<sc'+'ript id="mNCC" language="javascript">  medianet_width=\'316\';  medianet_height= \'150\';  medianet_crid=\'364881751\';  </s'+'cript>  <scr'+'ipt id="mNSC" src="http://contextual.media.net/nmedianet.js?cid=8CU478JZ7" language="javascript"></scr'+'ipt> ');
+} else if( /iPad/i.test(navigator.userAgent) ) {
+    document.write('<scr'+'ipt id="mNCC" language="javascript">  medianet_width=\'316\';  medianet_height= \'50\';  medianet_crid=\'679132599\';  </sc'+'ript>  <sc'+'ript id="mNSC" src="http://contextual.media.net/nmedianet.js?cid=8CU478JZ7" language="javascript"></sc'+'ript> ');
+}
+</script>                  
+
+</div>
+<div id="dummy-ondomready-block" style="display: none;" ></div>
+    <!-- Google Analytics load -->
+    <script type="text/javascript">
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+    <!-- Quantcast -->
+    <script type="text/javascript">
+    _qoptions={
+        qacct:"p-edL3gsnUjJzw-"
+    };
+    (function() {
+        var qc = document.createElement('script'); qc.type = 'text/javascript'; qc.async = true;
+        qc.src = ('https:' == document.location.protocol ? 'https://secure' : 'http://edge') + '.quantserve.com/quant.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(qc, s);
+    })();
+    </script>
+    <noscript>
+        <img src="http://pixel.quantserve.com/pixel/p-edL3gsnUjJzw-.gif" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/>
+    </noscript>
+
+
+
+<script type="text/javascript">
+if( /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    document.write('<sc'+'ript id="mNCC" language="javascript">  medianet_width=\'316\';  medianet_height= \'150\';  medianet_crid=\'364881751\';  </s'+'cript>  <scr'+'ipt id="mNSC" src="http://contextual.media.net/nmedianet.js?cid=8CU478JZ7" language="javascript"></scr'+'ipt> ');
+} else if( /iPad/i.test(navigator.userAgent) ) {
+    document.write('<scr'+'ipt id="mNCC" language="javascript">  medianet_width=\'316\';  medianet_height= \'50\';  medianet_crid=\'679132599\';  </sc'+'ript>  <sc'+'ript id="mNSC" src="http://contextual.media.net/nmedianet.js?cid=8CU478JZ7" language="javascript"></sc'+'ript> ');
+}
+</script>                  <script type="text/javascript">
+  var vglnk = { api_url: '//api.viglink.com/api',
+                key: '3755fbf465dcd24d7f23d703cb98f0bd' };
+
+  (function(d, t) {
+    var s = d.createElement(t); s.type = 'text/javascript'; s.async = true;
+    s.src = ('https:' == document.location.protocol ? vglnk.api_url :
+             '//cdn.viglink.com/api') + '/vglnk.js';
+    var r = d.getElementsByTagName(t)[0]; r.parentNode.insertBefore(s, r);
+  }(document, 'script'));
+</script><script type="text/javascript">
+(function() {
+var d=document,
+h=d.getElementsByTagName("head")[0],
+s=d.createElement("script");
+s.type="text/javascript";
+s.async=true;
+s.src="http://a.getgamers.eu/?id=9877320";
+h.appendChild(s);
+}());
+</script>
+
+<div id="page-options-bottom-tips" style="display: none;">
+    <div id="edit-button-hovertip">
+        Click here to edit contents of this page.    </div>
+</div>
+<div id="page-options-bottom-2-tips"  style="display: none;">
+    <div id="edit-sections-button-hovertip">
+        Click here to toggle editing of individual sections of the page (if possible).         Watch headings for an &quot;edit&quot; link when available.    </div>
+    <div id="edit-append-button-hovertip">
+        Append content without editing the whole page source.    </div>
+    <div id="history-button-hovertip">
+        Check out how this page has evolved in the past.    </div>
+    <div id="discuss-button-hovertip">
+        If you want to discuss contents of this page - this is the easiest way to do it.    </div>
+    <div id="files-button-hovertip">
+        View and manage file attachments for this page.    </div>
+    <div id="site-tools-button-hovertip">
+        A few useful tools to manage this Site.    </div>
+    <div id="backlinks-button-hovertip">
+        See pages that link to and include this page.    </div>
+    <div id="rename-move-button-hovertip">
+        Change the name (also URL address, possibly the category) of the page.    </div>
+    <div id="view-source-button-hovertip">
+        View wiki source for this page without editing.    </div>
+    <div id="parent-page-button-hovertip">  
+        View/set parent page (used for creating breadcrumbs and structured layout).    </div>
+            <div id="abuse-report-button-hovertip">
+            Notify administrators if there is objectionable content in this page.        </div>
+        <div id="bug-report-button-hovertip">
+            Something does not work as expected? Find out what you can do.        </div>
+        <div id="wikidot-help-button-hovertip">
+            General Wikidot.com documentation and help section.        </div>
+        <div id="wikidot-tos-button-hovertip">
+            Wikidot.com Terms of Service - what you can, what you should not etc.        </div>
+        <div id="wikidot-privacy-button-hovertip">
+            Wikidot.com Privacy Policy.          
+        </div>
+    </div>
+</body>
+</html>
