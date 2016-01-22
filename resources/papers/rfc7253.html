@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html>
+    <link rel="profile" href="http://gmpg.org/xfn/11" />
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />        <title>Information on RFC 7253 &raquo; RFC Editor</title> 
+        <meta name="generator" content="WordPress 4.4" /> <!-- leave this for stats -->
+        <link rel="stylesheet" type="text/css" media="screen" href="http://www.rfc-editor.org/wp-content/themes/techozoic-fluid/style.css" />
+                <!--[if IE]>
+                <style type="text/css">
+                #headerimg{ filter:alpha(opacity=80);}
+                .top img{ filter:alpha(opacity=60);}
+                .top img:hover{ filter:alpha(opacity=100);}
+                ul.comment-preview li{ filter:alpha(opacity=70);}
+                ul.comment-preview li:hover{ filter:alpha(opacity=100);}
+                #commentform input[type="text"],#commentform .comment-form-author .required, 
+                #commentform .comment-form-email .required{padding-left: 65px !important;}
+                .top a {position: relative;top: 2px;}
+                </style>
+        <![endif]-->
+        <!--[if IE 7]>
+                <style type="text/css">
+                #headerimgwrap{ position:absolute;left:20%}
+                .hleft{position:absolute;}
+                .hright{position:absolute; right:0;}
+                .top:hover {bottom: -30px;}
+                </style>
+        <![endif]-->
+        <!--[if IE 8 ]>
+                <style type="text/css">
+                .top:hover {bottom: -30px;}
+                </style>
+        <![endif]-->
+        <link rel="pingback" href="http://www.rfc-editor.org/xmlrpc.php" />
+        <link rel="alternate" type="application/rss+xml" title="RFC Editor &raquo; Feed" href="https://www.rfc-editor.org/feed/" />
+<link rel="alternate" type="application/rss+xml" title="RFC Editor &raquo; Comments Feed" href="https://www.rfc-editor.org/comments/feed/" />
+		<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"http:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/www.rfc-editor.org\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.4"}};
+			!function(a,b,c){function d(a){var c=b.createElement("canvas"),d=c.getContext&&c.getContext("2d");return d&&d.fillText?(d.textBaseline="top",d.font="600 32px Arial","flag"===a?(d.fillText(String.fromCharCode(55356,56806,55356,56826),0,0),c.toDataURL().length>3e3):("simple"===a?d.fillText(String.fromCharCode(55357,56835),0,0):d.fillText(String.fromCharCode(55356,57135),0,0),0!==d.getImageData(16,16,1,1).data[0])):!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g;c.supports={simple:d("simple"),flag:d("flag"),unicode8:d("unicode8")},c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.simple&&c.supports.flag&&c.supports.unicode8||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel='stylesheet' id='mbpro-font-awesome-css'  href='http://www.rfc-editor.org/wp-content/plugins/maxbuttons/assets/libraries/font-awesome/css/font-awesome.min.css?ver=4.4' type='text/css' media='all' />
+<link rel='stylesheet' id='tech-mobile-css'  href='http://www.rfc-editor.org/wp-content/themes/techozoic-fluid/css/mobile.css?ver=0.1' type='text/css' media='all' />
+<link rel='stylesheet' id='google_fonts-css'  href='https://fonts.googleapis.com/css?family=Noto+Sans%7C&#038;ver=4.4' type='text/css' media='screen' />
+<script type='text/javascript' src='http://www.rfc-editor.org/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
+<script type='text/javascript' src='http://www.rfc-editor.org/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript'>
+/* <![CDATA[ */
+var mb_ajax = {"ajaxurl":"https:\/\/www.rfc-editor.org\/wp-admin\/admin-ajax.php"};
+/* ]]> */
+</script>
+<script type='text/javascript' src='http://www.rfc-editor.org/wp-content/plugins/maxbuttons/js/front.js?ver=1'></script>
+<script type='text/javascript' src='http://www.rfc-editor.org/wp-content/plugins/responsive-menu/public/js/touch.js?ver=4.4'></script>
+<link rel='https://api.w.org/' href='https://www.rfc-editor.org/wp-json/' />
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://www.rfc-editor.org/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://www.rfc-editor.org/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 4.4" />
+<style>#responsive-menu .appendLink, #responsive-menu .responsive-menu li a, #responsive-menu #responsive-menu-title a,#responsive-menu .responsive-menu, #responsive-menu div, #responsive-menu .responsive-menu li, #responsive-menu{box-sizing: content-box !important;-moz-box-sizing: content-box !important;-webkit-box-sizing: content-box !important;-o-box-sizing: content-box !important}.RMPushOpen{width: 100% !important;overflow-x: hidden !important;height: 100% !important}.RMPushSlide{position: relative;left: 75%}#responsive-menu{position: absolute;width: 75%;left: -75%;top: 0px;background: #43494C;z-index: 9999;box-shadow: 0px 1px 8px #333333;font-size: 13px !important;max-width: 999px;display: none}#responsive-menu.admin-bar-showing{padding-top: 32px}#click-menu.admin-bar-showing{margin-top: 32px}#responsive-menu #rm-additional-content{padding: 10px 5% !important;width: 90% !important;color: #FFFFFF}#responsive-menu .appendLink{right: 0px !important;position: absolute !important;border: 1px solid #3C3C3 !important;padding: 12px 10px !important;color: #FFFFFF !important;background: #43494C !important;height: 20px !important;line-height: 20px !important;border-right: 0px !important}#responsive-menu .appendLink:hover{cursor: pointer;background: #3C3C3C !important;color: #FFFFFF !important}#responsive-menu .responsive-menu, #responsive-menu div, #responsive-menu .responsive-menu li,#responsive-menu{text-align: left !important}#responsive-menu .RMImage{vertical-align: middle;margin-right: 10px;display: inline-block}#responsive-menu.RMOpened{}#responsive-menu,#responsive-menu input{}#responsive-menu #responsive-menu-title{width: 95% !important;font-size: 14px !important;padding: 20px 0px 20px 5% !important;margin-left: 0px !important;background: #43494C !important;white-space: nowrap !important}#responsive-menu #responsive-menu-title,#responsive-menu #responsive-menu-title a{color: #FFFFFF !important;text-decoration: none !important;overflow: hidden !important}#responsive-menu #responsive-menu-title a:hover{color: #FFFFFF !important;text-decoration: none !important}#responsive-menu .appendLink,#responsive-menu .responsive-menu li a,#responsive-menu #responsive-menu-title a{transition: 1s all;-webkit-transition: 1s all;-moz-transition: 1s all;-o-transition: 1s all}#responsive-menu .responsive-menu{width: 100% !important;list-style-type: none !important;margin: 0px !important}#responsive-menu .responsive-menu li.current-menu-item > a,#responsive-menu .responsive-menu li.current-menu-item > .appendLink,#responsive-menu .responsive-menu li.current_page_item > a,#responsive-menu .responsive-menu li.current_page_item > .appendLink{background: #43494C !important;color: #FFFFFF !important}#responsive-menu .responsive-menu li.current-menu-item > a:hover,#responsive-menu .responsive-menu li.current-menu-item > .appendLink:hover,#responsive-menu .responsive-menu li.current_page_item > a:hover,#responsive-menu .responsive-menu li.current_page_item > .appendLink:hover{background: #43494C !important;color: #FFFFFF !important}#responsive-menu.responsive-menu ul{margin-left: 0px !important}#responsive-menu .responsive-menu li{list-style-type: none !important;position: relative !important}#responsive-menu .responsive-menu ul li:last-child{padding-bottom: 0px !important}#responsive-menu .responsive-menu li a{padding: 12px 0px 12px 5% !important;width: 95% !important;display: block !important;height: 20px !important;line-height: 20px !important;overflow: hidden !important;white-space: nowrap !important;color: #FFFFFF !important;border-top: 1px solid #3C3C3 !important;text-decoration: none !important}#click-menu{text-align: center;cursor: pointer;font-size: 13px !important;display: none;position: absolute;right: 2%;top: 20px;color: #FFFFFF;background: #000000;padding: 5px;z-index: 9999}#responsive-menu #responsiveSearch{display: block !important;width: 95% !important;padding-left: 5% !important;border-top: 1px solid #3C3C3 !important;clear: both !important;padding-top: 10px !important;padding-bottom: 10px !important;height: 40px !important;line-height: 40px !important}#responsive-menu #responsiveSearchSubmit{display: none !important}#responsive-menu #responsiveSearchInput{width: 91% !important;padding: 5px 0px 5px 3% !important;-webkit-appearance: none !important;border-radius: 2px !important;border: 1px solid #3C3C3 !important}#responsive-menu .responsive-menu,#responsive-menu div,#responsive-menu .responsive-menu li{width: 100% !important;margin-left: 0px !important;padding-left: 0px !important}#responsive-menu .responsive-menu li li a{padding-left: 10% !important;width: 90% !important;overflow: hidden !important}#responsive-menu .responsive-menu li li li a{padding-left: 15% !important;width: 85% !important;overflow: hidden !important}#responsive-menu .responsive-menu li li li li a{padding-left: 20% !important;width: 80% !important;overflow: hidden !important}#responsive-menu .responsive-menu li li li li li a{padding-left: 25% !important;width: 75% !important;overflow: hidden !important}#responsive-menu .responsive-menu li a:hover{background: #3C3C3C !important;color: #FFFFFF !important;list-style-type: none !important;text-decoration: none !important}#click-menu #RMX{display: none;font-size: 24px;line-height: 27px !important;height: 27px !important;color: #FFFFFF !important}#click-menu .threeLines{width: 33px !important;height: 27px !important;margin: auto !important}#click-menu .threeLines .line{height: 5px !important;margin-bottom: 6px !important;background: #FFFFFF !important;width: 100% !important}#click-menu .threeLines .line.last{margin-bottom: 0px !important}@media only screen and ( min-width : 0px ) and ( max-width : 800px ){#click-menu{display: block}#l_sidebar, .hright{display: none !important}}</style><script type="text/javascript">
+        jQuery(document).ready(function($){
+	/* toggle nav */
+	$("#menu-icon").on("click", function(){
+		$(".top-menu").slideToggle();
+		$(this).toggleClass("active");
+	});
+
+        });
+        </script>
+<style type="text/css">/*Variable Styles*/
+#page{ 
+background:#FFFFFF url() repeat top center scroll;
+}
+body{
+font:normal 14px/1.3em Noto Sans, Sans-Serif;
+background:#FFFFFF url() repeat top center scroll;
+}
+.techozoic_font_size{
+font-size: 14px;
+}
+.narrowcolumn .entry,.widecolumn .entry, .top {
+font:normal 14px/1.5em Noto Sans, Sans-Serif;
+color: #2C4353;
+}
+.noclass,.home .narrowcolumn .entry, home .widecolumn .entry, .top,.post .singlepost,.archive .narrowcolumn .entry, .archive .widecolumn .entry, .top{
+background-color:#E3E3E3;
+border-top:1px #A0B3C2 solid;
+}
+.top{
+border:none;
+}
+.blog_title, .blog_title a, .blog_title a:hover, .blog_title a:visited{
+font:normal 40px/1.3em Courier, Sans-Serif;
+color:  	#000000;
+}
+h1.post_title{
+font:bold 30px/1.4em Noto Sans, Sans-Serif;
+color:#2C4353 !important;
+}
+.post_title a{
+font:bold 30px/1.4em Noto Sans, Sans-Serif;
+color:#2C4353 !important;
+}
+.entry h1{
+font:bold 3em/2.2em Noto Sans, Sans-Serif;
+color: #2C4353 !important;
+}
+.entry h2{
+font:bold 2em/2em Noto Sans, Sans-Serif;
+color: #2C4353 !important;
+}
+.entry h3{
+font:bold 1.4em/1.6em Noto Sans, Sans-Serif;
+color: #2C4353 !important;
+}
+.entry h4{
+font:bold 1.3em/1.4em Noto Sans, Sans-Serif;
+color: #2C4353 !important;
+}
+.entry h5{
+font:bold 1.2em/1.3em Noto Sans, Sans-Serif;
+color: #2C4353 !important;
+}
+.sidebar h2, .sidebar h3, #footer h2{
+font: bold 18px/1.3em Noto Sans, Sans-Serif;
+color:#2C4353;
+}
+.widgettitle {
+font-size: 18px;
+margin: 1px 0;
+}
+#content {
+font-size: 14px;
+}
+acronym,abbr,span.caps,small,.trackback li,.sidebar, .postmetadata {
+font-size: 12px;
+}
+.postmetadata{
+font: normal 12px/1.3em Noto Sans, Sans-Serif;
+color: #777777;
+}
+ul#nav a, ul#admin a, #dropdown li.current_page_item a:hover, .top-menu li.current-menu-item a:hover, #dropdown li.current_page_item ul a, .top-menu li.current-menu-item ul a, ul#nav li.current_page_item a:hover, {
+color: #A0B3C2;
+}
+.commenlist .author,#searchform #s, #searchsubmit:hover,#catsubmit:hover,#wp-submit:hover,#TB_ajaxContent {
+background-color: #A0B3C2 ;
+}
+ul#admin li, ul#dropdown li, #navmenu .top-menu li{
+/*background-color: #E3E3E3;*/
+}
+ul#admin li a, ul#dropdown li a, #navmenu .top-menu li a{
+font-style: bold; 
+font-size:14px;
+font-family: Noto Sans, Sans-Serif;
+color:#A0B3C2;
+}
+ul#admin li a:hover, ul#dropdown li a:hover, #navmenu .top-menu li a:hover{
+color: #A0B3C2;
+}
+#dropdown > li, ul.top-menu > li{
+margin: 0 3px;
+}
+.ribbon ul.top-menu > li, .square ul.top-menu > li, #dropdown > li{
+margin: 0;
+padding: 0 3px;
+}
+.ribbon ul.top-menu > li.has_children:hover:after, .square ul.top-menu > li.has_children:hover:after, #dropdown > li.has_children:hover:after {
+border-bottom: 5px solid #E3E3E3;
+}
+#dropdown ul, .top-menu ul{
+background-color: #E3E3E3;
+}
+.ribbon, .square, #dropdown{
+background-color: #E3E3E3;
+background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#E3E3E3), to(#CCCCCC));
+background-image: -webkit-linear-gradient(top, #E3E3E3, #CCCCCC);
+background-image:    -moz-linear-gradient(top, #E3E3E3, #CCCCCC);
+background-image:     -ms-linear-gradient(top, #E3E3E3, #CCCCCC);
+background-image:      -o-linear-gradient(top, #E3E3E3, #CCCCCC);
+background-image:         linear-gradient(top, #E3E3E3, #CCCCCC);
+filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#E3E3E3', endColorstr='#CCCCCC');
+}
+.ribbon ul.top-menu:before{
+border-right: 10px solid #CCCCCC;
+}
+.ribbon ul.top-menu:after{
+border-left: 10px solid #CCCCCC;
+}.ribbon ul.top-menu > li:last-child, .square ul.top-menu > li:last-child, #dropdown > li:last-child{
+margin-right: 100px;
+}#navmenu .top-menu li, #navmenu .top-menu ul.sub-menu, ul#admin li, #navmenu #dropdown li{
+background-color: #E3E3E3;
+}       
+#navmenu #dropdown li.current_page_item, #navmenu .top-menu li.current-menu-item, #navmenu .top-menu ul.sub-menu li.current-menu-item {
+background-color: #A0B3C2 ;
+}
+#navmenu #dropdown li:hover, #navmenu .top-menu li:hover, #navmenu .top-menu ul.sub-menu > li:hover {
+background-color:#EFEFEF;
+}
+#navmenu #dropdown li.current_page_item > a:hover, #navmenu .top-menu li.current-menu-item > a:hover, #navmenu .top-menu li.current-menu-item:hover > a, #navmenu .top-menu li:hover > a, #navmenu #dropdown li:hover > a {
+color:#A0B3C2;
+}
+#navmenu #dropdown li.current_page_item > a, #navmenu .top-menu li.current-menu-item > a{
+color:#F7F7F7;
+}
+ul#admin li:hover{
+background:#EFEFEF;
+box-shadow:2px 1px 3px rgba(0, 0, 0, 0.3);
+-moz-box-shadow:2px 1px 3px rgba(0, 0, 0, 0.3);
+-webkit-box-shadow:2px 1px 3px rgba(0, 0, 0, 0.3);
+}#dropdown li ul li, .top-menu li ul li, #dropdown li ul , .top-menu li ul{
+width: 250px !important;
+}
+#dropdown li ul ul, .top-menu li ul ul{
+left:250px ; 
+}
+.tags {
+border-bottom:1px #A0B3C2 solid;
+border-top:1px #A0B3C2 solid;
+}
+a,h2 a:hover,h3 a:hover,#user_login,#user_pass, #sidenav a:visited {
+color:#597EAA; 
+text-decoration:none;
+}
+#searchform #s {
+color:#E3E3E3; 
+text-decoration:none;
+}
+a:hover {
+color:#114477; 
+text-decoration:underline;
+}
+a:visited{
+color:#476588;
+}
+.description {
+color:#A0B3C2;
+}
+#headerimg {
+;
+float:left;margin-left:10px;
+}
+#header-logo{
+float:left;margin-left:10px;
+padding-top:0px;
+padding-left:0px;
+}
+.single .blog_title a:hover {
+cursor:default;
+text-decoration:none;
+}
+.noclass{
+-moz-box-shadow:none !important;
+box-shadow:none !important;
+-webkit-box-shadow: none !important;
+opacity:1 !important;
+border: none !important;
+}#headerimgwrap{
+top:20%;
+}  #page {
+width: 90%;
+}
+.narrowcolumn {
+float:left;
+margin:0;
+padding:25px 3% 20px 2%;
+width:75%;
+}
+#l_sidebar {
+float:left;
+padding:25px 1% 0 2%;
+width:17%
+}#dropdown, .top-menu{
+text-align:left;
+}#header {
+background-repeat: no-repeat;  
+background-position: center center;
+height: 110px;
+}
+.hleft, .hright {
+height: 70px;
+}table.statictable {
+        font-family: verdana,arial,sans-serif;
+        font-size:12px;
+        color:#333333;
+        border-width: 1px;
+        border-color: #666666;
+        border-collapse: collapse;
+      
+}
+table.statictable th {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-left: 1em;
+        border-right: 1em;
+        border-color: #D2D2D2;
+        background-color: #CACACA;
+}
+table.statictable td {
+        border-width: 1px;
+        padding: 8px;
+        border-style:solid;
+        border-left: 1em;
+        border-right: 1em;
+        border-color: #D2D2D2;
+      
+}
+
+
+
+table.statictable tr{
+        background-color: #F6F6F6;
+}
+
+table.statictable td.special {
+          font-weight: bold;
+          color:grey
+}
+table.statictable td.title {
+         font-weight: bold;
+         letter-spacing: inherit
+}
+
+table.dynamictable {
+        font-family: verdana,arial,sans-serif;
+        font-size:12px;
+        color:#333333;
+        border-width: 1px;
+        border-color: #666666;
+        border-collapse: collapse;
+      
+}
+table.dynamictable th {
+        border-width: 1px;
+        padding: 8px;
+        border-style: solid;
+        border-left: 1em;
+        border-right: 1em;
+        border-color: #D2D2D2;
+        background-color: #FEFEFEFE;
+}
+table.dynamictable td {
+        border-width: 1px;
+        padding: 8px;
+        border-style:solid;
+        border-left: 1em;
+        border-right: 1em;
+        border-color: #D2D2D2;
+      
+}
+
+table.dynamictable tr.even{
+        background-color: #ffffff;
+}
+table.dynamictable tr.odd{
+        background-color: #F6F6F6;
+}
+table.erratasearch {
+        font-family: verdana,arial,sans-serif;
+        font-size:12px;
+        color:#333333;
+        border-color: #666666;
+        border-collapse: collapse;
+        text-align:center;
+}
+table.erratasearch th {
+        border-width: 1px;
+        padding: 8px;
+        
+        text-decoration: underline;
+        border-color: #666666;
+        //background-color: #ffffff;
+        background-color: silver;
+}
+
+table.erratasearch td {
+        border-width: 1px;
+        padding: 8px;
+        border-color: #666666;
+        background-color: #ffffff;
+        text-align:left;
+}
+table.erratasearch td.sbar { 
+          background-color: silver;
+          text-align: center;
+        }
+
+
+.nosidebar{
+    float:left;
+    margin:0 10%;
+    padding:0 0 10px;
+    width:70%;
+}
+
+input[type="button"], .button, div#infinite-handle span {
+    display: inline-block;
+    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+    *display: inline;
+    vertical-align: baseline;
+    margin: 0 2px;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    padding: .3em 1em .35em;
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+    -webkit-border-radius: .25em; 
+    -moz-border-radius: .25em;
+    border-radius: .25em;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    color: #505050;
+    border: solid 1px #b7b7b7;
+    background: #fff;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ededed));
+    background: -moz-linear-gradient(top,  #fff,  #ededed);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#ededed');
+}
+input[type="button"]:hover, .button:hover, div#infinite-handle span:hover {
+    text-decoration: none;
+    background: #ededed;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#dcdcdc));
+    background: -moz-linear-gradient(top,  #fff,  #dcdcdc);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#dcdcdc');
+}
+input[type="button"]:active, .button:active, div#infinite-handle span: active {
+    position: relative;
+    top: 1px;
+    color: #999;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ededed), to(#fff));
+    background: -moz-linear-gradient(top,  #ededed,  #fff);
+    filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#ffffff');
+}
+
+.search_label_bold { text-align: left;
+                     border-style: none;
+                     font-weight: bold;
+                   }
+
+.error { font-weight: bold; color: red; }
+
+textarea {
+   font-family: inherit;
+   font-size: inherit;
+}
+/*DIV to hold scroll tables*/
+.scrolltable{
+   width:95%
+
+}
+
+/*--------------------------------------------------------------------------------
+----------------------------RFCMETA PAGE  Styles---------------------------------------
+-------------------------------------------------------------------------------*/
+ body.rfcmeta {
+font-family: 'Noto Sans', sans-serif;
+color: #2C4353;
+width: 100%;}
+
+ body.rfcmeta #page {
+width: 100%;
+box-shadow:none;
+margin-top: 0px;}
+
+ body.rfcmeta .hright { height:120px;}
+
+ body.rfcmeta #header {width: 100%;
+ background-color: #fff;
+ box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        margin-bottom: 0px;;}
+
+ body.rfcmeta .singlepost.entry {padding-top: 0px!important;}
+ body.rfcmeta .singlepost.entry dl,  body.rfcmeta .singlepost.entry p, body.rfcmeta .singlepost.entry h2, body.rfcmeta .singlepost.entry h3 { margin-left:40px;
+ margin-right: 20px; }
+
+ body.rfcmeta .singlepost.entry dt{
+         font-weight: bold!important;
+         margin-top: 15px;}
+
+          body.rfcmeta .singlepost.entry dd{
+         margin-left: 15px;}
+
+ body.rfcmeta a{
+color: #597eaa;}
+  body.rfcmeta .entryheader {background-color:#2C4353 !important;
+  border-bottom: 10px solid #FFF !important;
+  margin-top: 0px;
+  padding-top: 20px !important;
+  padding-bottom: 20px !important;}
+
+   body.rfcmeta .entryheader h2 a, body.rfcmeta .entryheader h2 {color: #fff  !important;
+   font-size: 50px;
+   padding: 0px !important;
+   line-height: 1.2;
+   font:bold !important;}
+
+   body.rfcmeta .entryheader h2 a:hover {color: #aob3c2 !important;}
+
+   body.rfcmeta .entryheader h3 {color: #fff  !important;
+   font-size: 18px;
+   padding: 0px;
+   line-height: 1.2;
+   padding-top: 10px;
+   }
+
+      body.rfcmeta .entryheader h3 span {font-weight: normal;
+          font-size: 14px;
+          text-transform: uppercase;}
+    h2 {font-weight: bold;}
+
+ body.rfcmeta   #search_query_separator_id  {padding-bottom: 5px;
+ padding-top: 5px;}
+
+ body.rfcmeta .page {margin-top: 0px!important;
+ padding-top: 0px!important;}
+
+    /*--------------------------------------------------------------------------------
+----------------------------end RFCMETA PAGE Styles---------------------------------------
+-------------------------------------------------------------------------------*/
+
+.cluster_heading {
+ font-size: 14px;
+}
+</style>    <style type="text/css">
+        #header {
+            background-image: url();
+        }
+    </style>
+    <meta name="citation_title" content="The OCB Authenticated-Encryption Algorithm">
+		     <meta name="citation_author" content="T. Krovetz"><meta name="citation_author" content="P. Rogaway">
+                     <meta name="citation_publication_date" content="2014">
+                     <meta name="citation_issn" content="2070-1721">
+                     <meta name="citation_pdf_url" content="https://www.rfc-editor.org/rfc/pdfrfc/rfc7253.txt.pdf">
+		     <meta name="citation_technical_report_number" content="RFC 7253">    </head>
+    <body class="rfcmeta">
+        <a id="top"></a>
+        <div id="page">
+                
+            <div id="header">
+                <div class="hright">
+<div class="hwidget widget_text"><h2 class="widgettitle">Search RFCs</h2>			<div class="textwidget"><form id="search_query_separator_id" name="search_query_separator_name"  action="/search/rfc_search_detail.php" method="POST" onsubmit="return validateComboBox(this);"> 
+<input type="text" id ="combo_box_id" name="combo_box"  maxlength="40" size ="35" placeholder="number, title, keyword, or author surname"></form>
+<a href="/search/rfc_search.php">Advanced Search</a>
+</div>
+		</div></div>
+      
+                <div id="headerimgwrap">
+                      
+                    <div id="headerimg">
+                        <h1 class="blog_title">                            <a href="https://www.rfc-editor.org/">RFC Editor</a>
+                            </h1>                    </div><!--end headerimg-->
+                </div><!--end headerimgwrap-->
+
+
+            </div><!--end header-->
+
+             <div id="content" class="nosidebar">
+     <h1 class="post_title"></h1>
+
+     <div class="post-127 page type-page status-publish hentry post clear" id="post-127">
+     <div class="singlepost entry">
+<div class="entryheader"><h2><a href="https://www.rfc-editor.org/rfc/rfc7253.txt">RFC 7253</a></h2>
+<h3>The OCB Authenticated-Encryption Algorithm, <span>May 2014</span></h3>
+</div><dl>
+  <dt><b>Canonical URL:</b><dd><a href="https://www.rfc-editor.org/rfc/rfc7253.txt">https://www.rfc-editor.org/rfc/rfc7253.txt</a></dd>
+  <dt><b>File formats:</b><dd><a href=https://www.rfc-editor.org/rfc/rfc7253.txt><img src="/rfcscripts/images/PLAIN_TEXT.png" alt="Plain Text"></a><a href=https://www.rfc-editor.org/rfc/pdfrfc/rfc7253.txt.pdf><img src="/rfcscripts/images/PDF_ICON.png" alt="PDF"></a></dd>
+  <dt><b>Status:</b><dd>INFORMATIONAL</dd>
+  <dt><b>Authors:</b><dd>T. Krovetz<br />P. Rogaway</dd>
+  <dt><b>Stream:</b><dd><a href="http://www.irtf.org/">IRTF</a></dd>
+</dl>
+<p>
+<b>Cite this RFC</b>: 
+<a href="/refs/ref7253.txt">TXT</a> &nbsp;|</b>&nbsp;
+<a href="/refs/bibxml/reference.RFC.7253.xml">XML</a>
+</p><p>
+<b>DOI</b>: &nbsp;<a href="http://dx.doi.org/10.17487/RFC7253">http://dx.doi.org/10.17487/RFC7253</a>
+</p><p>
+<b>Other actions</b>: 
+<a href="/errata_search.php?rfc=7253">Find Errata (if any)</a> &nbsp;|</b>&nbsp; 
+<a href="/errata.php#reportnew">Submit Errata</a> &nbsp;|</b>&nbsp;
+<a href="https://datatracker.ietf.org/ipr/search/?draft=&rfc=7253&submit=rfc">
+Find IPR Disclosures from the IETF</a>
+</p>
+<hr/>
+<h2>Abstract</h2>
+<p>This document specifies OCB, a shared-key blockcipher-based
+encryption scheme that provides confidentiality and authenticity for
+plaintexts and authenticity for associated data.  This document is a
+product of the Crypto Forum Research Group (CFRG).</p>  <hr>
+<p>
+For the definition of <b>Status</b>,
+see <a href="/info/rfc2026">RFC 2026</a>.
+</p><p>
+For the definition of <b>Stream</b>, see <a href="/info/rfc4844">RFC 4844</a>.
+</p>
+<hr>
+<p><a href="//get.adobe.com/reader/">Download PDF Reader</a></p>    </div>
+  </div>
+</div>
+<br><br><div id="footer">
+    <div id="footerdivs">
+            </div>
+    <div style="clear:both"></div>
+    <p class="credit">
+        <a href="//www.iab.org/">IAB</a> • <a href="//www.iana.org/">IANA</a>  • <a href="//www.ietf.org">IETF</a> • <a href="//www.irtf.org">IRTF</a> • <a href="/about/independent">ISE</a> • <a href="//www.internetsociety.org">ISOC</a>
+<br>
+<a href="/report-summary">Reports</a> • <a href="/sitemap">Site Map</a> • <a href="/contact">Contact Us</a>    </p>
+    
+</div><!--footer-->
+</div><!--page-->
+<!-- Added by Responsive Menu Plugin for WordPress - http://responsive.menu -->
+
+<div id="responsive-menu" >
+
+    <div class="menu-responsive-menu-container"><ul id="menu-responsive-menu" class="responsive-menu"><li id="menu-item-632" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-632"><a href="https://www.rfc-editor.org/retrieve/">Document Retrieval</a></li><li id="menu-item-633" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-633"><a href="/errata.php">Errata</a></li><li id="menu-item-634" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-634"><a href="https://www.rfc-editor.org/faq/">Frequently Asked Questions</a></li><li id="menu-item-636" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-636"><a href="https://www.rfc-editor.org/rse/format-faq/">Future Format FAQ</a></li><li id="menu-item-637" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-637"><a href="https://www.rfc-editor.org/history/">History</a></li><li id="menu-item-638" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-638"><a href="https://www.rfc-editor.org/about/">About Us</a></li><li id="menu-item-639" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-639"><a href="https://www.rfc-editor.org/other/">Other Information</a></li><li id="menu-item-640" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-640"><a href="https://www.rfc-editor.org/pubprocess/">Publication Process</a></li><li id="menu-item-641" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-641"><a href="/current_queue.php">Publication Queue</a></li><li id="menu-item-642" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-642"><a href="https://www.rfc-editor.org/styleguide/">Style Guide</a></li></ul></div>        
+        <div id="rm-additional-content">
+            Search RFCs<form id="search_query_separator" name="search_query_separator"  action="/search/rfc_search_detail.php" method="POST" onsubmit="return validateComboBox(this);"> 
+<input type="text" id ="combo_box" name="combo_box"  maxlength="40" placeholder="number, title,...">
+</form>
+<a href="/search/rfc_search.php" style="color:white">Advanced Search</a>        </div>
+                                      
+        
+</div><!-- Added by Responsive Menu Plugin for WordPress - http://responsive.menu -->
+
+<div id="click-menu" 
+     class=" 
+     overlay"
+     role="button" 
+     aria-label="Responsive Menu Button"
+     >
+
+
+        
+        <div class="threeLines" id="RMX">×</div>
+    
+    
+
+
+    <div class="threeLines" id="RM3Lines">       
+        <div class="line"></div>
+        <div class="line"></div>
+        <div class="line"></div>
+    </div>
+
+
+
+</div><script>var $RMjQuery = jQuery.noConflict();$RMjQuery( document ).ready( function(){$RMjQuery( document ).bind( 'vclick', function( e ){if( e.which != 2 && !$RMjQuery( e.target ).closest( '#responsive-menu, #click-menu' ).length ){closeRM()}});var isOpen = false;$RMjQuery( document ).on( 'click', '#click-menu', function(){$RMjQuery( '#responsive-menu' ).css( 'height', $RMjQuery( document ).height() );!isOpen ? openRM() : closeRM()});function openRM(){$RMjQuery( '#click-menu #RM3Lines' ).css( 'display', 'none' );$RMjQuery( '#click-menu #RMX' ).css( 'display', 'block' );$RMjQuery( '#responsive-menu' ).css( 'display', 'block' );$RMjQuery( '#responsive-menu' ).addClass( 'RMOpened' );$RMjQuery( '#click-menu' ).addClass( 'click-menu-active' );$RMjQuery( '#responsive-menu' ).stop().animate({left: "0"}, 500, 'linear', function(){$RMjQuery( '#responsive-menu' ).css( 'height', $RMjQuery( document ).height() );isOpen = true})}function closeRM(){$RMjQuery( '#responsive-menu' ).animate({left: -$RMjQuery( '#responsive-menu' ).width()}, 500, 'linear', function(){$RMjQuery( '#click-menu #RMX' ).css( 'display', 'none' );$RMjQuery( '#click-menu #RM3Lines' ).css( 'display', 'block' );$RMjQuery( '#responsive-menu' ).css( 'display', 'none' );$RMjQuery( '#responsive-menu' ).removeClass( 'RMOpened' );$RMjQuery( '#click-menu' ).removeClass( 'click-menu-active' );isOpen = false})}$RMjQuery( window ).resize( function(){$RMjQuery( '#responsive-menu' ).stop( true, true );$RMjQuery( '#responsive-menu' ).css( 'height', $RMjQuery( document ).height() );if( $RMjQuery( window ).width() > 800 ){if( $RMjQuery( '#responsive-menu' ).css( 'left' ) != -$RMjQuery( '#responsive-menu' ).width() ){closeRM()}}});var clickLink = '<span class=\"appendLink rm-append-inactive\">▼</span>';var clickedLink = '<span class=\"appendLink rm-append-inactive\">▼</span>';$RMjQuery( '#responsive-menu .responsive-menu li' ).each( function(){if( $RMjQuery( this ).children( 'ul' ).length > 0 ){if( $RMjQuery( this ).find( '> ul' ).css( 'display' ) == 'none' ){$RMjQuery( this ).prepend( clickLink )}else{$RMjQuery( this ).prepend( clickedLink )}}});$RMjQuery( '.appendLink' ).on( 'click', function(){$RMjQuery( this ).nextAll( '#responsive-menu ul ul' ).slideToggle();$RMjQuery( this ).html( $RMjQuery( this ).hasClass( 'rm-append-active' ) ? '▼' : '▲' );$RMjQuery( this ).toggleClass( 'rm-append-active rm-append-inactive' );$RMjQuery( '#responsive-menu' ).css( 'height', $RMjQuery( document ).height() )});$RMjQuery( '.rm-click-disabled' ).on( 'click', function(){$RMjQuery( this ).nextAll( '#responsive-menu ul ul' ).slideToggle();$RMjQuery( this ).siblings( '.appendLink' ).html( $RMjQuery( this ).hasClass( 'rm-append-active' ) ? '▼' : '▲' );$RMjQuery( this ).toggleClass( 'rm-append-active rm-append-inactive' );$RMjQuery( '#responsive-menu' ).css( 'height', $RMjQuery( document ).height() )});$RMjQuery( '.rm-append-inactive' ).siblings( 'ul' ).css( 'display', 'none' );$RMjQuery( '#responsive-menu ul li a' ).on( 'click', function(){closeRM()})});</script><script type='text/javascript' src='http://www.rfc-editor.org/wp-includes/js/wp-embed.min.js?ver=4.4'></script>
+</body>
+</html>
