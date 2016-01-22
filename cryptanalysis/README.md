@@ -1,15 +1,5 @@
-attacks
+general cryptoanalysis attacks
 
-- timing/leakage
- + operator choice
- + data cache
- + instruction cache
- + branch prediction cache
-- secret-dependent dataflow
-- power consumption
-- RF emissions
-- electromagnetic emissions
-- fault induction (glitching)
 - chosen prefix collisions
 - oracle
 - nonce abuse and reuse [3: 18, 5: 38]
