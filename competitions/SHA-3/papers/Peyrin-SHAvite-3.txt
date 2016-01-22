@@ -1,0 +1,42 @@
+NIST mailing list, 19 January 2009
+----------------------------------
+
+Hi !
+
+I’ve found a chosen-salt, chosen-counter, pseudo-collision for the compression function of SHAvite-3. Note that this will not apply on the whole hash function, but it shows an unexpected property of the compression function.
+
+The goal is to exploit potential symmetries that one can get in an AES round: if all the bytes columns are equal, then by applying one AES round we still have this undesirable property. In the AES blockcipher, this is avoided thanks to the key schedule (the keys inserted will not be “symmetric”). However, in SHAvite-3, this is handled in the message expansion only. The message expansion takes as input the salt, the counter and the incoming message block, and outputs subkeys that will be used as AES subkeys during the computation. In a particular case, I can get all the subkeys equal to 0. If I choose:
+
+u64 counter = 0;
+u8 salt[32]={0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52,0x52};
+u8 message[64]={0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; 
+
+then all the subkeys will be equal to 0. One can see that using the null subkeys will maintain a state symmetry and I can now exploit the AES column symmetries to find a pseudo-collision on the compression function. I choose the following pair of chaining variables:
+
+u8 chaining_value[32]={0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4,0xd4};
+ 
+u8 chaining_value2[32]={0x2d,0x29,0x2d,0x29,0x2d,0x29,0x2d,0x29,0x2d,0x29,0x2d,0x29,0x2d,0x29,0x2d,0x29,0x2d,0x29,0x2d,0x29,0x2d,0x29,0x2d,0x29,0x2d,0x29,0x2d,0x29,0x2d,0x29,0x2d,0x29};
+ 
+and if I execute :
+
+ Compress256(message,chaining_value,counter,salt);
+ Compress256(message,chaining_value2,counter,salt);
+
+I get the two results equal to 0.
+
+ 
+
+Note that the counter equal to 0 only happens when one processes an entire padding block (which is different from 0). Thus, it is impossible to use this pseudo-collision for the whole hash function.
+
+This reasoning is independent of the number of rounds (for some reasons, as long as it is equal to 0 modulo 3). I don’t think there is a way to apply this to different counter or message value.
+
+
+Thomas.
+
+ 
+
+Thomas Peyrin
+Cryptography Expert
+Ingenico SA
+www.ingenico.com
+Tél: + 33 (0)1.41.44.67.44

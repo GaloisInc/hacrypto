@@ -1,0 +1,123 @@
+Jean-Philippe Aumasson, NIST mailing list 2010-09-09
+----------------------------------------------------
+
+This is to share an observation on the compression function of Shabal.
+
+Let "compress" be Shabal's compression function. The observation is
+that there exists a value of (A,B,C) and two distinct message blocks M
+and M' such that
+compress( A, B, C, M ) = ( A',  C-M, M  )
+compress( A, B, C, M') = ( A',  C-M', M' )
+where C-M et C-M' only differ on 1 bit in each word and where the
+first output block A' is identical for the two instances.
+
+More precisely: A_i=0xFFFFFFFF, B_i=0, C_i=0x55555551, M_i=0, and
+M'_i=0xFFFFFFFF for all word indices i.
+
+This property can be seen as a particular case of the fixed points
+previously found by Knudsen et al. in
+http://www.mat.dtu.dk/people/S.Thomsen/shabal/shabal.pdf
+
+Contrary to previous efficient distinguishers on Shabal's compression,
+here only the message block is modified, not the chaining value.
+
+According to the designers of Shabal, this distinguisher is captured
+by the recent "indifferentiability-with-distinguishers" results on
+Shabal (cf. second SHA-3 conference).
+
+Below is a C program to verify the observation:
+
+#include <stdio.h>
+#include <string.h>
+
+typedef unsigned int u32;
+
+void show( u32 * X, int len ) {
+ int i;
+ for(i=0;i<len;++i) {
+   printf("%08X ",X[i]);
+   if ( (i%8==7) || (i==len-1)) printf("\n");
+ }
+}
+
+void P( u32 * A, u32 * B, const u32 * C, const u32 * M ) {
+#define ROL(x,n) (((x)<<(n))|( (x)>>(32-(n))))
+#define U(x) (3*(x))
+#define V(x) (5*(x))
+ int i,j;
+
+ for(i=0; i<16; ++i)  B[i] = ROL( B[i], 17 );
+
+ for(j=0; j<3; ++j) {
+   for(i=0; i<16; ++i) {
+     A[(i+16*j)%12] ^= V( ROL( A[(i-1+12+16*j)%12], 15 ) ) ^ C[(8-i+16)%16];
+     A[(i+16*j)%12] = U(A[(i+16*j)%12]);
+     A[(i+16*j)%12] ^= B[(i+13)%16] ^ (B[(i+9)%16] & ~B[(i+6)%16] );
+     A[(i+16*j)%12] ^=  M[i];
+     B[i] = ROL( B[i], 1 ) ^ ~A[(i+16*j)%12];
+   }
+ }
+ for(i=0; i<36; ++i)  A[i%12] += C[(i+3)%16];
+}
+
+
+void compress( u32 * A, u32 * B,  u32 * C, const u32 * M ) {
+ int i;
+
+ for(i=0;i<16;++i) B[i] += M[i];
+
+ P( A,B,C,M );
+
+ for(i=0;i<16;++i) {
+   C[i] -= M[i];
+   B[i] ^= C[i];
+   C[i] ^= B[i];
+   B[i] ^= C[i];
+ }
+}
+
+
+int main() {
+ u32 A[12], B[16], C[16], M[16];
+ int i;
+
+ /* first instance */
+ memset( A, 0xFF, 48 );
+ memset( B, 0x00, 64 );
+ for(i=0;i<16;++i) C[i]=0x55555551;
+ memset( M, 0x00, 64 );
+
+ printf("\nfirst instance input (A,B,C,M)\n");
+ show( A, 12 );
+ show( B, 16 );
+ show( C, 16 );
+ show( M, 16 );
+
+ compress( A, B, C, M );
+
+ printf("\nfirst instance output (A,B,C)\n");
+ show( A, 12 );
+ show( B, 16 );
+ show( C, 16 );
+
+ /* second instance */
+ memset( A, 0xFF, 48 );
+ memset( B, 0x00, 64 );
+ for(i=0;i<16;++i) C[i]=0x55555551;
+ memset( M, 0xFF, 64 );
+
+ printf("\nsecond instance input (A,B,C,M)\n");
+ show( A, 12 );
+ show( B, 16 );
+ show( C, 16 );
+ show( M, 16 );
+
+ compress( A, B, C, M );
+
+ printf("\nsecond instance output (A,B,C)\n");
+ show( A, 12 );
+ show( B, 16 );
+ show( C, 16 );
+
+ return 0;
+}

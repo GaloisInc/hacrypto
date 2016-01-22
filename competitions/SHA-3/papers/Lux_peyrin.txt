@@ -1,0 +1,169 @@
+Thomas Peyrin, NIST mailing list 2008-12-17
+----------------------------------------------------
+
+
+Hi all,
+
+ 
+
+Here is a remark on the 256-bit version of LUX when a salt is used: by using slide attacks on hash functions (the general idea of the attack can be found here: http://thomas.peyrin.googlepages.com/Gorski-Lucks-Peyrin-Asiacrypt2008.pdf ), one can, without any computation (except for actually computing the outputs):
+
+ 
+
+1) differentiate the hash function from a random oracle
+
+2) generate two strongly related outputs
+
+ 
+
+This only works when the salt size is equal to 31 modulo 32. Thus, I fully agree that this observation is not really useful in practice, and I leave it up to you to judge if this is a real vulnerability. Note that the LUX designers already validated this analysis.
+
+ 
+
+ 
+
+For the interested readers, it works as follows:
+
+ 
+
+In LUX, two padding are used: the “10” padding and the length padding. In the case of 256-bit output, the length padding will fit in two message blocs and I denote them L1 and L2. Thus the padded message is
+
+ 
+
+M || 1 …0 || L1 || L2
+
+ 
+
+For now, we assume there is no “10” padding (we assume that the message length is always a multiple of the message block length). I will choose two messages M and M’:
+
+ 
+
+ 1st message with padding: M || L1 || L2
+
+2nd message with padding: M’ || L1’ || L2’
+
+ 
+
+I’ll force the condition that M’ = M || L1. Note that M’ is one message block bigger, so L1’ || L2’ = (L1 || L2) + 32 (4 times 8 bits per message block). Then, we have
+
+ 
+
+1st message with padding: M || L1 || L2
+
+2nd message with padding: M || L1 || L1’ || L2’
+
+ 
+
+Now, we add two more conditions: L2’ = 0 and L2 = L1’.  This is possible in the following case:
+
+ 
+
+L1 = 11111111 11111111 11111111 11011111
+
+L2 = 11111111 11111111 11111111 11100000
+
+ 
+
+L1’= 11111111 11111111 11111111 11100000
+
+L2’= 00000000 00000000 00000000 00000000
+
+ 
+
+Finally, we have:
+
+ 
+
+1st message with padding: M || L1 || L2
+
+2nd message with padding: M || L1 || L2 || 0
+
+ 
+
+One can see that exactly the same message blocks will be treated, except that for the second message M’ we have a “0” message block to add. This has the effect that the “0” block will behave as a blank round (in which no message is incorporated) and (M,M’) is a slid pair of message : their respective outputs are just one blank round away. That is, if the output for M is (H0,H1,H2,H3,H4,H5,H6,H7), then the output for M’ will be (H1,H2,H3,H4,H5,H6,H7,R)  where R is some random 32-bit value.
+
+ 
+
+To conclude, with no computation cost, one can differentiate the hash function from a random oracle or generate strongly correlated output pairs. Now, if I want to reintroduce the “01” padding and keep the attack working, I can use the salt: if the length of the salt is equal to 31 modulo 32, then I can adapt the attack to take care of the “10” padding. Note that the length padding only codes the real message length and don’t consider the salt length.
+
+ 
+
+ 
+
+Let’s say that we have a salt S of size 31 bit and two messages M and M’ of size 0 modulo 32, such that (as before):
+
+ 
+
+L1 = 11111111 11111111 11111111 11011111
+
+L2 = 11111111 11111111 11111111 11100000
+
+ 
+
+L1’= 11111111 11111111 11111111 11100000
+
+L2’= 00000000 00000000 00000000 00000000
+
+ 
+
+We indeed have L2 and L2’ = 0 modulo 32.
+
+ 
+
+1st message with padding:  S || M || “10” padding || L1 || L2
+
+2nd message with padding: S || M’ || “10” padding || L1’ || L2’
+
+ 
+
+The 10 padding will be just a 1 for both messages (because of the 31-bit salt), thus we have
+
+ 
+
+1st message with padding:  S || M || 1 || L1 || L2
+
+2nd message with padding: S || M’ || 1 || L1’ || L2’
+
+ 
+
+Now we say that M’= M || 1 || 11111111 11111111 11111111 1101111    (that is M, the “1” bit from the “10” padding, and the length L1 without the very last bit). Thus, when M’ will be “01” padded, we get
+
+ 
+
+M’ || “01” padding = M || 1 || 11111111 11111111 11111111 1101111 || 1 = M || 1 || L1
+
+ 
+
+Now, the reasoning is the same as before:
+
+ 
+
+1st message with padding: S || M || 1 || L1 || L2
+
+2nd message with padding: S || M || 1 || L1 || L1’ || L2’
+
+ 
+
+And since L2 = L1’ and L2’ = 0, we finally have
+
+ 
+
+1st message with padding: S || M || 1 || L1 || L2
+
+2nd message with padding: S || M || 1 || L1 || L2 || 0
+
+ 
+
+And the slide attack applies.
+
+ 
+
+Cheers,
+
+ 
+
+Thomas.
+
+ 
+
+ 

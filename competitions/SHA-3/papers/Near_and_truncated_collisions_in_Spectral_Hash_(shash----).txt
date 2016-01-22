@@ -1,0 +1,84 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Colleagues,
+
+Even though I have not been able to find a full collision in shash, I
+have a few results which I believe are interesting in their own right.
+
+To reduce the length of this email, rather than provide the hash of m1
+and the hash m2, I will provide the difference (XOR) of the two hashes
+and a colliding-bit count in this format:
+
+shash-### (### bits or ##.##%):
+m1 = XXXX...
+m2 = XXXX...
+hashdiff = XXX...
+
+For most of the shash size options I have multiple message pairs with
+the same bit collision count but for brevity I'll only include one.
+
+Near collisions:
+=================
+
+shash-128 (122 bits or 95.31%):
+m1 = 0e5897f7454f3388baecdabc2e78c5c2a66eceedeb759ae591036e99c9e133c729380e392fd723024511f64bf058806f5d97752918137de0d16156b9d14c26e0
+m2 = 0e5897f74550cc48baecdabc2e78c5c2a66eceedeb759ae591036e99c9e133c729380e392fd723024511f64bf058806f5d97752918137de0d16156b9d14c26e0
+hashdiff = 00880000800000000800000008080000
+
+shash-224 (215 bits or 95.98%):
+m1 = a2bbd509657c83d7520b5d40c8b236a4b7b330f7a1e95ee07b62b8da045690e28a412dd4acbf952cad4e645432c53056f4e1cfebd22b48a9014a776bfde2ace1
+m2 = 9d442509657c83d7520b5d40c8b236a4b7b330f7a1e95ee07b62b8da045690e28a412dd4acbf952cad4e645432c53056f4e1cfebd22b48a9014a776bfde2ace1
+hashdiff = 0098000000080000002000000010000000000000000040000000a000
+
+shash-512 (482 bits or 94.14%)
+m1 = ba585480aabf5af1f919bf1ab2f086d86d2bfcf627e988e3dd02c5606fb2700de898909c26153076474d9f1cc973141fe518a2e95c3b5713f9af2ce8ef99d309
+m2 = ba585480aabf5af1f919bf1ab2f086d86d2bfcf627e988e3dd02c5606fb58ff3e898909c26153076474d9f1cc973141fe518a2e95c3b5713f9af2ce8ef99d309
+hashdiff = 0000000000000000000000000000d0800000000000000000000000000f0004a30020003005000000008000700000003000000c0000000000200000e000000000
+
+
+Truncated collision:
+=====================
+
+shash-512 (22 bytes or 34.38%)
+m1 = 628398d4009dd8b5c6ce65be618598a1b2f2a3810e08fcea00e1c5e56ada0d4d73cfe5518c088bc68e18c102bb44e96521be35dc69ab8c6b0594d0f22a9a1f87
+m2 = 628398d4009dd8b5c6ce65be618598a1b2f2a3810e08fcea00e1c5e56ada0d4d73cc1aae8c088bc68e18c102bb44e96521be35dc69ab8c6b0594d0f22a9a1f87
+hashdiff = 000000000000000000000000000000000000000000000e400000000f000030100000cb34006030800007c8000000000080000000500000200080e00006001000
+
+Comments:
+==========
+
+Based on my work on shash-128 and my inability to get a near-collision
+in more than 122 bits I'm starting to think that the technique I'm
+using can not find a full collision in only a single block (512 bits)
+of input.  Unfortunately I haven't had much success extending my attack
+into another block.
+
+I believe the truncated hash collision of 22 full bytes found in
+shash-512 is a serious break.  Although the authors make no claim about
+the security of shash under truncation, it is widely accepted that a
+quality hash function should hold up well when truncated.
+
+At this point I think it is very unlikely that I'm going to be able to
+improve or extend this attack to a full collision.  Regardless, if the
+results I've provided above can be independently verified (the test
+vectors verify for me but I'm nervous none-the-less) then I believe
+Spectral Hash should be considered broken.
+
+Regards,
+
+Brandon
+
+- -- 
+Brandon Enright
+Network Security Analyst
+UC San Diego (UCSD)
+bmenrigh@ucsd.edu
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.9 (GNU/Linux)
+
+iEYEARECAAYFAkkehbwACgkQqaGPzAsl94Kq4QCfTqAiPLEFEMmvoRuej7YcHueJ
+OUcAn1VDbZK7fToPSxrh7JWwvGD1rQdr
+=V/JU
+-----END PGP SIGNATURE-----

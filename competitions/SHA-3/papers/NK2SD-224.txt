@@ -1,0 +1,13 @@
+Christophe De Cannière, NIST mailing list 2008-11-13
+----------------------------------------------------
+
+Example collision pair for NKS2D-224
+2008-11-13, Christophe De Cannière, COSIC, Katholieke Universiteit Leuven
+
+m1 = 10
+NKS2D-224(m1) = 98dbcc87f24e14918ce6acc24340f01b871a5c8ff58f749c6bc15251
+
+m2 = d0
+NKS2D-224(m2) = 98dbcc87f24e14918ce6acc24340f01b871a5c8ff58f749c6bc15251
+
+m1 and m2 collide!

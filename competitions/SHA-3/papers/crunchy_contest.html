@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/><title>The Keccak sponge function family</title><meta name="author" content="Guido Bertoni, Joan Daemen, Michaël Peeters, Gilles Van Assche"/><meta name="keywords" content="Keccak, sponge function, SHA-3, hash function, cryptography"/><link rel="stylesheet" type="text/css" href="screen.css" media="screen"/><link rel="stylesheet" type="text/css" href="print.css" media="print"/><link rel="alternate" type="application/atom+xml" href="news.atom"/></head><body><div id="main"><div id="title"><h1>The <span class="sc">Keccak</span> sponge function family</h1><p class="authors"><span class="author-name">Guido Bertoni</span><sup>1</sup>, <span class="author-name"><a href="http://jda.noekeon.org/">Joan Daemen</a></span><sup>1</sup>, <span class="author-name"><a href="http://mip.noekeon.org/">Michaël Peeters</a></span><sup>1</sup> and <span class="author-name"><a href="http://gva.noekeon.org/">Gilles Van Assche</a></span><sup>1</sup></p><p class="affiliation"><sup>1</sup><a href="http://www.st.com/">STMicroelectronics</a></p><p style="clear: both;"/></div><div id="rightpane"><div xmlns:h="http://www.w3.org/1999/xhtml" xmlns:s="http://gva.noekeon.org/simplewebsite/"><h2>Pages</h2><ul><li><a href="index.html">Home</a></li><li><a href="news.html">News</a></li><li><a href="files.html">Files</a></li><li><a href="specs_summary.html">Specifications summary</a></li><li><a href="tune.html">Tune <span xmlns:xi="http://www.w3.org/2001/XInclude" class="sc">Keccak</span> to your requirements</a></li><li><a href="third_party.html">Third-party cryptanalysis</a></li><li><a href="papers.html">Our papers and presentations</a></li><li><a href="crunchy_contest.html"><span xmlns:xi="http://www.w3.org/2001/XInclude" class="sc">Keccak</span> Crunchy Crypto Collision and Pre-image Contest</a></li><li><a href="team.html">The <span xmlns:xi="http://www.w3.org/2001/XInclude" class="sc">Keccak</span> Team</a></li></ul><h2>Documents</h2><ul><li><a href="http://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf">The FIPS 202 standard</a></li><li><a href="Keccak-reference-3.0.pdf">The <span xmlns:xi="http://www.w3.org/2001/XInclude" class="sc">Keccak</span> reference</a></li><li><a href="Keccak-reference-3.0-files.zip">Files for the <span xmlns:xi="http://www.w3.org/2001/XInclude" class="sc">Keccak</span> reference</a></li><li><a href="Keccak-submission-3.pdf">The <span xmlns:xi="http://www.w3.org/2001/XInclude" class="sc">Keccak</span> SHA-3 submission</a></li><li><a href="Keccak-implementation-3.2.pdf"><span xmlns:xi="http://www.w3.org/2001/XInclude" class="sc">Keccak</span> implementation overview</a></li><li><a href="http://sponge.noekeon.org/CSF-0.1.pdf">Cryptographic sponge functions</a></li><li><strong><a href="files.html">all files…</a></strong></li></ul><h2>Notes</h2>
+<ul xmlns:xi="http://www.w3.org/2001/XInclude">
+<li><a href="NoteSideChannelAttacks.pdf">Note on side-channel attacks and their countermeasures</a></li>
+<li><a href="NoteZeroSum.pdf">Note on zero-sum distinguishers of <span class="sc">Keccak</span>-<i>f</i></a></li>
+<li><a href="NoteOnKeccakParametersAndUsage.pdf">Note on <span class="sc">Keccak</span> parameters and usage</a></li>
+<li><a href="KeccakAlignment.pdf">On alignment in <span class="sc">Keccak</span></a></li>
+<li><a href="Sakura.pdf"><span class="sc">Sakura</span>: a flexible coding for tree hashing</a></li>
+<li><a href="NoteSoftwareInterface.pdf">A software interface for <span class="sc">Keccak</span></a></li>
+</ul>
+<h2>Software and other files</h2><ul><li><a href="https://github.com/gvanas/KeccakCodePackage"><b><span xmlns:xi="http://www.w3.org/2001/XInclude" class="sc">Keccak</span> Code Package</b></a></li><li><a href="KeccakVHDL-3.1.zip">Hardware implementation in VHDL</a></li><li><a href="https://github.com/gvanas/KeccakTools"><span xmlns:xi="http://www.w3.org/2001/XInclude" class="sc">KeccakTools</span></a></li><li><a href="KeccakInPython-3.2.zip"><span xmlns:xi="http://www.w3.org/2001/XInclude" class="sc">Keccak</span> in Python</a></li><li><strong><a href="files.html">all files…</a></strong></li></ul><h2>Figures</h2>
+<ul xmlns:xi="http://www.w3.org/2001/XInclude">
+<li><span class="sc">Keccak</span>-<i>f</i> state [<a href="Keccak-f-State.odg">ODG</a>] [<a href="Keccak-f-State.pdf">PDF</a>] [<a href="Keccak-f-State.png">PNG</a>]</li>
+<li>Pieces of state [<a href="Keccak-f-PiecesOfState.odg">ODG</a>] [<a href="Keccak-f-PiecesOfState.pdf">PDF</a>] [<a href="Keccak-f-PiecesOfState.png">PNG</a>]</li>
+<li>Step θ [<a href="Keccak-f-Theta.odg">ODG</a>] [<a href="Keccak-f-Theta.pdf">PDF</a>] [<a href="Keccak-f-Theta.png">PNG</a>]</li>
+<li>Step ρ [<a href="Keccak-f-Rho.odg">ODG</a>] [<a href="Keccak-f-Rho.pdf">PDF</a>] [<a href="Keccak-f-Rho.png">PNG</a>]</li>
+<li>Step π [<a href="Keccak-f-Pi.odg">ODG</a>] [<a href="Keccak-f-Pi.pdf">PDF</a>] [<a href="Keccak-f-Pi.png">PNG</a>]</li>
+<li>Step χ [<a href="Keccak-f-Chi.odg">ODG</a>] [<a href="Keccak-f-Chi.pdf">PDF</a>] [<a href="Keccak-f-Chi.png">PNG</a>]</li>
+</ul>
+
+<p xmlns:xi="http://www.w3.org/2001/XInclude">The figures above are available under the <a href="http://creativecommons.org/licenses/by/3.0/">Creative Commons Attribution license</a>. In short, they can be freely used, provided that attribution is properly done in the figure caption, either by linking to this webpage or by citing the article where the particular figure first appeared.</p>
+<h2>Links</h2>
+<ul xmlns:xi="http://www.w3.org/2001/XInclude">
+<li><a href="KeccakTools-doc/index.html"><span class="sc">KeccakTools</span> documentation</a></li>
+<li><a href="http://radiogatun.noekeon.org/"><span class="sc">RadioGatún</span></a></li>
+<li><a href="http://sponge.noekeon.org/">Cryptographic sponges</a></li>
+<li><a href="http://www.nist.gov/hash-competition">NIST SHA-3 hash function competition</a></li>
+<li><a href="http://ehash.iaik.tugraz.at/index.php/The_SHA-3_Zoo">The SHA-3 zoo</a></li>
+<li><a href="http://bench.cr.yp.to/ebash.html">eBASH</a></li>
+<li><a href="http://celan.informatik.uni-oldenburg.de/kryptos/info/keccak/overview/">Animated <span class="sc">Keccak</span> (in German)</a></li>
+</ul>
+</div></div><div id="content"><h2><span xmlns:xi="http://www.w3.org/2001/XInclude" class="sc">Keccak</span> Crunchy Crypto Collision and Pre-image Contest</h2>
+
+<p xmlns:xi="http://www.w3.org/2001/XInclude">This page specifies the challenges, defines the rules and reports on the status of the <span class="sc">Keccak</span> Crunchy Crypto Collision and Pre-image Contest.</p>
+
+<h3 xmlns:xi="http://www.w3.org/2001/XInclude">Rules</h3>
+
+<p xmlns:xi="http://www.w3.org/2001/XInclude">We present challenges for reduced-round <span class="sc">Keccak</span> instances, namely <span class="sc">Keccak</span>[<i>c</i>=160, <i>r</i>=<i>b</i>-<i>c</i>] with <i>b</i> ≥ 200:</p>
+<ul xmlns:xi="http://www.w3.org/2001/XInclude">
+    <li>The capacity is fixed to 160 bits: this implies a security level of 2<sup>80</sup> against generic collision search.</li>
+    <li>The width <i>b</i> of <span class="sc">Keccak</span>-<i>f</i>[<i>b</i>] is in {200, 400, 800, 1600}: the width values that support the chosen capacity.</li>
+    <li>The number of rounds <i>n<sub>r</sub></i> ranges from 1 to 12.</li>
+    <li>The submitter is free to choose the subsequence of consecutive rounds of <span class="sc">Keccak</span>-<i>f</i>[<i>b</i>], e.g., the <i>n<sub>r</sub></i> first rounds, the <i>n<sub>r</sub></i> last rounds or <i>n<sub>r</sub></i> rounds starting anywhere. This impacts the values of the round constants in the reduced-round <span class="sc">Keccak</span>-<i>f</i>[<i>b</i>].</li>
+</ul>
+
+<p xmlns:xi="http://www.w3.org/2001/XInclude">For each of these <span class="sc">Keccak</span> instances there are two challenges:</p>
+<ul xmlns:xi="http://www.w3.org/2001/XInclude">
+    <li>generating a collision in the output truncated to 160 bits;</li>
+    <li>generating a pre-image of an output truncated to 80 bits.</li>
+</ul>
+
+<p xmlns:xi="http://www.w3.org/2001/XInclude">To be informed of solutions, we suggest all interested people to subscribe to our mailing list by sending an empty mail to <code>crunchy-subscribe</code> <i>-at-</i> <code>noekeon</code> <i>-dot-</i> <code>org</code>. Solutions shall be sent to the mailing list <code>crunchy</code> <i>-at-</i> <code>noekeon</code> <i>-dot-</i> <code>org</code> with:</p>
+<ul xmlns:xi="http://www.w3.org/2001/XInclude">
+    <li>subject "[CRUNCHY CONTEST] <i>n<sub>r</sub></i> rounds, width <i>b</i>, challenge type", with <i>n<sub>r</sub></i> and <i>b</i> having the corresponding values and challenge type either "collision" or "pre-image";</li>
+    <li>in the body:</li>
+    <ul>
+        <li>names and affiliations of authors;</li>
+        <li>round index of the first round of the reduced-round variant of <span class="sc">Keccak</span>-<i>f</i>[<i>b</i>];</li>
+        <li>colliding messages or pre-image in hexadecimal notation;</li>
+        <li>textual summary of how the result was obtained.</li>
+    </ul>
+</ul>
+
+<p xmlns:xi="http://www.w3.org/2001/XInclude">The prize money is distributed in the following way:</p>
+<ul xmlns:xi="http://www.w3.org/2001/XInclude">
+    <li>There is one prize per challenge.</li>
+    <li>For a given challenge, only the <b>first</b> received solution gets a prize.</li> 
+    <li>The prize for a challenge for <i>n<sub>r</sub></i> rounds is <i>n<sub>r</sub></i> × 10 €.</li>
+</ul>
+
+<p xmlns:xi="http://www.w3.org/2001/XInclude"><span class="sc">KeccakTools</span> contains support for the validation of solutions (see file <a href="https://github.com/gvanas/KeccakTools/blob/master/Sources/KeccakCrunchyContest.cpp"><code>KeccakCrunchyContest.cpp</code></a>).</p>
+
+<h3 xmlns:xi="http://www.w3.org/2001/XInclude">Challenges and status</h3>
+
+<p xmlns:xi="http://www.w3.org/2001/XInclude">We list below the challenges and the status per number of rounds.</p>
+
+<table xmlns:xi="http://www.w3.org/2001/XInclude" class="compact" id="crunchyPreImage">
+<thead>
+<tr><th>Function</th><th>Pre-image</th><th>Image</th></tr>
+</thead>
+<tr class="even high"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 1]</td><td><a href="crunchy_mails/pre-r1-w200-20130306.txt">found by Joan Boyar and Rene Peralta</a></td><td><code>e9 f5 7f 02 a9 b0 eb d8 44 98</code></td></tr>
+<tr class="even high"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 1]</td><td><a href="crunchy_mails/pre-r1-w400-20110729.txt">found by Paweł Morawiecki</a></td><td><code>d9 d6 d3 c8 4d 1a c1 d7 5f 96</code></td></tr>
+<tr class="even high"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 1]</td><td><a href="crunchy_mails/pre-r1-w800-20110729.txt">found by Paweł Morawiecki</a></td><td><code>3f 41 9f 88 1c 42 cf fc 5f d7</code></td></tr>
+<tr class="even high"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 1]</td><td><a href="crunchy_mails/pre-r1-w1600-20110729.txt">found by Paweł Morawiecki</a></td><td><code>0f 0a f7 07 4b 6a bd 48 6f 80</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 2]</td><td>?</td><td><code>02 4a 55 18 e1 e9 5d b5 32 19 </code></td></tr>
+<tr class="odd high"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 2]</td><td><a href="crunchy_mails/pre-r2-w400-20110729.txt">found by Paweł Morawiecki</a></td><td><code>7a b8 98 1a da 8f db 60 ae fd</code></td></tr>
+<tr class="odd high"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 2]</td><td><a href="crunchy_mails/pre-r2-w800-20110729.txt">found by Paweł Morawiecki</a></td><td><code>82 8d 4d 09 05 0e 06 35 07 5e</code></td></tr>
+<tr class="odd high"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 2]</td><td><a href="crunchy_mails/pre-r2-w1600-20110729.txt">found by Paweł Morawiecki</a></td><td><code>63 90 22 0e 7b 5d 32 84 d2 3e</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 3]</td><td>?</td><td><code>d8 ed 85 69 2a fb ee 4c 99 ce</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 3]</td><td>?</td><td><code>5c 9d 5e 4b 38 5e 9c 4f 8e 2e</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 3]</td><td>?</td><td><code>00 7b b5 c5 99 80 66 0e 02 93</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 3]</td><td>?</td><td><code>06 25 a3 46 28 c0 cf e7 6c 75</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 4]</td><td>?</td><td><code>74 2c 7e 3c d9 46 1d 0d 03 4e</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 4]</td><td>?</td><td><code>0d d2 5e 6d e2 9a 42 ad b3 58</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 4]</td><td>?</td><td><code>75 1a 16 e5 e4 95 e1 e2 ff 22</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 4]</td><td>?</td><td><code>7d aa d8 07 f8 50 6c 9c 02 76</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 5]</td><td>?</td><td><code>e0 53 f9 64 4f aa b1 da 31 1b</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 5]</td><td>?</td><td><code>8d f4 44 09 b4 6f b8 c6 1b c4</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 5]</td><td>?</td><td><code>6e f2 61 6f eb b9 9b 1f 70 ed</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 5]</td><td>?</td><td><code>65 3b c0 f8 7d 26 4f 08 57 d0</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 6]</td><td>?</td><td><code>e5 1c 00 c4 8e d5 db 07 02 b3</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 6]</td><td>?</td><td><code>57 16 e7 01 ef 67 cc 04 48 b0</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 6]</td><td>?</td><td><code>5f 9e 63 88 4f 2e 94 f1 a1 0e</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 6]</td><td>?</td><td><code>d6 05 33 5e dc e7 d2 ca f4 10</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 7]</td><td>?</td><td><code>95 93 25 c5 67 73 a7 4a 43 c6</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 7]</td><td>?</td><td><code>9c ec ce 92 93 8a ea ba 26 af</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 7]</td><td>?</td><td><code>a4 c1 35 21 90 12 aa c8 08 ed</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 7]</td><td>?</td><td><code>5e 0d 17 9c 50 c2 93 0c 0d 76</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 8]</td><td>?</td><td><code>05 4d da f1 b9 b5 9b 9a 60 bf</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 8]</td><td>?</td><td><code>19 c2 d8 ff 69 e5 66 a5 07 c9</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 8]</td><td>?</td><td><code>f4 83 5d 80 2a ab c5 be 75 8e</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 8]</td><td>?</td><td><code>34 e1 81 23 29 d5 e8 9d 67 1a</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 9]</td><td>?</td><td><code>5e d1 a9 c1 84 eb 72 b9 45 46</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 9]</td><td>?</td><td><code>78 d6 58 de c5 01 ee d6 3b 1e</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 9]</td><td>?</td><td><code>2e dd 24 58 7f 22 5c 69 6e 61</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 9]</td><td>?</td><td><code>ca 18 6a 0f e1 26 ed be 2c a6</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 10]</td><td>?</td><td><code>c3 8f 61 8f 53 a9 6e 4f fd 53</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 10]</td><td>?</td><td><code>46 68 1a 4a 3a 97 5b 16 2a c4</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 10]</td><td>?</td><td><code>b8 6d b6 0f f7 23 18 76 6e ef</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 10]</td><td>?</td><td><code>df 7b f3 01 7c d3 22 a4 6c 31</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 11]</td><td>?</td><td><code>19 f8 e6 bc 5d 71 41 77 65 95</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 11]</td><td>?</td><td><code>12 9e 94 0f 63 43 00 f6 b4 14</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 11]</td><td>?</td><td><code>a2 49 0a 3e 68 d5 d0 2d d4 aa</code></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 11]</td><td>?</td><td><code>69 c9 4f 0a e8 30 40 26 b3 da</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 12]</td><td>?</td><td><code>20 68 65 eb 08 b4 2a 66 63 e1</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 12]</td><td>?</td><td><code>85 5a 86 45 96 c5 1c af 7d 3d</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 12]</td><td>?</td><td><code>68 ed de 13 a4 79 e1 47 71 bd</code></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 12]</td><td>?</td><td><code>bf 8c 82 63 a9 87 59 5b 21 c0</code></td></tr>
+<caption>Table 1: Pre-image challenges and status</caption>
+</table>
+
+<table xmlns:xi="http://www.w3.org/2001/XInclude" class="compact" id="crunchyCollision">
+<thead>
+<tr><th>Function</th><th>Inputs</th></tr>
+</thead>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 1]</td><td>?</td></tr>
+<tr class="even high"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 1]</td><td><a href="crunchy_mails/coll-r1-w400-20110729.txt">found by Paweł Morawiecki</a></td></tr>
+<tr class="even high"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 1]</td><td><a href="crunchy_mails/coll-r1-w800-20110729.txt">found by Paweł Morawiecki</a></td></tr>
+<tr class="even high"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 1]</td><td><a href="crunchy_mails/coll-r1-w1600-20110729.txt">found by Paweł Morawiecki</a> and <a href="crunchy_mails/coll-r1r2-w1600-20110802.txt">by Alexandre Duc, Jian Guo, Thomas Peyrin and Lei Wei</a></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 2]</td><td>?</td></tr>
+<tr class="odd high"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 2]</td><td><a href="crunchy_mails/coll-r2-w400-20110729.txt">found by Paweł Morawiecki</a></td></tr>
+<tr class="odd high"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 2]</td><td><a href="crunchy_mails/coll-r2-w800-20110729.txt">found by Paweł Morawiecki</a></td></tr>
+<tr class="odd high"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 2]</td><td><a href="crunchy_mails/coll-r2-w1600-20110729.txt">found by Paweł Morawiecki</a> and <a href="crunchy_mails/coll-r1r2-w1600-20110802.txt">by Alexandre Duc, Jian Guo, Thomas Peyrin and Lei Wei</a></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 3]</td><td>?</td></tr>
+<tr class="even low"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 3]</td><td>(closed)</td></tr>
+<tr class="even low"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 3]</td><td>(closed)</td></tr>
+<tr class="even high"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 3]</td><td><a href="crunchy_mails/coll-r3r4-w1600-20111124.txt">found by Itai Dinur, Orr Dunkelman and Adi Shamir</a></td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 4]</td><td>?</td></tr>
+<tr class="odd low"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 4]</td><td>(closed) <a href="crunchy_mails/coll-r4-w400w800-20130617.txt">yet found by Stefan Kölbl, Florian Mendel, Martin Schläffer and Tomislav Nad</a></td></tr>
+<tr class="odd low"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 4]</td><td>(closed) <a href="crunchy_mails/coll-r4-w400w800-20130617.txt">yet found by Stefan Kölbl, Florian Mendel, Martin Schläffer and Tomislav Nad</a></td></tr>
+<tr class="odd high"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 4]</td><td><a href="crunchy_mails/coll-r3r4-w1600-20111124.txt">found by Itai Dinur, Orr Dunkelman and Adi Shamir</a></td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 5]</td><td>?</td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 5]</td><td>?</td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 5]</td><td>?</td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 5]</td><td>?</td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 6]</td><td>?</td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 6]</td><td>?</td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 6]</td><td>?</td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 6]</td><td>?</td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 7]</td><td>?</td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 7]</td><td>?</td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 7]</td><td>?</td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 7]</td><td>?</td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 8]</td><td>?</td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 8]</td><td>?</td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 8]</td><td>?</td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 8]</td><td>?</td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 9]</td><td>?</td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 9]</td><td>?</td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 9]</td><td>?</td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 9]</td><td>?</td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 10]</td><td>?</td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 10]</td><td>?</td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 10]</td><td>?</td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 10]</td><td>?</td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 11]</td><td>?</td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 11]</td><td>?</td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 11]</td><td>?</td></tr>
+<tr class="even"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 11]</td><td>?</td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 40, <i>c</i> = 160, <i>n<sub>r</sub></i> = 12]</td><td>?</td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 240, <i>c</i> = 160, <i>n<sub>r</sub></i> = 12]</td><td>?</td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 640, <i>c</i> = 160, <i>n<sub>r</sub></i> = 12]</td><td>?</td></tr>
+<tr class="odd"><td><span class="sc">Keccak</span>[<i>r</i> = 1440, <i>c</i> = 160, <i>n<sub>r</sub></i> = 12]</td><td>?</td></tr>
+<caption>Table 2: Collision challenges and status</caption>
+</table>
+
+</div><div id="footer"><p>Unless otherwise specified, the contents and files within the domain keccak.noekeon.org are © 2008-2015 <a href="team.html">Guido Bertoni, Joan Daemen, Michaël Peeters and Gilles Van Assche</a>.</p><p>Last updated: 2014-05-14</p></div></div></body></html>

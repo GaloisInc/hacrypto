@@ -1,0 +1,127 @@
+Collision and Preimage Attacks on Vortex as submitted to the SHA-3 competition
+by Lars R. Knudsen and Florian Mendel and Christian Rechberger and Søren S. Thomsen
+
+
+
+In this note we point out that collision and preimage attacks on
+MDC-2 also apply to Vortex in the version submitted to the SHA-3
+competition [3]. In particular, this includes a recently
+discovered collision attack [2] that has a time complexity below
+the birthday bound and a preimage attack that allows various
+time/memory tradeoffs.
+
+(1) One can construct a pseudo-collision for the compression
+function with a complexity of about 2^{n/4} instead of 2^{n/2}
+(see [1]).
+
+(2) Preimages for Vortex can be constructed with a complexity of
+about 2^{3n/4} instead of 2^n (see [1] and extension of it as in
+[2]). Using Vortex-256 as an example, depending on memory
+requirements this results in runtimes between 2^{192} and 2^{256}. An
+even lower runtime (as low as 2^{n/2} for MDC-2 as recently
+discovered [2]) seems difficult to achieve.
+
+(3) One can find collisions for Vortex with a time complexity
+slightly faster than brute force search (see [2]). Using
+Vortex-256 as an example, this results in a runtime of 2^{122.5}.
+
+
+
+
+Short description of Vortex (actually a sub block):
+For the full description, refer to [3].
+
+A||B = V(C_A(W_0) \oplus W_0; C_B(W_0)\oplus W_0)
+A||B =V(C_A(W_1) \oplus W_1; C_B(W_1) \oplus W_1)
+
+
+
+ad 1: Pseudo-Collision Attack:
+
+The attack can be summarized as follows:
+
+- Compute x = C_A(W_0) \oplus W_0 for a fixed value of W_0 and
+2^{n/4} different values of A and save x in the list L_A. 
+- Compute Y = C_B(W_0) \oplus W_0 for the same value of W_0 and
+2^{n/4} different values of B and save y in the list L_B. 
+- Choose another W_0
+
+- Compute x and y for arbitrary values of A (and B) and check for
+a match in list L_A (and L_B). Note that due to the birthday
+paradox we expect to find a match in L_A (and L_B) after testing
+2^{n/4} candidates for x (and y).
+
+Hence, we can construct a pseudo-collision (or semi-free-start
+collision) for Vortex with complexity 2^{n/4}
+
+
+
+ad 2: Preimage and Second Preimage Attack
+
+The transformation V is not invertible (which contrasts MDC-2),
+nevertheless the same attack applies in a straight-forward way:
+Assume we have given the final hash value h=A'||B' then the attack
+can be summarized as follows:
+
+- Invert the function V to get x and y (again x = C_A(W_0) + W_0
+and y = C_B(W_0) + W_0). This has a complexity of about 2^{n/2}
+and can be summarized as follows:
+  * Let A'=A_1||A_0, B'=B_1||B_0, x=x_1||x_0 and y=y_1||y_0.
+  * Choose a random values for B_1 and A_0. This determines I_0 = x_0
+\oplus A_0, I_1 = B_1 - y_1 and O = O_1||O_0 = x_0 * y_1. Note
+that by fixing O_1 and O_0 also the values of y_0 and x_1 are
+determined.
+  * Once, we have determines y_0 and x_1, we have to check if also I =
+I_1||I_0 = y_0 * x_1 is correct. This holds with a probability of
+2^{-n/2}. Hence, by repeating the attack 2^n/2 times we can invert V.
+
+- Choose a random value for A and compute x = C_A(W_0) + W_0.
+After testing all 2^{n/2} values for A we expect to find the
+correct value.
+
+- Choose a random value for B and compute y = C_B(W_0) + W_0.
+After testing all 2^{n/2} values for B we expect to find the
+correct value. Hence, we can invert the compression function of
+Vortex with a complexity of 2^{n/2}.
+
+By using a meet-in-the-middle attack we can turn the preimage
+attack on the compression function into a preimage attack on the
+hash function. This has a complexity of about 2^{3n/4}. For
+details of the attack we refer to [1]. In constrast to MDC-2, further
+reducing the runtime to 2^{n/2} as done in [2] seems difficult.
+
+
+
+ad 3: Collision Attack
+
+The collision attack on Vortex (or MDC-2 in general) makes use of
+multicollisions. It can be summarized as follows:
+
+- Given A and B, find an r-collision in A with A||B = V(C_A(W_0)
+\oplus W_0; C_B(W_0) \oplus W_0). Let the messages producing the
+r-collision be W_0^1,...,W_0^k and let the r (random) values of A
+be A_01,...,A_0^k.
+
+- Choose the message block W_1 arbitrarily, and evaluate
+x^i=C_{A^i}(W_1) \oplus W_1 for i=0,...,k. If x_t = x^j for t <> j
+then a collision has been found for Vortex.
+
+The attack has a complexity of about 2^{122.5} compression function
+evaluations for Vortex-256 and 2^{249.7} for Vortex-512. For the
+details of the attack we refer to [2]
+
+
+
+
+[1] X. Lai and J. L. Massey. Hash Functions Based on Block
+Ciphers. In R. A. Rueppel, editor, Advances in Cryptology -
+EUROCRYPT '92, Proceedings, volume 658 of Lecture Notes in
+Computer Science, pages 55-70. Springer, 1993.
+
+[2] Lars R. Knudsen and Florian Mendel and Christian Rechberger 
+and Søren S. Thomsen. Cryptanalysis of MDC-2. Submitted to Eurocrypt
+2009.
+
+[3] Michael Kounavis and Shay Gueron. Vortex: A New Family of One
+Way Hash Functions based on Rijndael Rounds and Carry-less
+Multiplication, Cryptology ePrint Archive, Report 2008/464.

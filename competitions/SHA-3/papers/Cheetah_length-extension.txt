@@ -1,0 +1,20 @@
+Danilo Gligoroski, OFFICIAL COMMENT 2008-12-12
+----------------------------------------------
+
+Cheetah hash function is not resistant against length-extension attack.
+
+
+
+The mechanism in Cheetah to protect against length-extension attack is the
+permutation of the chaining value before the last invocation of the
+compression function. However, the initial chaining value of Cheetah is a
+zero vector of 256 or 512 bits. That means that every hashing of short
+messages that have length less than 959 bits will suffer from the trivial
+length-extension attack because the permutation of the initial zero vector
+is known to the attacker.
+
+
+
+Best regards,
+
+Danilo Gligoroski

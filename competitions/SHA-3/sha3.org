@@ -1,0 +1,249 @@
+* Rejected prior to competition
+** HASH 2X (very broken)
+http://tibasicdev.wikidot.com/archives:hash-2x
+** Maraca
+http://ehash.iaik.tugraz.at/uploads/5/52/Maraca.pdf
+** MIXIT (???)
+** NKS 2D (very broken)
+http://ehash.iaik.tugraz.at/uploads/3/3f/NK2SD-224.txt
+http://ehash.iaik.tugraz.at/uploads/9/93/NK2SD-512.txt
+** Ponic
+http://131002.net/data/papers/ponic.pdf
+** ZK-Crypt (no cryptanalysis so far?)
+* Conceded by authors
+** Abacus
+http://web.mit.edu/dwilson/www/hash/abacus_attack.pdf
+** Boole
+http://ehash.iaik.tugraz.at/uploads/2/2f/Boole.pdf
+** DCH (broken?)
+http://ehash.iaik.tugraz.at/uploads/9/9b/Dch.pdf
+http://ehash.iaik.tugraz.at/uploads/b/b7/Dch1.pdf
+http://web.mit.edu/dwilson/www/hash/
+** Khichidi-1 (attack in Nicky Mouha's thesis?)
+http://ehash.iaik.tugraz.at/uploads/5/5c/Thandra_Khichidi.pdf
+** MeshHash
+https://www.researchgate.net/publication/237819115_Second_preimage_attack_on_MeshHash
+** SHAMATA (weak internal block cipher)
+http://www.sdl.hitachi.co.jp/crypto/eval/shamata_2ndPI.pdf
+https://eprint.iacr.org/2008/513.pdf
+https://eprint.iacr.org/2008/501.pdf
+** StreamHash
+https://www.cryptolux.org/images/e/e9/StreamHash-analysis.pdf
+** Tangle
+http://ehash.iaik.tugraz.at/uploads/c/c9/Tangle_Observation.pdf
+** WaMM (seriously broken)
+http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/WaMM_Comments.pdf
+http://web.mit.edu/dwilson/www/hash/wamm.html
+** Waterfall (seriously broken)
+http://eprint.iacr.org/2008/531.pdf
+* Substantial weaknesses
+** Aurora
+http://eprint.iacr.org/2009/106.pdf
+http://eprint.iacr.org/2009/112.pdf
+http://eprint.iacr.org/2009/113.pdf
+** Blender (broken?)
+http://ehash.iaik.tugraz.at/uploads/2/20/Observations_on_Blender.pdf
+http://ehash.iaik.tugraz.at/uploads/4/48/Blender-preimage.pdf
+http://cryptography.hyperlink.cz/BMW/near_collision_blender.pdf
+http://eprint.iacr.org/2008/532.pdf
+** Cheetah (broken?)
+http://ehash.iaik.tugraz.at/uploads/d/d9/Cheetah_length-extension.txt
+http://ehash.iaik.tugraz.at/uploads/0/08/Cheetah256-12r.txt
+** Dynamic SHA (fairly serious?)
+http://ehash.iaik.tugraz.at/uploads/e/e7/Dynamic-sha_length-extension.txt
+http://eprint.iacr.org/2009/184.pdf
+http://ehash.iaik.tugraz.at/uploads/c/c2/Dsha.pdf
+** Dynamic SHA2 (like Dynamic SHA)
+http://eprint.iacr.org/2009/179.pdf
+http://ehash.iaik.tugraz.at/uploads/0/0e/Dynamic-sha2_length-extension.txt
+** ECOH
+http://eprint.iacr.org/2009/168.pdf
+** Edon-R (serious weakness?)
+http://eprint.iacr.org/2009/378.pdf
+http://eprint.iacr.org/2009/135.pdf
+http://eprint.iacr.org/2009/120.pdf
+http://cryptography.hyperlink.cz/BMW/EDONR_analysis_vk.pdf
+http://ehash.iaik.tugraz.at/uploads/7/74/Edon.pdf
+** EnRUPT
+http://ehash.iaik.tugraz.at/uploads/9/9b/Enrupt.pdf
+** ESSENCE
+http://eprint.iacr.org/2009/302.pdf
+** LUX (broken?)
+http://ehash.iaik.tugraz.at/uploads/7/78/Lux_nicky.txt
+http://ehash.iaik.tugraz.at/uploads/2/21/Lux_niels.txt
+http://ehash.iaik.tugraz.at/uploads/e/ec/Lux_dai.txt
+http://ehash.iaik.tugraz.at/uploads/6/62/Lux_peyrin.txt
+http://ehash.iaik.tugraz.at/uploads/3/3b/LUXATTACKNext.pdf
+http://ehash.iaik.tugraz.at/uploads/3/36/Analysis_LUX_1.pdf
+** MCSSHA-3
+http://131002.net/data/papers/AN09.pdf
+** NaSHA
+http://ehash.iaik.tugraz.at/uploads/3/33/Free-start_attacks_on_Nasha.pdf
+http://eprint.iacr.org/2008/519.pdf
+http://eprint.iacr.org/2009/026.pdf
+http://eprint.iacr.org/2009/034.pdf
+** Sgail (trivial collision)
+http://www.allicient.uk/2008/11/05/aww-psh/
+** Spectral Hash (seriously broken?)
+http://eprint.iacr.org/2009/415.pdf
+http://ehash.iaik.tugraz.at/uploads/6/64/Spectralhash.txt
+http://ehash.iaik.tugraz.at/uploads/2/27/Near_and_truncated_collisions_in_Spectral_Hash_%28shash----%29.txt
+** Twister
+https://online.tugraz.at/tug_online/voe_main2.getVollText?pDocumentNr=104903
+** Vortex (broken?)
+http://ehash.iaik.tugraz.at/uploads/6/6d/Vortex_correlation.txt
+http://www.131002.net/data/papers/ADMRT09.pdf
+http://ehash.iaik.tugraz.at/uploads/5/5c/Vortex_Collisions_and_Preimages_note.txt
+http://www.131002.net/data/papers/AD08.pdf
+* Rejected in round 2
+** ARIRANG
+http://eprint.iacr.org/2009/147.pdf
+http://ehash.iaik.tugraz.at/uploads/9/9a/Arirang-pseudo-sha3zoo.pdf
+** CHI
+http://ehash.iaik.tugraz.at/uploads/0/0d/Bjorstad_chi.txt
+** CRUNCH (broken?)
+http://ehash.iaik.tugraz.at/uploads/2/25/Crunch.txt
+** FSB
+http://eprint.iacr.org/2009/292.pdf
+** Lane
+http://eprint.iacr.org/2010/607.pdf
+http://eprint.iacr.org/2009/443.pdf
+** Lesamnta
+http://csrc.nist.gov/groups/ST/hash/sha-3/Round1/documents/LESAMNTA_Comments.pdf
+** MD6
+http://groups.csail.mit.edu/cis/md6/submitted-2008-10-27/Supporting_Documentation/md6_report.pdf
+http://fse2009rump.cr.yp.to/fe1a0e11287a9864c1d897a3110ebaa2.pdf
+http://ehash.iaik.tugraz.at/uploads/9/91/Khazaei_md6.txt
+** SANDstorm (no cryptanalysis)
+** Sarmal (broken?)
+http://ehash.iaik.tugraz.at/uploads/7/77/Sarmal.pdf
+http://ehash.iaik.tugraz.at/uploads/d/d1/Salt-collision.pdf
+http://ehash.iaik.tugraz.at/uploads/8/8c/Sarmal.new.pdf
+** SWIFFTX (no cryptanalysis)
+** TIB3
+http://ehash.iaik.tugraz.at/uploads/2/2b/Tib3-pseudo.pdf
+* Rejected in final round
+** Blue Midnight Wish (seriously broken?)
+https://who.rocq.inria.fr/Gaetan.Leurent/files/BMW_Distinguisher.pdf
+http://cryptography.hyperlink.cz/2009/BMWDecomposition04.pdf
+http://cryptography.hyperlink.cz/BMW/BijectionsInBMW03-plain.pdf
+http://131002.net/data/papers/Aum10.pdf
+http://eprint.iacr.org/2009/453.pdf
+http://eprint.iacr.org/2009/478.pdf
+** CubeHash
+http://eprint.iacr.org/2010/506.pdf
+http://eprint.iacr.org/2010/535.pdf
+http://eprint.iacr.org/2010/273.pdf
+http://eprint.iacr.org/2010/262.pdf
+http://eprint.iacr.org/2009/407.pdf
+http://eprint.iacr.org/2009/382.pdf
+http://ehash.iaik.tugraz.at/uploads/5/50/Bkmp_ch448.txt
+http://ehash.iaik.tugraz.at/uploads/9/93/Bkmp_ch464.txt
+http://ehash.iaik.tugraz.at/uploads/3/3a/Peyrin_ch22_ch364.txt
+http://ehash.iaik.tugraz.at/uploads/a/a9/Cubehash.txt
+http://ehash.iaik.tugraz.at/uploads/6/6c/Cubehash.pdf
+http://www.131002.net/data/papers/ABMNP08.pdf
+** ECHO (seriously broken?)
+http://eprint.iacr.org/2010/607.pdf
+http://csrc.nist.gov/groups/ST/hash/sha-3/Round2/Aug2010/documents/papers/SASAKI_ECHOanalysisFinal.pdf
+http://eprint.iacr.org/2010/588.pdf
+http://eprint.iacr.org/2010/569.pdf
+http://eprint.iacr.org/2010/321.pdf
+http://eprint.iacr.org/2009/531.pdf
+https://online.tugraz.at/tug_online/voe_main2.getVollText?pDocumentNr=124407&pCurrPk=44420
+** Fugue
+http://ehash.iaik.tugraz.at/uploads/c/cd/Fugue_path.pdf
+http://csrc.nist.gov/groups/ST/hash/sha-3/Round2/Aug2010/documents/papers/TURAN_Paper_Erdener.pdf
+http://www2.mat.dtu.dk/pg-projects/Fugue-256-analysis-v1.pdf
+** Hamsi (broken?)
+http://eprint.iacr.org/2010/602.pdf
+http://csrc.nist.gov/groups/ST/hash/sha-3/Round2/Aug2010/documents/papers/TURAN_Paper_Erdener.pdf
+http://people.item.ntnu.no/~danilog/Hash/Non-random-behaviour-narrow-pipe-designs-03.pdf
+http://131002.net/data/papers/AKKMOPS10.pdf
+http://ehash.iaik.tugraz.at/uploads/d/db/Hamsi_nonrandomness.txt
+http://rump2009.cr.yp.to/936779b3afb9b48a404b487d6865091d.pdf
+http://eprint.iacr.org/2009/484.pdf
+http://eprint.iacr.org/2010/057.pdf
+** Luffa
+http://eprint.iacr.org/2010/589.pdf
+https://online.tugraz.at/tug_online/voe_main2.getVollText?pDocumentNr=163671&pCurrPk=52053
+http://www.131002.net/data/papers/AM09.pdf
+http://eprint.iacr.org/2009/224.pdf
+** Shabal (seriously broken?)
+http://eprint.iacr.org/2010/434.pdf
+http://ehash.iaik.tugraz.at/uploads/4/4b/Aumasson_shabal.txt
+http://eprint.iacr.org/2010/398.pdf
+http://gva.noekeon.org/papers/ShabalRotation.pdf
+http://131002.net/data/papers/AMM09.pdf
+http://131002.net/data/papers/Aum09.pdf
+** SHAvite-3
+http://people.item.ntnu.no/~danilog/Hash/Non-random-behaviour-narrow-pipe-designs-03.pdf
+https://online.tugraz.at/tug_online/voe_main2.getvolltext?pCurrPk=49974
+http://eprint.iacr.org/2009/634.pdf
+http://ehash.iaik.tugraz.at/uploads/e/ea/Peyrin-SHAvite-3.txt
+http://ehash.iaik.tugraz.at/uploads/5/5c/NandiP-SHAvite-3.txt
+** SIMD
+http://eprint.iacr.org/2010/323.pdf
+http://eprint.iacr.org/2010/304.pdf
+https://online.tugraz.at/tug_online/voe_main2.getvolltext?pDocumentNr=125658
+* Finalists
+** BLAKE
+http://csrc.nist.gov/groups/ST/hash/sha-3/Round2/Aug2010/documents/papers/TURAN_Paper_Erdener.pdf
+http://lkrv.fri.uni-lj.si/~janos/blake/collisions.pdf
+http://eprint.iacr.org/2010/355.pdf
+http://people.item.ntnu.no/~danilog/Hash/Non-random-behaviour-narrow-pipe-designs-03.pdf
+http://eprint.iacr.org/2010/043.pdf
+http://eprint.iacr.org/2009/238.pdf
+** Grostl
+http://eprint.iacr.org/2012/206.pdf
+http://eprint.iacr.org/2012/141.pdf
+http://fse2011.mat.dtu.dk/slides/Higher-order%20differential%20properties%20of%20Keccak%20and%20Luffa.pdf
+http://groestl.info/groestl-analysis.pdf
+http://eprint.iacr.org/2010/607.pdf
+http://csrc.nist.gov/groups/ST/hash/sha-3/Round2/Aug2010/documents/papers/SASAKI_ECHOanalysisFinal.pdf
+http://eprint.iacr.org/2010/375.pdf
+http://eprint.iacr.org/2010/223.pdf
+http://eprint.iacr.org/2009/531.pdf
+https://online.tugraz.at/tug_online/voe_main2.getVollText?pDocumentNr=128007&pCurrPk=47053
+https://online.tugraz.at/tug_online/voe_main2.getVollText?pDocumentNr=124407&pCurrPk=44420
+https://online.tugraz.at/tug_online/voe_main2.getVollText?pDocumentNr=124409&pCurrPk=40943
+http://ehash.iaik.tugraz.at/uploads/d/d0/Grostl-comment-april28.pdf
+http://www.larc.usp.br/~pbarreto/Grizzly.pdf
+** JH
+http://eprint.iacr.org/2010/607.pdf
+http://csrc.nist.gov/groups/ST/hash/sha-3/Round2/Aug2010/documents/papers/TURAN_Paper_Erdener.pdf
+http://www.isical.ac.in/~rishi_r/FSE2010-146.pdf
+http://ehash.iaik.tugraz.at/uploads/a/a8/Jh1.txt
+http://ehash.iaik.tugraz.at/uploads/d/da/Jh_preimage.pdf
+http://ehash.iaik.tugraz.at/uploads/6/6f/Jh_mt_complexity.pdf
+** Skein
+http://eprint.iacr.org/2012/141.pdf
+http://eprint.iacr.org/2011/286.pdf
+http://eprint.iacr.org/2012/238.pdf
+http://eprint.iacr.org/2011/148.pdf
+http://eprint.iacr.org/2010/538.pdf
+http://eprint.iacr.org/2010/355.pdf
+http://people.item.ntnu.no/~danilog/Hash/Non-random-behaviour-narrow-pipe-designs-03.pdf
+http://eprint.iacr.org/2010/282.pdf
+http://eprint.iacr.org/2010/262.pdf
+http://eprint.iacr.org/2009/526.pdf
+http://eprint.iacr.org/2009/438.pdf
+http://131002.net/data/talks/threefish_rump.pdf
+* Winner
+** Keccak
+http://eprint.iacr.org/2011/420.pdf
+http://keccak.noekeon.org/crunchy_contest.html
+http://eprint.iacr.org/2011/023.pdf
+http://ehash.iaik.tugraz.at/uploads/6/65/NIST-mailing-list_Bernstein-Daemen.txt
+http://eprint.iacr.org/2010/589.pdf
+http://eprint.iacr.org/2010/285.pdf
+http://keccak.noekeon.org/NoteZeroSum.pdf
+https://www.rocq.inria.fr/secret/Anne.Canteaut/Publications/zero_sum.pdf
+http://131002.net/data/papers/AK09.pdf
+* Worth reading
+** 302.pdf
+** 378.pdf
+** 382.pdf
+** 415.pdf
+** 607.pdf
+** groestl-analysis.pdf

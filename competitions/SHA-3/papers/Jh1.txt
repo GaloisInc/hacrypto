@@ -1,0 +1,22 @@
+Nasour Bagheri, NIST mailing list 2008-11-29
+--------------------------------------------
+
+If I have understood the JH hash scheme correctly, the $E_d$ block is a
+permutation. So we can see this scheme as a variant of Sponge hah function. Now
+one can select a message in his choice (but considering the specific padding
+rule) and combined with the given target and reverse the hash function.
+However, he/she has not any control over the achieved IV. The same approach can
+be used for free start collision and second preimage. The complexity of attacks
+is one or two JH function in reverse. The designer has not presented any
+security against free start attacks.
+
+I am not claiming that the attack is a break of the JH hash function,
+nor that any security claims made by you are invalidated.
+
+
+Nasour Bagheri, NIST mailing list 2008-11-29
+--------------------------------------------
+I must correct my previous email and mention that the attack can find  pseudo-collision, 
+not free-start collision and pseudo-second preimag, not free-start second preimag.
+ 
+Acknowledgements: spacial thanks go to Hongjun Wu to correct me.

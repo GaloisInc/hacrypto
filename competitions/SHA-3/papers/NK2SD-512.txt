@@ -1,0 +1,13 @@
+Brandon Enright, NIST mailing list 2008-11-14
+---------------------------------------------
+
+Example collision pair for NKS2D-512
+2008-11-14, Brandon Enright, UC San Diego
+
+m1 = 1f560d6f
+NKS2D-512(m1) = 84c46a3b7a82c1a061784b546cad4f936f3d2ebd931c2048a888383a0f3f7baa13ababc86e92ca5c58dcbda4a3d60c9f2e82469d517322c7b1e81b4ad8045cb1
+
+m2 = 1f560d6d
+NKS2D-512(m2) = 84c46a3b7a82c1a061784b546cad4f936f3d2ebd931c2048a888383a0f3f7baa13ababc86e92ca5c58dcbda4a3d60c9f2e82469d517322c7b1e81b4ad8045cb1
+
+m1 and m2 collide!

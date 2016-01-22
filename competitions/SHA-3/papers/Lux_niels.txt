@@ -1,0 +1,81 @@
+From: Niels Ferguson <niels@microsoft.com>
+Date: Wed, 8 Apr 2009 23:03:49 -0400
+Subject: RE: OFFICIAL COMMENT: LUX
+
+I have not validated this attack, but if I understand the results correctly, LUX-256 can be seen as a 200-bit hash function with a post-processing function that stretches the 200 bits into a 256-bit result. That means it can't be used in SP 800-90 Hash-DRBG, it generates weak keys if used in a normal hash-based KDF, has reduced security for HMAC-LUX, etc.
+
+A minor point: We can drop the memory requirements for collision finding from 2100 (2228 for LUX-512) to a constant size by using Floyd's or Brent's cycle finding algorithm. 
+
+Regards,
+
+Niels
+
+________________________________________
+From: hash-forum@nist.gov [hash-forum@nist.gov] On Behalf Of Watanabe Dai [dai.watanabe.td@hitachi.com]
+Sent: Wednesday, April 08, 2009 8:02 PM
+To: Multiple recipients of list
+Subject: OFFICIAL COMMENT: LUX
+
+Dear all,
+
+I looked at Wu et. al's report [1] on LUX and I believe that
+their observation can obviously be extended to a collision
+attack and a second preimage attack which would be labeled
+orange in the SHA-3 zoo according to their computational
+complexities.
+The following is the brief sketch of the attacks.
+
+
+==  Wu et. al's observation
+
+Let H=(h0, h1, ..., h7) be the hash value and
+hi=(ai, bi, ci, di) be its byte expression.
+Then the following relation holds for 0<i<8.
+0xf7*ai + 0x4c*bi + 0xf4*ci + di = 0x4e * S(a(i-1))......(1)
+See [1] Section 3.1 for more detail.
+
+
+== What does it mean?
+
+Eq.(1) means that 4 bytes of hi of the output determine
+1 byte of h(i-1).
+In other words, LUX-256 has undesirable property that
+the 56(=8*7) bits of the output are determined by
+the remaining 256-56=200 bits without extra computational
+cost.
+It obviously reduces the complexity of the birthday attack
+and the second preimage attack.
+
+
+== Collision attack and second preimage attack
+
+Find a partial collision such that
+bi=bi',ci=ci',di=di' for 0<=i<8 and a7=a7'.
+With help of Eq.(1) and the fact that S is a permutation,
+we have ai=ai' for 0<=i<7.
+
+=== Complexity of collision attack
+* Hash function call: 2^{(3*8+1)*8/2} = 2100.
+* Memory: 2100.
+
+=== Complexity of second preimage attack
+* Hash function call: 2200,
+* Memory: none.
+
+
+== LUX-512
+
+LUX-512 has the same weakness as LUX-256 so that the 56(=8*7) bits
+of the output are determined by the remaining 512-56=456 bits.
+In the similar manner to the attacks on LUX-256, the collision
+attack and the second preimage attack require 2^{456/2}=2228
+and 2456 complexity respectively.
+
+
+[1] Shuang Wu, Dengguo Feng, Wenling Wu
+Cryptanalysis of the Hash Function LUX-256
+http://ehash.iaik.tugraz.at/uploads/3/36/Analysis_LUX_1.pdf
+
+Regards,
+Dai Watanabe
+
