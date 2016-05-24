@@ -67,3 +67,9 @@
 [submodule "src/Multi-lang/keyczar"]
 	path = src/Multi-lang/keyczar
 	url = https://github.com/google/keyczar.git
+[submodule "proposals/noise_spec"]
+	path = proposals/noise_spec
+	url = https://github.com/noiseprotocol/noise_spec.git
+[submodule "src/ASM/AES-GCM-SIV"]
+	path = src/ASM/AES-GCM-SIV
+	url = https://github.com/Shay-Gueron/AES-GCM-SIV.git
