@@ -503,16 +503,31 @@ public class Output {
 
 		case Cipher.ENCRYPT_MODE:
 			System.err.println("ENCRYPT_MODE");
-
+			break;
+			
 		default:
 			System.err.println("UNKNOWN MODE");
 		}
-		System.err.println("Key length: " + seckey.length + " bytes/ "
-				+ seckey.length * 8 + " bits.");
-		System.err.println("IV length: " + iv.length + " bytes/ " + iv.length
-				* 8 + " bits.");
-		System.err.println("Msg length: " + msg.length + " bytes/ "
-				+ msg.length * 8 + " bits.");
+		if (seckey != null) {
+			System.err.println("Key length: " + seckey.length + " bytes/ " +
+							   seckey.length * 8 + " bits.");
+		} else {
+			System.err.println("Key length: no key specified");
+		}
+		
+		if (iv != null) {
+			System.err.println("IV length: " + iv.length + " bytes/ " +
+							   iv.length * 8 + " bits.");
+		} else {
+			System.err.println("IV length: no IV specified");
+		}
+		
+		if (msg != null) {
+			System.err.println("Msg length: " + msg.length + " bytes/ " + 
+		                       msg.length * 8 + " bits.");
+		} else {
+			System.err.println("Msg length: no message specified");
+		}
 
 	}
 
