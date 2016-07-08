@@ -73,3 +73,9 @@
 [submodule "src/ASM/AES-GCM-SIV"]
 	path = src/ASM/AES-GCM-SIV
 	url = https://github.com/Shay-Gueron/AES-GCM-SIV.git
+[submodule "src/C/pbc"]
+	path = src/C/pbc
+	url = http://repo.or.cz/r/pbc.git
+[submodule "src/C/charm"]
+	path = src/C/charm
+	url = https://github.com/JHUISI/charm.git
