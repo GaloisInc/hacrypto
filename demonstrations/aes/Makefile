@@ -26,10 +26,10 @@ cryptol-validate:
 # Formally verify all properties.  If you have a fat maching and
 # patience, run the proofs! (x hours)
 cryptol-verify:
-	cryptol -c ":prove prop_tests" aes.cry
-	cryptol -c ":prove AESTests" \
-		-c ":prove sboxUnsboxInverse" \
-		-c ":prove keyExpansionInjective" \
+	cryptol -c ":prove prop_tests" aes.cry # 0.5s
+	cryptol -c ":prove AESTests" \ # 2s
+		-c ":prove sboxUnsboxInverse" \ # 2s
+		-c ":prove keyExpansionInjective" \ # 1s
 		-c ":prove encDecInverse" \
 		AESTBox.cry
 
@@ -40,7 +40,7 @@ compile-c:
 	$(CLANG) -o aes aes.c
 
 # Formally verify that the synthesized version of encrypt is correct
-# (x minutes).
+# (32 minutes).
 saw: compile-c
 	saw aes.saw
 
