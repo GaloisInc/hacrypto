@@ -1,0 +1,10 @@
+# compile verilog/system verilog design source files
+sv xil_defaultlib  "../../../vivado.srcs/sources_1/imports/vc2hdl/aes/gen/aes-svcsp/SVCSP_proc_AESEncrypt.sv"
+sv xil_defaultlib  "../../../vivado.srcs/sources_1/imports/vc2hdl/SystemVerilogCSP.sv"
+sv xil_defaultlib  "../../../vivado.srcs/sources_1/imports/vc2hdl/aes/gen/aes-svcsp/SVCSP_test_AESEncrypt.sv"
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort

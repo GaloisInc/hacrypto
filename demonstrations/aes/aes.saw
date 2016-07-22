@@ -1,0 +1,20 @@
+print "Importing AES Cryptol";
+import "aes.cry";
+
+print "Extracting AES128 encrypt term";
+aes <- llvm_load_module "aes.bc";
+
+k <- fresh_symbolic "k" {| [4][32] |};
+pt <- fresh_symbolic "pt" {| [4][32] |};
+ct <- fresh_symbolic "ct" {| [4][32] |};
+
+
+allocs <- [ ("pt", 4), ("key", 4), ("ct", 4) ];
+inputs <- [ ("*pt", pt, 4), ("*key", k, 4), ("*ct", ct, 4) ];
+outputs <- [ ("*ct", 4) ];
+encrypt <- llvm_symexec aes "aes128BlockEncrypt" allocs inputs outputs true;
+
+print "Proving AES128 C encrypt is equivalent to Cryptol specification.";
+
+encrypt_thm <- abstract_symbolic {{ encrypt == split`{4} (AESEncrypt (join k) (join pt)) }};
+prove_print abc encrypt_thm;

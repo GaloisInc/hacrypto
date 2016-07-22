@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Webtalk v2016.2 (64-bit)
+# SW Build 1577090 on Thu Jun  2 16:32:35 MDT 2016
+# IP Build 1577682 on Fri Jun  3 12:00:54 MDT 2016
+# Start of session at: Tue Jun 28 16:19:47 2016
+# Process ID: 4280
+# Current directory: /home/galois/Repositories/GaloisInc/vc2hdl/aes/vivado/vivado.sim/sim_1/behav
+# Command line: wbtcv -mode batch -source /home/galois/Repositories/GaloisInc/vc2hdl/aes/vivado/vivado.sim/sim_1/behav/xsim.dir/Test_aes_AESEncrypt_295_behav/webtalk/xsim_webtalk.tcl -notrace
+# Log file: /home/galois/Repositories/GaloisInc/vc2hdl/aes/vivado/vivado.sim/sim_1/behav/webtalk.log
+# Journal file: /home/galois/Repositories/GaloisInc/vc2hdl/aes/vivado/vivado.sim/sim_1/behav/webtalk.jou
+#-----------------------------------------------------------
+source /home/galois/Repositories/GaloisInc/vc2hdl/aes/vivado/vivado.sim/sim_1/behav/xsim.dir/Test_aes_AESEncrypt_295_behav/webtalk/xsim_webtalk.tcl -notrace

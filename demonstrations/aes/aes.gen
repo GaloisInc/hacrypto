@@ -1,0 +1,11 @@
+set outputDirectory = "gen";
+
+import "aes.cry";
+
+set defaultTactic = abc;
+set testVectors = 1000;
+
+library LLVM "aes-llvm" {
+  export {{ AESEncrypt: [128] -> [128] -> [128] }} as "aesEncrypt_128";
+}
+

@@ -1,0 +1,11 @@
+set outputDirectory = "gen";
+
+import "AESTBox.cry";
+
+set defaultTactic = abc;
+set testVectors = 1000;
+
+library LLVM "aes-tbox-llvm" {
+  export {{ aesEncrypt }} as "aesEncrypt_128";
+}
+

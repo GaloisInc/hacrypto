@@ -1,0 +1,18 @@
+Vivado Simulator 2016.2
+Copyright 1986-1999, 2001-2016 Xilinx, Inc. All Rights Reserved.
+Running: /opt/Xilinx/Vivado/2016.2/bin/unwrapped/lnx64.o/xelab -wto 85e115b54e774da7bab3428bca05055c --debug typical --relax --mt 8 -L xil_defaultlib -L unisims_ver -L unimacro_ver -L secureip --snapshot Test_aes_AESEncrypt_295_behav xil_defaultlib.Test_aes_AESEncrypt_295 xil_defaultlib.glbl -log elaborate.log 
+Using 8 slave threads.
+Starting static elaboration
+Completed static elaboration
+Starting simulation data flow analysis
+WARNING: [XSIM 43-4099] "/proj/xhdhdstaff2/tapodyu/XsimWork/data/verilog/src/std.sv" Line 7. Module std doesn't have a timescale but at least one module in design has a timescale.
+WARNING: [XSIM 43-4099] "/proj/xhdhdstaff2/tapodyu/XsimWork/data/verilog/src/std.sv" Line 7. Module std doesn't have a timescale but at least one module in design has a timescale.
+Completed simulation data flow analysis
+Time Resolution for simulation is 1fs
+Compiling module xil_defaultlib.Channel(WIDTH=128)
+Compiling module xil_defaultlib.Proc_aes_AESEncrypt_295(Channel(...
+Compiling module xil_defaultlib.Test_aes_AESEncrypt_295
+Compiling module xil_defaultlib.glbl
+Compiling package xil_defaultlib.SystemVerilogCSP
+Compiling package std.std
+Built simulation snapshot Test_aes_AESEncrypt_295_behav

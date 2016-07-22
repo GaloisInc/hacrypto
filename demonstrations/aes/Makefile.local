@@ -1,0 +1,8 @@
+# A flag to indicate if this makefile is being run at Galois where
+# non-public tools for synthesis are available.
+AT_GALOIS=1
+
+# LLVM 3.4 or 3.6 must be used
+CLANG=clang-3.4
+LLVMDIS=llvm-dis-3.4
+
