@@ -79,3 +79,9 @@
 [submodule "src/C/charm"]
 	path = src/C/charm
 	url = https://github.com/JHUISI/charm.git
+[submodule "src/OCaml/ocaml-tls"]
+	path = src/OCaml/ocaml-tls
+	url = https://github.com/mirleft/ocaml-tls.git
+[submodule "src/C/libressl/portable"]
+	path = src/C/libressl/portable
+	url = https://github.com/libressl-portable/portable.git
