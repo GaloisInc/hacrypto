@@ -15,7 +15,7 @@
 	url = https://github.com/digitalbazaar/forge.git
 [submodule "src/Javascript/end-to-end"]
 	path = src/Javascript/end-to-end
-	url = https://code.google.com/p/end-to-end/
+	url = https://github.com/google/end-to-end.git
 [submodule "src/C++/botan"]
 	path = src/C++/botan
 	url = git@github.com:randombit/botan.git
