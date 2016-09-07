@@ -43,7 +43,7 @@ components
 - PRP Pseudo-Random Permutation ("strong"?)
 - RAE Robust Authenticated-Encryption [5: 17]
 - S-box
-- SPN Substitution Permutation Network
+- SPN Substitution Permutation Network (substitution permutation product)
 - Sponge Function/Construction
 - TBC Tweakable BlockCipher
 - UMAC Universal Hashing Message Authentication
@@ -82,12 +82,17 @@ new schemes
 - ALE [8: 7]
 - ALRED [5: 9, 10, 39, 41]
 - BTM [9: 11]
+- CAST (Adams and Tavares, design procedure uses bent functions to
+  design its S-boxes)
 - Deoxys-BC [8]
 - FIDES [3: 3]
+- Grain (stream cipher that uses an NLFSR whose nonlinear feedback
+  poly is the sum of a bent function and a linear function)
+- HAVAL (hash using equivalence classes of bent functions on six vars)
 - HBS [9: 10]
 - Hamsi [6: 11]
 - Hummingbird-2 [3: 6]
-- Lucifer (pre-DES from Feistel)
+- Lucifer (pre-DES from Feistel at IBM)
 - Luffa [6: 7]
 - MARVIN [5: 9, 10, 39, 41]
 - MonkeyDuplex [6: 8]
