@@ -85,3 +85,6 @@
 [submodule "src/C/libressl/portable"]
 	path = src/C/libressl/portable
 	url = https://github.com/libressl-portable/portable.git
+[submodule "src/C/libressl/openbsd"]
+	path = src/C/libressl/openbsd
+	url = https://github.com/libressl-portable/openbsd.git
