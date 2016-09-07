@@ -10,7 +10,8 @@ Second-round candidates (alphabetical order):
 |-----------------+--------------------------------------------|
 |ACORN: v1 v2     |Hongjun Wu                                  |
 |-----------------+--------------------------------------------|
-side conditions on algorithm parameters and return values (e.g., keys
+
+Side conditions on algorithm parameters and return values (e.g., keys
 are generated in secure and random way, typical side conditions on IV,
 key x IV pair should not be used to protect more than one message, key
 x IV pair should not be used with two different tag sizes,
