@@ -64,3 +64,9 @@ resources/FIPS/OpenSSL/www.openssl.org/source/
 
 # Build artifacts
 src/C/nacl/nacl-20110221/build/
+
+demonstrations/aes/aes
+
+demonstrations/aes/aes.bc
+
+demonstrations/aes/aes.ll
