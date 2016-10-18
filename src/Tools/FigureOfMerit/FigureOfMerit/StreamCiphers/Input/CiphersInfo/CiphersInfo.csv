@@ -1,0 +1,5 @@
+Cipher,State,Key,IV,Link
+Trivium,288,80,80,Trivium
+Snow3G,608,128,128,SNOW_3G
+ChaCha20,512,128,64,ChaCha
+ChaCha20,512,256,64,ChaCha

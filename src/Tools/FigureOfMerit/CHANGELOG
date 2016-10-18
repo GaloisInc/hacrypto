@@ -1,0 +1,94 @@
+2016-10-12 - Release 1.0.21:
+	* BlockCiphers: added SPARX_64_128 & SPARX_128_128 info
+
+
+2016-03-09 - Release 1.0.20
+	* BlockCiphers: added RECTANGLE_64_80_v06, RECTANGLE_64_128_v06 to the Triathlon Competition
+
+
+2016-03-08 - Release 1.0.19
+	* BlockCiphers: added HIGHT_64_128_v21, LEA_128_128_v14 to the Triathlon Competition
+
+
+2016-02-23 - Release 1.0.18
+	* BlockCiphers: added RECTANGLE_64_80_v05, RECTANGLE_64_128_v05 to the Triathlon Competition
+
+
+2016-02-18 - Release 1.0.17
+	* StreamCiphers: updated RC5-20_64_128 (old RC5_64_128) info
+
+
+2016-02-05 - Release 1.0.16
+	* StreamCiphers: added ChaCha20_512_128_64 & ChaCha20_512_256_64 info
+
+
+2016-02-02 - Release 1.0.15
+	* BlockCiphers: added RECTANGLE_64_80_v02, RECTANGLE_64_80_v03, RECTANGLE_64_80_v04, RECTANGLE_64_128_v02, RECTANGLE_64_128_v03, RECTANGLE_64_128_v04 to the Triathlon Competition
+
+
+2016-01-11 - Release 1.0.14
+	* BlockCiphers: added RECTANGLE_64_80 & RECTANGLE_64_128 info
+
+
+2015-12-03 - Release 1.0.13
+	* BlockCiphers: added PRIDE_64_128 info
+
+
+2015-11-28 - Release 1.0.12
+	* BlockCiphers: use ISO date format for the Triathlon Competition
+
+
+2015-11-27 - Release 1.0.11
+	* BlockCiphers: added RoadRunneR_64_80 & RoadRunneR_64_128 info
+
+
+2015-10-02 - Release 1.0.10
+	* scripts: added scripts to automatically updated the web content
+
+
+2015-09-26 - Release 1.0.9
+	* BlockCiphers: compute the Triathlon Competition score
+
+
+2015-09-24 - Release 1.0.8
+	* BlockCiphers: added Simon_64_128 & Speck_64_128 info
+
+
+2015-09-21 - Release 1.0.7
+	* BlockCiphers: compute statistics used in the Triathlon Competition scoring
+
+
+2015-09-17 - Release 1.0.6
+	* BlockCiphers: ignore IdentityCipher
+	* StreamCiphers: ignore IdentityCipher
+
+
+2015-09-16 - Release 1.0.5
+	* BlockCiphers: added security level and link to cipher description for generated MediaWiki tables
+	* StreamCiphers: added link to cipher description for generated MediaWiki tables
+
+
+2015-09-11 - Release 1.0.4
+	* BlockCiphers: added support for C+ASM implementations
+	* StreamCiphers: added support for C+ASM implementations
+
+
+2015-08-24 - Release 1.0.3
+	* scripts: added scripts to plot the results using Gnuplot
+
+
+2015-08-17 - Release 1.0.2
+	* BlockCiphers: added support for different compiler options
+	* BlockCiphers: export results in Gnuplot DAT file
+	* StreamCiphers: added support for different compiler options
+
+
+2015-08-05 - Release 1.0.1
+	* BlockCiphers: added the implementation language for the generated results
+	* StreamCiphers: added the implementation language for the generated results
+
+
+2015-03-03 - Release 1.0.0
+	* FigureOfMerit initial release:
+		* BlockCiphers: initial release
+		* StreamCiphers: initial release

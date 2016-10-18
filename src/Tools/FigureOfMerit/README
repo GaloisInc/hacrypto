@@ -1,0 +1,17 @@
+================================================================================
+								FigureOfMerit (FOM)
+================================================================================
+
+
+Copyright
+=========
+FigureOfMerit is distributed under the GNU General Public License, version 3 or 
+later.
+
+
+Project structure
+=================
+FigureOfMerit 		-> FOM scripts
+	BlockCiphers	-> FOM for block ciphers
+	StreamCiphers	-> FOM for stream ciphers
+scripts 			-> helper scripts
