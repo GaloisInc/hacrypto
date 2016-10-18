@@ -103,3 +103,147 @@
 [submodule "src/C/milagro-tls"]
 	path = src/C/milagro-tls
 	url = https://github.com/miracl/milagro-tls.git
+[submodule "src/hardware/CrypTech/aes"]
+	path = src/hardware/CrypTech/aes
+	url = https://git.cryptech.is/core/cipher/aes.git
+[submodule "src/hardware/CrypTech/coretest"]
+	path = src/hardware/CrypTech/coretest
+	url = https://git.cryptech.is/core/comm/coretest.git
+[submodule "src/hardware/CrypTech/eim"]
+	path = src/hardware/CrypTech/eim
+	url = https://git.cryptech.is/core/comm/eim.git
+[submodule "src/hardware/CrypTech/fmc"]
+	path = src/hardware/CrypTech/fmc
+	url = https://git.cryptech.is/core/comm/fmc.git
+[submodule "src/hardware/CrypTech/i2c"]
+	path = src/hardware/CrypTech/i2c
+	url = https://git.cryptech.is/core/comm/i2c.git
+[submodule "src/hardware/CrypTech/uart"]
+	path = src/hardware/CrypTech/uart
+	url = https://git.cryptech.is/core/comm/uart.git
+[submodule "src/hardware/CrypTech/sha1"]
+	path = src/hardware/CrypTech/sha1
+	url = https://git.cryptech.is/core/hash/sha1.git
+[submodule "src/hardware/CrypTech/sha256"]
+	path = src/hardware/CrypTech/sha256
+	url = https://git.cryptech.is/core/hash/sha256.git
+[submodule "src/hardware/CrypTech/sha3"]
+	path = src/hardware/CrypTech/sha3
+	url = https://git.cryptech.is/core/hash/sha3.git
+[submodule "src/hardware/CrypTech/sha512"]
+	path = src/hardware/CrypTech/sha512
+	url = https://git.cryptech.is/core/hash/sha512.git
+[submodule "src/hardware/CrypTech/modexps6"]
+	path = src/hardware/CrypTech/modexps6
+	url = https://git.cryptech.is/core/math/modexps6.git
+[submodule "src/hardware/CrypTech/modexp"]
+	path = src/hardware/CrypTech/modexp
+	url = https://git.cryptech.is/core/math/modexp.git
+[submodule "src/hardware/CrypTech/alpha"]
+	path = src/hardware/CrypTech/alpha
+	url = https://git.cryptech.is/core/platform/alpha.git
+[submodule "src/hardware/CrypTech/common"]
+	path = src/hardware/CrypTech/common
+	url = https://git.cryptech.is/core/platform/common.git
+[submodule "src/hardware/CrypTech/novena"]
+	path = src/hardware/CrypTech/novena
+	url = https://git.cryptech.is/core/platform/novena.git
+[submodule "src/hardware/CrypTech/terasic_c5g"]
+	path = src/hardware/CrypTech/terasic_c5g
+	url = https://git.cryptech.is/core/platform/terasic_c5g.git
+[submodule "src/hardware/CrypTech/avalanche_entropy"]
+	path = src/hardware/CrypTech/avalanche_entropy
+	url = https://git.cryptech.is/core/rng/avalanche_entropy.git
+[submodule "src/hardware/CrypTech/rosc_entropy"]
+	path = src/hardware/CrypTech/rosc_entropy
+	url = https://git.cryptech.is/core/rng/rosc_entropy.git
+[submodule "src/hardware/CrypTech/trng"]
+	path = src/hardware/CrypTech/trng
+	url = https://git.cryptech.is/core/rng/trng.git
+[submodule "src/hardware/CrypTech/vndecorrelator"]
+	path = src/hardware/CrypTech/vndecorrelator
+	url = https://git.cryptech.is/core/rng/vndecorrelator.git
+[submodule "src/hardware/CrypTech/mkmif"]
+	path = src/hardware/CrypTech/mkmif
+	url = https://git.cryptech.is/core/util/mkmif.git
+[submodule "src/hardware/CrypTech/design"]
+	path = src/hardware/CrypTech/design
+	url = https://git.cryptech.is/doc/design.git
+[submodule "src/hardware/CrypTech/presentations"]
+	path = src/hardware/CrypTech/presentations
+	url = https://git.cryptech.is/doc/presentations.git
+[submodule "src/hardware/CrypTech/hardware"]
+	path = src/hardware/CrypTech/hardware
+	url = https://git.cryptech.is/hardware.git
+[submodule "src/hardware/CrypTech/cryptlib"]
+	path = src/hardware/CrypTech/cryptlib
+	url = https://git.cryptech.is/sw/cryptlib.git
+[submodule "src/hardware/CrypTech/libhal"]
+	path = src/hardware/CrypTech/libhal
+	url = https://git.cryptech.is/sw/libhal.git
+[submodule "src/hardware/CrypTech/pkcs11"]
+	path = src/hardware/CrypTech/pkcs11
+	url = https://git.cryptech.is/sw/pkcs11.git
+[submodule "src/hardware/CrypTech/stm32"]
+	path = src/hardware/CrypTech/stm32
+	url = https://git.cryptech.is/sw/stm32.git
+[submodule "src/hardware/CrypTech/tamper"]
+	path = src/hardware/CrypTech/tamper
+	url = https://git.cryptech.is/sw/tamper.git
+[submodule "src/hardware/CrypTech/ekermit"]
+	path = src/hardware/CrypTech/ekermit
+	url = https://git.cryptech.is/sw/thirdparty/ekermit.git
+[submodule "src/hardware/CrypTech/sqlite3"]
+	path = src/hardware/CrypTech/sqlite3
+	url = https://git.cryptech.is/sw/thirdparty/sqlite3.git
+[submodule "src/hardware/CrypTech/coretest_bp_entropy"]
+	path = src/hardware/CrypTech/coretest_bp_entropy
+	url = https://git.cryptech.is/test/coretest_bp_entropy.git
+[submodule "src/hardware/CrypTech/coretest_fpga_entropy"]
+	path = src/hardware/CrypTech/coretest_fpga_entropy
+	url = https://git.cryptech.is/test/coretest_fpga_entropy.git
+[submodule "src/hardware/CrypTech/coretest_test_core"]
+	path = src/hardware/CrypTech/coretest_test_core
+	url = https://git.cryptech.is/test/coretest_test_core.git
+[submodule "src/hardware/CrypTech/stm32-dev-bridge"]
+	path = src/hardware/CrypTech/stm32-dev-bridge
+	url = https://git.cryptech.is/user/ft/stm32-dev-bridge.git
+[submodule "src/hardware/CrypTech/benchmark"]
+	path = src/hardware/CrypTech/benchmark
+	url = https://git.cryptech.is/user/jakob/benchmark.git
+[submodule "src/hardware/CrypTech/libcli"]
+	path = src/hardware/CrypTech/libcli
+	url = https://git.cryptech.is/user/paul/libcli.git
+[submodule "src/hardware/CrypTech/releng"]
+	path = src/hardware/CrypTech/releng
+	url = https://git.cryptech.is/user/paul/releng.git
+[submodule "src/hardware/CrypTech/ModExpA7"]
+	path = src/hardware/CrypTech/ModExpA7
+	url = https://git.cryptech.is/user/shatov/ModExpA7.git
+[submodule "src/hardware/CrypTech/fmc-test"]
+	path = src/hardware/CrypTech/fmc-test
+	url = https://git.cryptech.is/user/shatov/fmc-test.git
+[submodule "src/hardware/CrypTech/streebog_tester"]
+	path = src/hardware/CrypTech/streebog_tester
+	url = https://git.cryptech.is/user/shatov/gost/streebog_tester.git
+[submodule "src/hardware/CrypTech/streebog"]
+	path = src/hardware/CrypTech/streebog
+	url = https://git.cryptech.is/user/shatov/gost/streebog.git
+[submodule "src/hardware/CrypTech/novena-fmc-arbiter"]
+	path = src/hardware/CrypTech/novena-fmc-arbiter
+	url = https://git.cryptech.is/user/shatov/novena-fmc-arbiter.git
+[submodule "src/hardware/CrypTech/stm32_n25q128"]
+	path = src/hardware/CrypTech/stm32_n25q128
+	url = https://git.cryptech.is/user/shatov/stm32_n25q128.git
+[submodule "src/hardware/CrypTech/stm32_sdram"]
+	path = src/hardware/CrypTech/stm32_sdram
+	url = https://git.cryptech.is/user/shatov/stm32_sdram.git
+[submodule "src/hardware/CrypTech/aes-keywrap"]
+	path = src/hardware/CrypTech/aes-keywrap
+	url = https://git.cryptech.is/user/sra/aes-keywrap.git
+[submodule "src/hardware/CrypTech/build-tools"]
+	path = src/hardware/CrypTech/build-tools
+	url = https://git.cryptech.is/user/sra/build-tools.git
+[submodule "src/hardware/CrypTech/openssl-engine"]
+	path = src/hardware/CrypTech/openssl-engine
+	url = https://git.cryptech.is/user/sra/openssl-engine.git
