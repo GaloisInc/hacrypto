@@ -1,0 +1,40 @@
+IN
+
+constant-time execution
+padding/format verification
+compiler “optimizations”
+conformance to specs
+choice of algorithms
+padding oracles
+stack hygiene
+randomness
+
+IN?
+
+SCA mitigation
+(smartcards etc.)
+masking, hiding, shuffling, etc.
+simple countermeasures simple and cheap
+effective ones (high-order…) more sophisticated
+
+OUT
+
+fault, microprobing, RE, etc.
+not much to do at the code level
+(or too invasive/slow)
+most effective countermeasures at HW level
+
+OTHER
+
+encrypt-then/and-MAC
+CTR counter format
+handling residues
+bignum arithmetic
+
+Test Benches
+
+SUPERCOP’s checksum checks for
+buffers overlap support
+off-boundaries writes
+determinism
+for 1, 2, 3, …, N bytes
