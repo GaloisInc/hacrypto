@@ -88,3 +88,6 @@
 [submodule "src/C/libressl/openbsd"]
 	path = src/C/libressl/openbsd
 	url = https://github.com/libressl-portable/openbsd.git
+[submodule "src/C/milagro-crypto-c"]
+	path = src/C/milagro-crypto-c
+	url = https://github.com/miracl/milagro-crypto-c.git
