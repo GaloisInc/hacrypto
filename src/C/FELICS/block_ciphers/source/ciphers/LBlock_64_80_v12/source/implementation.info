@@ -1,0 +1,15 @@
+ImplementationDescription: fully unrolled, swap optimized, reference implementation using 32 bits operations when possible; precomputed shifted constants for encryption key schedule XOR
+ImplementationAuthors: Daniel Dinu
+
+EncryptionKeyScheduleConstants: constants2
+EncryptConstants: constants1
+DecryptionKeyScheduleConstants:
+DecryptConstants: constants1
+
+EncryptionKeyScheduleCode:
+EncryptCode:
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

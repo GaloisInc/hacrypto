@@ -1,0 +1,15 @@
+ImplementationDescription: cleaner reference implementation
+ImplementationAuthors: Daniel Dinu
+
+EncryptionKeyScheduleConstants: constants2
+EncryptConstants: constants1
+DecryptionKeyScheduleConstants:
+DecryptConstants: constants1
+
+EncryptionKeyScheduleCode:
+EncryptCode:
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

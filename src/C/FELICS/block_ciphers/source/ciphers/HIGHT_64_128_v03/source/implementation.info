@@ -1,0 +1,15 @@
+ImplementationDescription: cleaner reference implementation; delta constants are computed when encryption key schedule is called
+ImplementationAuthors: Daniel Dinu
+
+EncryptionKeyScheduleConstants:
+EncryptConstants: 
+DecryptionKeyScheduleConstants:
+DecryptConstants:
+
+EncryptionKeyScheduleCode: 
+EncryptCode: round_function
+DecryptionKeyScheduleCode:
+DecryptCode: round_function
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

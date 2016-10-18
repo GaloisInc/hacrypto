@@ -1,0 +1,15 @@
+ImplementationDescription: Implementation with no extra function call, using key schedule
+ImplementationAuthors: Adnan Baysal, Daniel Dinu
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants: 
+DecryptionKeyScheduleConstants: constants
+DecryptConstants: 
+
+EncryptionKeyScheduleCode: 
+EncryptCode: 
+DecryptionKeyScheduleCode: 
+DecryptCode: 
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: yes

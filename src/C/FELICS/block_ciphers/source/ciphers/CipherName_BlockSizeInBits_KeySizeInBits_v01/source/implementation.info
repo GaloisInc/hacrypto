@@ -1,0 +1,20 @@
+ImplementationDescription: Cipher implementation example
+ImplementationAuthors: 
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants: constants
+DecryptionKeyScheduleConstants:
+DecryptConstants: constants
+
+EncryptionKeyScheduleCode: 
+EncryptCode: 
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no
+
+ImplementationAVR: C
+ImplementationMSP: C
+ImplementationARM: C
+ImplementationPC: C

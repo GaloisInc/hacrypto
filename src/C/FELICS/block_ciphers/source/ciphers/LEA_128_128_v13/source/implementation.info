@@ -1,0 +1,15 @@
+ImplementationDescription: C implementation; revised version of v09 (using rot32.h in FELICS framework)
+ImplementationAuthors: Ilwoong Jeong
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants: 
+DecryptionKeyScheduleConstants:
+DecryptConstants: 
+
+EncryptionKeyScheduleCode:
+EncryptCode:
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

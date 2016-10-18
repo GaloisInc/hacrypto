@@ -1,0 +1,15 @@
+ImplementationDescription: Optimized C code
+ImplementationAuthors: Jason Smith, Yann Le Corre
+
+EncryptionKeyScheduleConstants:
+EncryptConstants:
+DecryptionKeyScheduleConstants:
+DecryptConstants:
+
+EncryptionKeyScheduleCode:
+EncryptCode:
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

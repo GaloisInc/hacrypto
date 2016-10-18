@@ -1,0 +1,7 @@
+Balanced implementation of Simon/64/96
+
+- rounds are processed by pairs, which slightly  unrolls the main loop and save an intermediate variable
+- rotation functions are inlined
+- round function is inlined
+- key schedule use a lookup table for constant Z^3
+- only the usefull values of Z^3 for the current configuration of the cipher are stored

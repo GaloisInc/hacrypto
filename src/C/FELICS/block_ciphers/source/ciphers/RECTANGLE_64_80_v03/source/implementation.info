@@ -1,0 +1,20 @@
+ImplementationDescription: Optimized C implementation is used on ARM.
+ImplementationAuthors: Bao Zhenzhen, Luo Peng, Zhang Wentao
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants:
+DecryptionKeyScheduleConstants:
+DecryptConstants:
+
+EncryptionKeyScheduleCode: 
+EncryptCode: 
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no
+
+ImplementationAVR: ASM
+ImplementationMSP: ASM
+ImplementationARM: C
+ImplementationPC: C

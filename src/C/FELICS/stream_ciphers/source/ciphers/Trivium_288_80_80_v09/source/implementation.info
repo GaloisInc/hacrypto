@@ -1,0 +1,8 @@
+ImplementationDescription: reference implementation using 3 registers => the state size is increased with 1 byte; Implementation state size = 37 bytes (296 bits)
+ImplementationAuthors: Daniel Dinu
+
+SetupConstants:
+EncryptConstants:
+
+SetupCode: rotate
+EncryptCode: rotate

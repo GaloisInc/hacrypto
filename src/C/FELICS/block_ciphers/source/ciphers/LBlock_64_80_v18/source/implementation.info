@@ -1,0 +1,15 @@
+ImplementationDescription: use sawp (Swap) function and round function (F) in encryption and decryption; store constants in RAM
+ImplementationAuthors: Daniel Dinu
+
+EncryptionKeyScheduleConstants: constants2
+EncryptConstants: constants1
+DecryptionKeyScheduleConstants:
+DecryptConstants: constants1
+
+EncryptionKeyScheduleCode:
+EncryptCode: round_function
+DecryptionKeyScheduleCode:
+DecryptCode: round_function
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

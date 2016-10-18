@@ -1,0 +1,15 @@
+ImplementationDescription: Piccolo-64-80, speed-optimized
+ImplementationAuthors: Yann Le Corre
+
+EncryptionKeyScheduleConstants: eks_constants
+EncryptConstants: ed_constants
+DecryptionKeyScheduleConstants:
+DecryptConstants: ed_constants
+
+EncryptionKeyScheduleCode:
+EncryptCode: primitives
+DecryptionKeyScheduleCode:
+DecryptCode: primitives
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

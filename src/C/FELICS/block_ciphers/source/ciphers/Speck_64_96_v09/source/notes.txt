@@ -1,0 +1,2 @@
+High performance implementation of Speck 64/96.
+Half of the rounds are performed for each loop iteration.

@@ -1,0 +1,124 @@
+2016-10-12 - Release 1.1.18
+	* block_ciphers (source/common/rot8.h): added functions to handle rotations of 8-bit values efficiently
+	* stream_ciphers (source/common/rot8.h): added functions to handle rotations of 8-bit values efficiently
+	* block_ciphers (source/common/rot16.h): added functions to handle rotations of 16-bit values efficiently
+	* stream_ciphers (source/common/rot16.h): added functions to handle rotations of 16-bit values efficiently
+	* block_ciphers: added SPARX_64_128_v01, SPARX_64_128_v02, SPARX_64_128_v03, SPARX_64_128_v04, SPARX_64_128_v05, SPARX_64_128_v06, SPARX_64_128_v07, SPARX_64_128_v08, SPARX_64_128_v09, SPARX_64_128_v10, SPARX_64_128_v11, SPARX_64_128_v12, SPARX_64_128_v13, SPARX_64_128_v14, SPARX_64_128_v15, SPARX_64_128_v16, SPARX_64_128_v17, SPARX_64_128_v18, SPARX_64_128_v19, SPARX_64_128_v20, SPARX_64_128_v21, SPARX_64_128_v22, SPARX_64_128_v23, SPARX_64_128_v24, SPARX_64_128_v25, SPARX_64_128_v26, SPARX_64_128_v27, SPARX_64_128_v28, SPARX_64_128_v29, SPARX_64_128_v30, SPARX_64_128_v31, SPARX_64_128_v32, SPARX_64_128_v33, SPARX_64_128_v34, SPARX_64_128_v35, SPARX_128_128_v01, SPARX_128_128_v02, SPARX_128_128_v03, SPARX_128_128_v04, SPARX_128_128_v05, SPARX_128_128_v06, SPARX_128_128_v07, SPARX_128_128_v08, SPARX_128_128_v09, SPARX_128_128_v10, SPARX_128_128_v11, SPARX_128_128_v12, SPARX_128_128_v13, SPARX_128_128_v14, SPARX_128_128_v15, SPARX_128_128_v16, SPARX_128_128_v17, SPARX_128_128_v18, SPARX_128_128_v19, SPARX_128_128_v20, SPARX_128_128_v21, SPARX_128_128_v22, SPARX_128_128_v23, SPARX_128_128_v24 implementations
+
+
+2016-05-25 - Release 1.1.17
+	* block_ciphers (scripts/cipher/cipher_ram.sh): set device parameter for JLinkGDBServer
+	* block_ciphers (source/common/cipher.mk): fixed makefile for make version > 3.81
+	* stream_ciphers (scripts/cipher/cipher_ram.sh): set device parameter for JLinkGDBServer
+	* stream_ciphers (source/common/cipher.mk): fixed makefile for make version > 3.81
+
+
+2016-03-09 - Release 1.1.16
+	* block_ciphers: added RECTANGLE_64_80_v06, RECTANGLE_64_128_v06 implementations
+
+
+2016-03-08 - Release 1.1.15
+	* block_ciphers: added HIGHT_64_128_v21, LEA_128_128_v14 implementations
+
+
+2016-02-23 - Release 1.1.14
+	* block_ciphers: added RECTANGLE_64_80_v05, RECTANGLE_64_128_v05 implementations
+
+
+2016-02-18 - Release 1.1.13
+	* block_ciphers: fixed implementation.info for RECTANGLE_64_80_v02, RECTANGLE_64_80_v03, RECTANGLE_64_80_v04, RECTANGLE_64_128_v02, RECTANGLE_64_128_v03, RECTANGLE_64_128_v04
+	* block_ciphers: renamed RC5_64_128_v01, RC5_64_128_v02, RC5_64_128_v03, RC5_64_128_v04, RC5_64_128_v05, RC5_64_128_v06, RC5_64_128_v07, RC5_64_128_v08, RC5_64_128_v09, RC5_64_128_v10, RC5_64_128_v11, RC5_64_128_v12 to RC5-20_64_128_v01, RC5-20_64_128_v02, RC5-20_64_128_v03, RC5-20_64_128_v04, RC5-20_64_128_v05, RC5-20_64_128_v06, RC5-20_64_128_v07, RC5-20_64_128_v08, RC5-20_64_128_v09, RC5-20_64_128_v10, RC5-20_64_128_v11, RC5-20_64_128_v12
+
+
+2016-02-05 - Release 1.1.12
+	* stream_ciphers: added ChaCha20_512_128_64_v01, ChaCha20_512_128_64_v02, ChaCha20_512_128_64_v03, ChaCha20_512_256_64_v01, ChaCha20_512_256_64_v02, ChaCha20_512_256_64_v03, IdentityCipher_512_128_64_v01, IdentityCipher_512_256_64_v01 implementations
+
+
+2016-02-02 - Release 1.1.11
+	* block_ciphers: added RECTANGLE_64_80_v02, RECTANGLE_64_80_v03, RECTANGLE_64_80_v04, RECTANGLE_64_128_v02, RECTANGLE_64_128_v03, RECTANGLE_64_128_v04 implementations
+
+
+2016-01-11 - Release 1.1.10
+	* block_ciphers: added RECTANGLE_64_80_v01, RECTANGLE_64_128_v01 implementations
+	* block_ciphers: added PRIDE_64_128_v05, PRIDE_64_128_v06, PRIDE_64_128_v07, PRIDE_64_128_v08 implementations
+
+
+2015-12-03 - Release 1.1.9
+	* block_ciphers: added PRIDE_64_128_v01, PRIDE_64_128_v02, PRIDE_64_128_v03, PRIDE_64_128_v04 implementations
+
+
+2015-11-27 - Release 1.1.8
+	* block_ciphers: added RoadRunneR_64_80_v01, RoadRunneR_64_80_v02, RoadRunneR_64_128_v01, RoadRunneR_64_128_v02, RoadRunneR_64_128_v03, RoadRunneR_64_128_v04, RoadRunneR_64_128_v05, RoadRunneR_64_128_v06 implementations
+
+
+2015-09-26 - Release 1.1.7
+	* block_ciphers: Added support for incremental results
+	* stream_ciphers: Added support for incremental results
+
+
+2015-09-24 - Release 1.1.6
+	* block_ciphers: added Simon_64_128_v01, Simon_64_128_v02, Simon_64_128_v03, Simon_64_128_v04, Simon_64_128_v05, Simon_64_128_v06, Speck_64_128_v01, Speck_64_128_v02, Speck_64_128_v03, Speck_64_128_v04, Speck_64_128_v05, Speck_64_128_v06 implementations
+
+
+2015-09-21 - Release 1.1.5
+	* block_ciphers: improved key schedule for assembly implementations of Simon: Simon_64_96_v07, Simon_64_96_v08, Simon_64_96_v09
+
+
+2015-09-17 - Release 1.1.4
+	* block_ciphers: added IdentityCipher_128_128_v01, IdentityCipher_64_128_v01, IdentityCipher_64_80_v01, IdentityCipher_64_96_v01 implementations
+	* block_ciphers: added IdentityCipher_288_80_80_v01, IdentityCipher_608_128_128_v01 implementations
+ 
+
+2015-09-11 - Release 1.1.3
+	* block_cipher: added Chaskey-LTS_128_128_v01, Chaskey-LTS_128_128_v02 implementations
+
+
+2015-09-11 - Release 1.1.2
+	* block_ciphers (source/common/rot32.h): added functions to handle rotations of 32-bit values efficiently
+	* stream_ciphers (source/common/rot32.h): added functions to handle rotations of 32-bit values efficiently
+	* block_ciphers: added LEA_128_128_v01, LEA_128_128_v02, LEA_128_128_v03, LEA_128_128_v04, LEA_128_128_v05, LEA_128_128_v06, LEA_128_128_v07, LEA_128_128_v08, LEA_128_128_v09, LEA_128_128_v10, LEA_128_128_v11, LEA_128_128_v12, LEA_128_128_v13 implementations
+	* block_ciphers: added Chaskey_128_128_v02 implementation
+	* block_ciphers: added Speck_64_96_v03, Speck_64_96_v04, Speck_64_96_v05, Speck_64_96_v06, Speck_64_96_v07, Speck_64_96_v08, Speck_64_96_v09, Speck_64_96_v10 implementations
+	* block_ciphers: added Simon_64_96_v04, Simon_64_96_v05, Simon_64_96_v06, Simon_64_96_v07, Simon_64_96_v08, Simon_64_96_v09 implementations
+
+
+2015-08-24 - Release 1.1.1
+	* block_ciphers: changed alignment boundary for ARM
+	* stream_ciphers: changed alignment boundary for ARM
+
+
+2015-08-17 - Release 1.1.0
+	* block_ciphers: added support for different compiler options
+	* stream_ciphers: added support for different compiler options
+
+
+2015-08-05 - Release 1.0.5
+	* block_ciphers: added the implementation language for the generated results
+	* stream ciphers: added the implementation language for the generated results
+
+
+2015-07-16 - Release 1.0.4
+	* block_ciphers: added the HIGHT_64_128_v11, HIGHT_64_128_v12, HIGHT_64_128_v13, HIGHT_64_128_v14, HIGHT_64_128_v15, HIGHT_64_128_v16, HIGHT_64_128_v17, HIGHT_64_128_v18, HIGHT_64_128_v19, HIGHT_64_128_v20, RC5_64_128_v07, RC5_64_128_v08, RC5_64_128_v09, RC5_64_128_v10, RC5_64_128_v11, RC5_64_128_v12, Simon_64_96_v01, Simon_64_96_v02, Speck_64_96_v02 C implementations with improved code for rotations
+
+
+2015-06-26 - Release 1.0.3
+	* block_ciphers: added the AES_128_128_v07 assembly implementation
+	* block_ciphers: added the PRESENT_64_80_v06 assembly implementation
+
+
+2015-05-06 - Release 1.0.2
+	* block_ciphers (source/architecture/arm.mk): configurable port & device
+	* stream_ciphers (source/architecture/arm.mk): configurable port & device
+	* common (arm_serial_terminal.py): configurable device
+
+
+2015-04-20 - Release 1.0.1
+	* block_ciphers: added the Chaskey_128_128_v01 implementation
+	* block_ciphers (scripts/common/version.sh): changed console output
+	* stream_ciphers (scripts/common/version.sh): changed console output
+
+
+2015-03-03 - Release 1.0.0
+	* FELICS: initial realease: 
+		* block_ciphers: module initial release
+		* stream_ciphers: module initial release

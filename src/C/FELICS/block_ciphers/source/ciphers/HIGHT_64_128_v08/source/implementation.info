@@ -1,0 +1,15 @@
+ImplementationDescription: cleaner reference implementation; delta constants are precomputed; store constants in RAM
+ImplementationAuthors: Daniel Dinu
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants: 
+DecryptionKeyScheduleConstants:
+DecryptConstants:
+
+EncryptionKeyScheduleCode: 
+EncryptCode: round_function
+DecryptionKeyScheduleCode:
+DecryptCode: round_function
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

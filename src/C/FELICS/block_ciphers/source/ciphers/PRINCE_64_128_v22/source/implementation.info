@@ -1,0 +1,15 @@
+ImplementationDescription: fully unrolled reference implementation; use 16 bits operations where possible; store constants in RAM
+ImplementationAuthors: Daniel Dinu
+
+EncryptionKeyScheduleConstants:
+EncryptConstants: constants
+DecryptionKeyScheduleConstants:
+DecryptConstants: constants
+
+EncryptionKeyScheduleCode: 
+EncryptCode: 
+DecryptionKeyScheduleCode:
+DecryptCode: 
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

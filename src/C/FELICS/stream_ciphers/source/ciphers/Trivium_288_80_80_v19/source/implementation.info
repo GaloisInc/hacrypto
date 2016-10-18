@@ -1,0 +1,8 @@
+ImplementationDescription: reference implementation; Implementation state size = 48 bytes (384 bits); use 64 bits operations when possible; share also update, not just rotate; reduced the number of local variables in update
+ImplementationAuthors: Daniel Dinu
+
+SetupConstants:
+EncryptConstants:
+
+SetupCode: update, rotate
+EncryptCode: update, rotate

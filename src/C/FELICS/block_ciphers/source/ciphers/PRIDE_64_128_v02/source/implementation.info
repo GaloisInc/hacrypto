@@ -1,0 +1,15 @@
+ImplementationDescription: Reference C implementation with key schedule
+ImplementationAuthors: Adnan Baysal
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants: 
+DecryptionKeyScheduleConstants: constants
+DecryptConstants: 
+
+EncryptionKeyScheduleCode: 
+EncryptCode: pride_functions
+DecryptionKeyScheduleCode:
+DecryptCode: pride_functions
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: yes

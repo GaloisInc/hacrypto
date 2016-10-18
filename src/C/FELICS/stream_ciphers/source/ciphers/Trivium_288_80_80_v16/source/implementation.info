@@ -1,0 +1,8 @@
+ImplementationDescription: reference implementation using 3 registers => the state size is increased with 1 byte; Implementation state size = 37 bytes (296 bits); share also update, not just rotate; use 16 bits operations where possible; reduced the number of local variables in update; partially unrolled setup
+ImplementationAuthors: Daniel Dinu
+
+SetupConstants:
+EncryptConstants:
+
+SetupCode: update, rotate
+EncryptCode: update, rotate

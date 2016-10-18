@@ -1,0 +1,15 @@
+ImplementationDescription: Reference C implementation, no key schedule
+ImplementationAuthors: Adnan Baysal, Daniel Dinu
+
+EncryptionKeyScheduleConstants: 
+EncryptConstants: constants
+DecryptionKeyScheduleConstants: 
+DecryptConstants: constants
+
+EncryptionKeyScheduleCode: 
+EncryptCode: s_layer, l_layer, common_l_layer
+DecryptionKeyScheduleCode:
+DecryptCode: s_layer, inverse_l_layer, common_l_layer
+
+UseEncryptionKeySchedule: no
+UseDecryptionKeySchedule: no

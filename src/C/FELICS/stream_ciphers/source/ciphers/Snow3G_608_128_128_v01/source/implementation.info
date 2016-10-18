@@ -1,0 +1,8 @@
+ImplementationDescription: Snow 3G implemented as described in specification, without S1_T* and S2_T* LUTs. Requires more RAM and clock cycles
+ImplementationAuthors: Yann Le Corre
+
+SetupConstants: constants
+EncryptConstants: constants
+
+SetupCode: primitives
+EncryptCode: primitives

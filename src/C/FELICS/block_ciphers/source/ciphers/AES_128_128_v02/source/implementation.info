@@ -1,0 +1,15 @@
+ImplementationDescription: Fast table-based AES implementation
+ImplementationAuthors: Dmitry Khovratovich
+
+EncryptionKeyScheduleConstants: sbox, rcon
+EncryptConstants: sbox, table
+DecryptionKeyScheduleConstants: sbox, rcon, inv_mixcolumn
+DecryptConstants: inv_sbox, inv_table
+
+EncryptionKeyScheduleCode: key_schedule
+EncryptCode: 
+DecryptionKeyScheduleCode: key_schedule
+DecryptCode: 
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: yes

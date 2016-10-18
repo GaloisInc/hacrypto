@@ -1,0 +1,15 @@
+ImplementationDescription: Fast table-based AES implementation; store Sbox and inverse Sbox in RAM, the rest of constants (Rcon, T0, T1, T2, T3, inverse T0, inverse T1, inverse T2, inverse T3, inverce MC0, inverse MC1, inverse MC2 and inverse MC3) are stored in ROM because there is not enough RAM for them
+ImplementationAuthors: Dmitry Khovratovich
+
+EncryptionKeyScheduleConstants: sbox, rcon
+EncryptConstants: sbox, table
+DecryptionKeyScheduleConstants: sbox, rcon, inv_mixcolumn
+DecryptConstants: inv_sbox, inv_table
+
+EncryptionKeyScheduleCode: key_schedule
+EncryptCode: 
+DecryptionKeyScheduleCode: key_schedule
+DecryptCode: 
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: yes

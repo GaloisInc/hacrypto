@@ -1,0 +1,15 @@
+ImplementationDescription: optimized reference implementation. Use only rotations by 1 on 8
+ImplementationAuthors: Yann Le Corre
+
+EncryptionKeyScheduleConstants:
+EncryptConstants:
+DecryptionKeyScheduleConstants:
+DecryptConstants:
+
+EncryptionKeyScheduleCode:
+EncryptCode:
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

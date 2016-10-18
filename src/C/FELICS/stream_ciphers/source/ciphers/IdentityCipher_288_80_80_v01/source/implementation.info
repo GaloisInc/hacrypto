@@ -1,0 +1,13 @@
+ImplementationDescription: IndentityCipher implementation
+ImplementationAuthors: Daniel Dinu
+
+SetupConstants: 
+EncryptConstants: 
+
+SetupCode:
+EncryptCode:
+
+ImplementationAVR: C
+ImplementationMSP: C
+ImplementationARM: C
+ImplementationPC: C

@@ -1,0 +1,8 @@
+ImplementationDescription: reference implementation; share also update, not just rotate; use 16 bits operations where possible; reduced the number of local variables in update
+ImplementationAuthors: Daniel Dinu
+
+SetupConstants:
+EncryptConstants:
+
+SetupCode: update, rotate
+EncryptCode: update, rotate

@@ -1,0 +1,15 @@
+ImplementationDescription: use 16 bits operations where possible; store constants in RAM
+ImplementationAuthors: Daniel Dinu
+
+EncryptionKeyScheduleConstants:
+EncryptConstants: constants
+DecryptionKeyScheduleConstants:
+DecryptConstants: constants
+
+EncryptionKeyScheduleCode: 
+EncryptCode: shared_functions
+DecryptionKeyScheduleCode:
+DecryptCode: shared_functions
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

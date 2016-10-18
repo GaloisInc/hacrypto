@@ -1,0 +1,3 @@
+Piccolo-64-80, balanced implementation
+
+- GF[2^4] multiplications by 2 and 3 are implemented using look-up tables stored in ROM

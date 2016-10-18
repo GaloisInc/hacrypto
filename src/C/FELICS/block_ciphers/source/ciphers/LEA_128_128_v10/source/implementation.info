@@ -1,0 +1,15 @@
+ImplementationDescription: Reference implementation; load a block into an array of integers
+ImplementationAuthors: Ilwoong Jeong
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants: 
+DecryptionKeyScheduleConstants:
+DecryptConstants: 
+
+EncryptionKeyScheduleCode:
+EncryptCode:
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

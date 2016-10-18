@@ -1,0 +1,20 @@
+ImplementationDescription: Optimized C implementation for all platformss.
+ImplementationAuthors: Bao Zhenzhen, Luo Peng, Zhang Wentao
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants: 
+DecryptionKeyScheduleConstants:
+DecryptConstants: 
+
+EncryptionKeyScheduleCode:
+EncryptCode: 
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no
+
+ImplementationAVR: C
+ImplementationMSP: C
+ImplementationARM: C
+ImplementationPC: C

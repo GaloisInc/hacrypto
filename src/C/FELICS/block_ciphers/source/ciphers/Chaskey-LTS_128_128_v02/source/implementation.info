@@ -1,0 +1,15 @@
+ImplementationDescription: Cipher reference implementation with new rotation functions
+ImplementationAuthors: Nicky Mouha, Jason Smith
+
+EncryptionKeyScheduleConstants: 
+EncryptConstants:
+DecryptionKeyScheduleConstants:
+DecryptConstants:
+
+EncryptionKeyScheduleCode:
+EncryptCode: 
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: no
+UseDecryptionKeySchedule: no

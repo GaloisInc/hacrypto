@@ -1,0 +1,15 @@
+ImplementationDescription: AES_128_128 small footprint, 8-bit
+ImplementationAuthors: Dmitry Khovratovich 
+
+EncryptionKeyScheduleConstants: sbox, rc_tab
+EncryptConstants: sbox
+DecryptionKeyScheduleConstants: 
+DecryptConstants: inv_sbox
+
+EncryptionKeyScheduleCode: 
+EncryptCode: gmul_o
+DecryptionKeyScheduleCode:
+DecryptCode: gmul_o
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

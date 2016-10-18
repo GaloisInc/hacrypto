@@ -1,0 +1,15 @@
+ImplementationDescription: Implementation with single common function call in Encrypt/Decrypt, no key schedule
+ImplementationAuthors: Adnan Baysal
+
+EncryptionKeyScheduleConstants: 
+EncryptConstants: 
+DecryptionKeyScheduleConstants: 
+DecryptConstants: 
+
+EncryptionKeyScheduleCode: 
+EncryptCode: rrr_functions
+DecryptionKeyScheduleCode:
+DecryptCode: rrr_functions
+
+UseEncryptionKeySchedule: no
+UseDecryptionKeySchedule: no

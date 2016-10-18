@@ -1,0 +1,8 @@
+ImplementationDescription: reference implementation
+ImplementationAuthors: Daniel Dinu
+
+SetupConstants:
+EncryptConstants:
+
+SetupCode: rotate
+EncryptCode: rotate

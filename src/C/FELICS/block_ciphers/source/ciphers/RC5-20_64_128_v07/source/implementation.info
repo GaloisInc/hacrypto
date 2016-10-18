@@ -1,0 +1,15 @@
+ImplementationDescription: reference implementation; different implementation for rotations
+ImplementationAuthors: Daniel Dinu
+
+EncryptionKeyScheduleConstants:
+EncryptConstants: 
+DecryptionKeyScheduleConstants:
+DecryptConstants: 
+
+EncryptionKeyScheduleCode: 
+EncryptCode: 
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

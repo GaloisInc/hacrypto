@@ -1,0 +1,15 @@
+ImplementationDescription: partially unrolled reference implementation
+ImplementationAuthors: Daniel Dinu
+
+EncryptionKeyScheduleConstants:
+EncryptConstants: constants
+DecryptionKeyScheduleConstants:
+DecryptConstants: constants
+
+EncryptionKeyScheduleCode: 
+EncryptCode: 
+DecryptionKeyScheduleCode:
+DecryptCode: 
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

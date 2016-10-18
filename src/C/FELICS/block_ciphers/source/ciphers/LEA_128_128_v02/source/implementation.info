@@ -1,0 +1,20 @@
+ImplementationDescription: Assembly implementation for AVR and ARM; optimized for speed-size tradeoff
+ImplementationAuthors: Dongsoo Lee and Ilwoong Jeong
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants: 
+DecryptionKeyScheduleConstants:
+DecryptConstants: 
+
+EncryptionKeyScheduleCode:
+EncryptCode:
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no
+
+ImplementationAVR: ASM
+ImplementationMSP: C
+ImplementationARM: ASM
+ImplementationPC: C

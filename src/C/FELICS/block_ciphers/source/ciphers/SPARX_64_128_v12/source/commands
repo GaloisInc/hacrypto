@@ -1,0 +1,6 @@
+prog cipher.elf
+simio add console consoleDevice
+simio config consoleDevice base 0x7f
+setbreak StopDevice
+run
+exit

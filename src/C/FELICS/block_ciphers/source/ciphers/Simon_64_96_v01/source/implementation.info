@@ -1,0 +1,15 @@
+ImplementationDescription: optimized reference implementation
+ImplementationAuthors: Yann Le Corre
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants:
+DecryptionKeyScheduleConstants:
+DecryptConstants:
+
+EncryptionKeyScheduleCode:
+EncryptCode:
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

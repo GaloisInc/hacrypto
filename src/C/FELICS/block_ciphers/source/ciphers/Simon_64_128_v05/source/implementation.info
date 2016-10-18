@@ -1,0 +1,20 @@
+ImplementationDescription: Two rounds per loop iteration in assembly for MSP and AVR
+ImplementationAuthors: Jason Smith, Bryan Weeks, Yann Le Corre
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants:
+DecryptionKeyScheduleConstants:
+DecryptConstants:
+
+EncryptionKeyScheduleCode:
+EncryptCode:
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no
+
+ImplementationAVR: ASM
+ImplementationMSP: ASM
+ImplementationARM: C
+ImplementationPC: C

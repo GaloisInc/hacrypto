@@ -1,0 +1,34 @@
+Program: FELICS (Fair Evaluation of Cryptographic Systems)
+Homepage: https://www.cryptolux.org/index.php/FELICS
+Maintainer: Daniel Dinu <dumitru-daniel.dinu@uni.lu>
+License: GPLv3+
+
+
+FELICS is free software: you can redistribute it and/or modify it under the 
+terms of the GNU General Public License as published by the Free Software 
+Foundation, either version 3 of the License, or (at your option) any later 
+version.
+
+
+Authors
+=======
+Adnan Baysal <adnan.baysal@tubitak.gov.tr>
+Daniel Dinu <dumitru-daniel.dinu@uni.lu>
+Johann Großschädl <johann.groszschaedl@uni.lu>
+Ilwoong Jeong <iw98jeong@nsr.re.kr>
+Dmitry Khovratovich <dmitry.khovratovich@uni.lu>
+Yann Le Corre <yann.lecorre@uni.lu>
+Dongsoo Lee <lethree@nsr.re.kr>
+Nicky Mouha <nicky.mouha@esat.kuleuven.be>
+Luo Peng <luopeng@iie.ac.cn>
+Youngjoo Shin <yjshin@nsr.re.kr>
+Jason Smith <jksmit3@tycho.ncsc.mil>
+André Stemper <andre.stemper@uni.lu>
+Bryan Weeks <beweeks@tycho.ncsc.mil>
+Zhang Wentao <zhangwentao@iie.ac.cn>
+Bao Zhenzhen <baozhenzhen@iie.ac.cn>
+
+
+Copyright
+=========
+FELICS is distributed under the GNU General Public License, version 3 or later.

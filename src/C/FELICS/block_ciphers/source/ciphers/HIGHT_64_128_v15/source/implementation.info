@@ -1,0 +1,15 @@
+ImplementationDescription: fully unrolled implementation; delta constants are precomputed; different implementation for rotations
+ImplementationAuthors: Daniel Dinu
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants: 
+DecryptionKeyScheduleConstants:
+DecryptConstants:
+
+EncryptionKeyScheduleCode: 
+EncryptCode: round_function
+DecryptionKeyScheduleCode:
+DecryptCode: round_function
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

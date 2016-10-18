@@ -1,0 +1,13 @@
+ImplementationDescription: ChaCha20 reference implementation
+ImplementationAuthors: Daniel Dinu
+
+SetupConstants: constants
+EncryptConstants:
+
+SetupCode:
+EncryptCode: update
+
+ImplementationAVR: C
+ImplementationMSP: C
+ImplementationARM: C
+ImplementationPC: C

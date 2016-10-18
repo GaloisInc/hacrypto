@@ -1,0 +1,15 @@
+ImplementationDescription: Cipher reference implementation
+ImplementationAuthors: Nicky Mouha
+
+EncryptionKeyScheduleConstants: 
+EncryptConstants:
+DecryptionKeyScheduleConstants:
+DecryptConstants:
+
+EncryptionKeyScheduleCode:
+EncryptCode: 
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: no
+UseDecryptionKeySchedule: no

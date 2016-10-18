@@ -1,0 +1,449 @@
+Initial file structure
+======================
+
+.									-> CipherName_BlockSizeInBits_KeySizeInBits_v01
+├── build							-> Cipher build directory
+└── source							-> Cipher source directory
+    ├── constants.c					-> Cipher constants definition
+    ├── constants.h					-> Cipher constants declaration
+    ├── data_types.h				-> Cipher data types
+    ├── decrypt.c					-> Cipher decryption
+    ├── decryption_key_schedule.c	-> Cipher decryption key schedule
+    ├── encrypt.c					-> Cipher encryption
+    ├── encryption_key_schedule.c	-> Cipher encryption key schedule
+    ├── implementation.info			-> Cipher implementation information
+    ├── Makefile					-> Makefile
+    ├── README						-> README file - this file
+    └── test_vectors.c				-> Cipher test vectors
+
+
+
+Add cipher implementation
+=========================
+
+Steps:
+	1. Make a copy of "CipherName_BlockSizeInBits_KeySizeInBits_v01" directory 
+in "ciphers" directory.
+
+	2. Rename the copy of the directory to follow the pattern 
+"CipherName_BlockSizeInBits_KeySizeInBits_v01".
+			Example: "LBlock_64_80_v01"
+		Note: If you add several implementation for the same cipher (for example
+ one optimized for RAM and one optimized for speed) you can increase the 
+cipher directory name suffix "_v02", "_v03", etc.
+			Example: LBlock_64_80_v02
+
+	3. Add cipher implementation:
+		a. Add cipher block size, key size and round keys size in "constants.h".
+		
+		b. Declare cipher S-boxes and other constants in "constants.h" and 
+define them in "constants.c" or in any other "*.c" file, excepting "*.c" files 
+from Section 3.c.
+			Note: You can use any data type based on "RAM_DATA_*" 
+("RAM_DATA_BYTE", "RAM_DATA_WORD", "RAM_DATA_DOUBLE_WORD") or "ROM_DATA_*" 
+("ROM_DATA_BYTE", "ROM_DATA_WORD", "ROM_DATA_DOUBLE_WORD") depending where you 
+want to store them. 
+					If you want to define your custom data types in different 
+scenarios for different architectures use "data_types.h" file.
+			Example:
+				in "data_types.h"
+					#define SBOX1_BYTE ROM_DATA_BYTE
+					#define READ_SBOX1_BYTE READ_ROM_DATA_BYTE
+
+					#define SBOX2_WORD RAM_DATA_WORD
+					#define READ_SBOX2_WORD READ_RAM_DATA_WORD
+
+				in "constants.h"
+					extern SBOX1_BYTE SBox1[4];
+					extern SBOX2_WORD SBox2[2];
+					extern RAM_DATA_DOUBLE_WORD SBox[1];
+
+				in "constants.c"
+					SBOX1_BYTE SBox1[4] = { 0x01, 0x02, 0x03, 0x04 };
+					SBOX2_WORD SBox2[2] = { 0x0201, 0x0403 };
+					RAM_DATA_DOUBLE_WORD SBox[1] = { 0x04030201 };
+
+		c. If you have constants used by one or more of the following operations
+ (encryption key schedule, decryption key schedule, encrypt, decrypt), you can 
+define them in separate "*.c" files and declare them in "constants.h" file 
+according with the following rules:
+
+			* Do not use the following names for the added "*.c" files:
+				"main"
+				"cipher"
+				"scenario1"
+				"scenario2"
+				"encrypt_scenario1"
+				"decrypt_scenario1"
+				"encrypt_scenario2"
+				"decrypt_scenario2"
+				"common"
+				"test_vectors"
+				"encryption_key_schedule"
+				"decryption_key_schedule"
+				"encrypt" 
+				"decrypt"
+
+			* Do not add constant definition in "*.h" files, except for macros. 
+Declare the constants in "constants.h" file and define them in "*.c" files.
+
+			* Add the "*.c" name withouth the "." separator and extension in
+ "implementation.info" file, in the corresponding section(s) 
+("EncryptionKeyScheduleConstants:", "EncryptConstants:", 
+"DecryptionKeyScheduleConstants:", "DecryptConstants:"). If a section contains 
+more than one file, use ", " as separator.
+			
+			Example:
+				- if you add the following "*.c" constant files:
+					+ "f.c" that contains common constants for encryption and 
+decryption
+					+ "g.c" that contains common constants for encryption key 
+schedule and encryption
+					+ "h.c" that contains constants for encryption
+
+				- the "implementation.info" file should contain:
+					EncryptionKeyScheduleConstants: g
+					EncryptConstants: f, g, h
+					DecryptionKeyScheduleConstants:
+					DecryptConstants: f
+			Note: Do not add constants definitions in files that contain cipher 
+implementation ("encryption_key_schedule.c", "encrypt.c", 
+"decryption_key_schedule.c", "decrypt.c" and so on).
+
+		d. Declare & define the cipher test vectors in "test_vectors.c".
+
+		e. Implement the encryption key schedule in "encryption_key_schedule.c" 
+using the following function signature:
+				void RunEncryptionKeySchedule(uint8_t *key, uint8_t *roundKeys);
+			Note: After running the encryption key schedule the key "key" should
+ not be modified.
+			Note: To read data types based on "RAM_DATA_*" 
+("RAM_DATA_BYTE", "RAM_DATA_WORD", "RAM_DATA_DOUBLE_WORD") or "ROM_DATA_*" 
+("ROM_DATA_BYTE", "ROM_DATA_WORD", "ROM_DATA_DOUBLE_WORD") macros use the 
+associated macros.
+			Example:
+				uint8_t SBox1Value = READ_SBOX1_DATA_BYTE(SBox1[0]);
+				uint16_t SBox2Value = READ_SBOX2_DATA_WORD(SBox2[0]);
+				uint32_t SBoxValue = READ_RAM_DATA_DOUBLE_WORD(SBox[0]);
+			Note: Do not use "READ_ROUND_KEY_*" ("READ_ROUND_KEY_BYTE", 
+"READ_ROUND_KEY_WORD", "READ_ROUND_KEY_DOUBLE_WORD") macro in encryption key 
+schedule implementation.
+			Note: Do not add constants definitions in files that contain cipher 
+implementation ("encryption_key_schedule.c", "encrypt.c", 
+"decryption_key_schedule.c", "decrypt.c" and so on).
+
+		f. Implement the decryption key schedule (only if is different from the 
+encryption key schedule) in "decryption_key_schedule.c" using the following 
+function signature:
+				void RunDecryptionKeySchedule(uint8_t *key, uint8_t *roundKeys);
+			Note: After running the decryption key schedule the key "key" should
+ not be modified.
+			Note: To read data types based on "RAM_DATA_*" 
+("RAM_DATA_BYTE", "RAM_DATA_WORD", "RAM_DATA_DOUBLE_WORD") or "ROM_DATA_*" 
+("ROM_DATA_BYTE", "ROM_DATA_WORD", "ROM_DATA_DOUBLE_WORD") macros use the 
+associated macros.
+			Example:
+				uint8_t SBox1Value = READ_SBOX1_DATA_BYTE(SBox1[0]);
+				uint16_t SBox2Value = READ_SBOX2_DATA_WORD(SBox2[0]);
+				uint32_t SBoxValue = READ_RAM_DATA_DOUBLE_WORD(SBox[0]);
+			Note: Do not use "READ_ROUND_KEY_*" ("READ_ROUND_KEY_BYTE", 
+"READ_ROUND_KEY_WORD", "READ_ROUND_KEY_DOUBLE_WORD") macro in decryption key 
+schedule implementation.
+			Note: Do not add constants definitions in files that contain cipher 
+implementation ("encryption_key_schedule.c", "encrypt.c", 
+"decryption_key_schedule.c", "decrypt.c" and so on).
+
+		g. Implement the encryption in "encrypt.c" using the following function 
+signature:
+				void Encrypt(uint8_t *block, uint8_t *roundKeys);
+			Note: To read the value of the round  key use the "READ_ROUND_KEY_*"
+("READ_ROUND_KEY_BYTE", "READ_ROUND_KEY_WORD", "READ_ROUND_KEY_DOUBLE_WORD") 
+macro. It allows to read the round keys from RAM or Flash/ROM depending on the
+ scenario.
+			Example:
+				uint8_t ramRK[0] = READ_ROUND_KEY_BYTE(roundKey[0]);
+				uint16_t ramRK[0] = READ_ROUND_KEY_WORD(roundKey[0]);
+				uint32_t ramRK[0] = READ_ROUND_KEY_DOUBLE_WORD(roundKey[0]);
+			Note: To read data types based on "RAM_DATA_*" 
+("RAM_DATA_BYTE", "RAM_DATA_WORD", "RAM_DATA_DOUBLE_WORD") or "ROM_DATA_*" 
+("ROM_DATA_BYTE", "ROM_DATA_WORD", "ROM_DATA_DOUBLE_WORD") macros use the 
+associated macros.
+			Example:
+				uint8_t SBox1Value = READ_SBOX1_DATA_BYTE(SBox1[0]);
+				uint16_t SBox2Value = READ_SBOX2_DATA_WORD(SBox2[0]);
+				uint32_t SBoxValue = READ_RAM_DATA_DOUBLE_WORD(SBox[0]);
+			Note: Do not add constants definitions in files that contain cipher 
+implementation ("encryption_key_schedule.c", "encrypt.c", 
+"decryption_key_schedule.c", "decrypt.c" and so on).
+
+		h. Implement the decryption in "decrypt.c" using the following function 
+signature:
+				void Decrypt(uint8_t *block, uint8_t *roundKeys);
+			Note: To read the value of the round key use the "READ_ROUND_KEY_*"
+("READ_ROUND_KEY_BYTE", "READ_ROUND_KEY_WORD", "READ_ROUND_KEY_DOUBLE_WORD") 
+macro. It allows to read the round keys from RAM or Flash/ROM depending on the 
+scenario.
+			Example:
+				uint8_t ramRK[0] = READ_ROUND_KEY_BYTE(roundKey[0]);
+				uint16_t ramRK[0] = READ_ROUND_KEY_WORD(roundKey[0]);
+				uint32_t ramRK[0] = READ_ROUND_KEY_DOUBLE_WORD(roundKey[0]);
+			Note: To read data types based on "RAM_DATA_*" 
+("RAM_DATA_BYTE", "RAM_DATA_WORD", "RAM_DATA_DOUBLE_WORD") or "ROM_DATA_*" 
+("ROM_DATA_BYTE", "ROM_DATA_WORD", "ROM_DATA_DOUBLE_WORD") macros use the 
+associated macros.
+			Example:
+				uint8_t SBox1Value = READ_SBOX1_DATA_BYTE(SBox1[0]);
+				uint16_t SBox2Value = READ_SBOX2_DATA_WORD(SBox2[0]);
+				uint32_t SBoxValue = READ_RAM_DATA_DOUBLE_WORD(SBox[0]);
+			Note: Do not add constants definitions in files that contain cipher 
+implementation ("encryption_key_schedule.c", "encrypt.c", 
+"decryption_key_schedule.c", "decrypt.c" and so on).
+
+		i. Add a description of your implementation in "implementation.info" 
+file, in the "ImplementationDescription:" section.
+			Example:
+				ImplementationDescription: LBlock small code size
+
+		k. If you have common functions used by two or more of the following 
+operations (encryption key schedule, decryption key schedule, encrypt, decrypt), 
+you can add them in separate "*.c" and "*.h" files according with the following 
+rules. The same rules apply when you just want to make the code cleaner by 
+implementing some functions in separate files.
+
+			* Do not use the following names for the added "*.c" and/or "*.h" 
+files:
+				"main"
+				"cipher"
+				"scenario1"
+				"scenario2"
+				"encrypt_scenario1"
+				"decrypt_scenario1"
+				"encrypt_scenario2"
+				"decrypt_scenario2"
+				"common"
+				"constants"
+				"test_vectors"
+				"encryption_key_schedule"
+				"decryption_key_schedule"
+				"encrypt" 
+				"decrypt"
+
+			* Do not add constant definition in "*.h" files, except for macros. 
+For constants either use "constants.c" and "constants.h" (See 3.b.), either use 
+your own "*.c" and "*.h" files, but declare the constants in "*.h" files and 
+define them in "*.c" files.
+
+			* Add the "*.c" name withouth the "." separator and extension in
+ "implementation.info" file, in the corresponding section(s) 
+("EncryptionKeyScheduleCode:", "EncryptCode:", "DecryptionKeyScheduleCode:", 
+"DecryptCode:"). If a section contains more than one file, use ", " as 
+separator.
+			
+			Example:
+				- if you add the following files:
+					+ "f.c" that contains common code parts for encryption and 
+decryption
+					+ "g.c" that contains common code parts for encryption key 
+schedule and encryption
+					+ "h.c" that contains a part of the encryption code
+
+				- the "implementation.info" file should contain:
+					EncryptionKeyScheduleCode: g
+					EncryptCode: f, g, h
+					DecryptionKeyScheduleCode:
+					DecryptCode: f
+
+		l. If your cipher does not have an encryption key schedule, in the 
+encryption key schedule just copy your key into the round keys and indicate this
+ in the "implementation.info" file:
+			Example:
+				UseEncryptionKeySchedule: no
+			Note: You don't have to set "UseEncryptionKeySchedule: yes" when 
+using an encryption key schedule, since the default value is "yes".
+
+		m. Indicate the implementation language for all supported platforms in 
+"implementation.info" file.
+			Example:
+				ImplementationAVR: ASM
+				ImplementationMSP: C
+				ImplementationARM: ASM
+				ImplementationPC: 
+			Note: You don't have to set the implementation language to "C" 
+because this is the default value.
+
+	4. Fill the cipher implementation authors in "implementation.info"
+		Example:
+			ImplementationAuthors: John Doe
+
+
+
+Coding rules
+============
+
+1. Do not use the following data types: int, char, short, long and the 
+combinations of them. Instead use: int8_t, uint8_t, int16_t, uint16_t, int32_t, 
+uint32_t, int64_t and uint64_t data types which are declared in "<stdint.h>".
+
+2. Try to keep the code clean and easy to read.
+
+3. Use the "/* ... */" comment style, unless you comment a set of test vectors, 
+in which case is indicated to use "// ...".
+
+4. The framework is designed with several debug and test cases, so you should 
+not add "printf" or other function calls in your code, at least not in the final 
+version.
+
+
+
+Using the makefile
+==================
+
+The makefile can build the cipher in different scenarios and test cases, 
+either in debug or in release mode. To see a list of the makefile options, just 
+type "make" or "make help" in the cipher "source" directory. You can also type 
+"make -f ./../source/Makefile" or "make -f ./../source/Makefile help" from 
+either cipher "source" directory or cipher "build" directory. For simplicity we 
+assume that you call the makefile from the cipher "source" directory.
+
+
+Debug mode
+	Build  & test cipher in debug mode for PC
+		make clean
+		make cipher
+		make test-cipher
+
+	Build & test scenario 1 in debug mode for PC
+		make clean
+		make scenario1
+		make test-scenario1
+
+	Build & test scenario 2 in debug mode for PC
+		make clean
+		make scenario2
+		make test-scenario2
+
+
+Release mode
+	Build cipher in release mode for PC
+		make clean
+		make pc
+
+	Build cipher in release mode for AVR
+		make clean
+		make avr
+
+	Build cipher in release mode for MSP
+		make clean
+		make msp
+
+	Build cipher in release mode for ARM
+		make clean
+		make arm
+
+	Build scenario 1 in release mode for PC
+		make clean
+		make pc-scenario1
+
+	Build scenario 1 in release mode for AVR
+		make clean
+		make avr-scenario1
+
+	Build scenario 1 in release mode for MSP
+		make clean
+		make msp-scenario1
+
+	Build scenario 1 in release mode for ARM
+		make clean
+		make arm-scenario1
+
+	Build scenario 2 in release mode for PC
+		make clean
+		make pc-scenario2
+
+	Build scenario 2 in release mode for AVR
+		make clean
+		make avr-scenario2
+
+	Build scenario 2 in release mode for MSP
+		make clean
+		make msp-scenario2
+
+	Build scenario 2 in release mode for ARM
+		make clean
+		make arm-scenario2
+
+
+If your cipher builds without errors or warnings and the three tests 
+(test-cipher, test-scenario1 and test-scenario2) run as expected the cipher 
+implementation is correctly integrated into the framework.
+
+Note: If you encounter warnings during the build, you should fix the code such 
+that they do not appear.
+
+
+
+Constraints
+===========
+
+1. The implemented cipher should have a block size "BLOCK_SIZE" that divides 
+the "DATA_SIZE" or is equal with the "DATA_SIZE" which is set to 128 bytes in 
+scenario 1 and 128 bits in scenario 2.
+
+2. The values defined in "constants.h" for "BLOCK_SIZE", "KEY_SIZE" and 
+"ROUND_KEY_SIZE" must be in bytes.
+
+
+
+Getting the cipher metrics
+==========================
+
+1. Code Size
+From the cipher build directory type one of the following commands to see how to 
+use the cipher code size script:
+	./../../../../scripts/cipher/cipher_code_size.sh -h
+	./../../../../scripts/cipher/cipher_code_size.sh --help
+
+To get the code size in table format for a cipher for AVR in scenario 2 type:
+	./../../../../scripts/cipher/cipher_code_size.sh -a=AVR -s=2
+
+To get the code size in raw format for a cipher for AVR in scenario 2 type:
+	./../../../../scripts/cipher/cipher_code_size.sh -a=AVR -s=2 -m=1
+
+
+2. RAM
+From the cipher build directory type one of the following commands to see how to 
+use the cipher RAM script:
+	./../../../../scripts/cipher/cipher_ram.sh -h 
+	./../../../../scripts/cipher/cipher_ram.sh --help
+
+To get the RAM in table format for a cipher for AVR in scenario 2 type:
+	./../../../../scripts/cipher/cipher_ram.sh -a=AVR -s=2
+
+To get the RAM in raw format for a cipher for AVR in scenario 2 type:
+	./../../../../scripts/cipher/cipher_ram.sh -a=AVR -s=2 -m=1
+
+
+3. Execution Time
+From the cipher build directory type one of the following commands to see how to 
+use the cipher execution time script:
+	./../../../../scripts/cipher/cipher_execution_time.sh -h 
+	./../../../../scripts/cipher/cipher_execution_time.sh --help
+
+To get the execution time in table format for a cipher for AVR in scenario 2 
+type:
+	./../../../../scripts/cipher/cipher_execution_time.sh -a=AVR -s=2
+
+To get the execution time in raw format for a cipher for AVR in scenario 2 type:
+	./../../../../scripts/cipher/cipher_execution_time.sh -a=AVR -s=2 -m=1
+
+
+4. Collect all metrics
+To get help about how to collect all metrics for a list of ciphers on a list of 
+architectures in a list of scenarios use:
+	./../../../../scripts/collect_ciphers_metrics.sh -h
+	./../../../../scripts/collect_ciphers_metrics.sh -help
+
+To get all metrics for "LBlock_64_80_v01" and "LBlock_64_80_v03" on "PC" and 
+"ARM" in scenarios "1" and "2" in raw format use:
+	./../../../../scripts/collect_ciphers_metrics.sh -a='PC ARM' -s='1 2' 
+-c='LBlock_64_80_v01 LBlock_64_80_v02' -f=1

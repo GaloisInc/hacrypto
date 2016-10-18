@@ -1,0 +1,4 @@
+Balanced implementation of Speck/64/96
+
+- rounds are processed by pairs, which slightly  unrolls the main loop and save an intermediate variable
+- rotation functions are inlined

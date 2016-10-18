@@ -1,0 +1,6 @@
+Higher performance implementation of Speck 64/128
+
+- Three SPECK rounds are performed per loop iteration
+- Local variables are used rather than dereferenced pointers, which
+  seems to produce better results on some platforms.
+

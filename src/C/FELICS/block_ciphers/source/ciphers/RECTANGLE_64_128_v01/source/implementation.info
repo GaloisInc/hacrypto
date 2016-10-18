@@ -1,0 +1,15 @@
+ImplementationDescription: Reference C implementation with key schedule
+ImplementationAuthors: Adnan Baysal
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants: 
+DecryptionKeyScheduleConstants: 
+DecryptConstants: 
+
+EncryptionKeyScheduleCode: s_layer
+EncryptCode: s_layer
+DecryptionKeyScheduleCode: 
+DecryptCode: 
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

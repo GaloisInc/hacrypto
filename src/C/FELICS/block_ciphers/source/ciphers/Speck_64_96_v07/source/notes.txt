@@ -1,0 +1,5 @@
+High performance implementation of Speck 64/96
+
+- A total of five rounds are unrolled, with three inside the main loop
+  and two more after the loop.
+

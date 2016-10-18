@@ -1,0 +1,15 @@
+ImplementationDescription: Unroll three rounds per loop iteration for encrypt and two for decrypt for high performance.
+ImplementationAuthors: Jason Smith, Yann Le Corre
+
+EncryptionKeyScheduleConstants:
+EncryptConstants:
+DecryptionKeyScheduleConstants:
+DecryptConstants:
+
+EncryptionKeyScheduleCode:
+EncryptCode:
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

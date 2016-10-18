@@ -1,0 +1,20 @@
+ImplementationDescription: SPARX reference implementation; use optimized rotations; ASM with macros; limit the number of registers used; partially unrolled KS
+ImplementationAuthors: Daniel Dinu
+
+EncryptionKeyScheduleConstants: 
+EncryptConstants: 
+DecryptionKeyScheduleConstants:
+DecryptConstants: 
+
+EncryptionKeyScheduleCode: speckey
+EncryptCode: round, speckey
+DecryptionKeyScheduleCode:
+DecryptCode: round_inverse, speckey_inverse
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no
+
+ImplementationAVR: ASM
+ImplementationMSP: ASM
+ImplementationARM: ASM
+ImplementationPC: C

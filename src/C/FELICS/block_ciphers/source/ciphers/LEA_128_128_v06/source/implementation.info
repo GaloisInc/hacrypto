@@ -1,0 +1,20 @@
+ImplementationDescription: Assembly implementation for MSP; optimized for size
+ImplementationAuthors: Youngjoo Shin
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants: 
+DecryptionKeyScheduleConstants: constants
+DecryptConstants: 
+
+EncryptionKeyScheduleCode:
+EncryptCode:
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: yes
+
+ImplementationAVR: C
+ImplementationMSP: ASM
+ImplementationARM: C
+ImplementationPC: C

@@ -1,0 +1,15 @@
+ImplementationDescription: Speed-optimized implementation of Present with 80-bit key, 32-bit oriented
+ImplementationAuthors: Dmitry Khovratovich
+
+EncryptionKeyScheduleConstants: sbox
+EncryptConstants: sbox
+DecryptionKeyScheduleConstants:
+DecryptConstants: inv_sbox
+
+EncryptionKeyScheduleCode: 
+EncryptCode: 
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

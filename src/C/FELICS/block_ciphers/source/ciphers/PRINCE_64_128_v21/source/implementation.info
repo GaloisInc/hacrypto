@@ -1,0 +1,15 @@
+ImplementationDescription: fully unrolled reference implementation; store constants in RAM
+ImplementationAuthors: Daniel Dinu
+
+EncryptionKeyScheduleConstants:
+EncryptConstants: constants
+DecryptionKeyScheduleConstants:
+DecryptConstants: constants
+
+EncryptionKeyScheduleCode: 
+EncryptCode: 
+DecryptionKeyScheduleCode:
+DecryptCode: 
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

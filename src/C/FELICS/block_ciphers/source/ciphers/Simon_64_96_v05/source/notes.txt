@@ -1,0 +1,8 @@
+Balanced implementation of Simon 64/96
+
+- Two rounds are performed per loop iteration using local variables
+  rather than pointers. This slightly unrolls the loop and saves a
+  temporary variable.
+- rotation functions are inlined
+- key schedule use a lookup table for constant Z^3
+- only the usefull values of Z^3 for the current configuration of the cipher are stored

@@ -1,0 +1,15 @@
+ImplementationDescription: fully unrolled reference implementation; magic constants S table is precomputed and stored in RAM; different implementation for rotations
+ImplementationAuthors: Daniel Dinu
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants: 
+DecryptionKeyScheduleConstants:
+DecryptConstants: 
+
+EncryptionKeyScheduleCode: rotl
+EncryptCode: rotl
+DecryptionKeyScheduleCode:
+DecryptCode: rotr
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

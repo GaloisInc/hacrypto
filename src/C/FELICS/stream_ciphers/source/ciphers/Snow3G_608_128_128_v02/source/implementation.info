@@ -1,0 +1,8 @@
+ImplementationDescription: Snow 3G using S1_T* and S2_T* look-up tables. Requires a lot of constant memory, but fast
+ImplementationAuthors: Yann Le Corre
+
+SetupConstants: constants
+EncryptConstants: constants
+
+SetupCode: primitives
+EncryptCode: primitives

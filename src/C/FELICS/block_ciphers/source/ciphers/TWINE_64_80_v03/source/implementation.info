@@ -1,0 +1,15 @@
+ImplementationDescription: Speed-optimized implementation of Twine with 80-bit key; store all constants in RAM
+ImplementationAuthors: Dmitry Khovratovich
+
+EncryptionKeyScheduleConstants: sbox, rcon
+EncryptConstants: sbox, pbox
+DecryptionKeyScheduleConstants:
+DecryptConstants: sbox, inv_pbox
+
+EncryptionKeyScheduleCode: 
+EncryptCode: 
+DecryptionKeyScheduleCode:
+DecryptCode:
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

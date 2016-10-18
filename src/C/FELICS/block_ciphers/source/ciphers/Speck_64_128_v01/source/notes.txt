@@ -1,0 +1,6 @@
+Balanced implementation of Speck 64/128
+
+- A single SPECK round is performed per loop iteration
+- Local variables are used rather than dereferenced pointers, which
+  seems to produce better results on some platforms.
+

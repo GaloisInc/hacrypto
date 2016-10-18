@@ -1,0 +1,13 @@
+ImplementationDescription: Cipher implementation example
+ImplementationAuthors: 
+
+SetupConstants: constants
+EncryptConstants:
+
+SetupCode:
+EncryptCode:
+
+ImplementationAVR: C
+ImplementationMSP: C
+ImplementationARM: C
+ImplementationPC: C

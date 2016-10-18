@@ -1,0 +1,15 @@
+ImplementationDescription: fully unrolled reference implementation; different implementation for rotations
+ImplementationAuthors: Daniel Dinu
+
+EncryptionKeyScheduleConstants:
+EncryptConstants: 
+DecryptionKeyScheduleConstants:
+DecryptConstants: 
+
+EncryptionKeyScheduleCode: rotl
+EncryptCode: rotl
+DecryptionKeyScheduleCode:
+DecryptCode: rotr
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

@@ -1,0 +1,20 @@
+ImplementationDescription: SPARX reference implementation; use optimized rotations
+ImplementationAuthors: Daniel Dinu
+
+EncryptionKeyScheduleConstants: 
+EncryptConstants: 
+DecryptionKeyScheduleConstants:
+DecryptConstants: 
+
+EncryptionKeyScheduleCode: speckey
+EncryptCode: round, speckey
+DecryptionKeyScheduleCode:
+DecryptCode: round_inverse, speckey_inverse
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no
+
+ImplementationAVR: C
+ImplementationMSP: C
+ImplementationARM: C
+ImplementationPC: C

@@ -1,0 +1,15 @@
+ImplementationDescription: fully unrolled implementation; delta constants are precomputed; auxiliary functions (F0 and F1) are inlined; round keys are computed in a different order; store constants in RAM; different implementation for rotations
+ImplementationAuthors: Daniel Dinu
+
+EncryptionKeyScheduleConstants: constants
+EncryptConstants: 
+DecryptionKeyScheduleConstants:
+DecryptConstants:
+
+EncryptionKeyScheduleCode: 
+EncryptCode: 
+DecryptionKeyScheduleCode:
+DecryptCode: 
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

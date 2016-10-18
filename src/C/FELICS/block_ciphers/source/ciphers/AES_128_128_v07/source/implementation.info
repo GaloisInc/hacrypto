@@ -1,0 +1,20 @@
+ImplementationDescription: AES_128_128 Assembler version for AVR, MSP, ARM; optimized for speed based on AES_128_128_01 
+ImplementationAuthors: André Stemper
+
+EncryptionKeyScheduleConstants: sbox, rc_tab
+EncryptConstants: sbox
+DecryptionKeyScheduleConstants: 
+DecryptConstants: inv_sbox
+
+EncryptionKeyScheduleCode: 
+EncryptCode: gmul_o
+DecryptionKeyScheduleCode:
+DecryptCode: gmul_o
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no
+
+ImplementationAVR: ASM
+ImplementationMSP: ASM
+ImplementationARM: ASM
+ImplementationPC: C

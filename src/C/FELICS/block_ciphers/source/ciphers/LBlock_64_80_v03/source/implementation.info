@@ -1,0 +1,15 @@
+ImplementationDescription: use swap (Swap) function in encryption and decryption
+ImplementationAuthors: Daniel Dinu
+
+EncryptionKeyScheduleConstants: constants2
+EncryptConstants: constants1
+DecryptionKeyScheduleConstants:
+DecryptConstants: constants1
+
+EncryptionKeyScheduleCode:
+EncryptCode: swap
+DecryptionKeyScheduleCode:
+DecryptCode: swap
+
+UseEncryptionKeySchedule: yes
+UseDecryptionKeySchedule: no

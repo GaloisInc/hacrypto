@@ -1,0 +1,8 @@
+ImplementationDescription: SNOW3G, implemented with only S1_T0 and S2_T0 as in "High Performance Implementation of Snow 3G Algorithm in Memory Limited Environments", Vaidyanathan Jairaj, Jaakko Pohjonen, Konstantin Shemyak, 2011, IEEE
+ImplementationAuthors: Yann Le Corre
+
+SetupConstants: constants
+EncryptConstants: constants
+
+SetupCode: primitives
+EncryptCode: primitives
