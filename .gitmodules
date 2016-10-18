@@ -91,3 +91,15 @@
 [submodule "src/C/milagro-crypto-c"]
 	path = src/C/milagro-crypto-c
 	url = https://github.com/miracl/milagro-crypto-c.git
+[submodule "src/C/mbedtls/mbedtls"]
+	path = src/C/mbedtls/mbedtls
+	url = https://github.com/ARMmbed/mbedtls.git
+[submodule "src/Javascript/milagro-mfa-js-lib"]
+	path = src/Javascript/milagro-mfa-js-lib
+	url = https://github.com/miracl/milagro-mfa-js-lib.git
+[submodule "src/Multi-lang/milagro-crypto"]
+	path = src/Multi-lang/milagro-crypto
+	url = https://github.com/miracl/milagro-crypto.git
+[submodule "src/C/milagro-tls"]
+	path = src/C/milagro-tls
+	url = https://github.com/miracl/milagro-tls.git
