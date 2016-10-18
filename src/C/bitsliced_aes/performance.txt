@@ -1,0 +1,37 @@
+The sources were compiled and executed with Microsoft Visual Studio 
+2005 Standard Edition (version 8.0.50727.42) under Windows XP x64 Edition.
+The implementation encrypts 4 bocks of input data in parallel, so
+all tick-measures refer to the encryption of 4 blocks.
+A typical output on an AMD Opteron(tm) Processor 146
+with 2.00 GHz and 1 GB of RAM would look as following:
+
+aes_bitsliced:
+==============
+
+reference implementation took 1139 ticks
+bitslice implementation took 1388 ticks
+addRoundKey took 5 ticks
+subBytes took 68 ticks
+shiftRowsRR16 took 13 ticks
+mixColumnsRL16 took 16 ticks
+mu took 83 ticks
+muInv took 78 ticks
+reference implementation took 922 ms for 100 MB
+bitslice implementation took 1125 ms for 100 MB
+
+Test Finished. Hit Enter to exit...
+
+aes_bitsliced_fast:
+===================
+reference implementation took 1213 ticks
+bitslice implementation took 1268 ticks
+subBytes took 53 ticks
+shiftRows took 16 ticks
+shiftRowsRR16 took 5 ticks
+mixColumnsRL16AddRk took 13 ticks
+mu took 69 ticks
+muInv took 60 ticks
+bitslice implementation took 1031 ms for 100 MB
+reference implementation took 922 ms for 100 MB
+
+Test Finished. Hit Enter to exit...
