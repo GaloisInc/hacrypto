@@ -247,3 +247,30 @@
 [submodule "src/hardware/CrypTech/openssl-engine"]
 	path = src/hardware/CrypTech/openssl-engine
 	url = https://git.cryptech.is/user/sra/openssl-engine.git
+[submodule "src/C/libntru"]
+	path = src/C/libntru
+	url = https://github.com/tbuktu/libntru.git
+[submodule "src/Java/ntru"]
+	path = src/Java/ntru
+	url = https://github.com/tbuktu/ntru.git
+[submodule "src/Multi-lang/ntru-crypto"]
+	path = src/Multi-lang/ntru-crypto
+	url = https://github.com/NTRUOpenSourceProject/ntru-crypto.git
+[submodule "src/C/BearSSL"]
+	path = src/C/BearSSL
+	url = https://www.bearssl.org/git/BearSSL
+[submodule "Verification/wycheproof"]
+	path = Verification/wycheproof
+	url = https://github.com/google/wycheproof.git
+[submodule "src/Multi-lang/WhisperSystems/curve25519-java"]
+	path = src/Multi-lang/WhisperSystems/curve25519-java
+	url = https://github.com/WhisperSystems/curve25519-java.git
+[submodule "src/Multi-lang/WhisperSystems/libsignal-protocol-c"]
+	path = src/Multi-lang/WhisperSystems/libsignal-protocol-c
+	url = https://github.com/WhisperSystems/libsignal-protocol-c.git
+[submodule "src/Multi-lang/WhisperSystems/libsignal-protocol-java"]
+	path = src/Multi-lang/WhisperSystems/libsignal-protocol-java
+	url = https://github.com/WhisperSystems/libsignal-protocol-java.git
+[submodule "src/Multi-lang/WhisperSystems/libsignal-protocol-javascript"]
+	path = src/Multi-lang/WhisperSystems/libsignal-protocol-javascript
+	url = https://github.com/WhisperSystems/libsignal-protocol-javascript.git
