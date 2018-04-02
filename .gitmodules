@@ -283,3 +283,6 @@
 [submodule "src/Go/tls-tris"]
 	path = src/Go/tls-tris
 	url = https://github.com/cloudflare/tls-tris.git
+[submodule "tls-tris"]
+	path = src/Go/tls-tris
+	url = https://github.com/cloudflare/tls-tris.git
