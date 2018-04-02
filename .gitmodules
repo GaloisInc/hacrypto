@@ -274,3 +274,12 @@
 [submodule "src/Multi-lang/WhisperSystems/libsignal-protocol-javascript"]
 	path = src/Multi-lang/WhisperSystems/libsignal-protocol-javascript
 	url = https://github.com/WhisperSystems/libsignal-protocol-javascript.git
+[submodule "src/Multi-lang/Everest/everest"]
+	path = src/Multi-lang/Everest/everest
+	url = https://github.com/project-everest/everest.git
+[submodule "src/Multi-lang/Everest/vale"]
+	path = src/Multi-lang/Everest/vale
+	url = https://github.com/project-everest/vale.git
+[submodule "src/Go/tls-tris"]
+	path = src/Go/tls-tris
+	url = https://github.com/cloudflare/tls-tris.git
