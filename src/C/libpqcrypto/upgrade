@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+
+# libpqcrypto/upgrade
+# D. J. Bernstein
+# Public domain.
+
+import string
+import os
+import platform
+
+def readfile(fn):
+  with open(fn,'r') as f:
+    return f.read()
+
+project = 'pqcrypto'
+
+version = readfile('version').strip()
+
+shorthostname = platform.node().split('.')[0].lower()
+okcharacters = string.ascii_letters + string.digits
+shorthostname = ''.join(c for c in shorthostname if c in okcharacters)
+
+os.chdir('link-install')
+
+def relink(target,link,tmp):
+  try:
+    os.unlink(tmp)
+  except:
+    pass
+  os.symlink(target,tmp)
+  os.rename(tmp,link)
+
+relink('run-%s/%s' % (version,shorthostname),'newest','newest-tmp')
+
+relink('newest/include','include','include-tmp')
+relink('newest/command','command','command-tmp')
+relink('newest/python','python','python-tmp')
+relink('newest/lib/0','lib','lib-tmp')
+
+for abi in sorted(os.listdir('run-%s/%s/lib' % (version,shorthostname))):
+  if abi != '0':
+    relink('newest/lib/%s' % abi,'lib-%s' % abi,'lib-%s-tmp' % abi)

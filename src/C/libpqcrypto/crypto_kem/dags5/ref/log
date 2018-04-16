@@ -1,0 +1,600 @@
+Starting iteration: 0
+Key Generation cycles: 315008199458
+Encapsulation cycles: 100339094
+Decapsulation cycles: 644513530
+Total cycles: 315753052082
+
+Starting iteration: 1
+Key Generation cycles: 314592993726
+Encapsulation cycles: 103865634
+Decapsulation cycles: 627676604
+Total cycles: 315324535964
+
+Starting iteration: 2
+Key Generation cycles: 315806944054
+Encapsulation cycles: 102718922
+Decapsulation cycles: 631552998
+Total cycles: 316541215974
+
+Starting iteration: 3
+Key Generation cycles: 314500537288
+Encapsulation cycles: 103217392
+Decapsulation cycles: 634927290
+Total cycles: 315238681970
+
+Starting iteration: 4
+Key Generation cycles: 314514585512
+Encapsulation cycles: 100812074
+Decapsulation cycles: 626628320
+Total cycles: 315242025906
+
+Starting iteration: 5
+Key Generation cycles: 314309899086
+Encapsulation cycles: 100794580
+Decapsulation cycles: 625060486
+Total cycles: 315035754152
+
+Starting iteration: 6
+Key Generation cycles: 315378698374
+Encapsulation cycles: 106782745
+Decapsulation cycles: 634355236
+Total cycles: 316119836355
+
+Starting iteration: 7
+Key Generation cycles: 314582944412
+Encapsulation cycles: 100807778
+Decapsulation cycles: 622405020
+Total cycles: 315306157210
+
+Starting iteration: 8
+Key Generation cycles: 315711089676
+Encapsulation cycles: 105340994
+Decapsulation cycles: 654774274
+Total cycles: 316471204944
+
+Starting iteration: 9
+Key Generation cycles: 314537769587
+Encapsulation cycles: 100735924
+Decapsulation cycles: 625989982
+Total cycles: 315264495493
+
+Starting iteration: 10
+Key Generation cycles: 314760903662
+Encapsulation cycles: 102013906
+Decapsulation cycles: 625131328
+Total cycles: 315488048896
+
+Starting iteration: 11
+Key Generation cycles: 313883053036
+Encapsulation cycles: 100495264
+Decapsulation cycles: 628641712
+Total cycles: 314612190012
+
+Starting iteration: 12
+Key Generation cycles: 315005562472
+Encapsulation cycles: 100598986
+Decapsulation cycles: 624214904
+Total cycles: 315730376362
+
+Starting iteration: 13
+Key Generation cycles: 313832838308
+Encapsulation cycles: 96034864
+Decapsulation cycles: 600424062
+Total cycles: 314529297234
+
+Starting iteration: 14
+Key Generation cycles: 302225374562
+Encapsulation cycles: 99492662
+Decapsulation cycles: 622268152
+Total cycles: 302947135376
+
+Starting iteration: 15
+Key Generation cycles: 302364641482
+Encapsulation cycles: 96499742
+Decapsulation cycles: 604448424
+Total cycles: 303065589648
+
+Starting iteration: 16
+Key Generation cycles: 302817000498
+Encapsulation cycles: 96857638
+Decapsulation cycles: 618497460
+Total cycles: 303532355596
+
+Starting iteration: 17
+Key Generation cycles: 302411723374
+Encapsulation cycles: 96631530
+Decapsulation cycles: 606326658
+Total cycles: 303114681562
+
+Starting iteration: 18
+Key Generation cycles: 302243933730
+Encapsulation cycles: 96867708
+Decapsulation cycles: 602189696
+Total cycles: 302942991134
+
+Starting iteration: 19
+Key Generation cycles: 302770578350
+Encapsulation cycles: 96068360
+Decapsulation cycles: 599102844
+Total cycles: 303465749554
+
+Starting iteration: 20
+Key Generation cycles: 302577471936
+Encapsulation cycles: 96779190
+Decapsulation cycles: 600935836
+Total cycles: 303275186962
+
+Starting iteration: 21
+Key Generation cycles: 302393524902
+Encapsulation cycles: 97382334
+Decapsulation cycles: 609217365
+Total cycles: 303100124601
+
+Starting iteration: 22
+Key Generation cycles: 302471854149
+Encapsulation cycles: 95776100
+Decapsulation cycles: 602277666
+Total cycles: 303169907915
+
+Starting iteration: 23
+Key Generation cycles: 302033394018
+Encapsulation cycles: 95839726
+Decapsulation cycles: 603541010
+Total cycles: 302732774754
+
+Starting iteration: 24
+Key Generation cycles: 302040950900
+Encapsulation cycles: 95982094
+Decapsulation cycles: 610254918
+Total cycles: 302747187912
+
+Starting iteration: 25
+Key Generation cycles: 302455878450
+Encapsulation cycles: 101849922
+Decapsulation cycles: 605605388
+Total cycles: 303163333760
+
+Starting iteration: 26
+Key Generation cycles: 302347576088
+Encapsulation cycles: 96611528
+Decapsulation cycles: 601728034
+Total cycles: 303045915650
+
+Starting iteration: 27
+Key Generation cycles: 302992444158
+Encapsulation cycles: 96450184
+Decapsulation cycles: 603776424
+Total cycles: 303692670766
+
+Starting iteration: 28
+Key Generation cycles: 302353667672
+Encapsulation cycles: 96197430
+Decapsulation cycles: 606341398
+Total cycles: 303056206500
+
+Starting iteration: 29
+Key Generation cycles: 301898796290
+Encapsulation cycles: 96180944
+Decapsulation cycles: 603451516
+Total cycles: 302598428750
+
+Starting iteration: 30
+Key Generation cycles: 301315986874
+Encapsulation cycles: 96163018
+Decapsulation cycles: 600404748
+Total cycles: 302012554640
+
+Starting iteration: 31
+Key Generation cycles: 302060579262
+Encapsulation cycles: 96416858
+Decapsulation cycles: 603893918
+Total cycles: 302760890038
+
+Starting iteration: 32
+Key Generation cycles: 301450910898
+Encapsulation cycles: 96289858
+Decapsulation cycles: 600323328
+Total cycles: 302147524084
+
+Starting iteration: 33
+Key Generation cycles: 302313098911
+Encapsulation cycles: 96844058
+Decapsulation cycles: 605355338
+Total cycles: 303015298307
+
+Starting iteration: 34
+Key Generation cycles: 302274976500
+Encapsulation cycles: 98693362
+Decapsulation cycles: 616904976
+Total cycles: 302990574838
+
+Starting iteration: 35
+Key Generation cycles: 301920314108
+Encapsulation cycles: 97273884
+Decapsulation cycles: 603240008
+Total cycles: 302620828000
+
+Starting iteration: 36
+Key Generation cycles: 301499712364
+Encapsulation cycles: 96902090
+Decapsulation cycles: 598877298
+Total cycles: 302195491752
+
+Starting iteration: 37
+Key Generation cycles: 301614756724
+Encapsulation cycles: 99340362
+Decapsulation cycles: 609458995
+Total cycles: 302323556081
+
+Starting iteration: 38
+Key Generation cycles: 302162840016
+Encapsulation cycles: 96070828
+Decapsulation cycles: 608024300
+Total cycles: 302866935144
+
+Starting iteration: 39
+Key Generation cycles: 302556061972
+Encapsulation cycles: 98929062
+Decapsulation cycles: 611932100
+Total cycles: 303266923134
+
+Starting iteration: 40
+Key Generation cycles: 301765272272
+Encapsulation cycles: 96199508
+Decapsulation cycles: 602425500
+Total cycles: 302463897280
+
+Starting iteration: 41
+Key Generation cycles: 301802207135
+Encapsulation cycles: 96023244
+Decapsulation cycles: 601152686
+Total cycles: 302499383065
+
+Starting iteration: 42
+Key Generation cycles: 301916034581
+Encapsulation cycles: 95865378
+Decapsulation cycles: 602454580
+Total cycles: 302614354539
+
+Starting iteration: 43
+Key Generation cycles: 301416836730
+Encapsulation cycles: 96048780
+Decapsulation cycles: 599928624
+Total cycles: 302112814134
+
+Starting iteration: 44
+Key Generation cycles: 302263530366
+Encapsulation cycles: 96110446
+Decapsulation cycles: 602936192
+Total cycles: 302962577004
+
+Starting iteration: 45
+Key Generation cycles: 302418507718
+Encapsulation cycles: 95851784
+Decapsulation cycles: 605089216
+Total cycles: 303119448718
+
+Starting iteration: 46
+Key Generation cycles: 302210961491
+Encapsulation cycles: 95916332
+Decapsulation cycles: 603151260
+Total cycles: 302910029083
+
+Starting iteration: 47
+Key Generation cycles: 302154675248
+Encapsulation cycles: 96303236
+Decapsulation cycles: 602971530
+Total cycles: 302853950014
+
+Starting iteration: 48
+Key Generation cycles: 301752633636
+Encapsulation cycles: 96308274
+Decapsulation cycles: 604432552
+Total cycles: 302453374462
+
+Starting iteration: 49
+Key Generation cycles: 302163106516
+Encapsulation cycles: 95864214
+Decapsulation cycles: 604818646
+Total cycles: 302863789376
+
+Starting iteration: 50
+Key Generation cycles: 301858603184
+Encapsulation cycles: 96373694
+Decapsulation cycles: 599986966
+Total cycles: 302554963844
+
+Starting iteration: 51
+Key Generation cycles: 302284160228
+Encapsulation cycles: 96550810
+Decapsulation cycles: 606455236
+Total cycles: 302987166274
+
+Starting iteration: 52
+Key Generation cycles: 302317400838
+Encapsulation cycles: 96519908
+Decapsulation cycles: 603535752
+Total cycles: 303017456498
+
+Starting iteration: 53
+Key Generation cycles: 302299704520
+Encapsulation cycles: 96139402
+Decapsulation cycles: 612878052
+Total cycles: 303008721974
+
+Starting iteration: 54
+Key Generation cycles: 302398190768
+Encapsulation cycles: 99914690
+Decapsulation cycles: 610145170
+Total cycles: 303108250628
+
+Starting iteration: 55
+Key Generation cycles: 302573260370
+Encapsulation cycles: 95958184
+Decapsulation cycles: 603812928
+Total cycles: 303273031482
+
+Starting iteration: 56
+Key Generation cycles: 302201617901
+Encapsulation cycles: 96354902
+Decapsulation cycles: 602133510
+Total cycles: 302900106313
+
+Starting iteration: 57
+Key Generation cycles: 302266621459
+Encapsulation cycles: 96971878
+Decapsulation cycles: 604071028
+Total cycles: 302967664365
+
+Starting iteration: 58
+Key Generation cycles: 301379451428
+Encapsulation cycles: 97090732
+Decapsulation cycles: 601743020
+Total cycles: 302078285180
+
+Starting iteration: 59
+Key Generation cycles: 302339079824
+Encapsulation cycles: 98069438
+Decapsulation cycles: 604489490
+Total cycles: 303041638752
+
+Starting iteration: 60
+Key Generation cycles: 301901960305
+Encapsulation cycles: 96108234
+Decapsulation cycles: 602958332
+Total cycles: 302601026871
+
+Starting iteration: 61
+Key Generation cycles: 302138094298
+Encapsulation cycles: 100865620
+Decapsulation cycles: 619684312
+Total cycles: 302858644230
+
+Starting iteration: 62
+Key Generation cycles: 303076033566
+Encapsulation cycles: 96314590
+Decapsulation cycles: 603567438
+Total cycles: 303775915594
+
+Starting iteration: 63
+Key Generation cycles: 302146311834
+Encapsulation cycles: 96319338
+Decapsulation cycles: 606789870
+Total cycles: 302849421042
+
+Starting iteration: 64
+Key Generation cycles: 301592062358
+Encapsulation cycles: 96148832
+Decapsulation cycles: 602034724
+Total cycles: 302290245914
+
+Starting iteration: 65
+Key Generation cycles: 302106189546
+Encapsulation cycles: 97086230
+Decapsulation cycles: 601859544
+Total cycles: 302805135320
+
+Starting iteration: 66
+Key Generation cycles: 302307450556
+Encapsulation cycles: 96233066
+Decapsulation cycles: 604638742
+Total cycles: 303008322364
+
+Starting iteration: 67
+Key Generation cycles: 301825723304
+Encapsulation cycles: 97141386
+Decapsulation cycles: 603169440
+Total cycles: 302526034130
+
+Starting iteration: 68
+Key Generation cycles: 302204705687
+Encapsulation cycles: 96648606
+Decapsulation cycles: 603335626
+Total cycles: 302904689919
+
+Starting iteration: 69
+Key Generation cycles: 301749403854
+Encapsulation cycles: 97313830
+Decapsulation cycles: 602009260
+Total cycles: 302448726944
+
+Starting iteration: 70
+Key Generation cycles: 302400829356
+Encapsulation cycles: 96911432
+Decapsulation cycles: 604889446
+Total cycles: 303102630234
+
+Starting iteration: 71
+Key Generation cycles: 302707389210
+Encapsulation cycles: 96100206
+Decapsulation cycles: 607919506
+Total cycles: 303411408922
+
+Starting iteration: 72
+Key Generation cycles: 302381883878
+Encapsulation cycles: 96020112
+Decapsulation cycles: 603898062
+Total cycles: 303081802052
+
+Starting iteration: 73
+Key Generation cycles: 302500333616
+Encapsulation cycles: 99177746
+Decapsulation cycles: 611470800
+Total cycles: 303210982162
+
+Starting iteration: 74
+Key Generation cycles: 303135107129
+Encapsulation cycles: 96119396
+Decapsulation cycles: 606712832
+Total cycles: 303837939357
+
+Starting iteration: 75
+Key Generation cycles: 302741459212
+Encapsulation cycles: 97668636
+Decapsulation cycles: 605930798
+Total cycles: 303445058646
+
+Starting iteration: 76
+Key Generation cycles: 302417991775
+Encapsulation cycles: 97891906
+Decapsulation cycles: 602131762
+Total cycles: 303118015443
+
+Starting iteration: 77
+Key Generation cycles: 302196413635
+Encapsulation cycles: 96292900
+Decapsulation cycles: 600744750
+Total cycles: 302893451285
+
+Starting iteration: 78
+Key Generation cycles: 301453496502
+Encapsulation cycles: 96780922
+Decapsulation cycles: 603411364
+Total cycles: 302153688788
+
+Starting iteration: 79
+Key Generation cycles: 301706501212
+Encapsulation cycles: 96364240
+Decapsulation cycles: 606467160
+Total cycles: 302409332612
+
+Starting iteration: 80
+Key Generation cycles: 302334243888
+Encapsulation cycles: 103817474
+Decapsulation cycles: 609861156
+Total cycles: 303047922518
+
+Starting iteration: 81
+Key Generation cycles: 302400014270
+Encapsulation cycles: 97654612
+Decapsulation cycles: 603714394
+Total cycles: 303101383276
+
+Starting iteration: 82
+Key Generation cycles: 302060293929
+Encapsulation cycles: 96625938
+Decapsulation cycles: 602129886
+Total cycles: 302759049753
+
+Starting iteration: 83
+Key Generation cycles: 301917536193
+Encapsulation cycles: 96163570
+Decapsulation cycles: 600974564
+Total cycles: 302614674327
+
+Starting iteration: 84
+Key Generation cycles: 302382711185
+Encapsulation cycles: 97939904
+Decapsulation cycles: 604175172
+Total cycles: 303084826261
+
+Starting iteration: 85
+Key Generation cycles: 302032634688
+Encapsulation cycles: 96971446
+Decapsulation cycles: 611953272
+Total cycles: 302741559406
+
+Starting iteration: 86
+Key Generation cycles: 302175342984
+Encapsulation cycles: 96492122
+Decapsulation cycles: 599825300
+Total cycles: 302871660406
+
+Starting iteration: 87
+Key Generation cycles: 302438754912
+Encapsulation cycles: 96262296
+Decapsulation cycles: 602848140
+Total cycles: 303137865348
+
+Starting iteration: 88
+Key Generation cycles: 303367274642
+Encapsulation cycles: 99538834
+Decapsulation cycles: 603554602
+Total cycles: 304070368078
+
+Starting iteration: 89
+Key Generation cycles: 302972404870
+Encapsulation cycles: 96471836
+Decapsulation cycles: 600811048
+Total cycles: 303669687754
+
+Starting iteration: 90
+Key Generation cycles: 302229166832
+Encapsulation cycles: 96483778
+Decapsulation cycles: 600050560
+Total cycles: 302925701170
+
+Starting iteration: 91
+Key Generation cycles: 301722425118
+Encapsulation cycles: 96332438
+Decapsulation cycles: 599443592
+Total cycles: 302418201148
+
+Starting iteration: 92
+Key Generation cycles: 302418132502
+Encapsulation cycles: 96560726
+Decapsulation cycles: 603880346
+Total cycles: 303118573574
+
+Starting iteration: 93
+Key Generation cycles: 301732849070
+Encapsulation cycles: 95919746
+Decapsulation cycles: 602111886
+Total cycles: 302430880702
+
+Starting iteration: 94
+Key Generation cycles: 303134471013
+Encapsulation cycles: 96378198
+Decapsulation cycles: 601884696
+Total cycles: 303832733907
+
+Starting iteration: 95
+Key Generation cycles: 302492227454
+Encapsulation cycles: 97660390
+Decapsulation cycles: 602310578
+Total cycles: 303192198422
+
+Starting iteration: 96
+Key Generation cycles: 302280766877
+Encapsulation cycles: 96792532
+Decapsulation cycles: 606149198
+Total cycles: 302983708607
+
+Starting iteration: 97
+Key Generation cycles: 302402846093
+Encapsulation cycles: 96842360
+Decapsulation cycles: 603317920
+Total cycles: 303103006373
+
+Starting iteration: 98
+Key Generation cycles: 303125079741
+Encapsulation cycles: 95791864
+Decapsulation cycles: 607045270
+Total cycles: 303827916875
+
+Starting iteration: 99
+Key Generation cycles: 302867723340
+Encapsulation cycles: 96411316
+Decapsulation cycles: 601205334
+Total cycles: 303565339990
+

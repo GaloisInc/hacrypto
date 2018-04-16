@@ -1,0 +1,1 @@
+../avx/syndrome_asm.q

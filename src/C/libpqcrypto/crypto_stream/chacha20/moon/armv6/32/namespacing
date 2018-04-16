@@ -1,0 +1,4 @@
+#define chacha_armv6 pqcrypto_stream_chacha20_impl_priv_chacha_armv6
+#define chacha_blocks_armv6 pqcrypto_stream_chacha20_impl_priv_chacha_blocks_armv6
+#define hchacha_armv6 pqcrypto_stream_chacha20_impl_priv_hchacha_armv6
+#define xchacha_armv6 pqcrypto_stream_chacha20_impl_priv_xchacha_armv6

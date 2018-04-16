@@ -1,0 +1,23 @@
+#ifndef PARAMS_H
+#define PARAMS_H
+
+#define PARAM_N 2048
+#define PARAM_N_LOG 11
+#define PARAM_SIGMA 8.5
+#define PARAM_Q 12681217
+#define PARAM_Q_LOG 24
+#define PARAM_B 2097151
+#define PARAM_B_BITS 21
+
+#define PARAM_K 1
+#define PARAM_SIGMA_E PARAM_SIGMA
+
+#define PARAM_W 50
+#define PARAM_D 22
+	
+#define PARAM_KEYGEN_BOUND_E 1117
+#define PARAM_REJECTION PARAM_KEYGEN_BOUND_E
+#define PARAM_KEYGEN_BOUND_S 1138
+#define PARAM_U PARAM_KEYGEN_BOUND_S
+
+#endif

@@ -1,0 +1,669 @@
+#!/usr/bin/env python3
+
+# libpqcrypto/build
+# D. J. Bernstein
+# Public domain.
+
+import string
+import re
+import platform
+import sys
+import os
+import subprocess
+import shutil
+import datetime
+
+def readfile(fn):
+  with open(fn,'r') as f:
+    return f.read()
+
+def writefilebinary(fn,s):
+  with open(fn,'wb') as f:
+    f.write(s)
+
+def writefile(fn,s):
+  with open(fn,'w') as f:
+    f.write(s)
+
+def copymkdir(old,dir):
+  try:
+    os.makedirs(dir)
+  except:
+    pass
+  shutil.copy(old,dir)
+
+project = 'pqcrypto'
+
+version = readfile('version').strip()
+
+shorthostname = platform.node().split('.')[0].lower()
+okcharacters = string.ascii_letters + string.digits
+shorthostname = ''.join(c for c in shorthostname if c in okcharacters)
+
+startdir = os.getcwd()
+
+work = '%s/link-build/build-%s/%s' % (startdir,version,shorthostname)
+shutil.rmtree(work,True)
+os.makedirs(work)
+
+notes = '%s/notes' % work
+os.makedirs(notes)
+log = open('%s/log' % notes,'w')
+
+hinternal = '%s/include' % work
+shutil.copytree('h-internal',hinternal)
+
+tmp = '%s/tmp' % work
+
+hexternal = '%s/link-install/run-%s/%s/include' % (startdir,version,shorthostname)
+shutil.rmtree(hexternal,True)
+shutil.copytree('h-external',hexternal)
+
+results = '%s/link-build/obj-%s/%s' % (startdir,version,shorthostname)
+shutil.rmtree(results,True)
+os.makedirs(results)
+
+
+logprevious = None
+
+def lognow(x,y=''):
+  global logprevious
+
+  x = re.sub('\n','_',x)
+  output = '%s\n' % x
+  if y:
+    try:
+      y = y.decode()
+    except:
+      pass
+    for z in y.splitlines():
+      output += '> %s\n' % z
+
+  now = datetime.datetime.now()
+  if logprevious == None: logprevious = now
+  duration = (now - logprevious).total_seconds()
+  logprevious = now
+
+  log.write('%s === %9f === %s' % (now.ctime(),duration,output))
+  log.flush()
+  sys.stdout.write(output)
+  sys.stdout.flush()
+
+lognow('build starting')
+lognow('version %s' % version)
+lognow('hostname %s' % shorthostname)
+
+def guessarchitectures(c):
+  try:
+    command = '%s -dumpmachine' % (c)
+    p = subprocess.Popen(command.split(),cwd=tmp,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+    out,err = p.communicate()
+    assert not err
+    if p.returncode:
+      lognow('dumpmachine exited %s' % (p.returncode))
+    out = out.decode()
+    if out.startswith('x86_64'): return ['x86','amd64']
+    if out.startswith('i686'): return ['x86']
+    if out.startswith('i386'): return ['x86']
+    if out.startswith('aarch64'): return ['arm','armeabi','aarch64']
+    if out.startswith('arm'): return ['arm','armeabi']
+    return
+  except Exception as e:
+    lognow('dumpmachine failed %s' % e)
+    return
+
+def compile(c,c_,tmp,dir,f):
+  try:
+    command = '%s -fvisibility=hidden -c %s' % (c,f)
+    p = subprocess.Popen(command.split(),cwd=tmp,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+    out,err = p.communicate()
+    assert not err
+    if out:
+      lognow('output',out)
+      try:
+        os.makedirs('%s/%s/%s' % (notes,c_,dir))
+      except:
+        pass
+      writefilebinary('%s/%s/%s/%s' % (notes,c_,dir,f),out)
+    if p.returncode:
+      lognow('%s/%s compiler exited %s' % (dir,f,p.returncode))
+      return False
+    return True
+  except Exception as e:
+    lognow('%s/%s compiler failed %s' % (dir,f,e))
+    return False
+
+def checknamespace(tmp,dir,fo,namespace):
+  for symbol in subprocess.check_output(['nm','-pP','--defined-only','%s/%s' % (tmp,fo)]).decode().splitlines():
+    symbol = symbol.split()
+    if symbol[1] in ['b','d','r','t']: continue
+    if symbol[0] == namespace: continue
+    if symbol[0].startswith('%s_' % namespace): continue
+    if symbol[0].startswith('__x86.get_pc_thunk.'): continue
+    x = '%s_priv_%s' % (namespace,symbol[0])
+    lognow('%s warning: namespace violation: %s %s %s %s' % (dir,fo,symbol[0],symbol[1],x))
+
+# ----- compilers
+
+compilers = {}
+compilers['c'] = readfile('compilers/c').splitlines()
+compilerarchitectures = {}
+
+for c in compilers['c']:
+  c = c.strip()
+  if c == '': continue
+  c_ = re.sub(' ','_',c)
+
+  copt = c
+
+  shutil.rmtree(tmp,True)
+  os.mkdir(tmp)
+
+  lognow('compilers/abiname.c compiling %s' % c)
+  shutil.copy('compilers/abiname.c',tmp)
+  if compile(copt,c_,tmp,'compilers','abiname.c'):
+    copymkdir('%s/abiname.o' % tmp,'%s/%s/%s' % (results,c_,'compilers'))
+
+  x = 'void pqcrypto_base(void) { ; }'
+  writefile('%s/base.c' % tmp,x)
+  if compile(copt,c_,tmp,'compilers','base.c'):
+    copymkdir('%s/base.o' % tmp,'%s/%s/%s' % (results,c_,'compilers'))
+
+  a = guessarchitectures(c)
+  if a: compilerarchitectures[c] = a
+
+# ----- cpucycles
+
+for counter in sorted(os.listdir('cpucycles')):
+  source = 'cpucycles/%s' % counter
+  if not os.path.isdir(source): continue
+
+  for c in compilers['c']:
+    c = c.strip()
+    if c == '': continue
+    c_ = re.sub(' ','_',c)
+
+    if c in compilerarchitectures:
+      if os.path.exists('%s/architectures' % source):
+        if all(abi.strip() not in compilerarchitectures[c]
+               for abi in readfile('%s/architectures' % source).splitlines()):
+          lognow('%s skipping architecture %s' % (source,c))
+          continue
+
+    lognow('%s compiling %s' % (source,c))
+
+    shutil.rmtree(tmp,True)
+    os.mkdir(tmp)
+    shutil.copy('%s/cpucycles.c' % source,tmp)
+    shutil.copy('%s/implementation.c' % source,tmp)
+    shutil.copy('cpucycles/osfreq.c',tmp)
+    shutil.copy('cpucycles/test.c',tmp)
+
+    copt = c
+    copt += ' -I%s' % hinternal
+
+    if compile(copt,c_,tmp,'cpucycles','cpucycles.c'):
+      if compile(copt,c_,tmp,'cpucycles','implementation.c'):
+        if compile(copt,c_,tmp,'cpucycles','test.c'):
+          dir = '%s/%s/%s/%s' % (results,c_,'cpucycles',counter)
+          copymkdir('%s/cpucycles.o' % tmp,dir)
+          copymkdir('%s/implementation.o' % tmp,dir)
+          copymkdir('%s/test.o' % tmp,dir)
+          if os.path.exists('%s/architectures' % source):
+            copymkdir('%s/architectures' % source,dir)
+          checknamespace(tmp,'cpucycles','cpucycles.o','pqcpucycles_impl')
+          checknamespace(tmp,'cpucycles','implementation.o','pqcpucycles_impl')
+
+# ----- keccak
+
+for c in compilers['c']:
+  c = c.strip()
+  if c == '': continue
+  c_ = re.sub(' ','_',c)
+
+  lognow('keccak compiling %s' % c)
+
+  shutil.rmtree(tmp,True)
+  shutil.copytree('keccak',tmp)
+
+  files = sorted(os.listdir(tmp))
+  files = [x for x in files if x.endswith('.c')]
+
+  ok = True
+
+  for f in files:
+    copt = c
+    copt += ' -I.'
+    copt += ' -I%s' % hinternal
+    copt += ' -I%s/libkeccak.a.headers' % hinternal
+
+    lognow('keccak/%s compiling' % f)
+    if not compile(copt,c_,tmp,'keccak',f):
+      ok = False
+
+  if ok:
+    lognow('keccak compiled %s' % c)
+    dir = '%s/%s/keccak' % (results,c_)
+    for f in files:
+      fo = f[:-1] + 'o'
+      copymkdir('%s/%s' % (tmp,fo),dir)
+      checknamespace(tmp,'keccak',fo,'pqcrypto_keccak')
+
+# ----- kernelrandombytes
+
+randombytes = readfile('kernelrandombytes/PRIORITY').splitlines()
+
+for r in randombytes:
+  r = r.strip()
+  if r == '': continue
+  if not os.path.isdir('kernelrandombytes/%s' % r): continue
+
+  for c in compilers['c']:
+    c = c.strip()
+    if c == '': continue
+    c_ = re.sub(' ','_',c)
+
+    lognow('kernelrandombytes/%s compiling %s' % (r,c))
+
+    shutil.rmtree(tmp,True)
+    os.mkdir(tmp)
+
+    shutil.copy('kernelrandombytes/%s/kernelrandombytes.c' % r,tmp)
+    shutil.copy('kernelrandombytes/%s/implementation.c' % r,tmp)
+    shutil.copy('kernelrandombytes/test.c',tmp)
+
+    copt = c
+    copt += ' -I%s' % hinternal
+
+    if compile(copt,c_,tmp,'kernelrandombytes','kernelrandombytes.c'):
+      if compile(copt,c_,tmp,'kernelrandombytes','implementation.c'):
+        if compile(copt,c_,tmp,'kernelrandombytes','test.c'):
+          dir = '%s/%s/%s/%s' % (results,c_,'kernelrandombytes',r)
+          copymkdir('%s/kernelrandombytes.o' % tmp,dir)
+          copymkdir('%s/implementation.o' % tmp,dir)
+          copymkdir('%s/test.o' % tmp,dir)
+          checknamespace(tmp,'kernelrandombytes','kernelrandombytes.o','pqkernelrandombytes_impl')
+          checknamespace(tmp,'kernelrandombytes','implementation.o','pqkernelrandombytes_impl')
+
+# ----- crypto
+
+operations = readfile('OPERATIONS').splitlines()
+macros = readfile('MACROS').splitlines()
+prototypes = {}
+prototypes['c'] = readfile('PROTOTYPES.c').splitlines()
+prototypes['cpp'] = readfile('PROTOTYPES.cpp').splitlines()
+includefile = {}
+
+def walknosticky(d):
+  result = []
+
+  for dir,subdirs,files in os.walk(d,followlinks=True):
+    if os.stat(dir).st_mode & 0o1000 == 0o1000:
+      lognow('%s skipping sticky' % dir)
+      for x in list(subdirs): subdirs.remove(x)
+      continue
+    result += [(dir,subdirs,files)]
+
+  result.sort()
+  return result
+
+for o in operations:
+  o = o.strip()
+  if o == '': continue
+  if not os.path.isdir(o): continue
+
+  for p in sorted(os.listdir(o)):
+    if not os.path.isdir('%s/%s' % (o,p)): continue
+    op = '%s_%s' % (o,p)
+
+    w = walknosticky('%s/%s' % (o,p))
+    for implementationdir,dirnames,filenames in w:
+      if 'api.h' in filenames:
+        opi = 'pq%s_impl' % op
+
+        api = readfile('%s/api.h' % implementationdir)
+        api = api.splitlines()
+        apidict = {}
+        for line in api:
+          apiline = line.strip().split()
+          if len(apiline) == 0: continue
+          try:
+            assert apiline[0] == '#define'
+            assert len(apiline) == 3
+            assert apiline[2] == str(int(apiline[2]))
+            apidict[apiline[1]] = apiline[2]
+          except:
+            lognow('warning: api.h looseness: %s' % line)
+            continue
+
+        files = sorted(os.listdir(implementationdir))
+        cfiles = [x for x in files if x.endswith('.c')]
+        sfiles = [x for x in files if x.endswith('.s') or x.endswith('.S')]
+        files = cfiles + sfiles
+
+        shutil.rmtree(tmp,True)
+        shutil.copytree(implementationdir,tmp)
+
+        # implementations are not allowed to provide compiler.c
+        files += ['compiler.c']
+
+        if not 'version.c' in files:
+          x = ''
+          x += '#include "%s.h"\n' % o
+          x += 'const char %s_version[] __attribute__((visibility("default"))) = "-";\n' % o
+          writefile('%s/version.c' % tmp,x)
+          files += ['version.c']
+
+        if not 'implementation.c' in files:
+          x = ''
+          x += '#include "%s.h"\n' % o
+          x += 'const char %s_implementation[] __attribute__((visibility("default"))) = "%s";\n' % (o,implementationdir)
+          writefile('%s/implementation.c' % tmp,x)
+          files += ['implementation.c']
+
+        libraryfiles = list(files)
+
+        shutil.copy('%s/try.c' % o,tmp)
+        shutil.copy('%s/try-notest.c' % o,tmp)
+        shutil.copy('try-checksum.c',tmp)
+        shutil.copy('try-cycles.c',tmp)
+        files += ['try.c','try-notest.c','try-checksum.c','try-cycles.c']
+
+        # XXX: hooks to other languages
+
+        x = ''
+        x += '#ifndef %s_H\n' % o
+        x += '#define %s_H\n' % o
+        x += '\n'
+        x += '#include "%s.h"\n' % op
+        for m in macros:
+          m = m.strip()
+          if m == o or m.startswith(o + '_'):
+            x += '#define %s %s%s\n' % (m,op,m[len(o):])
+        x += '#define %s_primitive "%s"\n' % (o,p)
+        x += '#define %s_implementation %s_implementation\n' % (o,op)
+        x += '#define %s_version %s_version\n' % (o,op)
+        x += '#define %s_compiler %s_compiler\n' % (o,op)
+        x += '\n'
+        x += '#endif\n'
+
+        writefile('%s/%s.h' % (tmp,o),x)
+
+        x = ''
+        x += '#ifndef %s_H\n' % op
+        x += '#define %s_H\n' % op
+        x += '\n'
+        for m in macros:
+          m = m.strip()
+          if m == o or m.startswith(o + '_'):
+            x += '#define %s%s %s%s\n' % (op,m[len(o):],opi,m[len(o):])
+        x += '#define %s_implementation %s_implementation\n' % (op,opi)
+        x += '#define %s_version %s_version\n' % (op,opi)
+        x += '#define %s_compiler %s_compiler\n' % (op,opi)
+        x += '\n'
+
+        for m in macros:
+          m = m.strip()
+          if m.startswith(o + '_'):
+            key = 'CRYPTO%s' % m[len(o):]
+            if key in apidict:
+              x += '#define %s%s %s\n' % (opi,m[len(o):],apidict[key])
+
+        x += '\n'
+        x += '#ifdef __cplusplus\n'
+        x += '// C++ wrappers not included in libpqcrypto yet\n'
+        x += '#include <string>\n'
+        for fun in prototypes['cpp']:
+          fun = fun.strip()
+          if re.search(' %s[(_]' % o,fun):
+            x += '%s\n' % re.sub(' %s' % o,' %s' % op,fun)
+        x += 'extern "C" {\n'
+        x += '#endif\n'
+        x += '\n'
+        for fun in prototypes['c']:
+          fun = fun.strip()
+          if re.search(' %s[(_]' % o,fun):
+            x += '%s\n' % re.sub(' %s' % o,' %s' % op,fun)
+        x += 'extern const char %s_implementation[] __attribute__((visibility("default")));\n' % op
+        x += 'extern const char %s_version[] __attribute__((visibility("default")));\n' % op
+        x += 'extern const char %s_compiler[] __attribute__((visibility("default")));\n' % op
+        x += '\n'
+        x += '#ifdef __cplusplus\n'
+        x += '}\n'
+        x += '#endif\n'
+        x += '\n'
+        x += '#endif\n'
+
+        if op in includefile:
+          if includefile[op] != x:
+            lognow('error: variation in %s.h' % op)
+            assert False
+          includefile[op] = x
+
+        writefile('%s/%s.h' % (tmp,op),x)
+
+        ok = True
+        for f in files:
+          if f[0] == '-':
+            lognow('skipping %s because of invalid filename %s' % (implementationdir,f))
+            ok = False
+          for c in f:
+            if not c in string.ascii_letters + string.digits + '._-':
+              lognow('skipping %s because of invalid filename %s' % (implementationdir,f))
+              ok = False
+
+        if not ok: continue
+
+        namespacing = os.path.exists('%s/namespacing' % implementationdir)
+
+        for c in compilers['c']:
+          c = c.strip()
+          if c == '': continue
+          c_ = re.sub(' ','_',c)
+
+          if c in compilerarchitectures:
+            if os.path.exists('%s/architectures' % implementationdir):
+              if all(abi.strip() not in compilerarchitectures[c]
+                     for abi in readfile('%s/architectures' % implementationdir).splitlines()):
+                lognow('%s skipping architecture %s' % (implementationdir,c))
+                continue
+
+          lognow('%s compiling %s' % (implementationdir,c))
+
+          cquoted = c
+          cquoted = re.sub(r'\\',r'\\\\',cquoted)
+          cquoted = re.sub(r'"',r'\\"',cquoted)
+
+          compilerc = ''
+          compilerc += '#include "%s.h"\n' % o
+          compilerc += 'const char %s_compiler[] __attribute__((visibility("default"))) = "%s";\n' % (o,cquoted)
+          writefile('%s/compiler.c' % tmp,compilerc)
+
+          ok = True
+
+          for f in files:
+            copt = c
+            if f[-2:] in ['.s','.S']:
+              copt += ' -DPRIVATE='
+            else:
+              copt += ' -DPRIVATE=__attribute__((visibility("hidden")))'
+            copt += ' -DLIBPQCRYPTO -I. -I%s -I%s' % (hinternal,hexternal)
+            if namespacing: copt += ' -imacros namespacing'
+
+            if f == 'try.c':
+              lognow('%s/%s compiling -DSMALL' % (implementationdir,f))
+              if compile(copt + ' -DSMALL',c_,tmp,implementationdir,f):
+                shutil.copy('%s/try.o' % tmp,'%s/try-small.o' % tmp)
+              else:
+                ok = False
+
+            lognow('%s/%s compiling' % (implementationdir,f))
+            if not compile(copt,c_,tmp,implementationdir,f):
+              ok = False
+              # but keep going through files to collect error messages
+
+          if ok:
+            lognow('%s compiled %s' % (implementationdir,c))
+            dir = '%s/%s/%s' % (results,c_,implementationdir)
+            for f in files:
+              fo = f[:-1] + 'o'
+              copymkdir('%s/%s' % (tmp,fo),dir)
+              if f == 'try.c':
+                copymkdir('%s/%s' % (tmp,'try-small.o'),dir)
+              if f in libraryfiles:
+                checknamespace(tmp,implementationdir,fo,opi)
+            if os.path.exists('%s/architectures' % implementationdir):
+              copymkdir('%s/architectures' % implementationdir,dir)
+
+        writefile('%s/%s.h' % (hinternal,op),x)
+
+        x = re.sub(' crypto_',' pqcrypto_',x)
+        writefile('%s/pq%s.h' % (hexternal,op),x)
+
+        try:
+          os.makedirs('%s/%s/%s/macros' % (results,o,p))
+        except:
+          pass
+
+        for m in macros:
+          m = m.strip()
+          if m.startswith(o + '_'):
+            key = 'CRYPTO%s' % m[len(o):]
+            if key in apidict:
+              writefile('%s/%s/%s/macros/%s' % (results,o,p,key),apidict[key])
+
+  if o == 'crypto_rng':
+    for c in compilers['c']:
+      c = c.strip()
+      if c == '': continue
+      c_ = re.sub(' ','_',c)
+
+      lognow('knownrandombytes compiling %s' % c)
+
+      shutil.rmtree(tmp,True)
+      os.mkdir(tmp)
+
+      shutil.copy('knownrandombytes/knownrandombytes.c',tmp)
+      shutil.copy('knownrandombytes/test.c',tmp)
+
+      rng = 'chacha20'
+      x = ''
+      x += '#ifndef crypto_rng_h\n'
+      x += '#define crypto_rng_h\n'
+      x += '#include "crypto_rng_%s.h"\n' % rng
+      x += '#define crypto_rng crypto_rng_%s\n' % rng
+      x += '#define crypto_rng_KEYBYTES crypto_rng_%s_KEYBYTES\n' % rng
+      x += '#define crypto_rng_OUTPUTBYTES crypto_rng_%s_OUTPUTBYTES\n' % rng
+      x += '#endif\n'
+      writefile('%s/crypto_rng.h' % tmp,x)
+
+      copt = c
+      copt += ' -I%s' % hinternal
+
+      if compile(copt,c_,tmp,'knownrandombytes','knownrandombytes.c'):
+        if compile(copt,c_,tmp,'knownrandombytes','test.c'):
+          dir = '%s/%s/%s' % (results,c_,'knownrandombytes')
+          copymkdir('%s/knownrandombytes.o' % tmp,dir)
+          copymkdir('%s/test.o' % tmp,dir)
+          checknamespace(tmp,'knownrandombytes','knownrandombytes.o','pqrandombytes_impl')
+
+    for c in compilers['c']:
+      c = c.strip()
+      if c == '': continue
+      c_ = re.sub(' ','_',c)
+
+      shutil.rmtree(tmp,True)
+      os.mkdir(tmp)
+
+      shutil.copy('fastrandombytes/fastrandombytes.c',tmp)
+      shutil.copy('fastrandombytes/test.c',tmp)
+
+      for rng in ['aes256','chacha20','salsa20']:
+        lognow('fastrandombytes/%s compiling %s' % (rng,c))
+
+        x = ''
+        x += '#ifndef crypto_rng_h\n'
+        x += '#define crypto_rng_h\n'
+        x += '#include "crypto_rng_%s.h"\n' % rng
+        x += '#define crypto_rng crypto_rng_%s\n' % rng
+        x += '#define crypto_rng_KEYBYTES crypto_rng_%s_KEYBYTES\n' % rng
+        x += '#define crypto_rng_OUTPUTBYTES crypto_rng_%s_OUTPUTBYTES\n' % rng
+        x += '#endif\n'
+        writefile('%s/crypto_rng.h' % tmp,x)
+
+        copt = c
+        copt += ' -I%s' % hinternal
+
+        if compile(copt,c_,tmp,'fastrandombytes','fastrandombytes.c'):
+          if compile(copt,c_,tmp,'fastrandombytes','test.c'):
+            dir = '%s/%s/%s/%s' % (results,c_,'fastrandombytes',rng)
+            copymkdir('%s/fastrandombytes.o' % tmp,dir)
+            copymkdir('%s/test.o' % tmp,dir)
+            checknamespace(tmp,'fastrandombytes','fastrandombytes.o','pqrandombytes_impl')
+
+# ----- command
+
+for commandlib in ['freadall','limits']:
+  for c in compilers['c']:
+    c = c.strip()
+    if c == '': continue
+    c_ = re.sub(' ','_',c)
+
+    lognow('command/%s.c compiling %s' % (commandlib,c))
+  
+    shutil.rmtree(tmp,True)
+    os.mkdir(tmp)
+  
+    shutil.copy('command/%s.c' % commandlib,tmp)
+    shutil.copy('command/%s.h' % commandlib,tmp)
+  
+    copt = c
+    copt += ' -I%s' % hexternal
+  
+    if compile(copt,c_,tmp,'command','%s.c' % commandlib):
+      dir = '%s/%s/%s' % (results,c_,'command')
+      copymkdir('%s/%s.o' % (tmp,commandlib),dir)
+
+for o in operations:
+  if not os.path.isdir(o): continue
+
+  for p in sorted(os.listdir(o)):
+    if not os.path.isdir('%s/%s' % (o,p)): continue
+    if os.stat('%s/%s' % (o,p)).st_mode & 0o1000 == 0o1000:
+      continue
+
+    shutil.rmtree(tmp,True)
+    os.mkdir(tmp)
+
+    for cmdoc in sorted(os.listdir('command')):
+      if cmdoc in ['pq-keypair-kem.c','pq-encrypt-kem.c','pq-decrypt-kem.c']:
+        if not os.path.exists('%s/%s/goal-indcca2' % (o,p)):
+          continue
+
+      if cmdoc.endswith('-%s.c' % o[7:]):
+        cmdp = cmdoc[:-2-len(o[7:])] + p
+
+        x = readfile('command/%s' % cmdoc)
+        x = re.sub('PRIMITIVE',p,x)
+        writefile('%s/%s.c' % (tmp,cmdp),x)
+        shutil.copy('command/limits.h',tmp)
+        shutil.copy('command/freadall.h',tmp)
+
+        for c in compilers['c']:
+          c = c.strip()
+          if c == '': continue
+          c_ = re.sub(' ','_',c)
+    
+          lognow('command/%s.c compiling %s' % (cmdp,c))
+    
+          copt = c
+          copt += ' -I%s' % hexternal
+    
+          if compile(copt,c_,tmp,'command','%s.c' % cmdp):
+            dir = '%s/%s/%s' % (results,c_,'command')
+            copymkdir('%s/%s.o' % (tmp,cmdp),dir)
+
+# ----- finishing
+
+shutil.rmtree(tmp,True)
+lognow('build finishing')

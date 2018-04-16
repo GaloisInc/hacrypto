@@ -1,0 +1,1 @@
+../../newhope1024cca/avx2/ntt_double.S

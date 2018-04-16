@@ -1,0 +1,1 @@
+../../dilithium2/avx2/pointwise_mul.S

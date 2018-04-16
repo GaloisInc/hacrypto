@@ -1,0 +1,6 @@
+#!/bin/sh -e
+
+cd link-install/python
+
+python3 -c 'import pqcrypto' </dev/null >/dev/null 2>&1 || :
+python2 -c 'import pqcrypto' </dev/null >/dev/null 2>&1 || :

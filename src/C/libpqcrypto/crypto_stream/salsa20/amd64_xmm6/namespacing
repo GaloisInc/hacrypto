@@ -1,0 +1,2 @@
+#define crypto_stream_salsa20 pqcrypto_stream_salsa20_impl
+#define crypto_stream_salsa20_xor pqcrypto_stream_salsa20_impl_xor

@@ -1,0 +1,1 @@
+../../picnicl3fs/avx2/lowmc_192_192_30.c

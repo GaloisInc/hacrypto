@@ -1,0 +1,1 @@
+#define chacha_xor_avx pqcrypto_stream_chacha20_impl_priv_chacha_xor_avx

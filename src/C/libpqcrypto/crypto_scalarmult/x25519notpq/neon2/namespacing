@@ -1,0 +1,1 @@
+#define scalarmult pqcrypto_scalarmult_x25519notpq_impl

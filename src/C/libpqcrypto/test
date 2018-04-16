@@ -1,0 +1,695 @@
+#!/usr/bin/env python3
+
+# libpqcrypto/test
+# D. J. Bernstein
+# Public domain.
+
+import string
+import re
+import platform
+import sys
+import os
+import signal
+import subprocess
+import shutil
+import datetime
+
+def readfile(fn):
+  with open(fn,'r') as f:
+    return f.read()
+
+def writefilebinary(fn,s):
+  with open(fn,'wb') as f:
+    f.write(s)
+
+def writefile(fn,s):
+  with open(fn,'w') as f:
+    f.write(s)
+
+def copymkdir(old,dir):
+  try:
+    os.makedirs(dir)
+  except:
+    pass
+  shutil.copy(old,dir)
+
+project = 'pqcrypto'
+
+version = readfile('version').strip()
+
+shorthostname = platform.node().split('.')[0].lower()
+okcharacters = string.ascii_letters + string.digits
+shorthostname = ''.join(c for c in shorthostname if c in okcharacters)
+
+startdir = os.getcwd()
+
+compiled = '%s/link-build/obj-%s/%s' % (startdir,version,shorthostname)
+
+work = '%s/link-build/test-%s/%s' % (startdir,version,shorthostname)
+shutil.rmtree(work,True)
+os.makedirs(work)
+
+notes = '%s/notes' % work
+os.makedirs(notes)
+log = open('%s/log' % notes,'w')
+
+tmp = '%s/tmp' % work
+
+objproject = '%s/obj' % work
+shutil.rmtree(objproject,True)
+os.makedirs(objproject)
+
+testlib = '%s/lib' % work
+shutil.rmtree(testlib,True)
+os.makedirs(testlib)
+
+installlib = '%s/link-install/run-%s/%s/lib' % (startdir,version,shorthostname)
+shutil.rmtree(installlib,True)
+os.makedirs(installlib)
+rpath = os.path.realpath(installlib)
+
+command = '%s/link-install/run-%s/%s/command' % (startdir,version,shorthostname)
+shutil.rmtree(command,True)
+os.makedirs(command)
+
+python = '%s/link-install/run-%s/%s/python' % (startdir,version,shorthostname)
+shutil.rmtree(python,True)
+os.makedirs(python)
+
+
+logprevious = None
+
+def lognow(x,y=''):
+  global logprevious
+
+  x = re.sub('\n','_',x)
+  output = '%s\n' % x
+  if y:
+    try:
+      y = y.decode()
+    except:
+      pass
+    for z in y.splitlines():
+      output += '> %s\n' % z
+
+  now = datetime.datetime.now()
+  if logprevious == None: logprevious = now
+  duration = (now - logprevious).total_seconds()
+  logprevious = now
+
+  log.write('%s === %9f === %s' % (now.ctime(),duration,output))
+  log.flush()
+  sys.stdout.write(output)
+  sys.stdout.flush()
+
+lognow('test starting')
+lognow('version %s' % version)
+lognow('hostname %s' % shorthostname)
+
+signals = dict((getattr(signal,x),x) for x in dir(signal) if x.startswith('SIG') and '_' not in x)
+
+def returncodestr(n):
+  if -n in signals: return signals[-n]
+  return str(n)
+
+def addlibproject(abi,fo,membername):
+  staticlib = '%s/%s/lib%s.a' % (installlib,abi,project)
+  doto = '%s/%s/%s' % (objproject,abi,membername)
+
+  if os.path.exists(doto):
+    lognow('error: overwriting %s' % membername)
+    return
+  shutil.copy(fo,doto)
+
+  try:
+    cmd = 'ar cr %s %s' % (staticlib,doto)
+    p = subprocess.Popen(cmd.split(),stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+    out,err = p.communicate()
+    if out:
+      lognow('archiver stdout',out)
+    if err:
+      lognow('archiver stderr',err)
+    if p.returncode:
+      lognow('archiver failed exit %s' % returncodestr(p.returncode))
+  except Exception as e:
+    lognow('archiver failed %s' % e)
+  try:
+    cmd = 'ranlib %s' % staticlib
+    p = subprocess.Popen(cmd.split(),stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+    out,err = p.communicate()
+    if out:
+      lognow('ranlib stdout',out)
+    if err:
+      lognow('ranlib stderr',err)
+    if p.returncode:
+      lognow('ranlib failed exit %s' % returncodestr(p.returncode))
+  except Exception as e:
+    lognow('ranlib failed %s' % e)
+
+def link(c,c_,tmp,dir,exe,o):
+  try:
+    cmd = '%s -fvisibility=hidden -o %s %s' % (c,exe,' '.join(o))
+    p = subprocess.Popen(cmd.split(),cwd=tmp,stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+    out,err = p.communicate()
+    assert not err
+    if out:
+      lognow('linker output',out)
+      try:
+        os.makedirs('%s/%s/%s' % (notes,c_,dir))
+      except:
+        pass
+      writefilebinary('%s/%s/%s/%s' % (notes,c_,dir,exe),out)
+    if p.returncode:
+      lognow('%s/%s linker failed %s' % (dir,exe,returncodestr(p.returncode)))
+      return False
+    return True
+  except Exception as e:
+    lognow('%s/%s linker exited %s' % (dir,exe,e))
+    return False
+
+def run(c,c_,tmp,dir,exe):
+  try:
+    cmd = './%s' % exe
+    p = subprocess.Popen(cmd.split(),cwd=tmp,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+    out,err = p.communicate()
+    if err:
+      lognow('test stderr',err)
+      try:
+        os.makedirs('%s/%s/%s' % (notes,c_,dir))
+      except:
+        pass
+      writefilebinary('%s/%s/%s/%s' % (notes,c_,dir,exe),err)
+    if p.returncode:
+      lognow('%s/%s test exited %s' % (dir,exe,returncodestr(p.returncode)))
+      return
+    return out.decode()
+  except Exception as e:
+    lognow('%s/%s test failed %s' % (dir,exe,e))
+    return
+
+# ----- abi and syslibs
+
+compilers = {}
+compilers['c'] = readfile('compilers/c').splitlines()
+
+compilerabi = {}
+abis = []
+syslibs = {}
+
+for c in compilers['c']:
+  c = c.strip()
+  if c == '': continue
+  c_ = re.sub(' ','_',c)
+  compilerabi[c] = c_
+  syslibs[c] = []
+
+  shutil.rmtree(tmp,True)
+  dir = '%s/%s/compilers' % (compiled,c_)
+  if not os.path.exists(dir): continue
+
+  shutil.copytree(dir,tmp)
+  if link(c,c_,tmp,'compilers','abiname',['abiname.o']):
+    abi = run(c,c_,tmp,'compilers','abiname')
+    if abi:
+      abi = abi.strip()
+      compilerabi[c] = abi
+      try:
+        os.makedirs('%s/%s' % (objproject,abi))
+        os.makedirs('%s/%s' % (testlib,abi))
+        os.makedirs('%s/%s' % (installlib,abi))
+        addlibproject(abi,'%s/base.o' % tmp,'base.o')
+        os.symlink('../../include','%s/%s/include' % (installlib,abi))
+        os.symlink(abi,'%s/0' % installlib)
+      except:
+        pass
+
+      for lib in ['-lm','-ldl','-lrt','-lgmp','-lcrypto']:
+        if link(c,c_,tmp,'compilers','syslibs',['abiname.o'] + [lib] + syslibs[c]):
+          if run(c,c_,tmp,'compilers','syslibs'):
+            syslibs[c] = [lib] + syslibs[c]
+
+  lognow('abi %s %s %s' % (compilerabi[c],c,' '.join(syslibs[c])))
+  if not compilerabi[c] in abis:
+    abis += [compilerabi[c]]
+
+# XXX: check compatibility of compilers with same alleged abi
+
+# ----- cpucycles
+
+abicounter = {}
+
+for counter in sorted(os.listdir('cpucycles')):
+  if not os.path.isdir('cpucycles/%s' % counter): continue
+
+  for c in compilers['c']:
+    c = c.strip()
+    if c == '': continue
+    c_ = re.sub(' ','_',c)
+
+    dir = '%s/%s/cpucycles/%s' % (compiled,c_,counter)
+    if not os.path.exists(dir): continue
+
+    if os.path.exists('%s/architectures' % dir):
+      if all(dirabi.strip() != compilerabi[c]
+             for dirabi in readfile('%s/architectures' % dir).splitlines()):
+        lognow('cpucycles/%s skipping architecture %s' % (counter,c))
+        continue
+
+    abi = compilerabi[c]
+    lognow('cpucycles/%s testing %s' % (counter,c))
+    shutil.rmtree(tmp,True)
+    shutil.copytree(dir,tmp)
+    if link(c,c_,tmp,'cpucycles/%s' % counter,'test',['test.o','cpucycles.o','implementation.o']):
+      cycles = run(c,c_,tmp,'cpucycles/%s' % counter,'test')
+      if cycles:
+        cycles = int(cycles.strip())
+        lognow('cpucycles/%s cycles %s %s' % (counter,cycles,c))
+        if abi not in abicounter or cycles < abicounter[abi][0]:
+          abicounter[abi] = (cycles,counter,c)
+
+for abi in abis:
+  if abi not in abicounter:
+    raise Exception('no working cycle counter for %s' % abi)
+
+  cycles,counter,c = abicounter[abi]
+  lognow('selected %s cpucycles/%s %s %s' % (abi,counter,cycles,c))
+  c_ = re.sub(' ','_',c)
+
+  dir = '%s/%s/cpucycles/%s' % (compiled,c_,counter)
+  addlibproject(abi,'%s/cpucycles.o' % dir,'cpucycles.o')
+  addlibproject(abi,'%s/implementation.o' % dir,'cpucycles_implementation.o')
+
+# ----- keccak
+
+abikeccak = set()
+
+for c in compilers['c']:
+  c = c.strip()
+  if c == '': continue
+  c_ = re.sub(' ','_',c)
+  abi = compilerabi[c]
+
+  if abi in abikeccak: continue
+
+  dir = '%s/%s/keccak' % (compiled,c_)
+  if not os.path.exists(dir): continue
+
+  files = sorted(os.listdir(dir))
+
+  lognow('keccak testing %s' % c)
+  shutil.rmtree(tmp,True)
+  shutil.copytree(dir,tmp)
+
+  # XXX: tests
+
+  lognow('selected %s keccak %s' % (abi,c))
+  for f in files:
+    addlibproject(abi,'%s/%s' % (tmp,f),'keccak_%s' % f)
+  abikeccak.add(abi)
+
+# ----- kernelrandombytes
+
+kernelrandombytes = readfile('kernelrandombytes/PRIORITY').splitlines()
+
+abikernelrandombytes = set()
+
+for r in kernelrandombytes:
+  r = r.strip()
+  if r == '': continue
+  if not os.path.isdir('kernelrandombytes/%s' % r): continue
+
+  for c in compilers['c']:
+    c = c.strip()
+    if c == '': continue
+    c_ = re.sub(' ','_',c)
+    abi = compilerabi[c]
+
+    if abi in abikernelrandombytes: continue
+
+    dir = '%s/%s/kernelrandombytes/%s' % (compiled,c_,r)
+    if not os.path.exists(dir): continue
+
+    lognow('kernelrandombytes/%s testing %s' % (r,c))
+    shutil.rmtree(tmp,True)
+    shutil.copytree(dir,tmp)
+    if link(c,c_,tmp,'kernelrandombytes/%s' % r,'test',['test.o','kernelrandombytes.o','implementation.o']):
+      if run(c,c_,tmp,'kernelrandombytes/%s' % r,'test') == '':
+        lognow('selected %s kernelrandombytes/%s %s' % (abi,r,c))
+        addlibproject(abi,'%s/kernelrandombytes.o' % dir,'kernelrandombytes.o')
+        addlibproject(abi,'%s/implementation.o' % dir,'kernelrandombytes_implementation.o')
+        abikernelrandombytes.add(abi)
+
+# ----- crypto
+
+operations = readfile('OPERATIONS').splitlines()
+
+def walknosticky(d):
+  result = []
+
+  for dir,subdirs,files in os.walk(d,followlinks=True):
+    if os.stat(dir).st_mode & 0o1000 == 0o1000:
+      lognow('%s skipping sticky' % dir)
+      for x in list(subdirs): subdirs.remove(x)
+      continue
+    result += [(dir,subdirs,files)]
+
+  result.sort()
+  return result
+
+for o in operations:
+  o = o.strip()
+  if o == '': continue
+  if not os.path.isdir(o): continue
+
+  userandombytes = o in ['crypto_scalarmult','crypto_box','crypto_dh','crypto_encrypt','crypto_kem','crypto_sign']
+
+  for p in sorted(os.listdir(o)):
+    if not os.path.isdir('%s/%s' % (o,p)): continue
+    op = '%s_%s' % (o,p)
+
+    try:
+      checksumsmall = readfile('%s/%s/checksumsmall' % (o,p)).strip()
+      checksumbig = readfile('%s/%s/checksumbig' % (o,p)).strip()
+    except:
+      checksumsmall = None
+      checksumbig = None
+
+    cyclesimpl = {}
+
+    w = walknosticky('%s/%s' % (o,p))
+    for implementationdir,dirnames,filenames in w:
+      if 'api.h' not in filenames: continue
+
+      files = sorted(os.listdir(implementationdir))
+      cfiles = [x for x in files if x.endswith('.c')]
+      sfiles = [x for x in files if x.endswith('.s') or x.endswith('.S')]
+      files = cfiles + sfiles
+      if 'compiler.c' not in files: files += ['compiler.c']
+      if 'version.c' not in files: files += ['version.c']
+      if 'implementation.c' not in files: files += ['implementation.c']
+
+      files = ['%s.o' % x[:-2] for x in files]
+
+      ok = True
+      for f in files:
+        if f[0] == '-':
+          lognow('%s skipping because of invalid filename %s' % (implementationdir,f))
+          ok = False
+        for c in f:
+          if c not in string.ascii_letters + string.digits + '._-':
+            lognow('%s skipping because of invalid filename %s' % (implementationdir,f))
+            ok = False
+
+      if not ok: continue
+
+      for c in compilers['c']:
+        c = c.strip()
+        if c == '': continue
+        c_ = re.sub(' ','_',c)
+        abi = compilerabi[c]
+
+        dir = '%s/%s/%s' % (compiled,c_,implementationdir)
+        if not os.path.isdir(dir): continue
+
+        if os.path.exists('%s/architectures' % dir):
+          if all(dirabi.strip() != abi
+                 for dirabi in readfile('%s/architectures' % dir).splitlines()):
+            lognow('%s skipping architecture %s' % (implementationdir,c))
+            continue
+
+        shutil.rmtree(tmp,True)
+        shutil.copytree(dir,tmp)
+
+        copt = c
+        copt += ' -L%s/%s' % (installlib,abi)
+        libs = []
+        libs += ['-l%s' % project]
+        libs += syslibs[c]
+
+        trylibs = libs
+        if userandombytes:
+          trylibs = ['%s/%s/knownrandombytes.o' % (testlib,abi)] + libs
+
+        lognow('%s/try-cycles testing %s' % (implementationdir,c))
+
+        # see whether files are PIC-compatible
+        if not link(copt + ' -shared',c_,tmp,implementationdir,'shared.so',files): continue
+
+        # use files rather than shared.so to be able to access hidden symbols
+        if not link(copt,c_,tmp,implementationdir,'try-cycles',['try-notest.o','try-cycles.o'] + files + trylibs): continue
+
+        cycles = run(copt,c_,tmp,implementationdir,'try-cycles')
+        try:
+          cycles = int(cycles)
+          if not abi in cyclesimpl: cyclesimpl[abi] = []
+          cyclesimpl[abi] += [(cycles,implementationdir,c,files,copt,libs,trylibs)]
+          lognow('%s cycles %d %s' % (implementationdir,cycles,c))
+        except:
+          continue
+
+    for abi in abis:
+      if not abi in cyclesimpl: cyclesimpl[abi] = []
+      cyclesimpl[abi].sort()
+
+      ok = False
+  
+      for cycles,implementationdir,c,files,copt,libs,trylibs in cyclesimpl[abi]:
+        c_ = re.sub(' ','_',c)
+  
+        shutil.rmtree(tmp,True)
+        shutil.copytree('%s/%s/%s' % (compiled,c_,implementationdir),tmp)
+
+        lognow('%s/try-small testing %s' % (implementationdir,c))
+        if not link(copt,c_,tmp,implementationdir,'try-small',files + ['try-small.o','try-checksum.o'] + trylibs): continue
+
+        outsmall = run(copt,c_,tmp,implementationdir,'try-small')
+        if outsmall == None: continue
+        outsmall = outsmall.split()
+        if not checksumsmall in [outsmall[0],None]:
+          lognow('%s/try-small bad %s' % (implementationdir,outsmall[0]))
+          continue
+
+        lognow('%s/try testing %s' % (implementationdir,c))
+        if not link(copt,c_,tmp,implementationdir,'try',files + ['try.o','try-checksum.o'] + trylibs): continue
+
+        out = run(copt,c_,tmp,implementationdir,'try')
+        if out == None: continue
+        out = out.split()
+        if not checksumbig in [out[0],None]:
+          lognow('%s/try bad' % (implementationdir,out[0]))
+          continue
+
+        checksumstatus = 'ok'
+        if checksumsmall == None: checksumstatus = 'unknown'
+        lognow('%s checksum %s %s %s %s %s %s %s %s' % (implementationdir,checksumstatus,outsmall[0],out[0],c,outsmall[1],out[1],outsmall[2],out[2]))
+
+        lognow('selected %s %s %s %s' % (abi,implementationdir,cycles,c))
+        c_ = re.sub(' ','_',c)
+  
+        for f in files:
+          addlibproject(abi,'%s/%s' % (tmp,f),re.sub('/','_','%s_%s' % (implementationdir,f)))
+
+        ok = True
+        break
+
+      if not ok:
+        lognow('selectfails %s %s/%s no working implementation' % (abi,o,p))
+
+  if o == 'crypto_rng':
+    abiknownrandombytes = set()
+
+    for c in compilers['c']:
+      c = c.strip()
+      if c == '': continue
+      c_ = re.sub(' ','_',c)
+      abi = compilerabi[c]
+
+      if abi in abiknownrandombytes: continue
+
+      lognow('knownrandombytes testing %s' % c)
+
+      shutil.rmtree(tmp,True)
+      shutil.copytree('%s/%s/%s' % (compiled,c_,'knownrandombytes'),tmp)
+
+      copt = c
+      copt += ' -L%s/%s' % (installlib,abi)
+      libs = []
+      libs += ['-l%s' % project]
+      libs += syslibs[c]
+
+      if link(copt,c_,tmp,'knownrandombytes','test',['test.o','knownrandombytes.o'] + libs):
+        if run(copt,c_,tmp,'knownrandombytes','test') == '':
+          lognow('selected %s knownrandombytes %s' % (abi,c))
+          shutil.copy('%s/knownrandombytes.o' % tmp,'%s/%s/' % (testlib,abi))
+          abiknownrandombytes.add(abi)
+
+# ----- fastrandombytes
+
+abifastrandombytes = {}
+
+for c in compilers['c']:
+  c = c.strip()
+  if c == '': continue
+  c_ = re.sub(' ','_',c)
+  abi = compilerabi[c]
+
+  for rng in sorted(os.listdir('%s/%s/fastrandombytes' % (compiled,c_))):
+    lognow('fastrandombytes/%s testing %s' % (rng,c))
+    shutil.rmtree(tmp,True)
+    shutil.copytree('%s/%s/fastrandombytes/%s' % (compiled,c_,rng),tmp)
+
+    copt = c
+    copt += ' -L%s/%s' % (installlib,compilerabi[c])
+    libs = []
+    libs += ['-l%s' % project]
+    libs += syslibs[c]
+
+    if link(copt,c_,tmp,'fastrandombytes','test',['test.o','fastrandombytes.o'] + libs):
+      cycles = run(copt,c_,tmp,'fastrandombytes','test')
+      if cycles:
+        cycles = int(cycles.strip())
+        lognow('fastrandombytes/%s cycles %s %s' % (rng,cycles,c))
+        if abi not in abifastrandombytes or cycles < abifastrandombytes[abi][0]:
+          abifastrandombytes[abi] = (cycles,rng,c)
+
+for abi in abis:
+  if abi not in abifastrandombytes:
+    raise Exception('no working fastrandombytes for %s' % abi)
+
+  cycles,rng,c = abifastrandombytes[abi]
+  lognow('selected %s fastrandombytes/%s %s %s' % (abi,rng,cycles,c))
+  c_ = re.sub(' ','_',c)
+
+  dir = '%s/%s/fastrandombytes/%s' % (compiled,c_,rng)
+  addlibproject(abi,'%s/fastrandombytes.o' % dir,'fastrandombytes.o')
+
+# ----- shared library
+
+abishared = set()
+
+for c in compilers['c']:
+  c = c.strip()
+  if c == '': continue
+  c_ = re.sub(' ','_',c)
+  abi = compilerabi[c]
+
+  if abi in abishared: continue
+
+  shutil.rmtree(tmp,True)
+  shutil.copytree('%s/%s' % (objproject,abi),tmp)
+
+  copt = c
+  copt += ' -shared'
+  copt += ' -Wl,-soname,lib%s.so.1' % project
+
+  if link(copt,c_,tmp,'shared','lib%s.so.1' % project,sorted(os.listdir(tmp)) + syslibs[c]):
+    shutil.copy('%s/lib%s.so.1' % (tmp,project),'%s/%s/' % (installlib,abi))
+    os.symlink('lib%s.so.1' % project,'%s/%s/lib%s.so' % (installlib,abi,project))
+    abishared.add(abi)
+
+# ----- command
+
+sizeprimitives = []
+speedprimitives = []
+notesprimitives = []
+
+for o in operations:
+  if not os.path.isdir(o): continue
+
+  for p in sorted(os.listdir(o)):
+    if not os.path.isdir('%s/%s' % (o,p)): continue
+
+    for cmdoc in sorted(os.listdir('command')):
+      if cmdoc.endswith('-%s.c' % o[7:]):
+        cmdp = cmdoc[:-2-len(o[7:])] + p
+
+        for c in compilers['c']:
+          c = c.strip()
+          if c == '': continue
+          c_ = re.sub(' ','_',c)
+          abi = compilerabi[c]
+    
+          dir = '%s/%s/%s' % (compiled,c_,'command')
+    
+          if not os.path.exists('%s/%s.o' % (dir,cmdp)): continue
+          if not os.path.exists('%s/freadall.o' % dir): continue
+          if not os.path.exists('%s/limits.o' % dir): continue
+    
+          lognow('command/%s linking %s' % (cmdp,c))
+    
+          copt = c
+          copt += ' -L%s/%s' % (installlib,abi)
+          copt += ' -Wl,-rpath=%s/%s' % (rpath,abi)
+          libs = []
+          libs += ['-l%s' % project]
+          libs += syslibs[c]
+    
+          shutil.rmtree(tmp,True)
+          os.mkdir(tmp)
+          shutil.copy('%s/%s.o' % (dir,cmdp),tmp)
+          shutil.copy('%s/freadall.o' % dir,tmp)
+          shutil.copy('%s/limits.o' % dir,tmp)
+    
+          if link(copt,c_,tmp,'command',cmdp,['%s.o' % cmdp,'freadall.o','limits.o'] + libs):
+            copymkdir('%s/%s' % (tmp,cmdp),command)
+            os.chmod('%s/%s' % (command,cmdp),0o711)
+
+            if cmdoc in ['pq-size-sign.c','pq-size-kem.c']:
+              sizeprimitives += [p]
+            if cmdoc in ['pq-speed-sign.c','pq-speed-kem.c']:
+              speedprimitives += [p]
+            if cmdoc in ['pq-notes-sign.c','pq-notes-kem.c']:
+              notesprimitives += [p]
+            break
+
+x = '#!/bin/sh\n'
+for p in sizeprimitives:
+  x += 'pq-size-%s\n' % p
+writefile('%s/pq-size-all' % command,x)
+os.chmod('%s/pq-size-all' % command,0o755)
+
+x = '#!/bin/sh\n'
+for p in speedprimitives:
+  x += 'pq-speed-%s\n' % p
+writefile('%s/pq-speed-all' % command,x)
+os.chmod('%s/pq-speed-all' % command,0o755)
+
+x = '#!/bin/sh\n'
+for p in notesprimitives:
+  x += 'pq-notes-%s\n' % p
+writefile('%s/pq-notes-all' % command,x)
+os.chmod('%s/pq-notes-all' % command,0o755)
+
+# ----- python
+
+lognow('command/python')
+x = readfile('python/template-pqcrypto.py')
+y = ''
+for line in x.splitlines():
+  if line.startswith('%crypto_'):
+    for o in operations:
+      o = o.strip()
+      if o == '': continue
+      if not os.path.isdir(o): continue
+      if line.startswith('%%%s: ' % o):
+        line = line[len('%%%s: ' % o):]
+        for p in sorted(os.listdir(o)):
+          if not os.path.isdir('%s/%s' % (o,p)): continue
+          if not os.path.isdir('%s/%s/%s/macros' % (compiled,o,p)): continue
+
+          outline = re.sub('PRIMITIVE',p,line)
+
+          for M in os.listdir('%s/%s/%s/macros' % (compiled,o,p)):
+            m = readfile('%s/%s/%s/macros/%s' % (compiled,o,p,M))
+            outline = re.sub(M,m,outline)
+
+          y += outline + '\n'
+  else:
+    y += line + '\n'
+
+writefile('%s/pqcrypto.py' % python,y)
+
+# ----- finishing
+
+shutil.rmtree(tmp,True)
+lognow('test finishing')

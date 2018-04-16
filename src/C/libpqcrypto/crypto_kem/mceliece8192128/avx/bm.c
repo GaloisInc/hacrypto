@@ -1,0 +1,202 @@
+#include "bm.h"
+
+#include "gf.h"
+#include "params.h"
+
+#include <stdint.h>
+
+extern void vec128_mul_asm(vec128 *, vec128 *, vec128 *, int);
+extern gf vec_reduce_asm(vec128 *);
+extern void update_asm(void *, gf, int);
+
+static inline uint16_t mask_nonzero(gf a)
+{
+	uint32_t ret = a;
+
+	ret -= 1;
+	ret >>= 31;
+	ret -= 1;
+
+	return ret;
+}
+
+static inline uint16_t mask_leq(uint16_t a, uint16_t b)
+{
+	uint32_t a_tmp = a;
+	uint32_t b_tmp = b;
+	uint32_t ret = b_tmp - a_tmp; 
+
+	ret >>= 31;
+	ret -= 1;
+
+	return ret;
+}
+
+static inline void vec128_cmov(vec128 out[][2], uint16_t mask)
+{
+	int i;
+
+	vec128 v0, v1;
+
+	vec128 m0 = vec128_set1_16b( mask);
+	vec128 m1 = vec128_set1_16b(~mask);
+
+	for (i = 0; i < GFBITS; i++)
+	{
+		v0 = vec128_and(out[i][1], m0);
+		v1 = vec128_and(out[i][0], m1);
+		out[i][0] = vec128_or(v0, v1);
+	}
+}
+
+static inline void interleave(vec256 *in, int idx0, int idx1, vec256 *mask, int b)
+{
+	int s = 1 << b;
+
+	vec256 x, y;
+
+	x = vec256_or(vec256_and(in[idx0], mask[0]), 
+	vec256_sll_4x(vec256_and(in[idx1], mask[0]), s));
+
+	y = vec256_or(vec256_srl_4x(vec256_and(in[idx0], mask[1]), s),
+	                            vec256_and(in[idx1], mask[1]));
+
+	in[idx0] = x;
+	in[idx1] = y;
+}
+
+static inline void get_coefs(gf *out, vec256 *in)
+{
+	int i, j, k;
+
+	vec256 mask[4][2];
+	vec256 buf[16];
+	
+	for (i =  0; i < 13; i++) buf[i] = in[i];
+	for (i = 13; i < 16; i++) buf[i] = vec256_setzero();
+
+	mask[0][0] = vec256_set1_16b(0x5555);
+	mask[0][1] = vec256_set1_16b(0xAAAA);
+	mask[1][0] = vec256_set1_16b(0x3333);
+	mask[1][1] = vec256_set1_16b(0xCCCC);
+	mask[2][0] = vec256_set1_16b(0x0F0F);
+	mask[2][1] = vec256_set1_16b(0xF0F0);
+	mask[3][0] = vec256_set1_16b(0x00FF);
+	mask[3][1] = vec256_set1_16b(0xFF00);
+
+	interleave(buf,  0,  8, mask[3], 3);
+	interleave(buf,  1,  9, mask[3], 3);
+	interleave(buf,  2, 10, mask[3], 3);
+	interleave(buf,  3, 11, mask[3], 3);
+	interleave(buf,  4, 12, mask[3], 3);
+	interleave(buf,  5, 13, mask[3], 3);
+	interleave(buf,  6, 14, mask[3], 3);
+	interleave(buf,  7, 15, mask[3], 3);
+
+	interleave(buf,  0,  4, mask[2], 2);
+	interleave(buf,  1,  5, mask[2], 2);
+	interleave(buf,  2,  6, mask[2], 2);
+	interleave(buf,  3,  7, mask[2], 2);
+	interleave(buf,  8, 12, mask[2], 2);
+	interleave(buf,  9, 13, mask[2], 2);
+	interleave(buf, 10, 14, mask[2], 2);
+	interleave(buf, 11, 15, mask[2], 2);
+
+	interleave(buf,  0,  2, mask[1], 1);
+	interleave(buf,  1,  3, mask[1], 1);
+	interleave(buf,  4,  6, mask[1], 1);
+	interleave(buf,  5,  7, mask[1], 1);
+	interleave(buf,  8, 10, mask[1], 1);
+	interleave(buf,  9, 11, mask[1], 1);
+	interleave(buf, 12, 14, mask[1], 1);
+	interleave(buf, 13, 15, mask[1], 1);
+
+	interleave(buf,  0,  1, mask[0], 0);
+	interleave(buf,  2,  3, mask[0], 0);
+	interleave(buf,  4,  5, mask[0], 0);
+	interleave(buf,  6,  7, mask[0], 0);
+	interleave(buf,  8,  9, mask[0], 0);
+	interleave(buf, 10, 11, mask[0], 0);
+	interleave(buf, 12, 13, mask[0], 0);
+	interleave(buf, 14, 15, mask[0], 0);
+
+	for (i = 0; i < 16; i++)
+	for (j = 0; j <  4; j++)
+	for (k = 0; k <  4; k++)
+		out[ (4*j + k)*16 + i ] = (vec256_extract(buf[i], j) >> (k*16)) & GFMASK;
+}
+
+void bm(vec128 *out, vec256 *in)
+{
+	int i;
+	uint16_t N, L;
+	uint16_t mask;
+	uint64_t one = 1, t;
+
+	vec128 prod[ GFBITS ];
+	vec128 interval[GFBITS];
+
+	vec128 db[ GFBITS ][ 2 ];
+	vec128 BC_tmp[ GFBITS ][ 2 ];
+	vec128 BC[ GFBITS ][ 2 ];
+
+	gf d, b, c0 = 1;
+	gf coefs[256];
+
+	// init
+
+	get_coefs(coefs, in);
+
+	BC[0][0] = vec128_set2x(0, one << 63);
+	BC[0][1] = vec128_setzero();
+
+	for (i = 1; i < GFBITS; i++)
+		BC[i][0] = BC[i][1] = vec128_setzero();
+
+	b = 1;
+	L = 0;
+
+	//
+
+	for (i = 0; i < GFBITS; i++)
+		interval[i] = vec128_setzero();
+
+	for (N = 0; N < 256; N++)
+	{
+		vec128_mul_asm(prod, interval, BC[0]+1, 32);
+		update_asm(interval, coefs[N], 16);
+
+		d = vec_reduce_asm(prod);
+
+		t = gf_mul2(c0, coefs[N], b);
+		d ^= t & 0xFFFFFFFF;
+
+		mask = mask_nonzero(d) & mask_leq(L*2, N);
+
+		for (i = 0; i < GFBITS; i++) 
+		{
+			db[i][0] = vec128_setbits((d >> i) & 1);
+			db[i][1] = vec128_setbits((b >> i) & 1);
+		}
+
+		vec256_mul((vec256*) BC_tmp, (vec256*) db, (vec256*) BC);
+
+		vec128_cmov(BC, mask);
+		update_asm(BC, c0 & mask, 32);
+
+		for (i = 0; i < GFBITS; i++) 
+			BC[i][1] = vec128_xor(BC_tmp[i][0], BC_tmp[i][1]);
+
+		c0 = t >> 32; 
+		b = (d & mask) | (b & ~mask);
+		L = ((N+1-L) & mask) | (L & ~mask);
+	}
+
+	c0 = gf_inv(c0);
+
+	for (i = 0; i < GFBITS; i++) 
+		prod[i] = vec128_setbits((c0 >> i) & 1);
+
+	vec128_mul_asm(out, prod, BC[0]+1, 32);
+}
+

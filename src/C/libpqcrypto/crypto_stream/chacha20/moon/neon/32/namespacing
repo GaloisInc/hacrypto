@@ -1,0 +1,4 @@
+#define chacha_blocks_neon pqcrypto_stream_chacha20_impl_priv_chacha_blocks_neon
+#define chacha_neon pqcrypto_stream_chacha20_impl_priv_chacha_neon
+#define hchacha_neon pqcrypto_stream_chacha20_impl_priv_hchacha_neon
+#define xchacha_neon pqcrypto_stream_chacha20_impl_priv_xchacha_neon
