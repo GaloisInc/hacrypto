@@ -286,3 +286,6 @@
 [submodule "tls-tris"]
 	path = src/Go/tls-tris
 	url = https://github.com/cloudflare/tls-tris.git
+[submodule "src/Multi-lang/themis"]
+	path = src/Multi-lang/themis
+	url = https://github.com/cossacklabs/themis.git
